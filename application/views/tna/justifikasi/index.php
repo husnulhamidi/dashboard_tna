@@ -32,7 +32,7 @@
                        
                         <div class="row">
                             <div class="col-md-12">
-                                <table  class="table table-striped table-bordered table-hover" id="table-bank" cellspacing="0" width="100%">
+                                <table  class="table table-striped table-bordered table-hover" id="table-justifikasi" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
                                             <th width="7%">No.</th>
@@ -43,7 +43,7 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <!-- <tbody>
                                   
                                         <tr>
                                             <td class="text-center">1</td>
@@ -72,7 +72,7 @@
                                    
                                     
                                    
-                                    </tbody>
+                                    </tbody> -->
                                 </table>
                             </div>
                         </div>
@@ -84,58 +84,7 @@
         </div>
     </div>
 </section>
-<?php 
-    $this->load->view('tna/kompetensi/modal_form_kompetensi');
-    $this->load->view('tna/common/form_import_excel');
-?>
 <script type="text/javascript">
-     $('#table-bank').DataTable();
-      $(document).on("click",".hapus-bank",function(){
-        var encrypt = this.value;
-        
-        swal({
-            title: "Yakin Hapus Data ini ?",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Ya, Hapus!",
-            closeOnConfirm: false
-        }, function () {
-
-            $.ajax({
-                type : "POST",
-                url  : "<?php echo base_url();?>bank/delete/",
-                dataType: "JSON",
-                data : "data="+encrypt,
-                success:function(data){
-                    
-                    if(data.rc=='0000'){
-                        setTimeout(function() {
-                            swal({
-                                title: "Notification!",
-                                text: "Success Delete Data",
-                                imageUrl: '<?= base_url("assets/img/success.png");?>'
-                            }, function() {
-                               location.reload();
-                            });
-                        }, 1000);
-                    }else{
-                        setTimeout(function() {
-                            swal({
-                                title: "Notification!",
-                                text: "Delete Failed",
-                                imageUrl: '<?= base_url("assets/img/danger-red2.png");?>'
-                            }, function() {
-                                location.reload();
-                            });
-                        }, 1000);
-                    }
-                    
-                }
-
-            });
-           
-        });
-            
-    });
+    var url_detail_justifikasi = '<?php echo base_url('tna/justifikasi/detail');?>';
+    var url = '<?php echo base_url('tna/justifikasi/edit');?>';
 </script>

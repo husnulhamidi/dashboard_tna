@@ -87,5 +87,5 @@ defined('EXIT__AUTO_MAX') or define('EXIT__AUTO_MAX', 125); // highest automatic
 
 define('baseapplication', 'http://localhost/dashboard_tna');
 
-// define('baseapplicationhcm', 'http://localhost/hcm/');
+define('baseapplicationhcm', 'http://localhost/hcm/');
 // define('baseapplication', 'http://localhost/');

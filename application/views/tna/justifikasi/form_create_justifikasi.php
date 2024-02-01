@@ -21,7 +21,8 @@
                             </div>
                         <!-- /.box-header -->
                             <!-- form start -->
-                            <form method="post" action="" class="form-horizontal" enctype="multipart/form-data">
+                            <form method="post" action="javascript:;" class="form-horizontal form-justifikasi" enctype="multipart/form-data">
+                                <input type="hidden" name="id" value=<?php echo @$detail->id;?>>
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -29,13 +30,13 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Justifikasi <span class="text-red">*</span></label>
                                             <div class="col-sm-6">
-                                                <textarea class="form-control" name="address_bank" id="cabang_bank" ></textarea>
+                                                <textarea class="form-control" name="justifikasi" id="cabang_bank" ><?php echo @$detail->justifikasi;?></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Deskripsi <span class="text-red">*</span></label>
                                             <div class="col-sm-6">
-                                                <textarea class="form-control" rows="5" name="address_bank" id="cabang_bank" ></textarea>
+                                                <textarea class="form-control" rows="5" name="deskripsi" id="cabang_bank" ><?php echo @$detail->deskripsi;?></textarea>
                                             </div>
                                         </div>
                                         
@@ -51,8 +52,8 @@
                                 
                                 <div class="col-sm-8">
                                     <div class="pull-right"> 
-                                        <a href="<?php echo base_url('tna/justifikasi/submit');?>" class="btn btn-default">Kembali</a>
-                                        <button type="submit" class="btn btn-info ">Simpan</button>
+                                        <a href="<?php echo base_url('tna/justifikasi');?>" class="btn btn-default">Kembali</a>
+                                        <button type="submit" class="btn btn-info submit-justifikasi">Simpan</button>
                                         
                                     </div>
                                 </div>
@@ -69,55 +70,6 @@
         </div>
     </div>
 </section>
-<script>
-<?php //echo $this->jquery_validation->run('.form-horizontal');?>
-const base_url = '<?php echo site_url(); ?>'
-
-
-
-$(document).ready(function () {
-
-
-
-
-    $(".form-horizontal").validate({
-            rules: {
-                name_bank: "required",
-                cabang_bank: "required",
-                address_bank: "required",
-                jenis_rek: "required",
-                norek: "required",
-
-            },
-            messages: {
-                name_bank:{
-                    required:"<i class='fa fa-times'></i> Nama bank harus diisi"
-                },
-                cabang_bank:{
-                    required:"<i class='fa fa-times'></i> Cabang bank harus diisi"
-                }, 
-                address_bank:{
-                    required:"<i class='fa fa-times'></i> Alamat bank harus diisi"
-                },
-                jenis_rek:{
-                    required:"<i class='fa fa-times'></i> Jenis rekening harus diisi"
-                }, 
-                norek:{
-                    required:"<i class='fa fa-times'></i> Nomor rekening harus diisi"
-                },
-                
-            },
-            highlight: function (element) {
-                $(element).parent().parent().addClass("has-error")
-                $(element).parent().addClass("has-error")
-            },
-            unhighlight: function (element) {
-                $(element).parent().removeClass("has-error")
-                $(element).parent().parent().removeClass("has-error")
-            }
-    });
-
-    
-
-});
+<script type="text/javascript">
+    var url_detail_justifikasi = '<?php echo base_url('tna/justifikasi/detail');?>';
 </script>

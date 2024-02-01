@@ -70,10 +70,23 @@ $route['tna/create']    = 'tna/Tna/create';
 $route['tna/non']    = 'tna/NonTna/index';
 $route['tna/non/create']    = 'tna/NonTna/create';
 
+
+// ========================== JUSTIFIKASI
 $route['tna/justifikasi']    = 'tna/Justifikasi/index';
+$route['tna/justifikasi/getData'] = 'tna/Justifikasi/getData';
 $route['tna/justifikasi/create']    = 'tna/Justifikasi/create';
 $route['tna/justifikasi/submit']    = 'tna/Justifikasi/submit';
-$route['tna/justifikasi/detail']    = 'tna/Justifikasi/detail';
+$route['tna/justifikasi/detail/(:any)']    = 'tna/Justifikasi/detail/$1';
+$route['tna/justifikasi/getDataKompetensi/(:any)']    = 'tna/justifikasi/getDataKompetensi/$1';
+$route['tna/justifikasi/getDataTraining/(:any)']    = 'tna/justifikasi/getDataTraining/$1';
+$route['tna/justifikasi/getJobFamily']    = 'tna/Justifikasi/getJobFamily';
+$route['tna/justifikasi/getDataDropdown/(:any)']    = 'tna/Justifikasi/getDataDropdown/$1';
+$route['tna/justifikasi/simpan_kompetensi']    = 'tna/Justifikasi/simpan_kompetensi';
+$route['tna/justifikasi/simpan_training']    = 'tna/Justifikasi/simpan_training';
+$route['tna/justifikasi/edit/(:any)']    = 'tna/Justifikasi/edit/$1';
+$route['tna/justifikasi/delete_justifikasi']    = 'tna/Justifikasi/delete_justifikasi';
+$route['tna/justifikasi/delete_kompetensi']    = 'tna/Justifikasi/delete_kompetensi';
+$route['tna/justifikasi/delete_training']    = 'tna/Justifikasi/delete_training';
 
 //=====================================================================================================================
 // Anggaran 

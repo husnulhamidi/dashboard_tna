@@ -4,11 +4,13 @@
         <div class="modal-content">
             <div class="modal-header bg-info">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="false">&times;</button>
-                <h4 class="modal-title" id="myModalLabel"> Form Tambah Kompetensi</h4>
+                <h4 class="modal-title" id="myModalLabel"> <span id="label2"></span></h4>
             </div>
             <div class="modal-body">
                 <div>
-                <form method="post" action="<?php echo $action_url_submit;?>" class="form-horizontal form-add" enctype="multipart/form-data">
+                <form method="post" action="#" class="form-horizontal formkompetensi" id="formkompetensi" enctype="multipart/form-data">
+                    <input type="hidden" name="kompetensiId" id="kompetensiId">
+                    <input type="hidden" name="justifikasiId" id="justifikasiId">
                     <div class="box-body">
                         <div class="row">
                             <div class="col-lg-12">
@@ -16,7 +18,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Job Family</label>
                                     <div class="col-sm-9">
-                                        <select class="select2 form-control" name="pilih_produk" id="pilih_produk">
+                                        <select class="select2 form-control" name="jobFamily" id="jobFamily">
                                             <option value=""></option>
                                         </select>
                                     </div>
@@ -24,7 +26,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Job Function</label>
                                     <div class="col-sm-9">
-                                        <select class="select2 form-control" name="pilih_produk" id="pilih_produk">
+                                        <select class="select2 form-control" name="jobFunc" id="jobFunc">
                                             <option value=""></option>
                                         </select>
                                     </div>
@@ -32,15 +34,15 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Job Role</label>
                                     <div class="col-sm-9">
-                                        <select class="select2 form-control" name="pilih_produk" id="pilih_produk">
+                                        <select class="select2 form-control" name="jobRole" id="jobRole">
                                             <option value=""></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Kompetensi <span class="text-red">*</i></label>
+                                    <label class="col-sm-3 control-label">Kompetensi <span id="spanKompetensi" class="text-red">*</i></label>
                                     <div class="col-sm-7">
-                                        <select class=" form-control" name="pilih_produk" id="pilih_produk">
+                                        <select class=" form-control" name="kompetensi" id="kompetensi">
                                             <option value="">Pilih Kompetensi</option>
                                         </select>
                                     </div>
@@ -51,13 +53,14 @@
                                 <div class="form-group newkompetensi" style="display:none">
                                     <label class="col-sm-3 control-label">Kode Kompetensi <span class="text-red">*</i></label>
                                     <div class="col-sm-9">
-                                        <input type="text"  name="speed" id="speed" placeholder="" class="form-control input-sm">
+                                        <input type="hidden" id="addNew" name="addNew">
+                                        <input type="text"  name="kode" id="kode" placeholder="" class="form-control input-sm">
                                     </div>
                                 </div>
                                 <div class="form-group newkompetensi" style="display:none">
                                     <label class="col-sm-3 control-label">Kompetensi <span class="text-red">*</i></label>
                                     <div class="col-sm-9">
-                                        <input type="text"  name="speed" id="speed" placeholder="" class="form-control input-sm">
+                                        <input type="text"  name="name" id="name" placeholder="" class="form-control input-sm">
                                     </div>
                                 </div>
                               
@@ -74,7 +77,7 @@
                         <div class="">
                             <div class="pull-right"> 
                                 <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="false">Close</button>
-                                <button type="submit" class="btn btn-info ">Simpan</button>
+                                <button type="submit" class="btn btn-info btn-form-kompetensi">Simpan</button>
                                 
                             </div>
                         </div>
@@ -94,6 +97,9 @@
     });
 
     function ShowNewKompetensi(){
+        $('#addNew').val('true')
+        $('#kompetensi').attr('disabled', true)
+        $('#spanKompetensi').css("display","none")
         $(".newkompetensi").show();
     }
 
@@ -106,54 +112,7 @@
 
     $('.input_mask').mask('000.000.000.000', {reverse: true});
 
-    $(".form-add").validate({
-            rules: {
-                pilih_produk: "required",
-                speed: "required",
-                tgl_tagih: "required",
-                tgl_off: "required",
-                deskripsi: "required",
-                otc: "required",
-                mrc: "required",
-                cpe: "required",
-
-            },
-            messages: {
-                pilih_produk:{
-                    required:"<i class='fa fa-times'></i> Produk harus diisi"
-                },
-                speed:{
-                    required:"<i class='fa fa-times'></i> Speed harus diisi"
-                }, 
-                deskripsi:{
-                    required:"<i class='fa fa-times'></i> Deskripsi harus diisi"
-                }, 
-                tgl_tagih:{
-                    required:"<i class='fa fa-times'></i> Tgl tagih harus diisi"
-                },
-                tgl_off:{
-                    required:"<i class='fa fa-times'></i> Tgl Off harus diisi"
-                }, 
-                otc:{
-                    required:"<i class='fa fa-times'></i> OTC harus diisi"
-                }, 
-                mrc:{
-                    required:"<i class='fa fa-times'></i> MRC harus diisi"
-                },
-                cpe:{
-                    required:"<i class='fa fa-times'></i> CPE harus diisi"
-                },
-                
-            },
-            highlight: function (element) {
-                $(element).parent().parent().addClass("has-error")
-                $(element).parent().addClass("has-error")
-            },
-            unhighlight: function (element) {
-                $(element).parent().removeClass("has-error")
-                $(element).parent().parent().removeClass("has-error")
-            }
-    });
+  
 </script>
 
 <style type="text/css">
