@@ -102,6 +102,15 @@ class Justifikasi extends CI_Controller {
 		if($string == 'kompetensi'){
 			$data = $this->justifikasi->get_kompetensi();
 		}
+		if($string == 'pelatihan'){
+			$data = $this->justifikasi->get_pelatihan();
+		}
+		if($string == 'metodePembelajaran'){
+			$data = $this->justifikasi->get_metode_pembelajaran();
+		}
+		if($string == 'kategoriPelatihan'){
+			$data = $this->justifikasi->get_kategori_pelatihan();
+		}
 
 		echo json_encode($data);
 	}
@@ -135,22 +144,35 @@ class Justifikasi extends CI_Controller {
 	public function submit(){
 		$data = array(
 			'justifikasi' => $this->input->post('justifikasi'),
-			'deskripsi' => $this->input->post('deskripsi')
+			'deskripsi' => $this->input->post('deskripsi'),
+			// 'created_date' => date('Y-m-d')
 		);
 
 		if($this->input->post('id')){
+			$data['updated_date'] = date('Y-m-d');
 			$action = $this->input->post('id');
 			$this->justifikasi->updateData($data, $this->input->post('id') );
 		}else{
+			$data['created_date'] = date('Y-m-d');
 			$action = $this->justifikasi->insertData($data);
 		}
 		
-		$return = array(
-			'success'		=> true,
-			'status_code'	=> 200,
-			'msg'			=> "Data berhasil di simpan.",
-			'data'			=> $action
-		);
+		if($action){
+			$return = array(
+				'success'		=> true,
+				'status_code'	=> 201,
+				'msg'			=> "Data berhasil di simpan.",
+				'data'			=> $action
+			);
+		}else{
+			$return = array(
+				'success'		=> false,
+				'status_code'	=> 500,
+				'msg'			=> "Data gagal di simpan.",
+				'data'			=> $action
+			);
+		}
+		
 		echo json_encode($return);
 	}
 

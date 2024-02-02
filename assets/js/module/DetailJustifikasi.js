@@ -58,8 +58,6 @@ function submitFormTraining(){
     });	
 }
 
-
-
 function submitFormKompetensi(){
     $("#formkompetensi").validate({
         rules: {

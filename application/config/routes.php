@@ -60,9 +60,18 @@ $route['tna/report'] = 'tna/Report';
 $route['tna/dashboard-training']    = 'tna/home/dashboard_training';
 $route['tna/profil-training-personal/(:any)']    = 'tna/TrainingMandiri/profile/$1';
 $route['tna/profil-training-karyawan/(:any)']    = 'tna/TrainingMandiri/profile_all_karyawan/$1';
+
+// =================== TRAINING MANDIRI
 $route['tna/training-mandiri']    = 'tna/TrainingMandiri/list';
+$route['tna/training-mandiri/getDataTrainingMandiri']    = 'tna/TrainingMandiri/getDataTrainingMandiri';
 $route['tna/training-mandiri-hcpd']    = 'tna/TrainingMandiri/listhcpd';
 $route['tna/training-mandiri/create']    = 'tna/TrainingMandiri/create';
+$route['tna/training-mandiri/createOrUpdate']    = 'tna/TrainingMandiri/createOrUpdate';
+$route['tna/training-mandiri/edit/(:any)']    = 'tna/TrainingMandiri/edit/$1';
+$route['tna/training-mandiri/delete_training_mandiri']    = 'tna/TrainingMandiri/delete_training_mandiri';
+$route['tna/training-mandiri/verifikasi']    = 'tna/TrainingMandiri/verifikasi';
+
+
 
 $route['tna/list']    = 'tna/Tna/index';
 $route['tna/create']    = 'tna/Tna/create';

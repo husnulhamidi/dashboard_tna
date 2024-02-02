@@ -9,12 +9,7 @@
             <div class="modal-body">
            
                     <div class="box-body">
-                    
-                   
-                    
-                            <p> Pelatihan tidak sesuai dengan posisi jabatan </p>
-                       
-                   
+                        <p> <span id="alasan"></span></p>
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer">
@@ -34,15 +29,3 @@
         </div> <!-- /.modal-content -->
     </div> <!-- /.modal-dialog -->
 </div> <!-- /.modal -->
-
-<script type="text/javascript">
-    $('.select2').select2({
-        placeholder: "Please Select"
-    });
-
-
-<style type="text/css">
-    .select2 {
-width:100%!important;
-}
-</style>

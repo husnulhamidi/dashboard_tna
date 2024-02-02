@@ -21,37 +21,12 @@
                             </div>
                         <!-- /.box-header -->
                             <!-- form start -->
-                            <form method="post" action="<?php echo $action_url;?>" class="form-horizontal" enctype="multipart/form-data">
+                            <form method="post" action="javascript:void(0)" class="form-horizontal" enctype="multipart/form-data" id="form-submit-training">
+                            <input type="hidden" name="id" id="id" value=<?php echo @$detail->id;?>>
+                            <input type="hidden" name="userId" value="456">
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <!-- <div class="form-group">
-                                            <label class="col-sm-3 control-label">Direktorat</label>
-                                            <div class="col-sm-7">
-                                                <select class="select2 form-control" name="pilih_produk" id="edit-pilih_produk">
-                                                    <option value="1">Pilih Direktorat ....?</option>
-                                                   
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label">Subdit/Unit</label>
-                                            <div class="col-sm-7">
-                                                <select class="select2 form-control" name="pilih_produk" id="edit-pilih_produk">
-                                                    <option value="1">Pilih Subdit/Unit ....?</option>
-                                                   
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-3 control-label">Sub Unit</label>
-                                            <div class="col-sm-7">
-                                                <select class="select2 form-control" name="pilih_produk" id="edit-pilih_produk">
-                                                    <option value="1">Pilih Sub Unit ....?</option>
-                                                   
-                                                </select>
-                                            </div>
-                                        </div> -->
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Nama Karyawan</label>
                                             <div class="col-sm-7">
@@ -61,8 +36,8 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Kompetensi</label>
                                             <div class="col-sm-7">
-                                                <select class="select2 form-control" name="pilih_produk" id="edit-pilih_produk">
-                                                    <option value="1">Pilih Kompetensi ....?</option>
+                                                <select class="select2 form-control" name="kompetensi" id="kompetensi">
+                                                    <option >Pilih Kompetensi</option>
                                                    
                                                 </select>
                                             </div>
@@ -71,8 +46,8 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Nama Pelatihan</label>
                                             <div class="col-sm-7">
-                                                <select class="select2 form-control" name="pilih_produk" id="edit-pilih_produk">
-                                                    <option value="1">Pilih Pelatihan ....?</option>
+                                                <select class="select2 form-control" name="pelatihan" id="pelatihan">
+                                                    <option>Pilih Pelatihan</option>
                                                    
                                                 </select>
                                             </div>
@@ -81,45 +56,49 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Metode Pembelajaran</label>
                                             <div class="col-sm-7">
-                                                <select class="select2 form-control" name="pilih_produk" id="edit-pilih_produk">
-                                                    <option value="1">Pilih ....?</option>
+                                                <select class="select2 form-control" name="metodePembelajaran" id="metodePembelajaran">
+                                                    <option>Pilih Metode Pembelajaran</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Kategori Pelatihan</label>
                                             <div class="col-sm-7">
-                                                <select class="select2 form-control" name="pilih_produk" id="edit-pilih_produk">
-                                                    <option value="0">Pilih Kategori Pelatihan....?</option>
-                                                    <option value="Pelatihan">Pelatihan</option>
-                                                    <option value="Sertifikasi">Sertifikasi</option>
-                                                    <option value="E-Learning">E-Learning</option>
+                                                <select class="select2 form-control" name="ketegoriPelatihan" id="ketegoriPelatihan">
+                                                    <option>Pilih Kategori Pelatihan</option>
+                                                    
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Nama Penyelenggara</label>
                                             <div class="col-sm-7">
-                                                <input  class="form-control" name="pilih_produk" id="edit-pilih_produk"> 
+                                                <input  class="form-control" name="penyelenggara" id="penyelenggara" value="<?php echo @$detail->nama_penyelenggara;?>"> 
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Biaya</label>
                                             <div class="col-sm-7">
-                                                <input  class="form-control" name="pilih_produk" id="edit-pilih_produk"> 
+                                                <input class="form-control" name="biaya" id="biaya" value="<?php echo @$detail->biaya;?>"> 
                                             </div>
                                         </div>
                                        
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Waktu Pelaksanaan</label>
                                             <div class="col-sm-7">
-                                                <input type="date" class="form-control" name="pilih_produk" id="edit-pilih_produk"> 
+                                                <div class="input-group">
+                                                  <div class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                  </div>
+                                                  <input type="text" class="form-control pull-right" id="tgl_pelaksanaan" name="waktu_pelaksanaan">
+                                                </div>
                                             </div>
+                                            
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Justifikasi Pelatihan</label>
                                             <div class="col-sm-7">
-                                                <textarea type="text"  name="jenis_rek" id="jenis_rek"  class="form-control input-sm" ></textarea>
+                                                <textarea type="text"  name="justifikasi" id="justifikasi"  class="form-control input-sm" ><?php echo @$detail->justifikasi_pelatihan;?></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -143,8 +122,14 @@
                                 
                                 <div class="col-sm-10">
                                     <div class="pull-right"> 
-                                        <a href="<?php echo base_url('bank/data_bank');?>" class="btn btn-default">Kembali</a>
-                                        <button type="submit" class="btn btn-info ">Simpan</button>
+                                        <a 
+                                            href="<?php echo base_url('tna/training-mandiri');?>" class="btn btn-default">Kembali
+                                        </a>
+                                        <button 
+                                            type="submit" 
+                                            id="btn-submit-training" 
+                                            class="btn btn-info btn-submit-training">Simpan
+                                        </button>
                                         
                                     </div>
                                 </div>
@@ -161,57 +146,111 @@
         </div>
     </div>
 </section>
+<script type="text/javascript">
+    var url_site = '<?php echo base_url('tna/training-mandiri');?>';
+</script>
 <script>
-<?php //echo $this->jquery_validation->run('.form-horizontal');?>
-const base_url = '<?php echo site_url(); ?>'
+    $(document).ready(function () {
+        $('#tgl_pelaksanaan').daterangepicker();
+        $('.select2').select2({
+            placeholder: "Please Select"
+        });
+        const dataKompetensi = '<?php echo @$detail->r_tna_kompetensi_id;?>';
+        getDataKompetensi(dataKompetensi);
+
+        const dataTraining = '<?php echo @$detail->r_tna_training_id;?>';
+        getDataPelatihan(dataTraining)
+
+        const dataMetodePembelajaran = '<?php echo @$detail->metoda_pembelajaran;?>';
+        getDataMetodePembelajaran(dataMetodePembelajaran);
+
+        const dataKategoriPelatihan = '<?php echo @$detail->kategori_pelatihan;?>';
+        getDatakategoriPelatihan(dataKategoriPelatihan);
+
+        const tgl_mulai ='<?php echo @$detail->tanggal_mulai;?>';
+        const format_tgl_mulai = formatDate2(tgl_mulai)
+
+        const tgl_selesai ='<?php echo @$detail->tanggal_selesai;?>';
+        const format_tgl_selesai = formatDate2(tgl_selesai)
+
+        $('#tgl_pelaksanaan').val(format_tgl_mulai+ ' - ' +format_tgl_selesai)
 
 
-
-$(document).ready(function () {
-
-    $('.select2').select2({
-        placeholder: "Please Select"
     });
 
-
-    $(".form-horizontal").validate({
-            rules: {
-                name_bank: "required",
-                cabang_bank: "required",
-                address_bank: "required",
-                jenis_rek: "required",
-                norek: "required",
-
-            },
-            messages: {
-                name_bank:{
-                    required:"<i class='fa fa-times'></i> Nama bank harus diisi"
-                },
-                cabang_bank:{
-                    required:"<i class='fa fa-times'></i> Cabang bank harus diisi"
-                }, 
-                address_bank:{
-                    required:"<i class='fa fa-times'></i> Alamat bank harus diisi"
-                },
-                jenis_rek:{
-                    required:"<i class='fa fa-times'></i> Jenis rekening harus diisi"
-                }, 
-                norek:{
-                    required:"<i class='fa fa-times'></i> Nomor rekening harus diisi"
-                },
-                
-            },
-            highlight: function (element) {
-                $(element).parent().parent().addClass("has-error")
-                $(element).parent().addClass("has-error")
-            },
-            unhighlight: function (element) {
-                $(element).parent().removeClass("has-error")
-                $(element).parent().parent().removeClass("has-error")
+    function getDataKompetensi(dataKompetensi){
+        $('#kompetensi').empty()
+        $('#kompetensi').append('<option></option')
+        $.ajax({
+            url:base_url+'tna/justifikasi/getDataDropdown/kompetensi',
+            method: 'get',
+            dataType: 'json',
+            success: function(response){
+                for (var i = 0; i < response.length; i++) {
+                    var selected = "";
+                    if(dataKompetensi == response[i]['id']){
+                        selected = "selected";
+                    }
+                    $('#kompetensi').append('<option '+selected+' value='+response[i]['id']+'>'+response[i]['name']+'</option>')
+                }
             }
-    });
+        });
+    }
 
-    
+    function getDataPelatihan(dataTraining){
+        $('#pelatihan').empty()
+        $('#pelatihan').append('<option></option')
+        $.ajax({
+            url:base_url+'tna/justifikasi/getDataDropdown/pelatihan',
+            method: 'get',
+            dataType: 'json',
+            success: function(response){
+                for (var i = 0; i < response.length; i++) {
+                    var selected = "";
+                    if(dataTraining == response[i]['id']){
+                        selected = "selected";
+                    }
+                    $('#pelatihan').append('<option '+selected+' value='+response[i]['id']+'>'+response[i]['name']+'</option>')
+                }
+            }
+        });
+    }
 
-});
+    function getDataMetodePembelajaran(dataMetodePembelajaran){
+        $('#metodePembelajaran').empty()
+        $('#metodePembelajaran').append('<option></option')
+        $.ajax({
+            url:base_url+'tna/justifikasi/getDataDropdown/metodePembelajaran',
+            method: 'get',
+            dataType: 'json',
+            success: function(response){
+                for (var i = 0; i < response.length; i++) {
+                    var selected = "";
+                    if(dataMetodePembelajaran == response[i]['label']){
+                        selected = "selected";
+                    }
+                    $('#metodePembelajaran').append('<option '+selected+' >'+response[i]['label']+'</option>')
+                }
+            }
+        });
+    }
+
+    function getDatakategoriPelatihan(dataKategoriPelatihan){
+        $('#ketegoriPelatihan').empty()
+        $('#ketegoriPelatihan').append('<option></option')
+        $.ajax({
+            url:base_url+'tna/justifikasi/getDataDropdown/kategoriPelatihan',
+            method: 'get',
+            dataType: 'json',
+            success: function(response){
+                for (var i = 0; i < response.length; i++) {
+                    var selected = "";
+                    if(dataKategoriPelatihan == response[i]['name']){
+                        selected = "selected";
+                    }
+                    $('#ketegoriPelatihan').append('<option '+selected+'>'+response[i]['name']+'</option>')
+                }
+            }
+        });
+    }
 </script>

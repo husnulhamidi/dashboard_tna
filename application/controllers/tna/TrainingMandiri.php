@@ -9,6 +9,7 @@ class TrainingMandiri extends CI_Controller {
 		if(!$this->session->userdata('user')){
 			redirect('auth/login');
 		}
+		$this->load->model('Training_Mandiri_model', 'trainingMandiri');
 		//Do your magic here
     
 	}
@@ -56,18 +57,25 @@ class TrainingMandiri extends CI_Controller {
 			'plugins/datepicker/bootstrap-datepicker.js',
 			'js/jquery.validate.js',
 			'plugins/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js',
-			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js'
+			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js',
+			'js/module/TrainingMandiri.js',
+			'js/custom.js',
 		);
 
 
 		$this->template->load('template','tna/karyawan/index_training_mandiri',$data);
 	}
 
+	public function getDataTrainingMandiri(){
+		$get = $this->input->get();
+		echo $this->trainingMandiri->getDataTrainingMandiri($get);
+	}
+
     public function listhcpd()
 	{
-        $data['breadcrumb'] 	= 'Training Mandiri';
+        $data['breadcrumb'] 	= 'Training Mandiri Admin';
         $data['active_menu'] 	= 'training-mandiri-hcpd';
-		$data['title'] 			= 'List Training Mandiri';
+		$data['title'] 			= 'List Training Mandiri Admin';
 		$data['action_url_submit'] 	= site_url('tna/anggaran/submit');
 		$data['action_url_update'] 	= site_url('tna/anggaran/update');
 		$data['css'] 			= array(
@@ -81,10 +89,10 @@ class TrainingMandiri extends CI_Controller {
 			'plugins/datepicker/bootstrap-datepicker.js',
 			'js/jquery.validate.js',
 			'plugins/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js',
-			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js'
+			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js',
+			'js/module/TrainingMandiri.js',
+			'js/custom.js',
 		);
-
-
 		$this->template->load('template','tna/karyawan/index_training_mandiri_hcpd',$data);
 	}
 
@@ -146,151 +154,137 @@ class TrainingMandiri extends CI_Controller {
         $data['title'] 			= 'Tambah Training Mandiri';
 		$data['action'] 		= 'add';
 		$data['active_menu'] 	= 'training-mandiri';
-		$data['action_url'] 	= site_url('tna/anggaran/submit');
+		$data['action_url'] 	= site_url('tna/trainingMandiri/submit');
 		$data['css'] 			= array(
+			'plugins/sweet-alert/sweetalert.css',
             'plugins/select2/select2.min.css',
             'plugins/datepicker/datepicker3.css',
+            'plugins/daterangepicker/daterangepicker-bs3.css'
         );
 		$data['js']				= array(	// js tambahan
+			'plugins/sweet-alert/sweetalert.min.js',
+			'plugins/daterangepicker/moment.js',
 			'plugins/select2/select2.full.min.js',
 			'plugins/datepicker/bootstrap-datepicker.js',
 			'js/jquery.validate.js',
-			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js'
-            
+			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js',
+			'plugins/daterangepicker/daterangepicker.js',
+			'js/module/TrainingMandiri.js',
         );
 		
 		$this->template->load('template','tna/karyawan/form_training_mandiri', $data);
 	}
 
-	public function edit()
+	public function edit($id)
 	{
         $data = array();
-        $data['breadcrumb'] 	= 'Usulan > Edit';
-        $data['title'] 			= 'Edit Usulan';
-		$data['action'] 		= 'add';
-		$data['active_menu'] 	= 'usulan_tna';
-		$data['action_url'] 	= site_url('tna/anggaran/submit');
-		$data['css'] 			= array(
-            'plugins/select2/select2.min.css',
-        );
-		$data['js']				= array(	// js tambahan
-			'js/jquery.validate.js',
-            'plugins/select2/select2.full.min.js',
-            
-        );
-		
-		$this->template->load('template','tna/usulan/form_edit_usulan', $data);
-	}
-
-
-	public function simpan_bank(){
-		$data = array(
-			'nama_bank' => $this->input->post('name_bank'),
-			'alamat1' => $this->input->post('cabang_bank'),
-			'alamat2' => $this->input->post('address_bank'),
-			'jenis_rekening' => $this->input->post('jenis_rek'),
-			'no_rekening' => $this->input->post('norek'),
-		);
-
-		if($this->Bank_model->insert_record_bank($data)){
-
-            $this->session->set_flashdata('message', 'Data Berhasil Di Tambahkan');
-            $this->session->set_flashdata('status', 'success');
-                
-        }else{
-            $this->session->set_flashdata('message', 'Data Gagal Di Tambahkan');
-            $this->session->set_flashdata('status', 'danger');
-        }
-        redirect('bank/data_bank');
-	}
-
-	public function ubah($id_bank=null)
-	{
-		if($id_bank==null || $id_bank=="" ){
-			redirect('bank/data_bank');
-		}
-		
-
-        $data = array();
-        $data['title'] 			= 'Ubah Bank';
+        $data['breadcrumb'] 	= 'Training Mandiri > Edit';
+        $data['title'] 			= 'Edit Training Mandiri';
 		$data['action'] 		= 'edit';
-		$data['active_menu'] 	= 'edit_bank';
-		$data['action_url'] 	= site_url('bank/save_update/').$id_bank;
-		//$data['list_divisi'] 	= $this->Devisi_model->get_data_devisi();
-		$data['css'] 			= array();
-		$data['js']				= array(	// js tambahan
-			'js/jquery.validate.js',
+		$data['active_menu'] 	= 'training-mandiri';
+		$data['action_url'] 	= site_url('tna/trainingMandiri/submit');
+		$data['css'] 			= array(
+			'plugins/sweet-alert/sweetalert.css',
+            'plugins/select2/select2.min.css',
+            'plugins/datepicker/datepicker3.css',
+            'plugins/daterangepicker/daterangepicker-bs3.css'
         );
-       
+		$data['js']				= array(	// js tambahan
+			'plugins/sweet-alert/sweetalert.min.js',
+			'plugins/daterangepicker/moment.js',
+			'plugins/select2/select2.full.min.js',
+			'plugins/datepicker/bootstrap-datepicker.js',
+			'js/jquery.validate.js',
+			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js',
+			'plugins/daterangepicker/daterangepicker.js',
+			'js/module/TrainingMandiri.js',
+			'js/custom.js',
+        );
 
-		$decrypt_id = decrypt_url($id_bank);
-
-		$bank = $this->Bank_model->get_data_bank_byid($decrypt_id);
-
-		$data['nama_bank'] = $bank->nama_bank;
-		$data['cabang'] = $bank->alamat1;
-		$data['alamat'] = $bank->alamat2;
-		$data['jenis_rekening'] = $bank->jenis_rekening;
-		$data['no_rekening'] = $bank->no_rekening;
-		
-
-		$this->template->load('template','bank/ubah_bank', $data);
+        // $data['detail'];
+        $data['detail'] = $this->trainingMandiri->getDetailTrainingMandiri($id);
+        
+		$this->template->load('template','tna/karyawan/form_training_mandiri', $data);
 	}
 
-	public function update_bank($id_bank){
-	
-		if($id_bank==null || $id_bank=="" ){
-			redirect('bank/data_bank');
-		}
+	public function createOrUpdate(){
+		$waktu = explode("-", $this->input->post('waktu_pelaksanaan'));
+		$tgl1 = explode("/", $waktu[0]);
+		$tglMulai = $tgl1[2].'-'.$tgl1[0].'-'.$tgl1[1];
 
-		$decrypt_id = decrypt_url($id_bank);
-
-
-		
+		$tgl2 = explode("/", $waktu[1]);
+		$tglSelesai = $tgl2[2].'-'.$tgl2[0].'-'.$tgl2[1];
 		$data = array(
-			'nama_bank' => $this->input->post('name_bank'),
-			'alamat1' => $this->input->post('cabang_bank'),
-			'alamat2' => $this->input->post('address_bank'),
-			'jenis_rekening' => $this->input->post('jenis_rek'),
-			'no_rekening' => $this->input->post('norek'),
+			'm_karyawan_id' => $this->input->post('userId'),
+			'r_tna_kompetensi_id' => $this->input->post('kompetensi'),
+			'r_tna_training_id' => $this->input->post('pelatihan'),
+			'metoda_pembelajaran' => $this->input->post('metodePembelajaran'),
+			'kategori_pelatihan'  => $this->input->post('ketegoriPelatihan'),
+			'nama_penyelenggara' => $this->input->post('penyelenggara'),
+			'biaya' => $this->input->post('biaya'),
+			'tanggal_mulai' => str_replace(" ", "", $tglMulai),
+			'tanggal_selesai' => str_replace(" ", "", $tglSelesai),
+			'justifikasi_pelatihan'=> $this->input->post('justifikasi'),
 		);
-
-		if($this->Bank_model->update_data_bank($data, $decrypt_id)){
-
-			$this->session->set_flashdata('message', 'Data Berhasil Di Perbaharui');
-            $this->session->set_flashdata('status', 'success');
-
-                
-        }else{
-            $this->session->set_flashdata('message', 'Data Gagal Di Perbaharui');
-            $this->session->set_flashdata('status', 'danger');
-        }
-        redirect('bank/data_bank');
-
+		if($this->input->post('id')){
+			$data['updated_date'] = date('Y-m-d');
+			$action = $this->trainingMandiri->updateData($data, $this->input->post('id'));
+		}else{
+			$data['created_date'] = date('Y-m-d');
+			$action = $this->trainingMandiri->insertData($data);
+		}
+		
+		if($action){
+			$return = array(
+				'success'		=> true,
+				'status_code'	=> 201,
+				'msg'			=> "Data berhasil di simpan.",
+				'data'			=> $data
+			);
+		}else{
+			$return = array(
+				'success'		=> false,
+				'status_code'	=> 500,
+				'msg'			=> "Data gagal di simpan.",
+				'data'			=> $data
+			);
+		}
+		
+		echo json_encode($return);
 	}
 
-	public function delete_bank(){
-		$decrypt_id = decrypt_url($this->input->post('data'));
-
-		if ($this->Bank_model->delete_bank_byid($decrypt_id) === FALSE){
-			$message="Delete invoice gagal!";
-			$status=true;
-			$rc="0005";
-		}else{
-			$message="Delete invoice Berhasil";
-			$status=false;
-			$rc="0000";
-		}
-
-
-		$this->session->set_flashdata('message', $message);
-		$this->session->set_flashdata('status', $status);
-
-		$data['rc'] = $rc;
-		$data['message'] = $message;
-
+	public function delete_training_mandiri(){
+		$data = $this->trainingMandiri->delete_training_mandiri($this->input->post('id'));
 		echo json_encode($data);
 	}
+
+	public function verifikasi(){
+		$data = array(
+			'alasan_rejected' => $this->input->post('verifikasi'),
+			'status_approval' => $this->input->post('verifikasi')
+		);
+		$action = $this->trainingMandiri->verifikasi($data, $this->input->post('id'));
+		if($action){
+			$return = array(
+				'success'		=> true,
+				'status_code'	=> 201,
+				'msg'			=> "Data berhasil di simpan.",
+				'data'			=> array()
+			);
+		}else{
+			$return = array(
+				'success'		=> false,
+				'status_code'	=> 500,
+				'msg'			=> "Data gagal di simpan.",
+				'data'			=> array()
+			);
+		}
+		
+		echo json_encode($return);
+	}
+
+
+	
 }
 
 /* End of file bank.php */

@@ -124,6 +124,18 @@ class Justifikasi_model extends CI_Model {
 		return $this->db->from('r_tna_kompetensi')->where('status_code','1')->select('id,code,name')->get()->result();
 	}
 
+	function get_pelatihan(){
+		return $this->db->from('r_tna_training')->where('status_code','1')->select('id,code,name')->get()->result();
+	}
+
+	function get_metode_pembelajaran(){
+		return $this->db->from('r_tna_metoda_pelatihan')->where('status_code','1')->select('id,label')->get()->result();
+	}
+
+	function get_kategori_pelatihan(){
+		return $this->db->from('r_tna_jenis_pelatihan')->where('status_code','1')->select('id,name')->get()->result();
+	}
+
 
 	function getDataKompetensi($post, $id){
 		$column_order = array('name','code','helper','r_tna_job_role_code');
