@@ -84,6 +84,7 @@ class TrainingMandiri extends CI_Controller {
 			'plugins/datepicker/datepicker3.css',
 		); // css tambahan
 		$data['js']				= array(
+			'js/jquery.validate.js',
 			'plugins/sweet-alert/sweetalert.min.js',
 			'plugins/select2/select2.full.min.js',
 			'plugins/datepicker/bootstrap-datepicker.js',

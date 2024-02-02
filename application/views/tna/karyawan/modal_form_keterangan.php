@@ -27,10 +27,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group keterangan">
                         <label class="col-sm-12">Keterangan</label>
                         <div class="col-sm-12">
                             <textarea rows="5" cols="" class="form-control" name="keterangan" id="keterangan"></textarea>
+                            <label id="keterangan-error" style="color: red; display: none" class="error" for="keterangan"><i class="fa fa-times"></i> Keterangan harus diisi</label>
                         </div>
                     </div>
                     </form>

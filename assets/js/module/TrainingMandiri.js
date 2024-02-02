@@ -158,7 +158,18 @@ jQuery(document).ready(function() {
 
 
     $('.btn-varifikasi').click(function(){
-        submitVerifikasi()
+        // console.log($('#form-verifikasi').serialize())
+        var status = $("input[name='verifikasi']:checked").val();
+        if(status == 'Rejected'){
+            if($('#keterangan').val() == ''){ 
+                $('.keterangan').addClass("has-error")
+                $('#keterangan-error').css('display', 'block')
+            }else{
+                submitVerifikasi()
+            }
+        }else{
+            submitVerifikasi()
+        }
     })
 });
 
