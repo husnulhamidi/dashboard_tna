@@ -25,7 +25,6 @@ function formatDate(dateFormat){
 
 function formatDate2(dateFormat){
 	let formattedDate = new Date(dateFormat);
-	console.log('formattedDate',formattedDate)
 	var d = formattedDate.getDate();
 	if(d < 10){
 		d = '0'+formattedDate.getDate();

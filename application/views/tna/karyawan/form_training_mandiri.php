@@ -21,14 +21,14 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Nama Karyawan</label>
+                                        <label class="col-sm-3 control-label">Nama Karyawan<span class="text-red">*</span></label>
                                         <div class="col-sm-7">
                                             <input  readonly class="form-control" name="pilih_produk" id="edit-pilih_produk" value="86744666-Firman"> 
                                         </div>
                                     </div>
                                     
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Kompetensi</label>
+                                        <label class="col-sm-3 control-label">Kompetensi<span class="text-red">*</span></label>
                                         <div class="col-sm-7">
                                             <select class="select2 form-control" name="kompetensi" id="kompetensi">
                                                 <option >Pilih Kompetensi</option>
@@ -37,7 +37,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Nama Pelatihan</label>
+                                        <label class="col-sm-3 control-label">Nama Pelatihan<span class="text-red">*</span></label>
                                         <div class="col-sm-7">
                                             <select class="select2 form-control" name="pelatihan" id="pelatihan">
                                                 <option>Pilih Pelatihan</option>
@@ -46,7 +46,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Metode Pembelajaran</label>
+                                        <label class="col-sm-3 control-label">Metode Pembelajaran<span class="text-red">*</span></label>
                                         <div class="col-sm-7">
                                             <select class="select2 form-control" name="metodePembelajaran" id="metodePembelajaran">
                                                 <option>Pilih Metode Pembelajaran</option>
@@ -55,41 +55,44 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Kategori Pelatihan</label>
+                                        <label class="col-sm-3 control-label">Kategori Pelatihan<span class="text-red">*</span></label>
                                         <div class="col-sm-7">
                                             <select class="select2 form-control" name="ketegoriPelatihan" id="ketegoriPelatihan">
-                                                <option>Pilih Kategori Pelatihan</option>
+                                                <option value="">Pilih Kategori Pelatihan</option>
+                                                <option <?php echo @$detail->kategori_pelatihan == 'Pelatihan' ? 'selected' : ''; ?> > Pelatihan </option>
+                                                <option <?php echo @$detail->kategori_pelatihan == 'Sertifikasi' ? 'selected' : ''; ?>> Sertifikasi </option>
+                                                <option <?php echo @$detail->kategori_pelatihan == 'Internal Sharing' ? 'selected' : ''; ?>> Internal Sharing </option>
                                             </select>
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Nama Penyelenggara</label>
+                                        <label class="col-sm-3 control-label">Nama Penyelenggara<span class="text-red">*</span></label>
                                         <div class="col-sm-7">
                                             <input  class="form-control" name="penyelenggara" id="penyelenggara" value="<?php echo @$detail->nama_penyelenggara;?>"> 
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Biaya</label>
+                                        <label class="col-sm-3 control-label">Biaya<span class="text-red">*</span></label>
                                         <div class="col-sm-7">
                                             <input class="form-control" name="biaya" id="biaya" value="<?php echo @$detail->biaya;?>"> 
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Waktu Pelaksanaan</label>
+                                        <label class="col-sm-3 control-label">Waktu Pelaksanaan<span class="text-red">*</span></label>
                                         <div class="col-sm-7">
                                             <div class="input-group">
                                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                                <input type="text" class="form-control pull-right" id="tgl_pelaksanaan" name="waktu_pelaksanaan">
+                                                <input type="text" class="form-control pull-right" id="waktu_pelaksanaan" name="waktu_pelaksanaan">
                                             </div>
                                         </div>
 
                                     </div>
                                         
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Justifikasi Pelatihan</label>
+                                        <label class="col-sm-3 control-label">Justifikasi Pelatihan<span class="text-red">*</span></label>
                                         <div class="col-sm-7">
                                             <textarea type="text"  name="justifikasi" id="justifikasi"  class="form-control input-sm" ><?php echo @$detail->justifikasi_pelatihan;?></textarea>
                                         </div>
@@ -98,8 +101,8 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Upload Justifikasi</label>
                                         <div class="col-sm-7">
-                                            <input type="file" name="projet" id="file-project">
-                                            <input type="hidden" name="input-file-project" value="projet">
+                                            <input type="file" name="fileName" id="fileName">
+                                            <!-- <input type="hidden" name="input-file-project" value="projet"> -->
                                         </div>
                                     </div>
                                 </div> 
@@ -120,12 +123,13 @@
         </div>
     </div>
 </section>
+
 <script type="text/javascript">
     var url_site = '<?php echo base_url('tna/training-mandiri');?>';
 </script>
 <script>
     $(document).ready(function () {
-        $('#tgl_pelaksanaan').daterangepicker();
+        $('#waktu_pelaksanaan').daterangepicker();
         $('.select2').select2({
             placeholder: "Please Select"
         });
@@ -138,8 +142,8 @@
         const dataMetodePembelajaran = '<?php echo @$detail->metoda_pembelajaran;?>';
         getDataMetodePembelajaran(dataMetodePembelajaran);
 
-        const dataKategoriPelatihan = '<?php echo @$detail->kategori_pelatihan;?>';
-        getDatakategoriPelatihan(dataKategoriPelatihan);
+        // const dataKategoriPelatihan = '<?php echo @$detail->kategori_pelatihan;?>';
+        // getDatakategoriPelatihan(dataKategoriPelatihan);
 
         const tgl_mulai ='<?php echo @$detail->tanggal_mulai;?>';
         const format_tgl_mulai = formatDate2(tgl_mulai)
@@ -147,7 +151,7 @@
         const tgl_selesai ='<?php echo @$detail->tanggal_selesai;?>';
         const format_tgl_selesai = formatDate2(tgl_selesai)
         if(tgl_selesai){
-            $('#tgl_pelaksanaan').val(format_tgl_mulai+ ' - ' +format_tgl_selesai)
+            $('#waktu_pelaksanaan').val(format_tgl_mulai+ ' - ' +format_tgl_selesai)
         }
         
 
@@ -211,22 +215,22 @@
         });
     }
 
-    function getDatakategoriPelatihan(dataKategoriPelatihan){
-        $('#ketegoriPelatihan').empty()
-        $('#ketegoriPelatihan').append('<option></option')
-        $.ajax({
-            url:base_url+'tna/justifikasi/getDataDropdown/kategoriPelatihan',
-            method: 'get',
-            dataType: 'json',
-            success: function(response){
-                for (var i = 0; i < response.length; i++) {
-                    var selected = "";
-                    if(dataKategoriPelatihan == response[i]['name']){
-                        selected = "selected";
-                    }
-                    $('#ketegoriPelatihan').append('<option '+selected+'>'+response[i]['name']+'</option>')
-                }
-            }
-        });
-    }
+    // function getDatakategoriPelatihan(dataKategoriPelatihan){
+    //     $('#ketegoriPelatihan').empty()
+    //     $('#ketegoriPelatihan').append('<option></option')
+    //     $.ajax({
+    //         url:base_url+'tna/justifikasi/getDataDropdown/kategoriPelatihan',
+    //         method: 'get',
+    //         dataType: 'json',
+    //         success: function(response){
+    //             for (var i = 0; i < response.length; i++) {
+    //                 var selected = "";
+    //                 if(dataKategoriPelatihan == response[i]['name']){
+    //                     selected = "selected";
+    //                 }
+    //                 $('#ketegoriPelatihan').append('<option '+selected+'>'+response[i]['name']+'</option>')
+    //             }
+    //         }
+    //     });
+    // }
 </script>

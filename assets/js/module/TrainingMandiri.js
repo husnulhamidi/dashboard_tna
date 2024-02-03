@@ -1,95 +1,3 @@
-function submitFormTraining(){
-    $("#form-submit-training").validate({
-        // rules: {
-        //     name: "required",
-        //     kode: "required"
-        // },
-        // messages: {
-        //     name:{
-        //         required:"<i class='fa fa-times'></i> Kode harus diisi"
-        //     }, 
-        //      kode:{
-        //         required:"<i class='fa fa-times'></i> Kode harus diisi"
-        //     },            
-        // },
-        // highlight: function (element) {
-        //     $(element).parent().parent().addClass("has-error")
-        //     $(element).parent().addClass("has-error")
-        // },
-        // unhighlight: function (element) {
-        //     $(element).parent().removeClass("has-error")
-        //     $(element).parent().parent().removeClass("has-error")
-        // },
-        submitHandler: function(form) {
-            $.ajax({
-                url: base_url+"tna/training-mandiri/createOrUpdate",
-                type: 'POST',
-                dataType: "JSON",
-                data: $(form).serialize(),
-                success: function(response) {
-                    console.log(response)
-                    if(response.success){
-                        setTimeout(function() {
-                            swal({
-                                title: "Notifikasi!",
-                                text: "Data berhasil disimpan",
-                                imageUrl: img_icon_success
-                            }, function(d) {
-                                location.reload();
-                                location.href = url_site
-                            });
-                        }, 1000);
-                    }else{
-                        setTimeout(function() {
-                            swal({
-                                title: "Notifikasi!",
-                                text: "Data gagal disimpan",
-                                imageUrl: img_icon_error
-                            }, function() {
-                                location.reload();
-                            });
-                        }, 1000);
-                    }                   
-                }            
-            });
-        }
-    });
-}
-
-function submitVerifikasi(){
-    $.ajax({
-        url: base_url+"tna/training-mandiri/verifikasi",
-        type: 'POST',
-        dataType: "JSON",
-        data: $('#form-verifikasi').serialize(),
-        success: function(response) {
-            console.log(response)
-            if(response.success){
-                setTimeout(function() {
-                    swal({
-                        title: "Notifikasi!",
-                        text: "Data berhasil disimpan",
-                        imageUrl: img_icon_success
-                    }, function(d) {
-                        location.reload();
-                        location.href = url_site
-                    });
-                }, 1000);
-            }else{
-                setTimeout(function() {
-                    swal({
-                        title: "Notifikasi!",
-                        text: "Data gagal disimpan",
-                        imageUrl: img_icon_error
-                    }, function() {
-                        location.reload();
-                    });
-                }, 1000);
-            }                   
-        }            
-    });
-}
-
 jQuery(document).ready(function() {
     // training mandiri
     generateTableTrainingMandiri()
@@ -172,6 +80,122 @@ jQuery(document).ready(function() {
         }
     })
 });
+
+function submitFormTraining(){
+    $("#form-submit-training").validate({
+        rules: {
+            kompetensi: "required",
+            pelatihan: "required",
+            metodePembelajaran: "required",
+            ketegoriPelatihan: "required",
+            penyelenggara: "required",
+            biaya: "required",
+            waktu_pelaksanaan: "required",
+            justifikasi: "required"
+        },
+        messages: {
+            kompetensi:{
+                required:"<i class='fa fa-times'></i> Kompetensi harus diisi"
+            }, 
+            pelatihan:{
+                required:"<i class='fa fa-times'></i> Nama Pelatihan harus diisi"
+            }, 
+            metodePembelajaran:{
+                required:"<i class='fa fa-times'></i> Metode Pembelajaran harus diisi"
+            }, 
+            ketegoriPelatihan:{
+                required:"<i class='fa fa-times'></i> Kategori Pelatihan harus diisi"
+            }, 
+            penyelenggara:{
+                required:"<i class='fa fa-times'></i> Nama Penyelenggara harus diisi"
+            }, 
+            biaya:{
+                required:"<i class='fa fa-times'></i> Biaya harus diisi"
+            }, 
+            waktu_pelaksanaan:{
+                required:"<i class='fa fa-times'></i> Waktu Pelaksanaan harus diisi"
+            }, 
+            justifikasi:{
+                required:"<i class='fa fa-times'></i> Justifikasi harus diisi"
+            },             
+        },
+        highlight: function (element) {
+            $(element).parent().parent().addClass("has-error")
+            $(element).parent().addClass("has-error")
+        },
+        unhighlight: function (element) {
+            $(element).parent().removeClass("has-error")
+            $(element).parent().parent().removeClass("has-error")
+        },
+        submitHandler: function(form) {
+            $.ajax({
+                url: base_url+"tna/training-mandiri/createOrUpdate",
+                type: 'POST',
+                dataType: "JSON",
+                data: $(form).serialize(),
+                success: function(response) {
+                    console.log(response)
+                    if(response.success){
+                        setTimeout(function() {
+                            swal({
+                                title: "Notifikasi!",
+                                text: "Data berhasil disimpan",
+                                imageUrl: img_icon_success
+                            }, function(d) {
+                                location.reload();
+                                location.href = url_site
+                            });
+                        }, 1000);
+                    }else{
+                        setTimeout(function() {
+                            swal({
+                                title: "Notifikasi!",
+                                text: "Data gagal disimpan",
+                                imageUrl: img_icon_error
+                            }, function() {
+                                location.reload();
+                            });
+                        }, 1000);
+                    }                   
+                }            
+            });
+        }
+    });
+}
+
+function submitVerifikasi(){
+    $.ajax({
+        url: base_url+"tna/training-mandiri/verifikasi",
+        type: 'POST',
+        dataType: "JSON",
+        data: $('#form-verifikasi').serialize(),
+        success: function(response) {
+            console.log(response)
+            if(response.success){
+                setTimeout(function() {
+                    swal({
+                        title: "Notifikasi!",
+                        text: "Data berhasil disimpan",
+                        imageUrl: img_icon_success
+                    }, function(d) {
+                        location.reload();
+                        location.href = url_site
+                    });
+                }, 1000);
+            }else{
+                setTimeout(function() {
+                    swal({
+                        title: "Notifikasi!",
+                        text: "Data gagal disimpan",
+                        imageUrl: img_icon_error
+                    }, function() {
+                        location.reload();
+                    });
+                }, 1000);
+            }                   
+        }            
+    });
+}
 
 function generateTableTrainingMandiri(){
     oTable = $('#table-training-mandiri').DataTable({
