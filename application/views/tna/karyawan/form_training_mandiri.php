@@ -101,8 +101,19 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Upload Justifikasi</label>
                                         <div class="col-sm-7">
-                                            <input type="file" name="fileName" id="fileName">
-                                            <!-- <input type="hidden" name="input-file-project" value="projet"> -->
+                                            <input type="file" class="fileName" name="fileName" id="fileName">
+                                            <input type="hidden" name="input-file" value="fileName">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">&nbsp;</label>
+                                        <div class="col-sm-7">
+                                            <?php
+                                                if(@$detail->document){
+                                                    echo "<img src='" . base_url('files/upload/training-mandiri/'.@$detail->document) . "' alt='Deskripsi Gambar' width='100%'>";
+                                                }
+                                            ?>
                                         </div>
                                     </div>
                                 </div> 
@@ -129,6 +140,12 @@
 </script>
 <script>
     $(document).ready(function () {
+         $('#fileName').filestyle({
+            btnClass : 'btn-success',
+            text : 'Select File',
+            htmlIcon : '<span class="fa fa-folder"></span> ',
+        }); 
+         
         $('#waktu_pelaksanaan').daterangepicker();
         $('.select2').select2({
             placeholder: "Please Select"

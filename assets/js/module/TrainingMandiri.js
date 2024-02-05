@@ -128,14 +128,27 @@ function submitFormTraining(){
             $(element).parent().parent().removeClass("has-error")
         },
         submitHandler: function(form) {
+            // console.log(new FormData($("#form-submit-training")[0]))
+            // var formData = $('#form-submit-training').serialize();
+            // var fileInput = document.getElementById('input-file');
+            // if(fileInput){
+            //     var file = fileInput.files[0];
+            //     var fileName = file.name;
+            //     formData += '&fileName=' + fileName;
+            // }
+
+
+            // console.log(formData)
             $.ajax({
                 url: base_url+"tna/training-mandiri/createOrUpdate",
                 type: 'POST',
-                dataType: "JSON",
-                data: $(form).serialize(),
+                data: new FormData($("#form-submit-training")[0]),
+                contentType: false,
+                cache: false,
+                processData:false,
                 success: function(response) {
-                    console.log(response)
-                    if(response.success){
+                    var newResponse = JSON.parse(response);
+                    if(newResponse.success){
                         setTimeout(function() {
                             swal({
                                 title: "Notifikasi!",

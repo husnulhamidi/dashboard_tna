@@ -58,8 +58,8 @@ class TrainingMandiri extends CI_Controller {
 			'js/jquery.validate.js',
 			'plugins/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js',
 			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js',
-			'js/module/TrainingMandiri.js',
-			'js/custom.js',
+			'js/module/TrainingMandiri.js?random='.date("ymdHis"),
+			'js/custom.js?random='.date("ymdHis"),
 		);
 
 
@@ -91,8 +91,8 @@ class TrainingMandiri extends CI_Controller {
 			'js/jquery.validate.js',
 			'plugins/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js',
 			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js',
-			'js/module/TrainingMandiri.js',
-			'js/custom.js',
+			'js/module/TrainingMandiri.js?random='.date("ymdHis"),
+			'js/custom.js?random='.date("ymdHis"),
 		);
 		$this->template->load('template','tna/karyawan/index_training_mandiri_hcpd',$data);
 	}
@@ -170,7 +170,8 @@ class TrainingMandiri extends CI_Controller {
 			'js/jquery.validate.js',
 			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js',
 			'plugins/daterangepicker/daterangepicker.js',
-			'js/module/TrainingMandiri.js',
+			'js/module/TrainingMandiri.js?random='.date("ymdHis"),
+
         );
 		
 		$this->template->load('template','tna/karyawan/form_training_mandiri', $data);
@@ -188,7 +189,8 @@ class TrainingMandiri extends CI_Controller {
 			'plugins/sweet-alert/sweetalert.css',
             'plugins/select2/select2.min.css',
             'plugins/datepicker/datepicker3.css',
-            'plugins/daterangepicker/daterangepicker-bs3.css'
+            'plugins/daterangepicker/daterangepicker-bs3.css',
+            'css/custom.js?random='.date("ymdHis"),
         );
 		$data['js']				= array(	// js tambahan
 			'plugins/sweet-alert/sweetalert.min.js',
@@ -198,8 +200,8 @@ class TrainingMandiri extends CI_Controller {
 			'js/jquery.validate.js',
 			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js',
 			'plugins/daterangepicker/daterangepicker.js',
-			'js/module/TrainingMandiri.js',
-			'js/custom.js',
+			'js/module/TrainingMandiri.js?random='.date("ymdHis"),
+			'js/custom.js?random='.date("ymdHis"),
         );
 
         // $data['detail'];
@@ -209,6 +211,23 @@ class TrainingMandiri extends CI_Controller {
 	}
 
 	public function createOrUpdate(){
+		// echo json_encode($this->input->post()); 
+
+		ini_set('MAX_EXECUTION_TIME', 0);
+		// $data =array();
+		$config['upload_path'] = './files/upload/training-mandiri';
+		$config['allowed_types'] = 'gif|jpg|png';
+		
+		$config['file_name'] = $this->input->post('input-file').'-'.date('ymdHis');
+		$this->upload->initialize($config);
+
+		$fileDoc = '';
+		if ($this->upload->do_upload($this->input->post('input-file'))){
+			$upload_data  = $this->upload->data();
+			$file_extension = $upload_data['file_ext'];
+			$fileDoc = $this->input->post('input-file').'-'.date('ymdHis').$file_extension;
+		}
+
 		$waktu = explode("-", $this->input->post('waktu_pelaksanaan'));
 		$tgl1 = explode("/", $waktu[0]);
 		$tglMulai = $tgl1[2].'-'.$tgl1[0].'-'.$tgl1[1];
@@ -225,16 +244,20 @@ class TrainingMandiri extends CI_Controller {
 			'biaya' => $this->input->post('biaya'),
 			'tanggal_mulai' => str_replace(" ", "", $tglMulai),
 			'tanggal_selesai' => str_replace(" ", "", $tglSelesai),
-			'justifikasi_pelatihan'=> $this->input->post('justifikasi'),
+			'justifikasi_pelatihan'=> $this->input->post('justifikasi')
 		);
 		if($this->input->post('id')){
 			$data['updated_date'] = date('Y-m-d');
+			if($fileDoc){
+				$data['document'] = $fileDoc;
+			}
 			$action = $this->trainingMandiri->updateData($data, $this->input->post('id'));
 		}else{
 			$data['created_date'] = date('Y-m-d');
+			$data['document'] = $fileDoc;
 			$action = $this->trainingMandiri->insertData($data);
 		}
-		
+		// echo json_encode($action);
 		if($action){
 			$return = array(
 				'success'		=> true,

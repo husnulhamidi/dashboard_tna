@@ -15,7 +15,7 @@
                         <div class="col-lg-6 ">
                             <div class="pull-right">
                                
-                                <a href="<?php echo site_url('tna/justifikasi/create');?>"><button class="btn btn-info btn-sm" data-toggle='modal' data-target='#AddKompetensi'>
+                                <a href="<?php echo site_url('tna/InternalSharing/create');?>"><button class="btn btn-info btn-sm" data-toggle='modal' data-target='#AddKompetensi'>
                                     <i class="glyphicon glyphicon-plus"></i> Tambah
                                 </button></a>
                             </div>
@@ -36,14 +36,14 @@
                                     <thead>
                                         <tr>
                                             <th width="7%">No.</th>
-                                            <th>Materi</th>
-                                            <th>Nara Sumber</th>
-                                            <th>Subdit/Unit</th>
-                                            <th>Tanggal</th>
-                                            <th>Jam</th>
-                                            <th>Biaya</th>
-                                            <th>Link Zoom</th>
-                                            <th>Jumlah Peserta</th>
+                                            <th class="text-nowrap">Materi</th>
+                                            <th class="text-nowrap">Nara Sumber</th>
+                                            <th class="text-nowrap">Subdit/Unit</th>
+                                            <th class="text-nowrap">Tanggal</th>
+                                            <th class="text-nowrap">Jam</th>
+                                            <th class="text-nowrap">Biaya</th>
+                                            <th class="text-nowrap">Link Zoom</th>
+                                            <th class="text-nowrap">Jumlah Peserta</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
