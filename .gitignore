@@ -1,4 +1,5 @@
 /vendor/
 /application/config/config.php
 /application/config/database.php
+/files/upload/training-mandiri/
 

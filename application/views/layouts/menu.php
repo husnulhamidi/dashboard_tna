@@ -88,6 +88,11 @@ $sess = $this->session->userdata();
                 <i class="fa fa-clone"></i> <span>Internal Sharing</span>
             </a>
         </li>
+        <li class="<?php echo $active_menu=='tna_internal_sharing_ee'? 'active':'';?> ">
+            <a href="<?php echo site_url('tna/internalsharing'); ?>">
+                <i class="fa fa-clone"></i> <span>Internal Sharing Karyawan</span>
+            </a>
+        </li>
         
      
         <!-- <li class="<?php echo $active_menu=='tna_anggran'? 'active':'';?> ">

@@ -18,12 +18,16 @@ class InternalSharing extends CI_Controller {
         $data['breadcrumb'] 	= 'Internal Sharing';
         $data['active_menu'] 	= 'tna_internal_sharing';
 		$data['title'] 			= 'Daftar Internal Sharing';
+		$data['action_url_edit'] 	= site_url('tna/InternalSharing/edit');
+		$data['action_url_detail'] 	= site_url('tna/InternalSharing/detail');
+		$data['action_url_generate'] 	= site_url('tna/InternalSharing/generate_sertifikat');
 		$data['action_url_submit'] 	= site_url('tna/InternalSharing/submit');
 		$data['action_url_update'] 	= site_url('tna/InternalSharing/update');
 		$data['css'] 			= array(
 			'plugins/sweet-alert/sweetalert.css',
 			'plugins/select2/select2.min.css',
 			'plugins/datepicker/datepicker3.css',
+			'css/custom.css',
 		); // css tambahan
 		$data['js']				= array(
 			'plugins/sweet-alert/sweetalert.min.js',
@@ -31,36 +35,12 @@ class InternalSharing extends CI_Controller {
 			'plugins/datepicker/bootstrap-datepicker.js',
 			'js/jquery.validate.js',
 			'plugins/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js',
-			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js'
+			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js',
+			'js/module/internal-sharing/InternalSharing.js?random='.date("ymdHis"),
 		);
 
 
 		$this->template->load('template','tna/internal_sharing/index',$data);
-	}
-
-    public function detail()
-	{
-        $data['breadcrumb'] 	= 'Justifikasi > Detail';
-        $data['active_menu'] 	= 'tna_justifikasi';
-		$data['title'] 			= 'Detail Justifikasi';
-		$data['action_url_submit'] 	= site_url('tna/anggaran/submit');
-		$data['action_url_update'] 	= site_url('tna/anggaran/update');
-		$data['css'] 			= array(
-			'plugins/sweet-alert/sweetalert.css',
-			'plugins/select2/select2.min.css',
-			'plugins/datepicker/datepicker3.css',
-		); // css tambahan
-		$data['js']				= array(
-			'plugins/sweet-alert/sweetalert.min.js',
-			'plugins/select2/select2.full.min.js',
-			'plugins/datepicker/bootstrap-datepicker.js',
-			'js/jquery.validate.js',
-			'plugins/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js',
-			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js'
-		);
-
-
-		$this->template->load('template','tna/justifikasi/detail_justifikasi',$data);
 	}
 
 	public function create()
@@ -84,141 +64,74 @@ class InternalSharing extends CI_Controller {
             'plugins/select2/select2.full.min.js',
 			'plugins/datepicker/bootstrap-datepicker.js',
 			'plugins/timepicker/bootstrap-timepicker.min.js',
+			'js/module/internal-sharing/InternalSharing.js?random='.date("ymdHis"),
         );
 		
 		$this->template->load('template','tna/internal_sharing/form_internalSharing', $data);
 	}
 
-	public function edit()
-	{
-        $data = array();
-        $data['breadcrumb'] 	= 'Usulan > Edit';
-        $data['title'] 			= 'Edit Usulan';
-		$data['action'] 		= 'add';
-		$data['active_menu'] 	= 'usulan_tna';
-		$data['action_url'] 	= site_url('tna/anggaran/submit');
+	public function edit($id){
+		$data = array();
+        $data['breadcrumb'] 	= 'Internal Sharing > Edit';
+		$data['title'] 			= 'Edit Internal Sharing';
+		$data['action'] 		= 'edit';
+		$data['active_menu'] 	= 'InternalSharing';
+		$data['action_url'] 	= site_url('tna/InternalSharing/submit');
 		$data['css'] 			= array(
+			'plugins/sweet-alert/sweetalert.css',
             'plugins/select2/select2.min.css',
+            'plugins/datepicker/datepicker3.css',
+            'plugins/timepicker/bootstrap-timepicker.css',
+            'plugins/timepicker/bootstrap-timepicker.min.css',
         );
-		$data['js']				= array(	// js tambahan
+		$data['js']				= array(
+			'plugins/sweet-alert/sweetalert.min.js',
 			'js/jquery.validate.js',
             'plugins/select2/select2.full.min.js',
-            
+			'plugins/datepicker/bootstrap-datepicker.js',
+			'plugins/timepicker/bootstrap-timepicker.min.js',
+			'js/module/internal-sharing/InternalSharing.js?random='.date("ymdHis"),
         );
 		
-		$this->template->load('template','tna/usulan/form_edit_usulan', $data);
+		$this->template->load('template','tna/internal_sharing/form_internalSharing', $data);
 	}
 
 
-	public function simpan_bank(){
-		$data = array(
-			'nama_bank' => $this->input->post('name_bank'),
-			'alamat1' => $this->input->post('cabang_bank'),
-			'alamat2' => $this->input->post('address_bank'),
-			'jenis_rekening' => $this->input->post('jenis_rek'),
-			'no_rekening' => $this->input->post('norek'),
-		);
-
-		if($this->Bank_model->insert_record_bank($data)){
-
-            $this->session->set_flashdata('message', 'Data Berhasil Di Tambahkan');
-            $this->session->set_flashdata('status', 'success');
-                
-        }else{
-            $this->session->set_flashdata('message', 'Data Gagal Di Tambahkan');
-            $this->session->set_flashdata('status', 'danger');
-        }
-        redirect('bank/data_bank');
-	}
-
-	public function ubah($id_bank=null)
+    public function detail($id)
 	{
-		if($id_bank==null || $id_bank=="" ){
-			redirect('bank/data_bank');
-		}
-		
-
         $data = array();
-        $data['title'] 			= 'Ubah Bank';
-		$data['action'] 		= 'edit';
-		$data['active_menu'] 	= 'edit_bank';
-		$data['action_url'] 	= site_url('bank/save_update/').$id_bank;
-		//$data['list_divisi'] 	= $this->Devisi_model->get_data_devisi();
-		$data['css'] 			= array();
-		$data['js']				= array(	// js tambahan
-			'js/jquery.validate.js',
+        $data['breadcrumb'] 	= 'Internal Sharing > Detail';
+		$data['title'] 			= 'Detail Internal Sharing';
+		$data['action'] 		= 'detail';
+		$data['active_menu'] 	= 'InternalSharing';
+		$data['action_url'] 	= site_url('tna/InternalSharing/submit');
+		$data['css'] 			= array(
+			'plugins/sweet-alert/sweetalert.css',
+            'plugins/select2/select2.min.css',
+            'plugins/datepicker/datepicker3.css',
+            'plugins/timepicker/bootstrap-timepicker.css',
+            'plugins/timepicker/bootstrap-timepicker.min.css',
         );
-       
-
-		$decrypt_id = decrypt_url($id_bank);
-
-		$bank = $this->Bank_model->get_data_bank_byid($decrypt_id);
-
-		$data['nama_bank'] = $bank->nama_bank;
-		$data['cabang'] = $bank->alamat1;
-		$data['alamat'] = $bank->alamat2;
-		$data['jenis_rekening'] = $bank->jenis_rekening;
-		$data['no_rekening'] = $bank->no_rekening;
+		$data['js']				= array(
+			'plugins/sweet-alert/sweetalert.min.js',
+			'js/jquery.validate.js',
+            'plugins/select2/select2.full.min.js',
+			'plugins/datepicker/bootstrap-datepicker.js',
+			'plugins/timepicker/bootstrap-timepicker.min.js',
+			'js/module/internal-sharing/InternalSharing.js?random='.date("ymdHis"),
+        );
 		
-
-		$this->template->load('template','bank/ubah_bank', $data);
+		$this->template->load('template','tna/internal_sharing/detail_internalSharing', $data);
 	}
 
-	public function update_bank($id_bank){
+	public function generate_sertifikat(){
+		$this->load->view('tna/internal_sharing/generate_sertifikat');
+	}
+
 	
-		if($id_bank==null || $id_bank=="" ){
-			redirect('bank/data_bank');
-		}
 
-		$decrypt_id = decrypt_url($id_bank);
-
-
-		
-		$data = array(
-			'nama_bank' => $this->input->post('name_bank'),
-			'alamat1' => $this->input->post('cabang_bank'),
-			'alamat2' => $this->input->post('address_bank'),
-			'jenis_rekening' => $this->input->post('jenis_rek'),
-			'no_rekening' => $this->input->post('norek'),
-		);
-
-		if($this->Bank_model->update_data_bank($data, $decrypt_id)){
-
-			$this->session->set_flashdata('message', 'Data Berhasil Di Perbaharui');
-            $this->session->set_flashdata('status', 'success');
-
-                
-        }else{
-            $this->session->set_flashdata('message', 'Data Gagal Di Perbaharui');
-            $this->session->set_flashdata('status', 'danger');
-        }
-        redirect('bank/data_bank');
-
-	}
-
-	public function delete_bank(){
-		$decrypt_id = decrypt_url($this->input->post('data'));
-
-		if ($this->Bank_model->delete_bank_byid($decrypt_id) === FALSE){
-			$message="Delete invoice gagal!";
-			$status=true;
-			$rc="0005";
-		}else{
-			$message="Delete invoice Berhasil";
-			$status=false;
-			$rc="0000";
-		}
-
-
-		$this->session->set_flashdata('message', $message);
-		$this->session->set_flashdata('status', $status);
-
-		$data['rc'] = $rc;
-		$data['message'] = $message;
-
-		echo json_encode($data);
-	}
+	
 }
 
-/* End of file bank.php */
-/* Location: ./application/controllers/bank.php */
+/* End of file InternalSharing.php */
+/* Location: ./application/controllers/InternalSharing.php */

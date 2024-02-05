@@ -1,3 +1,9 @@
+<style type="text/css">
+    .dropdown-menu {
+        left: auto;
+        right: 0
+    }
+</style>
 <section class="content">
     <!-- Main row -->
     <div class="row">
@@ -14,10 +20,11 @@
                         </div>
                         <div class="col-lg-6 ">
                             <div class="pull-right">
-                               
-                                <a href="<?php echo site_url('tna/InternalSharing/create');?>"><button class="btn btn-info btn-sm" data-toggle='modal' data-target='#AddKompetensi'>
-                                    <i class="glyphicon glyphicon-plus"></i> Tambah
-                                </button></a>
+                                <button class="btn btn-default btn-sm" data-toggle='modal' data-target='#modalFilter'  style="padding-right: 20px;padding-left: 20px;">
+                                    <i class="glyphicon glyphicon-filter"></i> Filter
+                                </button>
+
+                                <a href="<?php echo site_url('tna/InternalSharing/create');?>" class="btn btn-info btn-sm"><i class="glyphicon glyphicon-plus" ></i> Tambah</a>
                             </div>
                         </div>
                     </div>
@@ -44,7 +51,7 @@
                                             <th class="text-nowrap">Biaya</th>
                                             <th class="text-nowrap">Link Zoom</th>
                                             <th class="text-nowrap">Jumlah Peserta</th>
-                                            <th>Action</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -52,18 +59,54 @@
                                         <tr>
                                             <td class="text-center">1</td>
                                             <td>Pengembangan Produk Aplikasi Rantai Pasok Sabut Kelapa</td>
-                                            <td>Seiring perkembangan produk perusahaan yang akan merambah ke sektor rantai pasok sabut kelapa, maka untuk menunjang produk tersebut dibutuhkan beberapa keahlian.</td>
-                                            <td><span class="label label-info">2</span></td>
-                                            <td><span class="label label-success">2</span></td>
-                                            <td><span class="label label-success">2</span></td>
-                                            <td><span class="label label-success">2</span></td>
-                                            <td><span class="label label-success">2</span></td>
-                                            <td><span class="label label-success">2</span></td>
+                                            <td>Firman</td>
+                                            <td>IT & Digital</td>
+                                            <td>20 Oktober 2023</td>
+                                            <td>14:00</td>
+                                            <td>Rp. 300.000</td>
+                                            <td>http://zoom.com</td>
+                                            <td>500 Peserta</td>
 
                                             <td class="text-center">
-                                                <a href="<?php echo site_url('tna/justifikasi/detail');?>" data-toggle='tooltip' data-placement='bottom' title='Detail'><button class='btn btn-info btn-xs'><i class='fa fa-eye' ></i> </button></a>
-                                                <button data-toggle="tooltip" data-placement="bottom" title="edit" class="btn btn-success btn-xs"><i class="fa fa-edit"></i></button>&nbsp;
-                                                <button data-toggle="tooltip" data-placement="bottom" title="Hapus" class="btn btn-danger btn-xs hapus-bank" value='.$id_bank.'><i class="fa fa-trash"></i></button>&nbsp;
+                                                <div class="input-group-btn">
+                                                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Aksi
+                                                    <span class="fa fa-caret-down"></span></button>
+                                                  <ul class="dropdown-menu">
+                                                    <li><a href="<?php echo $action_url_edit.'/1';?>">Edit</a></li>
+                                                    <li>
+                                                        <a onclick="deleteData(1)">Hapus</a>
+                                                    </li>
+                                                    <li><a href="<?php echo $action_url_detail.'/1';?>">Detail</a></li>
+                                                    <li>
+                                                        <a
+                                                        target="_blank" 
+                                                        href="<?php echo $action_url_generate;?>">Generate Sertifikat
+                                                        </a>
+                                                    </li>
+                                                  </ul>
+                                                </div>
+                                                <!-- <a 
+                                                    href="<?php echo site_url('tna/justifikasi/detail');?>" 
+                                                    data-toggle='tooltip' 
+                                                    data-placement='bottom' 
+                                                    title='Detail' 
+                                                    class='btn btn-info btn-xs'>
+                                                   <i class='fa fa-eye' ></i> 
+                                                </a>&nbsp;
+                                                <button 
+                                                    data-toggle="tooltip" 
+                                                    data-placement="bottom" 
+                                                    title="edit" 
+                                                    class="btn btn-success btn-xs">
+                                                    <i class="fa fa-edit"></i>
+                                                </button>&nbsp;
+                                                <button 
+                                                    data-toggle="tooltip" 
+                                                    data-placement="bottom" 
+                                                    title="Hapus" 
+                                                    class="btn btn-danger btn-xs hapus-bank" value='.$id_bank.'>
+                                                    <i class="fa fa-trash"></i>
+                                                </button>&nbsp; -->
                                             </td>
                                         </tr>
                                     
@@ -82,8 +125,7 @@
     </div>
 </section>
 <?php 
-    $this->load->view('tna/kompetensi/modal_form_kompetensi');
-    $this->load->view('tna/common/form_import_excel');
+    $this->load->view('tna/internal_sharing/modal_filter');
 ?>
 <script type="text/javascript">
      $('#table-bank').DataTable();

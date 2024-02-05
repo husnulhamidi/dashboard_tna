@@ -196,6 +196,9 @@ $route['tna/pengawalan/edit']    = 'tna/pengawalan/edit';
 // internal sharing
 $route['tna/internalsharing/']    = 'tna/InternalSharing/index';
 $route['tna/internalsharing/create']    = 'tna/InternalSharing/create';
+$route['tna/internalsharing/edit/(:any)']    = 'tna/InternalSharing/edit/$1';
+$route['tna/internalsharing/detail/(:any)']    = 'tna/InternalSharing/detail/$1';
+$route['tna/internalsharing/generate_sertifikat']    = 'tna/InternalSharing/generate_sertifikat';
 
 
 $route['tna/internalsharing/submit']    = 'tna/InternalSharing/submit';

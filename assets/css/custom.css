@@ -261,6 +261,10 @@ span.glyphicon-big {
   display: none;
 }
 
+.select2 {
+    width:100%!important;
+}
+
 
 .callout-min{
     padding: 5px 30px 5px 10px;
