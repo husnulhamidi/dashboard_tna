@@ -73,7 +73,7 @@ $sess = $this->session->userdata();
                 <i class="fa fa-file-text"></i> <span>Training Mandiri</span>
             </a>
         </li>
-        <li class="<?php echo $active_menu=='training-mandiri'? 'active':'';?>">
+        <li class="<?php echo $active_menu=='training-mandiri-hcpd'? 'active':'';?>">
             <a href="<?php echo site_url('tna/training-mandiri-hcpd'); ?>">
                 <i class="fa fa-file-text"></i> <span>Training Mandiri Admin</span>
             </a>
@@ -84,16 +84,15 @@ $sess = $this->session->userdata();
             </a>
         </li>
         <li class="<?php echo $active_menu=='tna_internal_sharing'? 'active':'';?> ">
-            <a href="<?php echo site_url('tna/internalsharing'); ?>">
-                <i class="fa fa-clone"></i> <span>Internal Sharing</span>
+            <a href="<?php echo site_url('tna/internalSharing'); ?>">
+                <i class="fa fa-clone"></i> <span>Internal Sharing Admin</span>
             </a>
         </li>
-        <li class="<?php echo $active_menu=='tna_internal_sharing_ee'? 'active':'';?> ">
-            <a href="<?php echo site_url('tna/internalsharing'); ?>">
+       <li class="<?php echo $active_menu=='tna_internal_sharing_employee'? 'active':'';?> ">
+            <a href="<?php echo site_url('tna/internalSharing-employee'); ?>">
                 <i class="fa fa-clone"></i> <span>Internal Sharing Karyawan</span>
             </a>
         </li>
-        
      
         <!-- <li class="<?php echo $active_menu=='tna_anggran'? 'active':'';?> ">
             <a href="<?php echo site_url('tna/anggaran'); ?>">

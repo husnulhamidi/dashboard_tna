@@ -53,6 +53,18 @@ $(document).ready(function(){
     });
 });
 
+function getCurrentDateTime() {
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = ('0' + (now.getMonth() + 1)).slice(-2); // Menambahkan nol di depan jika bulan < 10
+    var day = ('0' + now.getDate()).slice(-2); // Menambahkan nol di depan jika tanggal < 10
+    var hours = ('0' + now.getHours()).slice(-2); // Menambahkan nol di depan jika jam < 10
+    var minutes = ('0' + now.getMinutes()).slice(-2); // Menambahkan nol di depan jika menit < 10
+    var seconds = ('0' + now.getSeconds()).slice(-2); // Menambahkan nol di depan jika detik < 10
+
+    return day+'/'+month+'/'+ year + ' jam  ' + hours+':'+minutes;
+}
+
 
 
 $("#alert").alert();

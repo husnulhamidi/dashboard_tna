@@ -23,8 +23,6 @@
                                 <button class="btn btn-default btn-sm" data-toggle='modal' data-target='#modalFilter'  style="padding-right: 20px;padding-left: 20px;">
                                     <i class="glyphicon glyphicon-filter"></i> Filter
                                 </button>
-
-                                <a href="<?php echo site_url('tna/InternalSharing/create');?>" class="btn btn-info btn-sm"><i class="glyphicon glyphicon-plus" ></i> Tambah</a>
                             </div>
                         </div>
                     </div>
@@ -39,7 +37,7 @@
                        
                         <div class="row">
                             <div class="col-md-12">
-                                <table  class="table table-striped table-bordered table-hover" id="tbl-internal-sharing-hcpd" cellspacing="0" width="100%">
+                                <table  class="table table-striped table-bordered table-hover" id="tbl-internal-sharing-emp" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
                                             <th width="7%" class="text-center">No.</th>
@@ -56,10 +54,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                  
                                         <tr>
                                             <td class="text-center">1</td>
-                                            <td>Pengembangan Produk Aplikasi Rantai Pasok Sabut Kelapa</td>
+                                            <td>Pelatihan scrum master</td>
                                             <td>Firman</td>
                                             <td>IT & Digital</td>
                                             <td>20 Oktober 2023</td>
@@ -70,25 +67,42 @@
                                             <td>500 Peserta</td>
 
                                             <td class="text-center">
-                                                <div class="input-group-btn">
-                                                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Aksi
-                                                    <span class="fa fa-caret-down"></span></button>
-                                                  <ul class="dropdown-menu">
-                                                    <li><a href="<?php echo $action_url_edit.'/1';?>">Edit</a></li>
-                                                    <li>
-                                                        <a onclick="deleteData(1)">Hapus</a>
-                                                    </li>
-                                                    <li><a href="<?php echo $action_url_detail.'/1';?>">Detail</a></li>
-                                                    <li>
-                                                        <a
-                                                        target="_blank" 
-                                                        href="<?php echo $action_url_generate;?>">Generate Sertifikat
-                                                        </a>
-                                                    </li>
-                                                  </ul>
-                                                </div>
-                                                <!-- <a 
-                                                    href="<?php echo site_url('tna/justifikasi/detail');?>" 
+                                                
+                                                <a 
+                                                    href="<?php echo site_url('tna/internalSharing-employee/detail/1');?>" 
+                                                    data-toggle='tooltip' 
+                                                    data-placement='bottom' 
+                                                    title='Detail' 
+                                                    class='btn btn-info btn-xs'>
+                                                   <i class='fa fa-eye' ></i> 
+                                                </a>&nbsp;
+                                                <button
+                                                	onclick="showModal('batal','Pelatihan scrum master')" 
+                                                    data-toggle="tooltip" 
+                                                    data-placement="bottom" 
+                                                    title="klik untuk batal ikut internal sharing" 
+                                                    class="btn btn-danger btn-xs">
+                                                    <i class="fa fa-fw fa-remove"></i>
+                                                </button>&nbsp;
+                                               
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">2</td>
+                                            <td>Sertifikasi scrum master</td>
+                                            <td>Firman</td>
+                                            <td>IT & Digital</td>
+                                            <td>29 Oktober 2023</td>
+                                            <td>14:00</td>
+                                            <td>Room 1</td>
+                                            <td>Rp. 300.000</td>
+                                            <td>via zoom (http://zoom.com)</td>
+                                            <td>500 Peserta</td>
+
+                                            <td class="text-center">
+                                                
+                                                <a 
+                                                    href="<?php echo site_url('tna/internalSharing-employee/detail/2');?>" 
                                                     data-toggle='tooltip' 
                                                     data-placement='bottom' 
                                                     title='Detail' 
@@ -96,24 +110,17 @@
                                                    <i class='fa fa-eye' ></i> 
                                                 </a>&nbsp;
                                                 <button 
+                                                	onclick="showModal('daftar','Sertifikasi scrum master')" 
                                                     data-toggle="tooltip" 
                                                     data-placement="bottom" 
-                                                    title="edit" 
+                                                    title="klik untuk daftar internal sharing" 
                                                     class="btn btn-success btn-xs">
-                                                    <i class="fa fa-edit"></i>
+                                                    <i class="fa fa-file-text"></i>
                                                 </button>&nbsp;
-                                                <button 
-                                                    data-toggle="tooltip" 
-                                                    data-placement="bottom" 
-                                                    title="Hapus" 
-                                                    class="btn btn-danger btn-xs hapus-bank" value='.$id_bank.'>
-                                                    <i class="fa fa-trash"></i>
-                                                </button>&nbsp; -->
+                                                
+                                               
                                             </td>
                                         </tr>
-                                    
-                                    
-                                   
                                     </tbody>
                                 </table>
                             </div>
@@ -127,56 +134,22 @@
     </div>
 </section>
 <?php 
-    $this->load->view('tna/internal_sharing/modal_filter');
+    $this->load->view('tna/internal_sharing/modal_confrim');
 ?>
 <script type="text/javascript">
-     $('#table-bank').DataTable();
-      $(document).on("click",".hapus-bank",function(){
-        var encrypt = this.value;
-        
-        swal({
-            title: "Yakin Hapus Data ini ?",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Ya, Hapus!",
-            closeOnConfirm: false
-        }, function () {
-
-            $.ajax({
-                type : "POST",
-                url  : "<?php echo base_url();?>bank/delete/",
-                dataType: "JSON",
-                data : "data="+encrypt,
-                success:function(data){
-                    
-                    if(data.rc=='0000'){
-                        setTimeout(function() {
-                            swal({
-                                title: "Notification!",
-                                text: "Success Delete Data",
-                                imageUrl: '<?= base_url("assets/img/success.png");?>'
-                            }, function() {
-                               location.reload();
-                            });
-                        }, 1000);
-                    }else{
-                        setTimeout(function() {
-                            swal({
-                                title: "Notification!",
-                                text: "Delete Failed",
-                                imageUrl: '<?= base_url("assets/img/danger-red2.png");?>'
-                            }, function() {
-                                location.reload();
-                            });
-                        }, 1000);
-                    }
-                    
-                }
-
-            });
-           
-        });
-            
-    });
+	function showModal(ket, pelatihan){
+		var formattedDateTime = getCurrentDateTime();
+		console.log(formattedDateTime);
+		var label = 'Konfirmasi Pendaftaran Internal Sharing'
+		var text = 'Apakah anda yakin mau daftar Internal Sharing'
+		var text2 = pelatihan
+		if(ket == 'batal'){
+			label = 'Konfirmasi Pembatalan Internal Sharing'
+			text = 'Apakah anda yakin mau membatalkan keikutsertaan Internal Sharing'
+		}
+		$('#label').text(label)
+		$('#text').text(text)
+		$('#text2').html('<b> '+ pelatihan + ' pada '+ formattedDateTime +'</b> ')
+		$('#modalConfirm').modal('show')
+	}
 </script>

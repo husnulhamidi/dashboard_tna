@@ -194,28 +194,31 @@ $route['tna/pengawalan/edit']    = 'tna/pengawalan/edit';
 
 //=====================================================================================================================
 // internal sharing
-$route['tna/internalsharing/']    = 'tna/InternalSharing/index';
-$route['tna/internalsharing/create']    = 'tna/InternalSharing/create';
-$route['tna/internalsharing/edit/(:any)']    = 'tna/InternalSharing/edit/$1';
-$route['tna/internalsharing/detail/(:any)']    = 'tna/InternalSharing/detail/$1';
-$route['tna/internalsharing/generate_sertifikat']    = 'tna/InternalSharing/generate_sertifikat';
+$route['tna/internalSharing']    = 'tna/InternalSharing/index';
+$route['tna/internalSharing/create']    = 'tna/InternalSharing/create';
+$route['tna/internalSharing/edit/(:any)']    = 'tna/InternalSharing/edit/$1';
+$route['tna/internalSharing/detail/(:any)']    = 'tna/InternalSharing/detail/$1';
+$route['tna/internalSharing/generate_sertifikat']    = 'tna/InternalSharing/generate_sertifikat';
+
+$route['tna/internalSharing-employee']    = 'tna/InternalSharing/index2';
+$route['tna/internalSharing-employee/detail/(:any)']    = 'tna/InternalSharing/detail2/$1';
 
 
-$route['tna/internalsharing/submit']    = 'tna/InternalSharing/submit';
-$route['tna/internalsharing/delete']    = 'tna/InternalSharing/delete';
-$route['tna/internalsharing/update']    = 'tna/InternalSharing/update';
-$route['tna/internalsharing/detail']    = 'tna/InternalSharing/detail';
-$route['tna/internalsharing/preview']    = 'tna/InternalSharing/preview';
-$route['tna/internalsharing/generate-sertifikat']    = 'tna/InternalSharing/generate_sertifikat';
-$route['tna/internalsharing/materi/list']    = 'tna/InternalSharing/materi_list';
-$route['tna/internalsharing/materi/submit']    = 'tna/InternalSharing/materi_submit';
-$route['tna/internalsharing/materi/delete']    = 'tna/InternalSharing/materi_delete';
-$route['tna/internalsharing/documentation/list']    = 'tna/InternalSharing/dokumentasi';
-$route['tna/internalsharing/documentation/submit']    = 'tna/InternalSharing/dokumentasi_submit';
-$route['tna/internalsharing/documentation/delete']    = 'tna/InternalSharing/dokumentasi_delete';
-$route['tna/internalsharing/peserta/list']    = 'tna/InternalSharing/peserta_list';
-$route['tna/internalsharing/peserta/submit']    = 'tna/InternalSharing/peserta_submit';
-$route['tna/internalsharing/peserta/delete']    = 'tna/InternalSharing/peserta_delete';
+// $route['tna/internalsharing/submit']    = 'tna/InternalSharing/submit';
+// $route['tna/internalsharing/delete']    = 'tna/InternalSharing/delete';
+// $route['tna/internalsharing/update']    = 'tna/InternalSharing/update';
+// $route['tna/internalsharing/detail']    = 'tna/InternalSharing/detail';
+// $route['tna/internalsharing/preview']    = 'tna/InternalSharing/preview';
+// $route['tna/internalsharing/generate-sertifikat']    = 'tna/InternalSharing/generate_sertifikat';
+// $route['tna/internalsharing/materi/list']    = 'tna/InternalSharing/materi_list';
+// $route['tna/internalsharing/materi/submit']    = 'tna/InternalSharing/materi_submit';
+// $route['tna/internalsharing/materi/delete']    = 'tna/InternalSharing/materi_delete';
+// $route['tna/internalsharing/documentation/list']    = 'tna/InternalSharing/dokumentasi';
+// $route['tna/internalsharing/documentation/submit']    = 'tna/InternalSharing/dokumentasi_submit';
+// $route['tna/internalsharing/documentation/delete']    = 'tna/InternalSharing/dokumentasi_delete';
+// $route['tna/internalsharing/peserta/list']    = 'tna/InternalSharing/peserta_list';
+// $route['tna/internalsharing/peserta/submit']    = 'tna/InternalSharing/peserta_submit';
+// $route['tna/internalsharing/peserta/delete']    = 'tna/InternalSharing/peserta_delete';
 
 
 //=====================================================================================================================

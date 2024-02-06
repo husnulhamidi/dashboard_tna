@@ -1,5 +1,6 @@
 jQuery(document).ready(function() {
-   
+   $('#tbl-internal-sharing-emp').DataTable()
+   $('#tbl-internal-sharing-hcpd').DataTable()
 
 });
 
