@@ -216,8 +216,7 @@
 	                   	<div class="row">
 	                   		<div class="pull-right" style="padding-right: 2%; padding-bottom: 10px">
                    				<button
-                   					data-toggle='modal' 
-                   					data-target='#modalTambahPeserta' 
+                   					id="btnAddPeserta"
                    					class="btn btn-sm btn-primary">
                    					<i class="fa fa-plus"></i> 
                    					&nbsp;Tambah Peserta 
@@ -229,20 +228,20 @@
                    				</button>
                    			</div>
                    			<div class="col-md-12">
-                   				<table class="table">
+                   				<table class="table" id="tbl-peserta">
                    					<thead>
                    						<tr>
                    							<th> No </th>
                    							<th> ID Internal Sharing </th>
                    							<th> Nama Peserta </th>
                    							<th> Jabatan </th>
-                   							<th> Subinit/Unit </th>
+                   							<th> Subunit/Unit </th>
                    							<th> Status Karyawan </th>
                    							<th> Aksi </th>
                    						</tr>
                    					</thead>
                    					<tbody>
-                   						<tr>
+                   						<!-- <tr>
                    							<td> 1 </td>
                    							<td> 12345 </td>
                    							<td> Citra Dewi </td>
@@ -254,7 +253,7 @@
 													<i class="fa fa-trash"></i>
 												</button>
                    							</td>
-                   						</tr>
+                   						</tr> -->
                    					</tbody>
                    				</table>
                    			</div>

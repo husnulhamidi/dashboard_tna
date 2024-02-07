@@ -3,6 +3,9 @@ jQuery(document).ready(function() {
 	getMateriSharing(id)
 	getDokumentasiSharing(id)
 	getCountDocument(id);
+
+    // $('#table-materi').DataTable();
+    getPeserta(id);
 	$('#btnAddMateri').click(function(){
 		$('#label').text('Form Tambah Materi')
 		$('#modalTambahMateri').modal('show')
@@ -20,7 +23,58 @@ jQuery(document).ready(function() {
 		$('#labelUpload').text('Form Upload Dokumentasi')
 		$('#modalUplaodDokumentasi').modal('show')
 	})
+
+    $('#btnAddPeserta').click(function(){
+        $('#labelPeserta').text('Form Tambah Peserta')
+        $('#modalTambahPeserta').modal('show')
+    })
+
+    $('.submit-tambah-peserta').click(function(){
+        submitTambahPeserta()
+    })
 })
+
+function getPeserta(id){
+    $('#tbl-peserta').DataTable({
+        processing: true, 
+        serverSide: true, 
+        order: [], 
+        ajax: {
+            url     : base_url+"tna/internalSharing/getPeserta/"+id,
+            type    : "get",
+            datatype: "json",
+            data    : function(d){
+                console.log(d)
+            }
+                      
+        },
+        columns: [
+            {
+                "data": "id",
+                "width": "50px",
+                render: function (data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                }
+            },
+            { "data": "id" },
+            { "data": "nama" },
+            { "data": "jabatan" },
+            { "data": "subunit" },
+            { "data": "status_fte" },
+            
+            { 
+                "data": "id",
+                render:function(data, type, row, meta){
+                    let html = `
+                                <button class="btn-danger btn-xs">
+                                    <i class="fa fa-trash"></i>
+                                </button>`
+                    return html
+                }
+            },
+        ]
+    })
+}
 
 function getMateriSharing(id){
 	$('#table-materi').DataTable({
@@ -186,6 +240,67 @@ function submitUploadDokumentasi(){
                 url: base_url+"tna/internalSharing/createOrUpdateDokumentasi",
                 type: 'POST',
                 data: new FormData($("#form-upload-dokumentasi")[0]),
+                contentType: false,
+                cache: false,
+                processData:false,
+                success: function(response) {
+                    var newResponse = JSON.parse(response);
+                   console.log(newResponse)
+                    if(newResponse.success){
+                        setTimeout(function() {
+                            swal({
+                                title: "Notifikasi!",
+                                text: "Data berhasil disimpan",
+                                imageUrl: img_icon_success
+                            }, function(d) {
+                                location.reload();
+                            });
+                        }, 1000);
+                    }else{
+                        setTimeout(function() {
+                            swal({
+                                title: "Notifikasi!",
+                                text: newResponse.msg,
+                                imageUrl: img_icon_error
+                            }, function() {
+                                location.reload();
+                            });
+                        }, 1000);
+                    }                   
+                }            
+            });
+        }
+    });
+}
+
+function submitTambahPeserta(){
+    $("#form-add-peserta").validate({
+        rules: {
+            direktorat: "required",
+            peserta: "required",
+        },
+        messages: {
+            dokumentasi:{
+                direktorat:"<i class='fa fa-times'></i> Subunit harus diisi"
+            },
+            peserta:{
+                direktorat:"<i class='fa fa-times'></i> Peserta harus diisi"
+            }, 
+                        
+        },
+        highlight: function (element) {
+            $(element).parent().parent().addClass("has-error")
+            $(element).parent().addClass("has-error")
+        },
+        unhighlight: function (element) {
+            $(element).parent().removeClass("has-error")
+            $(element).parent().parent().removeClass("has-error")
+        },
+        submitHandler: function(form) {
+            $.ajax({
+                url: base_url+"tna/internalSharing/createOrUpdatePeserta",
+                type: 'POST',
+                data: new FormData($("#form-add-peserta")[0]),
                 contentType: false,
                 cache: false,
                 processData:false,

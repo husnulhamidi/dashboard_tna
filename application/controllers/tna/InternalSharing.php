@@ -376,7 +376,41 @@ class InternalSharing extends CI_Controller {
 		}
 		echo json_encode($return);	
     }
+
+    public function getPeserta($id){
+    	$get = $this->input->get();
+		echo $this->InternalSharing->getDataPeserta($get,$id);
+    }
    
+   	public function createOrUpdatePeserta(){
+   		$data = array(
+    		'm_tna_internal_sharing_id' => $this->input->post('trainingId'),
+    		'm_karyawan_id' => $this->input->post('peserta')
+    	);
+    	if($this->input->post('id')){
+			$data['updated_date'] = date('Y-m-d');
+			$action = $this->InternalSharing->updateDataPeserta($data, $this->input->post('id'));
+		}else{
+			$data['created_date'] = date('Y-m-d');
+			$action = $this->InternalSharing->insertDataPeserta($data);
+		}
+		if($action){
+			$return = array(
+				'success'		=> true,
+				'status_code'	=> 201,
+				'msg'			=> "Data berhasil di simpan.",
+				'data'			=> $action
+			);
+		}else{
+			$return = array(
+				'success'		=> false,
+				'status_code'	=> 500,
+				'msg'			=> 'Data gagal di simpan.',
+				'data'			=> array()
+			);
+		}
+		echo json_encode($return);	
+   	}
 	private function getDetailData($id){
 		return $this->InternalSharing->getDataDetail($id);
 	}
