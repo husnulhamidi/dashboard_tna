@@ -13,7 +13,7 @@
                     <div class="box-header with-border">
                         <h3 class="box-title"><?php echo $title;?></h3>
                     </div>
-                    <form method="post" action="javascript:;" class="form-horizontal form-InternalSharing" enctype="multipart/form-data">
+                    <form method="post" action="javascript:;" class="form-horizontal form-InternalSharing" id="form-InternalSharing" enctype="multipart/form-data">
                         <input type="hidden" name="id" value=<?php echo @$detail->id;?>>
                         <div class="box-body">
                             <div class="row">
@@ -22,10 +22,17 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Judul Materi <span class="text-red">*</span></label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" placeholder="Judul Pemateri" name="judul" id="judul">
+                                            <input type="text" class="form-control" placeholder="Judul Pemateri" name="judul" id="judul" value="<?php echo @$detail->judul_materi;?>" >
                                         </div>
                                     </div>
-                                    
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Subdit / Unit <span class="text-red">*</span></label>
+                                        <div class="col-sm-6">
+                                           <select class="select2 form-control" id="direktorat" name="direktorat" onchange="getDataPemateri()">
+                                               <option value=""> Pilih Subdit / Unit</option>
+                                           </select>
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Pemateri <span class="text-red">*</span></label>
                                         <div class="col-sm-6">
@@ -35,53 +42,46 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">Direktorat <span class="text-red">*</span></label>
-                                        <div class="col-sm-6">
-                                           <select class="select2 form-control" id="direktorat" name="direktorat">
-                                               <option value=""> Pilih Direktorat</option>
-                                           </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
                                         <label class="col-sm-2 control-label">Tanggal <span class="text-red">*</span></label>
                                         <div class="col-sm-3">
                                             <div class="input-group">
-                                                <input type="text" class="form-control pull-right" id="tgl" name="tgl">
+                                                <input type="text" class="form-control pull-right" id="tgl" name="tgl"  >
                                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                             </div>
                                         </div>
 
                                         <label class="col-sm-1 control-label">Jam <span class="text-red">*</span></label>
                                         <div class="col-sm-2">
-                                            <div class="input-group">
+                                            <!-- <div class="input-group">
                                                 
-                                                <input type="text" class="form-control pull-right timepicker" id="time" name="time">
+                                                <input type="time" class="form-control pull-right timepicker" id="time" name="time">
                                                 <div class="input-group-addon"><i class="fa fa-clock-o"></i></div>
-                                            </div>
+                                            </div> -->
+                                            <input type="time" class="form-control pull-right timepicker" value="<?php echo @$detail->jam;?>" id="time" name="time" required>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Tempat <span class="text-red">*</span></label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" placeholder="Temapt" name="tempat" id="tempat">
+                                            <input type="text" class="form-control" placeholder="Temapt" name="tempat" id="tempat" value="<?php echo @$detail->tempat;?>" >
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Biaya <span class="text-red">*</span></label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" placeholder="Pemateri" name="biaya" id="biaya">
+                                            <input type="text" class="form-control" placeholder="Pemateri" value="<?php echo @$detail->biaya;?>" name="biaya" id="biaya">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">Kouta <span class="text-red">*</span></label>
+                                        <label class="col-sm-2 control-label">Kuota <span class="text-red">*</span></label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" placeholder="Kouta" name="kouta" id="kouta">
+                                            <input type="text" class="form-control" placeholder="kuota" value="<?php echo @$detail->kuota;?>" name="kuota" id="kuota">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">Link Zoom <span class="text-red">*</span></label>
+                                        <label class="col-sm-2 control-label">Link Zoom </label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" placeholder="Link Zoom" name="linkZoom" id="linkZoom">
+                                            <input type="text" class="form-control" placeholder="Link Zoom" name="linkZoom" id="linkZoom" value="<?php echo @$detail->link_zoom;?>">
                                         </div>
                                     </div>
                                     
@@ -94,7 +94,7 @@
                             <div class="col-sm-8">
                                 <div class="pull-right"> 
                                     <a href="<?php echo base_url('tna/InternalSharing');?>" class="btn btn-default">Kembali</a>
-                                    <button type="submit" class="btn btn-info submit-justifikasi">Simpan</button>
+                                    <button type="submit" class="btn btn-info submit-internal-sharing">Simpan</button>
 
                                 </div>
                             </div>
@@ -108,6 +108,9 @@
     </div>
 </section>
 <script type="text/javascript">
+    // var base_url = '<?php echo base_url('tna/internalSharing');?>';
+</script>
+<script type="text/javascript">
     $(document).ready(function () {
         $('.select2').select2({
             placeholder: "Pilih Opsi"
@@ -117,8 +120,64 @@
           autoclose: true
         });
 
-        $(".timepicker").timepicker({
-          showInputs: false
-        });
+        const tgl = '<?php echo @$detail->tanggal ;?>';
+        if(tgl){
+            $('#tgl').val(formatDate2(tgl))
+        }
+        
+        var unit = '<?php echo @$detail->m_organisasi_id ;?>'
+        getDirektorat(unit)
+        if(unit){
+            var karyawan = '<?php echo @$detail->m_karyawan_id ;?>'
+            getDataPemateri(unit,karyawan)
+        }
+        
+        
     })
+
+    function getDirektorat(unit){
+        console.log(unit)
+        $('#direktorat').empty()
+        $('#direktorat').append('<option></option')
+        $.ajax({
+            url:base_url+'tna/internalSharing/getDirektorat',
+            method: 'get',
+            dataType: 'json',
+            success: function(response){
+                // console.log(response)
+                for (var i = 0; i < response.length; i++) {
+                    var selected = "";
+                    if(unit == response[i]['id']){
+                        selected = "selected";
+                    }
+                    $('#direktorat').append('<option '+selected+' value='+response[i]['id']+'>'+response[i]['nama']+'</option>')
+                }
+            }
+        });
+    }
+
+    function getDataPemateri(idDir = false, karyawan = false){
+        var dirId = $('#direktorat').val()
+        if(dirId == ''){
+            dirId = idDir
+        }
+       
+        $('#pemateri').empty()
+        $('#pemateri').append('<option></option')
+        $.ajax({
+            url:base_url+'tna/internalSharing/getPemateriByDirKom/'+dirId,
+            method: 'get',
+            dataType: 'json',
+            success: function(response){
+                console.log(response)
+                for (var i = 0; i < response.length; i++) {
+                    var selected = "";
+                    if(karyawan == response[i]['id']){
+                        selected = "selected";
+                    }
+                    $('#pemateri').append('<option '+selected+' value='+response[i]['id']+'>'+response[i]['nama']+'</option>')
+                }
+            }
+        });
+    }
 </script>

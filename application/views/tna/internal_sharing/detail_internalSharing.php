@@ -46,6 +46,7 @@
     <div class="row">
         <div class="col-md-12">
             <?php $this->load->view('layouts/alert'); ?>
+            <input type="hidden" id="id" value="<?php echo $detail->id ;?>">
             <div class="nav-tabs-custom-aqua">
                 <div class="box box-info">
                     <div class="box-header with-border">
@@ -55,38 +56,42 @@
                    		<div class="row">
 	                   		<div class="col-md-12">
 	                   			<label class="col-md-2"> ID Internal Sharing </label>
-	                   			<div class="col-md-10"><b> 12345 </b> </div>
+	                   			<div class="col-md-10"><b> <?php echo $detail->id ;?> </b> </div>
 	                   		</div>
 	                   		<div class="col-md-12 mt-10" style="padding-top: 10px">
 	                   			<label class="col-md-2"> Nama TNA </label>
-	                   			<div class="col-md-10"><b> Sertifikat Scrum Master </b> </div>
+	                   			<div class="col-md-10"><b> <?php echo $detail->judul_materi ;?> </b> </div>
 	                   		</div>
 	                   		<div class="col-md-12 mt-10" style="padding-top: 10px">
 	                   			<label class="col-md-2">Pemateri </label>
-	                   			<div class="col-md-10"><b> Firman </b> </div>
+	                   			<div class="col-md-10"><b> <?php echo $detail->narasumber;?> </b> </div>
 	                   		</div>
 	                   		<div class="col-md-12 mt-10" style="padding-top: 10px">
 	                   			<label class="col-md-2"> Tanggal </label>
-	                   			<div class="col-md-10"><b> 20 Okt 2023 14:00 </b> </div>
+	                   			<div class="col-md-10"><b> <?php echo date("d F Y", strtotime($detail->tanggal)) . ' ' . $detail->jam ;?> </b> </div>
 	                   		</div>
 	                   		<div class="col-md-12 mt-10" style="padding-top: 10px">
 	                   			<label class="col-md-2"> Tempat </label>
-	                   			<div class="col-md-10"><b> Room  123 </b> </div>
+	                   			<div class="col-md-10"><b> <?php echo $detail->tempat ;?> </b> </div>
+	                   		</div>
+	                   		<div class="col-md-12 mt-10" style="padding-top: 10px">
+	                   			<label class="col-md-2"> Kuota </label>
+	                   			<div class="col-md-10"><b> <?php echo $detail->kuota ;?> Peserta </b> </div>
 	                   		</div>
 	                   		<div class="col-md-12 mt-10" style="padding-top: 10px">
 	                   			<label class="col-md-2"> Link Zoom </label>
-	                   			<div class="col-md-10"><b> https://zoom.com </b> </div>
+	                   			<div class="col-md-10"><b> <?php echo $detail->link_zoom ;?> </b> </div>
 	                   		</div>
 	                   	</div>
-
 	                   	<div class="row">
 	                   		<div class="col-md-4" style="padding-top: 20px">
 	                   			<div class="pull-right" style="padding-right: 10%">
-	                   				<button 
+	                   				<a 
+	                   					href="<?php echo $action_url_edit.'/'.$detail->id ?>" 
 	                   					class="btn btn-sm btn-primary">
 	                   					<i class="fa fa-edit"></i> 
 	                   					&nbsp;Edit 
-	                   				</button>
+	                   				</a>
 	                   				<button 
 	                   					class="btn btn-sm btn-primary"> 
 	                   					<i class="fa fa-plus"></i> 
@@ -103,20 +108,20 @@
 		                   			<fieldset id="fieldset1">
 									  	<legend>Materi Internal Sharing</legend>
 									  	<div class="pull-right" style="margin-top: -30px;padding-bottom: 10px">
-									  		<button class="btn btn-xs btn-success">
+									  		<button id="btnAddMateri" class="btn btn-xs btn-success">
 									  			<i class="fa fa-plus"></i> Tambah
 									  		</button>
 									  	</div>
 										<table class="table" id="table-materi">
 											<thead>
 												<tr>
-													<th> Judul materi </th>
-													<th> Dokumen </th>
-													<th> Aksi </th>
+													<th class="text-center"> Judul materi </th>
+													<th class="text-center"> Dokumen </th>
+													<th class="text-center"> Aksi </th>
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
+												<!-- <tr>
 													<td> Pengenalan scrum master </td>
 													<td>
 														file_pengenalan_scrum_master.pdf
@@ -129,7 +134,7 @@
 															<i class="fa fa-trash"></i>
 														</button>
 													</td>
-												</tr>
+												</tr> -->
 											</tbody>
 										</table>
 									</fieldset>
@@ -138,7 +143,7 @@
 		                   			<fieldset id="fieldset1">
 									  	<legend>Dokumentasi Internal Sharing</legend>
 									  	<div class="pull-right" style="margin-top: -30px;padding-bottom: 10px; margin-right: 25px">
-									  		<button class="btn btn-xs btn-success">
+									  		<button id="uploadDocument" class="btn btn-xs btn-success">
 									  			<i class="fa fa-upload"></i> Upload Dokumentasi
 									  		</button>
 									  	</div>
@@ -246,8 +251,12 @@
 </section>
 <?php 
     $this->load->view('tna/internal_sharing/modal_form_tambah_peserta');
+    $this->load->view('tna/internal_sharing/form_tambah_materi');
+    $this->load->view('tna/internal_sharing/form_uplaod_dokumentasi');
 ?>
 <script type="text/javascript">
+	var url_file ='<?php echo base_url('files/upload/materi');?>';
+	var url_edit ='<?php echo base_url('tna/InternalSharing/materi/edit');?>';
     $(document).ready(function () {
         $('.select2').select2({
             placeholder: "Pilih Opsi"

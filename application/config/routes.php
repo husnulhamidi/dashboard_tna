@@ -203,6 +203,18 @@ $route['tna/internalSharing/generate_sertifikat']    = 'tna/InternalSharing/gene
 $route['tna/internalSharing-employee']    = 'tna/InternalSharing/index2';
 $route['tna/internalSharing-employee/detail/(:any)']    = 'tna/InternalSharing/detail2/$1';
 
+$route['tna/internalSharing/getDirektorat']    = 'tna/InternalSharing/getDataDirektorat';
+$route['tna/internalSharing/getPemateriByDirKom/(:any)']    = 'tna/InternalSharing/getDataPemateri/$1';
+$route['tna/internalSharing/getNarasumber']    = 'tna/InternalSharing/getNarasumber';
+
+$route['tna/internalSharing/createOrUpdate']    = 'tna/InternalSharing/createOrUpdate';
+$route['tna/internalSharing/getDataAdmin']    = 'tna/InternalSharing/getDataAdmin';
+$route['tna/internalSharing/getDataMateri/(:any)']    = 'tna/InternalSharing/getDataMateri/$1';
+$route['tna/internalSharing/createOrUpdateMateri']    = 'tna/InternalSharing/createOrUpdateMateri';
+
+$route['tna/internalSharing/getCountDocument']    = 'tna/InternalSharing/getCountDocument';
+$route['tna/internalSharing/getDataDokumentasi/(:any)']    = 'tna/InternalSharing/getDataDokumentasi/$1';
+
 
 // $route['tna/internalsharing/submit']    = 'tna/InternalSharing/submit';
 // $route['tna/internalsharing/delete']    = 'tna/InternalSharing/delete';

@@ -1,4 +1,9 @@
 <!-- Modal -->
+<style type="text/css">
+    .datepicker.dropdown-menu {
+        max-width: 500px;
+    }
+</style>
 <div class="modal fade" id="modalFilter" role="dialog" aria-hidden="true" enctype="multipart/form-data">
     <div class="modal-dialog modal-lg" >
         <div class="modal-content">
@@ -53,11 +58,11 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Biaya</label>
                                     <div class="col-sm-4">
-                                         <input type="text" class="form-control" name="filter_biaya_min" id="filter_biaya_min">
+                                         <input type="number" class="form-control" name="filter_biaya_min" id="filter_biaya_min">
                                     </div>
                                     <div class="col-sm-1">s/d</div>
                                     <div class="col-sm-5">
-                                        <input type="text" class="form-control" name="filter_biaya_max" id="filter_biaya_max">
+                                        <input type="number" class="form-control" name="filter_biaya_max" id="filter_biaya_max">
                                        
                                     </div>
                                 </div>
@@ -90,6 +95,14 @@
     $('.select2').select2({
         placeholder: "Silahkan pilih narasumber"
     });
+
+    $('#filter_tgl_mulai').datepicker({
+        autoclose: true
+    })
+
+     $('#filter_tgl_selesai').datepicker({
+        autoclose: true
+    })
 
 </script>
 

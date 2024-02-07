@@ -56,64 +56,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                  
-                                        <tr>
-                                            <td class="text-center">1</td>
-                                            <td>Pengembangan Produk Aplikasi Rantai Pasok Sabut Kelapa</td>
-                                            <td>Firman</td>
-                                            <td>IT & Digital</td>
-                                            <td>20 Oktober 2023</td>
-                                            <td>14:00</td>
-                                            <td>Room 1</td>
-                                            <td>Rp. 300.000</td>
-                                            <td>via zoom (http://zoom.com)</td>
-                                            <td>500 Peserta</td>
-
-                                            <td class="text-center">
-                                                <div class="input-group-btn">
-                                                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Aksi
-                                                    <span class="fa fa-caret-down"></span></button>
-                                                  <ul class="dropdown-menu">
-                                                    <li><a href="<?php echo $action_url_edit.'/1';?>">Edit</a></li>
-                                                    <li>
-                                                        <a onclick="deleteData(1)">Hapus</a>
-                                                    </li>
-                                                    <li><a href="<?php echo $action_url_detail.'/1';?>">Detail</a></li>
-                                                    <li>
-                                                        <a
-                                                        target="_blank" 
-                                                        href="<?php echo $action_url_generate;?>">Generate Sertifikat
-                                                        </a>
-                                                    </li>
-                                                  </ul>
-                                                </div>
-                                                <!-- <a 
-                                                    href="<?php echo site_url('tna/justifikasi/detail');?>" 
-                                                    data-toggle='tooltip' 
-                                                    data-placement='bottom' 
-                                                    title='Detail' 
-                                                    class='btn btn-info btn-xs'>
-                                                   <i class='fa fa-eye' ></i> 
-                                                </a>&nbsp;
-                                                <button 
-                                                    data-toggle="tooltip" 
-                                                    data-placement="bottom" 
-                                                    title="edit" 
-                                                    class="btn btn-success btn-xs">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>&nbsp;
-                                                <button 
-                                                    data-toggle="tooltip" 
-                                                    data-placement="bottom" 
-                                                    title="Hapus" 
-                                                    class="btn btn-danger btn-xs hapus-bank" value='.$id_bank.'>
-                                                    <i class="fa fa-trash"></i>
-                                                </button>&nbsp; -->
-                                            </td>
-                                        </tr>
-                                    
-                                    
-                                   
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -130,53 +73,7 @@
     $this->load->view('tna/internal_sharing/modal_filter');
 ?>
 <script type="text/javascript">
-     $('#table-bank').DataTable();
-      $(document).on("click",".hapus-bank",function(){
-        var encrypt = this.value;
-        
-        swal({
-            title: "Yakin Hapus Data ini ?",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Ya, Hapus!",
-            closeOnConfirm: false
-        }, function () {
-
-            $.ajax({
-                type : "POST",
-                url  : "<?php echo base_url();?>bank/delete/",
-                dataType: "JSON",
-                data : "data="+encrypt,
-                success:function(data){
-                    
-                    if(data.rc=='0000'){
-                        setTimeout(function() {
-                            swal({
-                                title: "Notification!",
-                                text: "Success Delete Data",
-                                imageUrl: '<?= base_url("assets/img/success.png");?>'
-                            }, function() {
-                               location.reload();
-                            });
-                        }, 1000);
-                    }else{
-                        setTimeout(function() {
-                            swal({
-                                title: "Notification!",
-                                text: "Delete Failed",
-                                imageUrl: '<?= base_url("assets/img/danger-red2.png");?>'
-                            }, function() {
-                                location.reload();
-                            });
-                        }, 1000);
-                    }
-                    
-                }
-
-            });
-           
-        });
-            
-    });
+    var action_url_edit ='<?php echo base_url('tna/InternalSharing/edit');?>';
+    var action_url_detail = '<?php echo base_url('tna/InternalSharing/detail');?>';
+    var action_url_generate = '<?php echo base_url('tna/InternalSharing/generate_sertifikat');?>';
 </script>
