@@ -17,7 +17,7 @@
     }
 
     .card{
-    	border: 1px solid #DDDDDD;
+    	/*border: 1px solid #DDDDDD;*/
         display: inline-block;
         padding: 1em 2em;
         width: 100%;
@@ -40,6 +40,21 @@
         background: #DCDCDC;
         margin-bottom: 50px;
     }
+
+    #containerImage {
+	    position: relative; /* Pastikan container memiliki posisi relative */
+	    width: 180px; /* Ganti lebar container sesuai kebutuhan */
+	    height: 150px; /* Ganti tinggi container sesuai kebutuhan */
+	}
+
+	#gambar {
+	    position: absolute;
+	    top: 20%;
+	    left: 30%;
+	    transform: translate(-50%, -50%);
+	    max-width: 100%; /* Untuk memastikan gambar tidak melebihi ukuran container */
+    	max-height: 100%; /* Untuk memastikan gambar tidak melebihi ukuran container */
+	}
 </style>
 
 <section class="content">
@@ -143,12 +158,13 @@
 		                   			<fieldset id="fieldset1">
 									  	<legend>Dokumentasi Internal Sharing</legend>
 									  	<div class="pull-right" style="margin-top: -30px;padding-bottom: 10px; margin-right: 25px">
-									  		<button id="uploadDocument" class="btn btn-xs btn-success">
+									  		<button id="uploadDokumentasi" class="btn btn-xs btn-success">
 									  			<i class="fa fa-upload"></i> Upload Dokumentasi
 									  		</button>
 									  	</div>
 									  	<div class="col-md-12">
-									  		<div class="col-md-4">
+									  		<div id="dataDokumentasi"></div>
+									  		<!-- <div class="col-md-4">
 									  			<div class="card">
 												    <div class="card-body text-center">			Dokumentasi 1
 												    </div>
@@ -189,7 +205,7 @@
 														<i class="fa fa-trash"></i>
 													</button>
 												</div>
-									  		</div>
+									  		</div> -->
 									  	</div>
 									</fieldset>
 		                   		</div>
@@ -252,10 +268,11 @@
 <?php 
     $this->load->view('tna/internal_sharing/modal_form_tambah_peserta');
     $this->load->view('tna/internal_sharing/form_tambah_materi');
-    $this->load->view('tna/internal_sharing/form_uplaod_dokumentasi');
+    $this->load->view('tna/internal_sharing/form_upload_dokumentasi');
 ?>
 <script type="text/javascript">
 	var url_file ='<?php echo base_url('files/upload/materi');?>';
+	var url_dokumentasi ='<?php echo base_url('files/upload/dokumentasi');?>';
 	var url_edit ='<?php echo base_url('tna/InternalSharing/materi/edit');?>';
     $(document).ready(function () {
         $('.select2').select2({

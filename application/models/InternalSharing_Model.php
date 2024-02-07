@@ -230,17 +230,30 @@ class InternalSharing_Model extends CI_Model {
 		return $update;	
     }
 
-    public function getCountDocument(){
+    public function getCountDocument($id){
     	$this->db->from('m_tna_internal_sharing_dokumentasi');
+        $query = $this->db->where('m_tna_internal_sharing_id', $id);
 		$query = $this->db->get();
 		$count = $query->num_rows();
 
 		return $count;
     }
 
-    // public function getDataDokumentasi($id){
-    // 	return $this->db->from('m_tna_internal_sharing_dokumentasi')->where('m_tna_internal_sharing_id',$id)->select('file_dokumentasi')->get()->result();
-    // }
+    public function getDataDokumentasi($id){
+    	return $this->db->from('m_tna_internal_sharing_dokumentasi')->where('m_tna_internal_sharing_id',$id)->select('id,file_dokumentasi')->get()->result();
+    }
+
+    public function insertDataDokumentasi($data){
+        $this->db->insert('m_tna_internal_sharing_dokumentasi', $data);
+        return $this->db->insert_id();
+    }
+
+    public function updateDataDokumentasi($data, $id){
+        $this->db->where('id',$id);
+        $update = $this->db->update('m_tna_internal_sharing_dokumentasi',$data);
+
+        return $update; 
+    }
 
 }
 

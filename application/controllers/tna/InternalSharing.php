@@ -321,17 +321,64 @@ class InternalSharing extends CI_Controller {
 		echo json_encode($return);	
     }
 
-    public function getCountDocument(){
-		echo $this->InternalSharing->getCountDocument();
+    public function getCountDocument($id){
+		echo $this->InternalSharing->getCountDocument($id);
     }
 
-    // public function getDataDokumentasi($id){
-    // 	echo $this->InternalSharing->getDataDokumentasi();
-    // }
+    public function getDataDokumentasi($id){
+    	echo json_encode($this->InternalSharing->getDataDokumentasi($id));
+    }
+
+    public function createOrUpdateDokumentasi(){
+    	$data = array(
+    		'm_tna_internal_sharing_id' => $this->input->post('trainingId')
+    	);
+    	$fileDoc = '';
+    	if($this->input->post('input-file')){
+    		ini_set('MAX_EXECUTION_TIME', 0);
+			$config['upload_path'] = './files/upload/dokumentasi';
+			$config['allowed_types'] = 'png|jpg|jpeg';
+			$config['file_name'] = $this->input->post('input-file').'-'.date('ymdHis');
+			$this->upload->initialize($config);
+			if ($this->upload->do_upload($this->input->post('input-file'))){
+				$upload_data  = $this->upload->data();
+				$file_extension = $upload_data['file_ext'];
+				$fileDoc = $this->input->post('input-file').'-'.date('ymdHis').$file_extension;
+			}
+    	}
+
+    	if($this->input->post('id')){
+			$data['updated_date'] = date('Y-m-d');
+			if($fileDoc){
+				$data['file_dokumentasi'] = $fileDoc;
+			}
+			$action = $this->InternalSharing->updateDataDokumentasi($data, $this->input->post('id'));
+		}else{
+			$data['created_date'] = date('Y-m-d');
+			$data['file_dokumentasi'] = $fileDoc;
+			$action = $this->InternalSharing->insertDataDokumentasi($data);
+		}
+
+		if($action){
+			$return = array(
+				'success'		=> true,
+				'status_code'	=> 201,
+				'msg'			=> "Data berhasil di simpan.",
+				'data'			=> $action
+			);
+		}else{
+			$return = array(
+				'success'		=> false,
+				'status_code'	=> 500,
+				'msg'			=> 'Data gagal di simpan.',
+				'data'			=> array()
+			);
+		}
+		echo json_encode($return);	
+    }
    
 	private function getDetailData($id){
 		return $this->InternalSharing->getDataDetail($id);
-		// echo json_encode($data);
 	}
 
 	

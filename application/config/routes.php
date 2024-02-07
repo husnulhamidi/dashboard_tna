@@ -212,8 +212,9 @@ $route['tna/internalSharing/getDataAdmin']    = 'tna/InternalSharing/getDataAdmi
 $route['tna/internalSharing/getDataMateri/(:any)']    = 'tna/InternalSharing/getDataMateri/$1';
 $route['tna/internalSharing/createOrUpdateMateri']    = 'tna/InternalSharing/createOrUpdateMateri';
 
-$route['tna/internalSharing/getCountDocument']    = 'tna/InternalSharing/getCountDocument';
+$route['tna/internalSharing/getCountDocument/(:any)']    = 'tna/InternalSharing/getCountDocument/$1';
 $route['tna/internalSharing/getDataDokumentasi/(:any)']    = 'tna/InternalSharing/getDataDokumentasi/$1';
+$route['tna/internalSharing/createOrUpdateDokumentasi']    = 'tna/InternalSharing/createOrUpdateDokumentasi';
 
 
 // $route['tna/internalsharing/submit']    = 'tna/InternalSharing/submit';
