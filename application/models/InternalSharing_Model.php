@@ -10,7 +10,7 @@ class InternalSharing_Model extends CI_Model {
     	$this->id = 'id';
     }
 
-    public function getDataInternalSharing($post){
+    public function getDataInternalSharing($post, $karyawanId){
     	$column_order = array('judul_materi,narasumber, organisasi,jam,tanggal,tempat,biaya,kuota');
 		$column_search = array('judul_materi,narasumber, organisasi,jam,tanggal,tempat,biaya,kuota');
 
@@ -31,21 +31,13 @@ class InternalSharing_Model extends CI_Model {
 		$recordsTotal = 0;
         $this->db->start_cache();
 
-        // $this->db->select('mti.id,mti.judul_materi,mti.tanggal,mti.jam,
-        // 				  mti.tempat,mti.biaya,mti.kuota, mti.link_zoom,mti.r_tna_training_id,
-        // 				   mk.nama as narasumber,
-        // 				   mo.nama as organisasi
-        // 	');
-        // $this->db->from('m_tna_internal_sharing as mti');
-        // $this->db->join('m_karyawan as mk','mti.m_karyawan_id = mk.id');
-        // $this->db->join('m_organisasi as mo','mti.m_organisasi_id = mo.id');
 
         $this->db->select('mti.id, mti.judul_materi, mti.tanggal, mti.jam,
                    mti.tempat, mti.biaya, mti.kuota, mti.link_zoom, mti.r_tna_training_id,
                    mk.nama AS narasumber,
                    mo.nama AS organisasi,
                    COUNT(isp.m_tna_internal_sharing_id) AS jumlah_peserta,
-                   SUM(CASE WHEN isp.m_karyawan_id = 628 THEN 1 ELSE 0 END) AS jumlah_ikut');
+                   SUM(CASE WHEN isp.m_karyawan_id = '.$karyawanId.' THEN 1 ELSE 0 END) AS jumlah_ikut');
         $this->db->from('m_tna_internal_sharing as mti');
         $this->db->join('m_karyawan as mk', 'mti.m_karyawan_id = mk.id');
         $this->db->join('m_organisasi as mo', 'mti.m_organisasi_id = mo.id');
@@ -154,24 +146,13 @@ class InternalSharing_Model extends CI_Model {
         return $data;
     }
 
-     public function getDataDetailEmployee($id){
-        // $data = $this->db->select('mti.id,mti.judul_materi,mti.tanggal,mti.jam,
-        //                   mti.tempat,mti.biaya,mti.kuota, mti.link_zoom,mti.r_tna_training_id,mti.m_organisasi_id,mti.m_karyawan_id,
-        //                    mk.nama as narasumber,
-        //                    mo.nama as organisasi
-        //     ')
-        // ->from('m_tna_internal_sharing as mti')
-        // ->join('m_karyawan as mk','mti.m_karyawan_id = mk.id')
-        // ->join('m_organisasi as mo','mti.m_organisasi_id = mo.id')
-        // ->where('mti.id', $id)
-        // ->get()
-        // ->row();
+     public function getDataDetailEmployee($id, $karyawanId){
        $data = $this->db->select('mti.id, mti.judul_materi, mti.tanggal, mti.jam,
                    mti.tempat, mti.biaya, mti.kuota, mti.link_zoom, mti.r_tna_training_id,
                    mk.nama AS narasumber,
                    mo.nama AS organisasi,
                    COUNT(isp.m_tna_internal_sharing_id) AS jumlah_peserta,
-                   SUM(CASE WHEN isp.m_karyawan_id = 628 THEN 1 ELSE 0 END) AS jumlah_ikut')
+                   SUM(CASE WHEN isp.m_karyawan_id = '.$karyawanId.' THEN 1 ELSE 0 END) AS jumlah_ikut')
                 ->from('m_tna_internal_sharing as mti')
                 ->join('m_karyawan as mk', 'mti.m_karyawan_id = mk.id')
                 ->join('m_organisasi as mo', 'mti.m_organisasi_id = mo.id')

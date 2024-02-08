@@ -41,13 +41,17 @@ class InternalSharing extends CI_Controller {
 			'js/custom.js?random='.date("ymdHis"),
 		);
 
-
+		// echo $this->session->userdata('username');
+		
 		$this->template->load('template','tna/internal_sharing/index',$data);
 	}
 
 	public function getDataAdmin(){
+		$userData = $this->session->userdata('user');
+		$karyawanId = $userData['m_karyawan_id'];
+		$karyawanId = $karyawanId;
 		$get = $this->input->get();
-		echo $this->InternalSharing->getDataInternalSharing($get);
+		echo $this->InternalSharing->getDataInternalSharing($get, $karyawanId);
 	}
 
 	public function index2(){
@@ -198,7 +202,10 @@ class InternalSharing extends CI_Controller {
 
   //       $detail = $this->getDetailData($id);
 		// $data['detail'] = $detail;
-		$data['detail'] = $this->InternalSharing->getDataDetailEmployee($id);
+		$userData = $this->session->userdata('user');
+		$karyawanId = $userData['m_karyawan_id'];
+		$karyawanId = $karyawanId;
+		$data['detail'] = $this->InternalSharing->getDataDetailEmployee($id,$karyawanId);
 		
 		$this->template->load('template','tna/internal_sharing/detail_internalSharing_karyawan', $data);
 	}
@@ -433,14 +440,13 @@ class InternalSharing extends CI_Controller {
 		return $this->InternalSharing->getDataDetail($id);
 	}
 
-	
-
 	public function confirm(){
-		
-		$karyawanId = 628;
+		$userData = $this->session->userdata('user');
+		$karyawanId = $userData['m_karyawan_id'];
+		$karyawanId = $karyawanId;
 		if($this->input->post('ket') == 'batal'){
 			$data = $this->InternalSharing->batal($this->input->post('idSharing'),$karyawanId);
-			// $this->insertHistory($this->input->post('idSharing'),'Batal internal sharing');
+			$this->insertHistory($this->input->post('idSharing'),'Batal internal sharing');
 		}
 		if($this->input->post('ket') == 'daftar'){
 			$saveData = array(
@@ -448,8 +454,6 @@ class InternalSharing extends CI_Controller {
 				'm_karyawan_id' => $karyawanId,
 				'created_date' => date('Y-m-d')
 			);
-			// $this->insertHistory($this->input->post('idSharing'),'Daftar internal sharing');
-
 			$save = $this->InternalSharing->daftar($saveData);
 			$data = array(
 				'success'		=> true,
@@ -457,6 +461,7 @@ class InternalSharing extends CI_Controller {
 				'msg'			=> "Data berhasil di simpan.",
 				'data'			=> $save
 			);
+			$this->insertHistory($this->input->post('idSharing'),'Daftar internal sharing');
 		}
 
 		echo json_encode($data);

@@ -16,7 +16,7 @@
                     
                     <div class="box-header with-border">
                         <div class="col-lg-6">
-                            <h3 class="box-title" style="padding-top:5px"><?php echo $title;?></h3>
+                            <h3 class="box-title" style="padding-top:5px"><?php echo $title;?>  </h3>
                         </div>
                         <div class="col-lg-6 ">
                             <div class="pull-right">
