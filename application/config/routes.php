@@ -219,6 +219,8 @@ $route['tna/internalSharing/createOrUpdateDokumentasi']    = 'tna/InternalSharin
 $route['tna/internalSharing/getPeserta/(:any)']    = 'tna/InternalSharing/getPeserta/$1';
 $route['tna/internalSharing/createOrUpdatePeserta']    = 'tna/InternalSharing/createOrUpdatePeserta';
 
+$route['tna/internalSharing/deleteData/(:any)']    = 'tna/InternalSharing/deleteData/$1';
+
 
 // $route['tna/internalsharing/submit']    = 'tna/InternalSharing/submit';
 // $route['tna/internalsharing/delete']    = 'tna/InternalSharing/delete';

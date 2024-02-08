@@ -3,8 +3,6 @@ jQuery(document).ready(function() {
 	getMateriSharing(id)
 	getDokumentasiSharing(id)
 	getCountDocument(id);
-
-    // $('#table-materi').DataTable();
     getPeserta(id);
 	$('#btnAddMateri').click(function(){
 		$('#label').text('Form Tambah Materi')
@@ -34,48 +32,7 @@ jQuery(document).ready(function() {
     })
 })
 
-function getPeserta(id){
-    $('#tbl-peserta').DataTable({
-        processing: true, 
-        serverSide: true, 
-        order: [], 
-        ajax: {
-            url     : base_url+"tna/internalSharing/getPeserta/"+id,
-            type    : "get",
-            datatype: "json",
-            data    : function(d){
-                console.log(d)
-            }
-                      
-        },
-        columns: [
-            {
-                "data": "id",
-                "width": "50px",
-                render: function (data, type, row, meta) {
-                    return meta.row + meta.settings._iDisplayStart + 1;
-                }
-            },
-            { "data": "id" },
-            { "data": "nama" },
-            { "data": "jabatan" },
-            { "data": "subunit" },
-            { "data": "status_fte" },
-            
-            { 
-                "data": "id",
-                render:function(data, type, row, meta){
-                    let html = `
-                                <button class="btn-danger btn-xs">
-                                    <i class="fa fa-trash"></i>
-                                </button>`
-                    return html
-                }
-            },
-        ]
-    })
-}
-
+// ==================== MATERI
 function getMateriSharing(id){
 	$('#table-materi').DataTable({
 		processing: true, 
@@ -106,7 +63,7 @@ function getMateriSharing(id){
                     let html = `<button onclick="showModalEdit(`+data+`,'`+row.nama_materi+`')" class="btn-warning btn-xs">
 									<i class="fa fa-edit"></i>
 								</button>
-								<button class="btn-danger btn-xs">
+								<button onclick="deleteData(`+data+`,'materi')" class="btn-danger btn-xs">
 									<i class="fa fa-trash"></i>
 								</button>`
                     return html
@@ -116,51 +73,8 @@ function getMateriSharing(id){
 	})
 }
 
-function getDokumentasiSharing(id){
-    var html = '';
-	$.ajax({
-        url:base_url+'tna/internalSharing/getDataDokumentasi/'+id,
-        method: 'get',
-        dataType: 'json',
-        success: function(response){
-            
-            for (var i = 0; i < response.length; i++) {
-                html = `
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div id="containerImage">
-                                    <img src="`+url_dokumentasi+'/'+response[i].file_dokumentasi+`" alt="image" id="gambar">
-                                </div>
-                            </div>
-                            <div class="text-center" style="padding-top: 5%">
-                                <button onclick="showEditDokumentasi(`+response[i].id+`)" class="btn-warning btn-xs">
-                                    <i class="fa fa-edit"></i>
-                                </button>
-                                <button class="btn-danger btn-xs">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                `
-                $('#dataDokumentasi').append(html)
-
-               
-           }
-          
-        }
-    });
-}
-
-function showModalEdit(id, materi){
-	$('#label').text('Form Edit Materi')
-	$('#reqFile').css('display','none')
-	$('#idMateri').val(id)
-	$('#judul_materi').val(materi)
-	$('#modalTambahMateri').modal('show')
-}
-
 function submitAddMateri(){
-	$("#form-tambah-materi").validate({
+    $("#form-tambah-materi").validate({
         rules: {
             judul_materi: "required",
         },
@@ -212,6 +126,51 @@ function submitAddMateri(){
                     }                   
                 }            
             });
+        }
+    });
+}
+
+function showModalEdit(id, materi){
+    $('#label').text('Form Edit Materi')
+    $('#reqFile').css('display','none')
+    $('#idMateri').val(id)
+    $('#judul_materi').val(materi)
+    $('#modalTambahMateri').modal('show')
+}
+
+
+// =================== DOKUMENTASI
+function getDokumentasiSharing(id){
+    var html = '';
+	$.ajax({
+        url:base_url+'tna/internalSharing/getDataDokumentasi/'+id,
+        method: 'get',
+        dataType: 'json',
+        success: function(response){
+            
+            for (var i = 0; i < response.length; i++) {
+                html = `
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div id="containerImage">
+                                    <img src="`+url_dokumentasi+'/'+response[i].file_dokumentasi+`" alt="image" id="gambar">
+                                </div>
+                            </div>
+                            <div class="text-center" style="padding-top: 5%">
+                                <button onclick="showEditDokumentasi(`+response[i].id+`)" class="btn-warning btn-xs">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <button onclick="deleteData(`+response[i].id+`,'dokumentasi')" class="btn-danger btn-xs">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                `
+                $('#dataDokumentasi').append(html)
+
+               
+           }
+          
         }
     });
 }
@@ -271,6 +230,71 @@ function submitUploadDokumentasi(){
             });
         }
     });
+}
+
+function getCountDocument(id){
+	$.ajax({
+        url:base_url+'tna/internalSharing/getCountDocument/'+id,
+        method: 'get',
+        dataType: 'json',
+        success: function(response){
+           console.log(response)
+           	if(response >= 3 ){
+	           	$('#uploadDokumentasi').css('display','none')
+	        }else{
+				$('#uploadDokumentasi').css('display','block')
+	        }
+        }
+    });
+}
+
+function showEditDokumentasi(id){
+    $('#labelUpload').text('Form Edit Upload Dokumentasi')
+    $('#idDokumentasi').val(id)
+    $('#modalUplaodDokumentasi').modal('show')
+}
+
+// ===================== PESERTA
+function getPeserta(id){
+    $('#tbl-peserta').DataTable({
+        processing: true, 
+        serverSide: true, 
+        order: [], 
+        ajax: {
+            url     : base_url+"tna/internalSharing/getPeserta/"+id,
+            type    : "get",
+            datatype: "json",
+            data    : function(d){
+                console.log(d)
+            }
+                      
+        },
+        columns: [
+            {
+                "data": "id",
+                "width": "50px",
+                render: function (data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                }
+            },
+            { "data": "id" },
+            { "data": "nama" },
+            { "data": "jabatan" },
+            { "data": "subunit" },
+            { "data": "status_fte" },
+            
+            { 
+                "data": "id",
+                render:function(data, type, row, meta){
+                    let html = `
+                                <button onclick="deleteData(`+row.idPeserta+`,'peserta')" class="btn-danger btn-xs">
+                                    <i class="fa fa-trash"></i>
+                                </button>`
+                    return html
+                }
+            },
+        ]
+    })
 }
 
 function submitTambahPeserta(){
@@ -334,24 +358,45 @@ function submitTambahPeserta(){
     });
 }
 
-function getCountDocument(id){
-	$.ajax({
-        url:base_url+'tna/internalSharing/getCountDocument/'+id,
-        method: 'get',
-        dataType: 'json',
-        success: function(response){
-           console.log(response)
-           	if(response >= 3 ){
-	           	$('#uploadDokumentasi').css('display','none')
-	        }else{
-				$('#uploadDokumentasi').css('display','block')
-	        }
-        }
+function deleteData(id,ket){
+    swal({
+        title: "Yakin Hapus Data ini ?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya, Hapus!",
+        closeOnConfirm: false
+    }, function () {
+        console.log("masuk")
+        $.ajax({
+            type : "POST",
+            url  : base_url+"tna/internalSharing/deleteData/"+ket,
+            dataType: "JSON",
+            data : "id="+id,
+            success:function(resp){
+                console.log(resp)
+                if(resp.success){
+                    setTimeout(function() {
+                        swal({
+                            title: "Notifikasi!",
+                            text: "Data berhasil dihapus",
+                            imageUrl: img_icon_success
+                        }, function() {
+                            location.reload();
+                        });
+                    }, 1000);
+                }else{
+                    setTimeout(function() {
+                        swal({
+                            title: "Notifikasi!",
+                            text: "Data gagal dihapus",
+                            imageUrl: img_icon_error
+                        }, function() {
+                            location.reload();
+                        });
+                    }, 1000);
+                }
+            }
+        });
     });
-}
-
-function showEditDokumentasi(id){
-    $('#labelUpload').text('Form Edit Upload Dokumentasi')
-    $('#idDokumentasi').val(id)
-    $('#modalUplaodDokumentasi').modal('show')
 }

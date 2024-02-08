@@ -411,6 +411,24 @@ class InternalSharing extends CI_Controller {
 		}
 		echo json_encode($return);	
    	}
+
+   	public function deleteData($ket){
+   		if($ket == 'peserta'){
+   			$data = $this->InternalSharing->delete($this->input->post('id'),'m_tna_internal_sharing_peserta');
+   		}
+   		if($ket == 'dokumentasi'){
+   			$data = $this->InternalSharing->delete($this->input->post('id'),'m_tna_internal_sharing_dokumentasi');
+   		}
+   		if($ket == 'materi'){
+   			$data = $this->InternalSharing->delete($this->input->post('id'),'m_tna_internal_sharing_materi');
+   		}
+   		if($ket == 'all'){
+   			$data = $this->InternalSharing->deleteData($this->input->post('id'));
+   		}
+
+   		echo json_encode($data);
+   	}
+
 	private function getDetailData($id){
 		return $this->InternalSharing->getDataDetail($id);
 	}

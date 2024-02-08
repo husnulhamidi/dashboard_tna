@@ -279,7 +279,7 @@ class InternalSharing_Model extends CI_Model {
         // $this->db->select('misp.');
         // $this->db->from('m_tna_internal_sharing_peserta misp');
         // $this->db->where('misp.m_tna_internal_sharing_id',$id);
-        $this->db->select('tis.id, mk.nama, j.nama as jabatan, mo.nama as subunit, IF(sk.id IN (2,4,5),"FTE","Non FTE") as status_fte')
+        $this->db->select('tis.id, mk.nama, j.nama as jabatan, mo.nama as subunit, IF(sk.id IN (2,4,5),"FTE","Non FTE") as status_fte,isp.id as idPeserta')
          ->from('m_tna_internal_sharing_peserta as isp')
          ->join('m_karyawan mk', 'mk.id = isp.m_karyawan_id')
          ->join('m_tna_internal_sharing tis', 'tis.id = isp.m_tna_internal_sharing_id')
@@ -350,6 +350,63 @@ class InternalSharing_Model extends CI_Model {
         $update = $this->db->update('m_tna_internal_sharing_peserta',$data);
 
         return $update;
+    }
+
+    public function delete($id,$table){
+        $this->db->where($this->id,$id);
+        $delete = $this->db->delete($table);
+
+        if($delete){
+            $return = array(
+                'success'       => true,
+                'status_code'   => 200,
+                'msg'           => "Data berhasil dihapus.",
+                'data'          => array()
+            );
+        }else{
+            $return = array(
+                'success'       => false,
+                'status_code'   => 500,
+                'msg'           => "Data gagal dihapus.",
+                'data'          => array()
+            );
+        }
+        return $return;
+    }
+
+    public function deleteData($id){
+        // delete peserta
+        $this->db->where('m_tna_internal_sharing_id',$id);
+        $delete = $this->db->delete('m_tna_internal_sharing_peserta');
+
+        // delete dokumentasi
+        $this->db->where('m_tna_internal_sharing_id',$id);
+        $delete = $this->db->delete('m_tna_internal_sharing_dokumentasi');
+
+        // delete materi
+        $this->db->where('m_tna_internal_sharing_id',$id);
+        $delete = $this->db->delete('m_tna_internal_sharing_materi');
+
+        // delete internal sharing
+        $this->db->where($this->id,$id);
+        $delete = $this->db->delete($this->table);
+
+        if($delete){
+            $return = array(
+                'success'       => true,
+                'status_code'   => 200,
+                'msg'           => "Data berhasil dihapus.",
+                'data'          => array()
+            );
+        }else{
+            $return = array(
+                'success'       => false,
+                'status_code'   => 500,
+                'msg'           => "Data gagal dihapus.",
+                'data'          => array()
+            );
+        }
+        return $return;
     }
 
 }
