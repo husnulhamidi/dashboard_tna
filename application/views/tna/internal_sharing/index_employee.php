@@ -54,7 +54,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        <!-- <tr>
                                             <td class="text-center">1</td>
                                             <td>Pelatihan scrum master</td>
                                             <td>Firman</td>
@@ -120,7 +120,7 @@
                                                 
                                                
                                             </td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>
@@ -134,22 +134,9 @@
     </div>
 </section>
 <?php 
+    $this->load->view('tna/internal_sharing/modal_filter');
     $this->load->view('tna/internal_sharing/modal_confrim');
 ?>
 <script type="text/javascript">
-	function showModal(ket, pelatihan){
-		var formattedDateTime = getCurrentDateTime();
-		console.log(formattedDateTime);
-		var label = 'Konfirmasi Pendaftaran Internal Sharing'
-		var text = 'Apakah anda yakin mau daftar Internal Sharing'
-		var text2 = pelatihan
-		if(ket == 'batal'){
-			label = 'Konfirmasi Pembatalan Internal Sharing'
-			text = 'Apakah anda yakin mau membatalkan keikutsertaan Internal Sharing'
-		}
-		$('#label').text(label)
-		$('#text').text(text)
-		$('#text2').html('<b> '+ pelatihan + ' pada '+ formattedDateTime +'</b> ')
-		$('#modalConfirm').modal('show')
-	}
+	var action_url_detail = '<?php echo base_url('tna/internalSharing-employee/detail');?>'
 </script>

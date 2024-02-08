@@ -69,7 +69,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Biaya <span class="text-red">*</span></label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" placeholder="Pemateri" value="<?php echo @$detail->biaya;?>" name="biaya" id="biaya">
+                                            <input type="text" class="form-control" placeholder="Biaya" value="<?php echo @$detail->biaya;?>" name="biaya" id="biaya">
                                         </div>
                                     </div>
                                     <div class="form-group">

@@ -195,6 +195,10 @@ class InternalSharing extends CI_Controller {
 			'js/module/internal-sharing/InternalSharing.js?random='.date("ymdHis"),
         );
         $data['id'] = $id;
+
+  //       $detail = $this->getDetailData($id);
+		// $data['detail'] = $detail;
+		$data['detail'] = $this->InternalSharing->getDataDetailEmployee($id);
 		
 		$this->template->load('template','tna/internal_sharing/detail_internalSharing_karyawan', $data);
 	}
@@ -239,12 +243,8 @@ class InternalSharing extends CI_Controller {
 			$action = $this->InternalSharing->insertData($data);
 
 			// insert history
-			$dataHistory = array(
-				'm_tna_internal_sharing_id' => $action,
-				'keterangan' => 'Buat Internal Sharing',
-				'created_date' => date('Y-m-d')
-			);
-			$this->InternalSharing->insertDataHistory($dataHistory);
+			$this->insertHistory($action,'Buat Internal Sharing');
+			
 		}
 
 		if($action){
@@ -431,6 +431,44 @@ class InternalSharing extends CI_Controller {
 
 	private function getDetailData($id){
 		return $this->InternalSharing->getDataDetail($id);
+	}
+
+	
+
+	public function confirm(){
+		
+		$karyawanId = 628;
+		if($this->input->post('ket') == 'batal'){
+			$data = $this->InternalSharing->batal($this->input->post('idSharing'),$karyawanId);
+			// $this->insertHistory($this->input->post('idSharing'),'Batal internal sharing');
+		}
+		if($this->input->post('ket') == 'daftar'){
+			$saveData = array(
+				'm_tna_internal_sharing_id' => $this->input->post('idSharing'),
+				'm_karyawan_id' => $karyawanId,
+				'created_date' => date('Y-m-d')
+			);
+			// $this->insertHistory($this->input->post('idSharing'),'Daftar internal sharing');
+
+			$save = $this->InternalSharing->daftar($saveData);
+			$data = array(
+				'success'		=> true,
+				'status_code'	=> 201,
+				'msg'			=> "Data berhasil di simpan.",
+				'data'			=> $save
+			);
+		}
+
+		echo json_encode($data);
+	}
+
+	private function insertHistory($idInternahSahring, $ket){
+		$dataHistory = array(
+			'm_tna_internal_sharing_id' => $idInternahSahring,
+			'keterangan' => $ket,
+			'created_date' => date('Y-m-d')
+		);
+		$this->InternalSharing->insertDataHistory($dataHistory);
 	}
 
 	

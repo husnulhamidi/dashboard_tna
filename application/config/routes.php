@@ -220,6 +220,7 @@ $route['tna/internalSharing/getPeserta/(:any)']    = 'tna/InternalSharing/getPes
 $route['tna/internalSharing/createOrUpdatePeserta']    = 'tna/InternalSharing/createOrUpdatePeserta';
 
 $route['tna/internalSharing/deleteData/(:any)']    = 'tna/InternalSharing/deleteData/$1';
+$route['tna/internalSharing-employee/confirm']    = 'tna/InternalSharing/confirm';
 
 
 // $route['tna/internalsharing/submit']    = 'tna/InternalSharing/submit';

@@ -31,18 +31,28 @@ class InternalSharing_Model extends CI_Model {
 		$recordsTotal = 0;
         $this->db->start_cache();
 
-        $this->db->select('mti.id,mti.judul_materi,mti.tanggal,mti.jam,
-        				  mti.tempat,mti.biaya,mti.kuota, mti.link_zoom,mti.r_tna_training_id,
-        				   mk.nama as narasumber,
-        				   mo.nama as organisasi
-        	');
+        // $this->db->select('mti.id,mti.judul_materi,mti.tanggal,mti.jam,
+        // 				  mti.tempat,mti.biaya,mti.kuota, mti.link_zoom,mti.r_tna_training_id,
+        // 				   mk.nama as narasumber,
+        // 				   mo.nama as organisasi
+        // 	');
+        // $this->db->from('m_tna_internal_sharing as mti');
+        // $this->db->join('m_karyawan as mk','mti.m_karyawan_id = mk.id');
+        // $this->db->join('m_organisasi as mo','mti.m_organisasi_id = mo.id');
+
+        $this->db->select('mti.id, mti.judul_materi, mti.tanggal, mti.jam,
+                   mti.tempat, mti.biaya, mti.kuota, mti.link_zoom, mti.r_tna_training_id,
+                   mk.nama AS narasumber,
+                   mo.nama AS organisasi,
+                   COUNT(isp.m_tna_internal_sharing_id) AS jumlah_peserta,
+                   SUM(CASE WHEN isp.m_karyawan_id = 628 THEN 1 ELSE 0 END) AS jumlah_ikut');
         $this->db->from('m_tna_internal_sharing as mti');
-        $this->db->join('m_karyawan as mk','mti.m_karyawan_id = mk.id');
-        $this->db->join('m_organisasi as mo','mti.m_organisasi_id = mo.id');
-        // $this->db->join('r_tna_job_role as c','a.r_tna_job_role_id = c.id','left');
-        // $this->db->join('r_tna_job_function as d','a.r_tna_job_function_id = d.id','left');
-        // $this->db->join('r_tna_job_family as e','a.r_tna_job_family_id = e.id','left');
-        // $this->db->where('a.m_tna_justifikasi_rjbp_id',$id);
+        $this->db->join('m_karyawan as mk', 'mti.m_karyawan_id = mk.id');
+        $this->db->join('m_organisasi as mo', 'mti.m_organisasi_id = mo.id');
+        $this->db->join('m_tna_internal_sharing_peserta isp', 'isp.m_tna_internal_sharing_id = mti.id', 'left');
+        $this->db->group_by('mti.id, mti.judul_materi, mti.tanggal, mti.jam,
+                             mti.tempat, mti.biaya, mti.kuota, mti.link_zoom, mti.r_tna_training_id,
+                             mk.nama, mo.nama');
 				 
 
 		IF($post['search']['value']!=""){
@@ -141,6 +151,38 @@ class InternalSharing_Model extends CI_Model {
         ->where('mti.id', $id)
         ->get()
         ->row();
+        return $data;
+    }
+
+     public function getDataDetailEmployee($id){
+        // $data = $this->db->select('mti.id,mti.judul_materi,mti.tanggal,mti.jam,
+        //                   mti.tempat,mti.biaya,mti.kuota, mti.link_zoom,mti.r_tna_training_id,mti.m_organisasi_id,mti.m_karyawan_id,
+        //                    mk.nama as narasumber,
+        //                    mo.nama as organisasi
+        //     ')
+        // ->from('m_tna_internal_sharing as mti')
+        // ->join('m_karyawan as mk','mti.m_karyawan_id = mk.id')
+        // ->join('m_organisasi as mo','mti.m_organisasi_id = mo.id')
+        // ->where('mti.id', $id)
+        // ->get()
+        // ->row();
+       $data = $this->db->select('mti.id, mti.judul_materi, mti.tanggal, mti.jam,
+                   mti.tempat, mti.biaya, mti.kuota, mti.link_zoom, mti.r_tna_training_id,
+                   mk.nama AS narasumber,
+                   mo.nama AS organisasi,
+                   COUNT(isp.m_tna_internal_sharing_id) AS jumlah_peserta,
+                   SUM(CASE WHEN isp.m_karyawan_id = 628 THEN 1 ELSE 0 END) AS jumlah_ikut')
+                ->from('m_tna_internal_sharing as mti')
+                ->join('m_karyawan as mk', 'mti.m_karyawan_id = mk.id')
+                ->join('m_organisasi as mo', 'mti.m_organisasi_id = mo.id')
+                ->join('m_tna_internal_sharing_peserta isp', 'isp.m_tna_internal_sharing_id = mti.id', 'left')
+                ->where('mti.id', $id)
+                ->group_by('mti.id, mti.judul_materi, mti.tanggal, mti.jam,
+                             mti.tempat, mti.biaya, mti.kuota, mti.link_zoom, mti.r_tna_training_id,
+                             mk.nama, mo.nama')
+                ->get()
+                ->row();
+
         return $data;
     }
 
@@ -407,6 +449,32 @@ class InternalSharing_Model extends CI_Model {
             );
         }
         return $return;
+    }
+
+    public function batal($id, $karyawanId){
+        $this->db->where('m_tna_internal_sharing_id',$id)->where('m_karyawan_id', $karyawanId);
+        $delete = $this->db->delete('m_tna_internal_sharing_peserta');
+        if($delete){
+            $return = array(
+                'success'       => true,
+                'status_code'   => 200,
+                'msg'           => "Data berhasil dihapus.",
+                'data'          => array()
+            );
+        }else{
+            $return = array(
+                'success'       => false,
+                'status_code'   => 500,
+                'msg'           => "Data gagal dihapus.",
+                'data'          => array()
+            );
+        }
+        return $return;
+    }
+
+    public function daftar($data){
+        $this->db->insert('m_tna_internal_sharing_peserta', $data);
+        return $this->db->insert_id();
     }
 
 }

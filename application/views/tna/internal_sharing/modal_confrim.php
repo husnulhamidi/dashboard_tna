@@ -8,8 +8,9 @@
             </div>
             <div class="modal-body">
                 <div>
-                <form method="post" action="javascript:;" class="form-horizontal form-confirm">
+                <form method="post" action="javascript:;" class="form-horizontal form-confirm" id="form-confirm">
                     <input type="hidden" name="ket" id="ket">
+                    <input type="hidden" name="idSharing" id="idSharing">
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-12">
@@ -25,7 +26,7 @@
                                 <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="false">Close</button>
                                 <button 
                                     type="submit" 
-                                    class="btn btn-info submit-kompetensi">
+                                    class="btn btn-info submit-confirm" id="submit-confirm">
                                     <span id="nameBtn"></span>
                                 </button>
                                 

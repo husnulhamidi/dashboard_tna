@@ -1,10 +1,15 @@
 jQuery(document).ready(function() {
    $('#tbl-internal-sharing-emp').DataTable()
    buildTableInternalSharingAdmin()
+   buildTableInternalSharingKaryawan()
    getNarasumber()
    // internal sharing admin
     $('.submit-internal-sharing').click(function(){
        submitFormInternalSharingHCM()
+    })
+
+    $('#submit-confirm').click(function(){
+        submitConform()
     })
 });
 
@@ -202,7 +207,7 @@ function buildTableInternalSharingAdmin(){
                 }
             },
             { 
-                "data": "kuota",
+                "data": "jumlah_peserta",
                 render:function(data, type, row, meta){
                     return data+' Peserta'
                 } 
@@ -242,6 +247,187 @@ function buildTableInternalSharingAdmin(){
         ],
     });
 }
+
+function buildTableInternalSharingKaryawan(){
+    $('#tbl-internal-sharing-emp').DataTable().destroy();
+    $('#tbl-internal-sharing-emp').DataTable({
+        processing: true, 
+        serverSide: true, 
+        order: [], 
+        ajax: {
+            url     : base_url+"tna/internalSharing/getDataAdmin",
+            type    : "get",
+            datatype: "json",
+            data    : function(d){
+                console.log(d)
+            }
+                      
+        },
+        columns: [
+            {
+                "data": "id",
+                "width": "50px",
+                render: function (data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                }
+            },
+            { "data": "judul_materi" },
+            { "data": "narasumber" },
+            { "data": "organisasi" },
+            { 
+                "data": "tanggal",
+                render:function(data, type, row, meta){
+                    return formatDate(data)
+                } 
+            },
+            { "data": "jam" },
+            { "data": "tempat" },
+            { 
+                "data": "biaya",
+                render:function(data, type, row, meta){
+                    return formatRupiah(data,'Rp.')
+                } 
+            },
+            { 
+                "data": "m_tna_training_id", 
+                render:function(data, type, row, meta){
+                    let ket = 'Inisiasi'
+                    if(data){
+                        ket = 'TNA'
+                    }
+                    return ket
+                }
+            },
+            { 
+                "data": "jumlah_peserta",
+                render:function(data, type, row, meta){
+                    return data+' Peserta'
+                } 
+            },
+            { 
+                "data": "id",
+                render:function(data, type, row, meta){
+                    // var respon = 'Tidak ikut'
+                    // if(row.jumlah_ikut > '0'){
+                    //     respon = 'Ikut'
+                    // }
+                    // return respon
+                    // let html = `<div class="input-group-btn">
+                    //               <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Aksi
+                    //                 <span class="fa fa-caret-down"></span></button>
+                    //               <ul class="dropdown-menu">
+                    //                 <li><a href="`+action_url_edit+'/'+data+`">Edit</a></li>
+                    //                 <li>
+                    //                     <a onclick="deleteData(`+data+`)">Hapus</a>
+                    //                 </li>
+                    //                 <li><a href="`+action_url_detail+'/'+data+`">Detail</a></li>
+                    //                 <li>
+                    //                     <a
+                    //                     target="_blank" 
+                    //                     href="`+action_url_generate+`">Generate Sertifikat
+                    //                     </a>
+                    //                 </li>
+                    //               </ul>
+                    //             </div>`
+                    // return html
+                    var html = ` <a 
+                                    href="`+action_url_detail+'/'+data+`" 
+                                    data-toggle='tooltip' 
+                                    data-placement='bottom' 
+                                    title='Detail' 
+                                    class='btn btn-info btn-xs'>
+                                   <i class='fa fa-eye' ></i> 
+                                </a>&nbsp;`
+                    if(row.jumlah_ikut > 0){
+                        html = html+`<button
+                                        onclick="showModal('batal','`+row.judul_materi+`',`+row.id+`)" 
+                                        data-toggle="tooltip" 
+                                        data-placement="bottom" 
+                                        title="klik untuk batal ikut internal sharing" 
+                                        class="btn btn-danger btn-xs">
+                                        <i class="fa fa-fw fa-remove"></i>
+                                    </button>&nbsp;`
+                    }else{
+                        html = html+`<button 
+                                        onclick="showModal('daftar','`+row.judul_materi+`',`+row.id+`)" 
+                                        data-toggle="tooltip" 
+                                        data-placement="bottom" 
+                                        title="klik untuk daftar internal sharing" 
+                                        class="btn btn-success btn-xs">
+                                        <i class="fa fa-file-text"></i>
+                                    </button>&nbsp;`
+                    }
+
+                    return html
+                }
+            },
+        ],
+        columnDefs: [
+            {
+                targets: [0],
+                orderable: false,
+                className: 'text-center',
+
+            }
+
+        ],
+    });
+}
+
+function showModal(ket, pelatihan, idSharing){
+    var formattedDateTime = getCurrentDateTime();
+    console.log(formattedDateTime);
+    var label = 'Konfirmasi Pendaftaran Internal Sharing'
+    var text = 'Apakah anda yakin mau daftar Internal Sharing'
+    var text2 = pelatihan
+    var nameBtn = 'Ya, Daftar!'
+    if(ket == 'batal'){
+        label = 'Konfirmasi Pembatalan Internal Sharing'
+        text = 'Apakah anda yakin mau membatalkan keikutsertaan Internal Sharing'
+        nameBtn = 'Ya, Batal!'
+    }
+    $('#label').text(label)
+    $('#text').text(text)
+    $('#ket').val(ket)
+    $('#text2').html('<b> '+ pelatihan + ' pada '+ formattedDateTime +'</b> ')
+    $('#nameBtn').text(nameBtn)
+    $('#idSharing').val(idSharing)
+    $('#modalConfirm').modal('show')
+}
+
+function submitConform(){
+    $.ajax({
+        url: base_url+"tna/internalSharing-employee/confirm",
+        type: 'POST',
+        dataType: "JSON",
+        data: $('#form-confirm').serialize(),
+        success: function(response) {
+            if(response.success){
+                setTimeout(function() {
+                    swal({
+                        title: "Notifikasi!",
+                        text: "Data berhasil disimpan",
+                        imageUrl: img_icon_success
+                    }, function(d) {
+                        location.reload();
+                    });
+                }, 1000);
+            }else{
+                setTimeout(function() {
+                    swal({
+                        title: "Notifikasi!",
+                        text: "Data gagal disimpan",
+                        imageUrl: img_icon_error
+                    }, function() {
+                        location.reload();
+                    });
+                }, 1000);
+            }
+        }            
+    });
+}
+
+
 
 
 
