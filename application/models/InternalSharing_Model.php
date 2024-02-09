@@ -34,7 +34,7 @@ class InternalSharing_Model extends CI_Model {
 
         $this->db->select('mti.id, mti.judul_materi, mti.tanggal, mti.jam,
                    mti.tempat, mti.biaya, mti.kuota, mti.link_zoom, mti.r_tna_training_id,
-                   mk.nama AS narasumber,
+                   mk.nama AS narasumber,mk.id AS idNarasumber,
                    mo.nama AS organisasi,
                    COUNT(isp.m_tna_internal_sharing_id) AS jumlah_peserta,
                    SUM(CASE WHEN isp.m_karyawan_id = '.$karyawanId.' THEN 1 ELSE 0 END) AS jumlah_ikut');
@@ -42,6 +42,26 @@ class InternalSharing_Model extends CI_Model {
         $this->db->join('m_karyawan as mk', 'mti.m_karyawan_id = mk.id');
         $this->db->join('m_organisasi as mo', 'mti.m_organisasi_id = mo.id');
         $this->db->join('m_tna_internal_sharing_peserta isp', 'isp.m_tna_internal_sharing_id = mti.id', 'left');
+        if($post['filter_materi']){
+            $this->db->like('mti.judul_materi',$post['filter_materi'],'both');
+        }
+        if($post['filter_narasumber']){
+            $this->db->where('mk.id',$post['filter_narasumber']);
+        }
+        if($post['filter_tgl_mulai']){
+            $tgl1 = $this->chageDate($post['filter_tgl_mulai']);
+            $this->db->where('mti.tanggal >=',$tgl1);
+        }
+        if($post['filter_tgl_selesai']){
+            $tgl2 = $this->chageDate($post['filter_tgl_selesai']);
+            $this->db->where('mti.tanggal <=',$tgl2);
+        }
+        if($post['filter_biaya_min']){
+            $this->db->where('mti.biaya >=',$post['filter_biaya_min']);
+        }
+        if($post['filter_biaya_max']){
+            $this->db->where('mti.biaya <=',$post['filter_biaya_max']);
+        }
         $this->db->group_by('mti.id, mti.judul_materi, mti.tanggal, mti.jam,
                              mti.tempat, mti.biaya, mti.kuota, mti.link_zoom, mti.r_tna_training_id,
                              mk.nama, mo.nama');
@@ -93,6 +113,11 @@ class InternalSharing_Model extends CI_Model {
         );
         echo json_encode($output);
 		exit();
+    }
+
+    private function chageDate($date){
+        $tgl = explode('/', $date);
+        return $tgl[2].'-'.$tgl[0].'-'.$tgl[1];
     }
 
     public function get_direktorat(){

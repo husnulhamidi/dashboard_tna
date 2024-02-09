@@ -1,4 +1,5 @@
 jQuery(document).ready(function() {
+    var oTable;
    $('#tbl-internal-sharing-emp').DataTable()
    buildTableInternalSharingAdmin()
    buildTableInternalSharingKaryawan()
@@ -11,6 +12,13 @@ jQuery(document).ready(function() {
     $('#submit-confirm').click(function(){
         submitConform()
     })
+
+    $('.btn-filter').on('click', function() {
+        $('#modalFilter').modal('hide')
+        const table = $('#tbl-internal-sharing-hcpd').DataTable();
+        table.destroy();
+        buildTableInternalSharingAdmin()
+    });
 });
 
 function deleteData(id){
@@ -167,7 +175,14 @@ function buildTableInternalSharingAdmin(){
             type    : "get",
             datatype: "json",
             data    : function(d){
-                console.log(d)
+                d.filter_materi = $('#filter_materi').val()
+                d.filter_narasumber = $('#filter_narasumber').val()
+                d.filter_tgl_mulai = $('#filter_tgl_mulai').val()
+                d.filter_tgl_selesai = $('#filter_tgl_selesai').val()
+                d.tempat = $('#tempat').val()
+                d.filter_biaya_min = $('#filter_biaya_min').val()
+                d.filter_biaya_max = $('#filter_biaya_max').val()
+
             }
                       
         },
@@ -248,6 +263,7 @@ function buildTableInternalSharingAdmin(){
     });
 }
 
+// internal sharing admin
 function buildTableInternalSharingKaryawan(){
     $('#tbl-internal-sharing-emp').DataTable().destroy();
     $('#tbl-internal-sharing-emp').DataTable({

@@ -13,7 +13,7 @@
             </div>
             <div class="modal-body">
                 <div>
-                <form method="post" action="javascript:;" class="form-horizontal form-add-kompetensi" enctype="multipart/form-data">
+                <form method="post" action="javascript:;" class="form-horizontal form-filter" enctype="multipart/form-data" id="form-filter">
                     <div class="box-body">
                         <div class="row">
                             <div class="col-lg-12">
@@ -21,7 +21,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Materi </label>
                                     <div class="col-sm-10">
-                                        <input type="text"  name="filer_materi" id="filer_materi" placeholder="Materi" class="form-control input-sm">
+                                        <input type="text"  name="filter_materi" id="filter_materi" placeholder="Materi" class="form-control input-sm">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -77,7 +77,7 @@
                         <div class="">
                             <div class="pull-right"> 
                                 <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="false">Close</button>
-                                <button type="submit" class="btn btn-info submit-kompetensi">Cari</button>
+                                <button type="submit" class="btn btn-info btn-filter">Cari</button>
                                 
                             </div>
                         </div>
