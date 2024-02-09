@@ -117,6 +117,12 @@ $sess = $this->session->userdata();
             <li ><a href="<?php echo site_url('tna/referensi/lembaga'); ?>"><i class="fa fa-circle-o"></i>Lembaga Training</a></li>
             </ul>
         </li> 
+
+         <li class="<?php echo $active_menu=='tna_setting_ttd'? 'active':'';?> ">
+            <a href="<?php echo site_url('tna/setting-ttd'); ?>">
+                <i class="fa fa-gear"></i> <span>Setting TTD</span>
+            </a>
+        </li>
         <!-- <li class="<?php echo $active_menu=='tna_materi'? 'active':'';?> ">
             <a href="<?php echo site_url('tna/library_materi'); ?>">
                 <i class="fa fa-cube"></i> <span>Library Materi</span>

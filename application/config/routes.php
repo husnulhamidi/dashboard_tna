@@ -225,7 +225,10 @@ $route['tna/internalSharing-employee/confirm']    = 'tna/InternalSharing/confirm
 
 //=====================================================================================================================
 // setting TTD
-
+$route['tna/setting-ttd']    = 'tna/SettingTTD/index';
+$route['tna/setting-ttd/submit']    = 'tna/SettingTTD/submit';
+$route['tna/setting-ttd/delete']    = 'tna/SettingTTD/delete';
+$route['tna/setting-ttd/getDataDropdown']    = 'tna/SettingTTD/getDataDropdown';
 
 //=====================================================================================================================
 // library materi

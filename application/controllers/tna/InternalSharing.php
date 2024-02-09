@@ -197,7 +197,7 @@ class InternalSharing extends CI_Controller {
 			$data['peserta'] = [];
 
 		}
-
+		// echo $data['setting'];
 		$data = $this->load->view('tna/internal_sharing/generate_sertifikat', ['data' => $data], TRUE);
 
 		$mpdf->WriteHTML($data);

@@ -106,15 +106,15 @@
 		        <div class="container" style="padding-top: 30px">
 		            <center>
 		                <div class="" style="margin-bottom: 10px;text-align:center">
-		                 	<img src="' . base_url("files/sertificate/" . $data['setting']->scan_ttd) . '" alt="Deskripsi Gambar" width="20%">
+		                 	<img src="' . base_url("files/sertificate/") . (@$data['setting'] == '' ? 'ttd.png' : $data['setting']->scan_ttd) . '" alt="Deskripsi Gambar" width="20%">
 		                </div>
 		            </center>
 		            <div style="text-align: center;" class="orify sixStyle">
-		                <center><b>'.$data['setting']->nama_ttd.'</b></center>
+		                <center><b>'.(isset($data['setting']) && is_object($data['setting']) ? $data['setting']->nama_ttd : 'MUCHMAD YAZID SAKTINO').'</b></center>
 		            </div>
 		            <hr style="width:250px; text-align:center; margin-left:0; margin-bottom:0px; margin-top:0px; color:#000; border: 0.5px solid #0093AD;">
-		            <p class="orify sixStyle" style="text-align: center;">'.$data['setting']->jabatan_ttd.'</p>
-		        </div>
+		            <p class="orify sixStyle" style="text-align: center;">'.(isset($data['setting']) && is_object($data['setting']) ? $data['setting']->jabatan_ttd : 'VP HCM Telkomsat').'</p>
+		            
 		 	</div>';
 		 	if($data['peserta']){
 		 		echo '<div class="page-break"></div>';
@@ -149,14 +149,14 @@
 		        <div class="container" style="padding-top: 30px">
 		            <center>
 		                <div class="" style="margin-bottom: 10px;text-align:center">
-		     				<img src="' . base_url("files/sertificate/" . $data['setting']->scan_ttd) . '" alt="Deskripsi Gambar" width="20%">
+		                 	<img src="' . base_url("files/sertificate/") . (@$data['setting'] == '' ? 'ttd.png' : $data['setting']->scan_ttd) . '" alt="Deskripsi Gambar" width="20%">
 		                </div>
 		            </center>
 		            <div style="text-align: center;" class="orify sixStyle">
-		                <center><b>'.$data['setting']->nama_ttd.'</b></center>
+		                <center><b>'.(isset($data['setting']) && is_object($data['setting']) ? $data['setting']->nama_ttd : 'MUCHMAD YAZID SAKTINO').'</b></center>
 		            </div>
 		            <hr style="width:250px; text-align:center; margin-left:0; margin-bottom:0px; margin-top:0px; color:#000; border: 0.5px solid #0093AD;">
-		            <p class="orify sixStyle" style="text-align: center;">'.$data['setting']->jabatan_ttd.'</p>
+		            <p class="orify sixStyle" style="text-align: center;">'.(isset($data['setting']) && is_object($data['setting']) ? $data['setting']->jabatan_ttd : 'VP HCM Telkomsat').'</p>
 		        </div>
 		 	</div>';
  			if($no < count($data['peserta'])){
