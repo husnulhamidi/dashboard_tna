@@ -107,11 +107,12 @@
 	                   					<i class="fa fa-edit"></i> 
 	                   					&nbsp;Edit 
 	                   				</a>
-	                   				<button 
+	                   				<a 
+	                   					href="<?php echo $action_url_generate.'/'.$detail->id.'/pemateri' ?>" 
 	                   					class="btn btn-sm btn-primary"> 
 	                   					<i class="fa fa-plus"></i> 
 	                   					&nbsp; Generate Sertifikat Pemateri 
-	                   				</button>
+	                   				</a>
 	                   			</div>
 	                   		</div>
 	                   	</div>
@@ -221,11 +222,12 @@
                    					<i class="fa fa-plus"></i> 
                    					&nbsp;Tambah Peserta 
                    				</button>
-                   				<button 
+                   				<a 
+                   					href="<?php echo $action_url_generate.'/'.$detail->id.'/peserta' ?>"
                    					class="btn btn-sm btn-primary"> 
                    					<i class="fa fa-plus"></i> 
                    					&nbsp; Generate Sertifikat Peserta 
-                   				</button>
+                   				</a>
                    			</div>
                    			<div class="col-md-12">
                    				<table class="table" id="tbl-peserta">

@@ -227,7 +227,7 @@ function buildTableInternalSharingAdmin(){
                                     <li>
                                         <a
                                         target="_blank" 
-                                        href="`+action_url_generate+`">Generate Sertifikat
+                                        href="`+action_url_generate+'/'+data+'/all'+`">Generate Sertifikat
                                         </a>
                                     </li>
                                   </ul>

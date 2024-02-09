@@ -458,6 +458,26 @@ class InternalSharing_Model extends CI_Model {
         return $this->db->insert_id();
     }
 
+    public function getPeserta($id){
+        $data = $this->db->select('mk.nama')
+                ->from('m_tna_internal_sharing_peserta as isp')
+                ->join('m_karyawan mk','mk.id = isp.m_karyawan_id')
+                ->where('isp.m_tna_internal_sharing_id', $id)
+                ->get()
+                ->result();
+        return $data;
+    }
+
+    public function getPemateri($id){
+        $data = $this->db->select('mk.nama')
+                ->from('m_tna_internal_sharing as is')
+                ->join('m_karyawan mk','mk.id = is.m_karyawan_id')
+                ->where('is.id', $id)
+                ->get()
+                ->result();
+        return $data;
+    }
+
 }
 
 /* End of file internalSharing.php */

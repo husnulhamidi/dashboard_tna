@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+// require_once (APPPATH. 'vendor/autoload.php');
 class InternalSharing extends CI_Controller {
 
 	public function __construct()
@@ -10,12 +11,12 @@ class InternalSharing extends CI_Controller {
 			redirect('auth/login');
 		}
 		$this->load->model('InternalSharing_Model', 'InternalSharing');
+		$this->load->model('Setting_ttd_model', 'settingTTD');
 		//Do your magic here
     
 	}
 
-	public function index()
-	{
+	public function index(){
         $data['breadcrumb'] 	= 'Internal Sharing Admin';
         $data['active_menu'] 	= 'tna_internal_sharing';
 		$data['title'] 			= 'Daftar Internal Sharing Admin';
@@ -84,8 +85,7 @@ class InternalSharing extends CI_Controller {
 		$this->template->load('template','tna/internal_sharing/index_employee',$data);
 	}
 
-	public function create()
-	{
+	public function create(){
         $data = array();
         $data['breadcrumb'] 	= 'Internal Sharing > Tambah';
         $data['active_menu'] 	= 'tna_internal_sharing';
@@ -136,7 +136,6 @@ class InternalSharing extends CI_Controller {
 		
 		$detail = $this->getDetailData($id);
 		$data['detail'] = $detail;
-		// $data['detail'] = $this->InternalSharing->getDataDetail($id);
 		$this->template->load('template','tna/internal_sharing/form_internalSharing', $data);
 	}
 
@@ -149,6 +148,7 @@ class InternalSharing extends CI_Controller {
 		$data['active_menu'] 	= 'InternalSharing';
 		$data['action_url'] 	= site_url('tna/InternalSharing/submit');
 		$data['action_url_edit'] 	= site_url('tna/InternalSharing/edit');
+		$data['action_url_generate'] 	= site_url('tna/InternalSharing/generate_sertifikat');
 		$data['css'] 			= array(
 			'plugins/sweet-alert/sweetalert.css',
             'plugins/select2/select2.min.css',
@@ -172,8 +172,36 @@ class InternalSharing extends CI_Controller {
 		$this->template->load('template','tna/internal_sharing/detail_internalSharing', $data);
 	}
 
-	public function generate_sertifikat(){
-		$this->load->view('tna/internal_sharing/generate_sertifikat');
+	public function generate_sertifikat($id,$ket){
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+		    'format' => 'A4-L',
+		    'orientation' => 'L'
+		]);
+
+		$data['detail'] = $this->getDetailData($id);
+		$data['setting'] = $this->settingTTD->getSetting();
+		if($ket == 'all'){
+			$data['pemateri'] = $this->InternalSharing->getPemateri($id);
+			$data['peserta'] = $this->InternalSharing->getPeserta($id);
+
+		}
+		if($ket == 'peserta'){
+			$data['pemateri'] = [];
+			$data['peserta'] = $this->InternalSharing->getPeserta($id);
+
+		}
+
+		if($ket == 'pemateri'){
+			$data['pemateri'] = $this->InternalSharing->getPemateri($id);
+			$data['peserta'] = [];
+
+		}
+
+		$data = $this->load->view('tna/internal_sharing/generate_sertifikat', ['data' => $data], TRUE);
+
+		$mpdf->WriteHTML($data);
+		$mpdf->Output();
 	}
 
 	public function detail2($id){
@@ -199,9 +227,6 @@ class InternalSharing extends CI_Controller {
 			'js/module/internal-sharing/InternalSharing.js?random='.date("ymdHis"),
         );
         $data['id'] = $id;
-
-  //       $detail = $this->getDetailData($id);
-		// $data['detail'] = $detail;
 		$userData = $this->session->userdata('user');
 		$karyawanId = $userData['m_karyawan_id'];
 		$karyawanId = $karyawanId;
