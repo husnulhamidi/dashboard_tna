@@ -93,6 +93,17 @@ $sess = $this->session->userdata();
                 <i class="fa fa-clone"></i> <span>Internal Sharing Karyawan</span>
             </a>
         </li>
+
+        <li class="<?php echo $active_menu=='tna_tna'? 'active':'';?> ">
+            <a href="<?php echo site_url('tna'); ?>">
+                <i class="fa fa-clone"></i> <span>TNA</span>
+            </a>
+        </li>
+       <li class="<?php echo $active_menu=='tna_internal_sharing_employee'? 'active':'';?> ">
+            <a href="<?php echo site_url('tna/internalSharing-employee'); ?>">
+                <i class="fa fa-clone"></i> <span>Pengawalan TNA & Non TNA</span>
+            </a>
+        </li>
      
         <!-- <li class="<?php echo $active_menu=='tna_anggran'? 'active':'';?> ">
             <a href="<?php echo site_url('tna/anggaran'); ?>">
