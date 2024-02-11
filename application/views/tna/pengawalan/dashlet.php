@@ -1,56 +1,63 @@
-<div class="row">
-                <div class="col-lg-2 col-4">
-                    <!-- small card -->
-                    <div class="small-box bg-primary">
-                        <div class="inner text-center">
-                            <h3>1</h3>
-                            <p>Draft</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-4">
-                    <!-- small card -->
-                    <div class="small-box bg-primary">
-                        <div class="inner text-center">
-                            <h3>2</h3>
-                            <p>Mgr.Lini</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-4">
-                    <!-- small card -->
-                    <div class="small-box bg-primary">
-                        <div class="inner text-center">
-                            <h3>5</h3>
-                            <p>Admin HCPD</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-4">
-                    <!-- small card -->
-                    <div class="small-box bg-primary">
-                        <div class="inner text-center">
-                            <h3>5</h3>
-                            <p>Mgr. HCPD</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-4">
-                    <!-- small card -->
-                    <div class="small-box bg-primary">
-                        <div class="inner text-center">
-                            <h3>3</h3>
-                            <p>AVP HCPD</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-4">
-                    <!-- small card -->
-                    <div class="small-box bg-primary">
-                        <div class="inner text-center">
-                            <h3>5</h3>
-                            <p>VP HCPD</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<style>
+    input.largerCheckbox {
+        width: 55px;
+        height: 55px;
+    }
+    .divFont{
+        font-size: 14px
+    }
+</style>
+
+<div class="row" style="margin-bottom: 30px; margin-left: -30px">
+    <div class="col-lg-2 col-4" style="text-align: center;">
+        <input type="checkbox" id="rekonfirmasiPeserta" name="vehicle1" class="largerCheckbox">
+        <div class="divFont"> Rekonfirmasi <br> Peserta </div>
+    </div>
+    <div class="col-lg-2 col-4" style="text-align: center;">
+        <input type="checkbox" id="verifikasiMgrLini" name="vehicle1" class="largerCheckbox">
+        <div class="divFont"> Menunggu Verifikasi Mgr.lini </div>
+    </div>
+    <div class="col-lg-2 col-4" style="text-align: center;">
+        <input type="checkbox" id="verifikasiMgrHCPD" name="vehicle1" class="largerCheckbox">
+        <div class="divFont"> Menunggu Verifikasi Mgr.HCPD  </div>
+    </div>
+    <div class="col-lg-2 col-4" style="text-align: center;">
+        <input type="checkbox" id="verifikasiAVPHCPD" name="vehicle1" class="largerCheckbox">
+        <div class="divFont"> Menunggu Verifikasi AVP HCPD </div>
+    </div>
+    <div class="col-lg-2 col-4" style="text-align: center;">
+        <input type="checkbox" id="pernyataanPeserta" name="vehicle1" class="largerCheckbox">
+        <div class="divFont"> Menunggu Pernyataan Form Peserta </div>
+    </div>
+    <div class="col-lg-2 col-4" style="text-align: center;">
+        <input type="checkbox" id="rekonfirmasiKuota" name="vehicle1" class="largerCheckbox">
+        <div class="divFont"> Rekonfirmasi Kuota </div>
+    </div>
+</div>
+
+<div class="row" style="margin-bottom: 30px; margin-left: -30px">
+    <div class="col-lg-2 col-4" style="text-align: center;">
+        <input type="checkbox" id="kelengkapanDokumen" name="vehicle1" class="largerCheckbox">
+        <div class="divFont"> Proses Kelengkapan Dokumen </div>
+    </div>
+    <div class="col-lg-2 col-4" style="text-align: center;">
+        <input type="checkbox" id="pembayaran" name="vehicle1" class="largerCheckbox">
+        <div class="divFont"> Menunggu Pembayaran </div>
+    </div>
+    <div class="col-lg-2 col-4" style="text-align: center;">
+        <input type="checkbox" id="uplaodSerifikasi" name="vehicle1" class="largerCheckbox">
+        <div class="divFont"> Upload Sertifikasi </div>
+    </div>
+    <div class="col-lg-2 col-4" style="text-align: center;">
+        <input type="checkbox" id="uplaodMateri" name="vehicle1" class="largerCheckbox">
+        <div class="divFont"> Upload Materi</div>
+    </div>
+    <div class="col-lg-2 col-4" style="text-align: center;">
+        <input type="checkbox" id="jadwalInternalSharing" name="vehicle1" class="largerCheckbox">
+        <div class="divFont"> Menunggu Jadwal Internal Sharing </div>
+    </div>
+    <div class="col-lg-2 col-4" style="text-align: center;">
+        <input type="checkbox" id="evaluasi" name="vehicle1" class="largerCheckbox">
+        <div class="divFont"> Menunggu Penilaian Evaluasi Training </div>
+    </div>
+</div>

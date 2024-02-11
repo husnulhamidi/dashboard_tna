@@ -190,6 +190,7 @@ $route['tna/pengawalan/ditolak']    = 'tna/pengawalan/ditolak';
 $route['tna/pengawalan/disetujui']    = 'tna/pengawalan/disetujui';
 $route['tna/pengawalan/create']    = 'tna/pengawalan/create';
 $route['tna/pengawalan/edit']    = 'tna/pengawalan/edit';
+$route['tna/pengawalan/(:any)/(:any)']    = 'tna/Pengawalan/detail/$i/$1';
 
 
 //=====================================================================================================================
@@ -235,6 +236,7 @@ $route['tna/setting-ttd/getDataDropdown']    = 'tna/SettingTTD/getDataDropdown';
 $route['tna']    = 'tna/tna';
 $route['tna/edit/(:any)']    = 'tna/tna/edit/$1';
 $route['tna/detail/(:any)']    = 'tna/tna/detail/$1';
+
 
 //=====================================================================================================================
 // library materi

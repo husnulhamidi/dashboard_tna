@@ -16,7 +16,7 @@ class Pengawalan extends CI_Controller {
 	public function index($active_tab="all")
 	{
         $data['breadcrumb'] 	= 'Pengawalan > '.ucwords(str_replace("-"," ",$active_tab));
-        $data['active_menu'] 	= 'pengawalan';
+        $data['active_menu'] 	= 'tna_pengawalan';
 		$data['title'] 			= 'Daftar Pengawalan TNA / NON TNA';
         $data['active_tab'] 	= $active_tab;
 		$data['action_url_submit'] 	= site_url('tna/anggaran/submit');
@@ -32,7 +32,8 @@ class Pengawalan extends CI_Controller {
 			'plugins/datepicker/bootstrap-datepicker.js',
 			'js/jquery.validate.js',
 			'plugins/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js',
-			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js'
+			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js',
+			'js/module/Pengawalan/Pengawalan.js?random='.date("ymdHis"),
 		);
 
         if($active_tab=='verifikasi'){
@@ -45,6 +46,39 @@ class Pengawalan extends CI_Controller {
             $pageindex = 'tna/pengawalan/index';
         }
 
+        $data['active_tab'] = $active_tab;
+		$this->template->load('template',$pageindex,$data);
+	}
+
+	public function detail($id, $active_tab="riwayat_verifikasi"){
+		$data['breadcrumb'] 	= 'Pengawalan > Detail > '.ucwords(str_replace("-"," ",$active_tab));
+        $data['active_menu'] 	= 'tna_pengawalan';
+		$data['title'] 			= 'Detail Pengawalan TNA / NON TNA';
+        $data['active_tab'] 	= $active_tab;
+		$data['action_url_submit'] 	= site_url('tna/anggaran/submit');
+		$data['action_url_update'] 	= site_url('tna/anggaran/update');
+		$data['css'] 			= array(
+			'plugins/sweet-alert/sweetalert.css',
+			'plugins/select2/select2.min.css',
+			'plugins/datepicker/datepicker3.css',
+			'plugins/daterangepicker/daterangepicker-bs3.css'
+		); // css tambahan
+		$data['js']				= array(
+			'plugins/daterangepicker/moment.js',
+			'plugins/sweet-alert/sweetalert.min.js',
+			'plugins/select2/select2.full.min.js',
+			'plugins/datepicker/bootstrap-datepicker.js',
+			'js/jquery.validate.js',
+			'plugins/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js',
+			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js',
+			'js/module/Pengawalan/Pengawalan.js?random='.date("ymdHis"),
+			'plugins/daterangepicker/daterangepicker.js',
+		);
+
+		$pageindex = 'tna/pengawalan/detail';
+
+
+        $data['active_tab'] = $active_tab;
 		$this->template->load('template',$pageindex,$data);
 	}
 
@@ -125,114 +159,7 @@ class Pengawalan extends CI_Controller {
 	}
 
 
-	public function simpan_bank(){
-		$data = array(
-			'nama_bank' => $this->input->post('name_bank'),
-			'alamat1' => $this->input->post('cabang_bank'),
-			'alamat2' => $this->input->post('address_bank'),
-			'jenis_rekening' => $this->input->post('jenis_rek'),
-			'no_rekening' => $this->input->post('norek'),
-		);
-
-		if($this->Bank_model->insert_record_bank($data)){
-
-            $this->session->set_flashdata('message', 'Data Berhasil Di Tambahkan');
-            $this->session->set_flashdata('status', 'success');
-                
-        }else{
-            $this->session->set_flashdata('message', 'Data Gagal Di Tambahkan');
-            $this->session->set_flashdata('status', 'danger');
-        }
-        redirect('bank/data_bank');
-	}
-
-	public function ubah($id_bank=null)
-	{
-		if($id_bank==null || $id_bank=="" ){
-			redirect('bank/data_bank');
-		}
-		
-
-        $data = array();
-        $data['title'] 			= 'Ubah Bank';
-		$data['action'] 		= 'edit';
-		$data['active_menu'] 	= 'edit_bank';
-		$data['action_url'] 	= site_url('bank/save_update/').$id_bank;
-		//$data['list_divisi'] 	= $this->Devisi_model->get_data_devisi();
-		$data['css'] 			= array();
-		$data['js']				= array(	// js tambahan
-			'js/jquery.validate.js',
-        );
-       
-
-		$decrypt_id = decrypt_url($id_bank);
-
-		$bank = $this->Bank_model->get_data_bank_byid($decrypt_id);
-
-		$data['nama_bank'] = $bank->nama_bank;
-		$data['cabang'] = $bank->alamat1;
-		$data['alamat'] = $bank->alamat2;
-		$data['jenis_rekening'] = $bank->jenis_rekening;
-		$data['no_rekening'] = $bank->no_rekening;
-		
-
-		$this->template->load('template','bank/ubah_bank', $data);
-	}
-
-	public function update_bank($id_bank){
 	
-		if($id_bank==null || $id_bank=="" ){
-			redirect('bank/data_bank');
-		}
-
-		$decrypt_id = decrypt_url($id_bank);
-
-
-		
-		$data = array(
-			'nama_bank' => $this->input->post('name_bank'),
-			'alamat1' => $this->input->post('cabang_bank'),
-			'alamat2' => $this->input->post('address_bank'),
-			'jenis_rekening' => $this->input->post('jenis_rek'),
-			'no_rekening' => $this->input->post('norek'),
-		);
-
-		if($this->Bank_model->update_data_bank($data, $decrypt_id)){
-
-			$this->session->set_flashdata('message', 'Data Berhasil Di Perbaharui');
-            $this->session->set_flashdata('status', 'success');
-
-                
-        }else{
-            $this->session->set_flashdata('message', 'Data Gagal Di Perbaharui');
-            $this->session->set_flashdata('status', 'danger');
-        }
-        redirect('bank/data_bank');
-
-	}
-
-	public function delete_bank(){
-		$decrypt_id = decrypt_url($this->input->post('data'));
-
-		if ($this->Bank_model->delete_bank_byid($decrypt_id) === FALSE){
-			$message="Delete invoice gagal!";
-			$status=true;
-			$rc="0005";
-		}else{
-			$message="Delete invoice Berhasil";
-			$status=false;
-			$rc="0000";
-		}
-
-
-		$this->session->set_flashdata('message', $message);
-		$this->session->set_flashdata('status', $status);
-
-		$data['rc'] = $rc;
-		$data['message'] = $message;
-
-		echo json_encode($data);
-	}
 }
 
 /* End of file bank.php */

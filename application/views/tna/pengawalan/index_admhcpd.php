@@ -15,7 +15,7 @@
                         <ul class="nav nav-tabs">
                             <?php $this->load->view('tna/pengawalan/header_tab');?>
                             <div class="pull-right">
-                                <a data-toggle='modal' data-target='#ModalFilterUsulan'> 
+                                <a data-toggle='modal' data-target='#modalFilter'> 
                                     <button class="btn btn-grey btn-sm">
                                         <i class="fa fa-filter"></i> Filter
                                     </button>
@@ -40,25 +40,25 @@
                        
                         <div class="row">
                             <div class="col-md-12">
-                                <table  class="table table-striped table-bordered table-hover" id="table-node" cellspacing="0" width="100%">
+                                <table  class="table table-striped table-bordered table-hover" id="table-verifikasi" cellspacing="0" width="100%">
                                     <thead>
                                         
                                         <tr>
                                             <!-- <th width="7%">No</th> -->
-                                            <th>ID TNA</th>
-                                            <th>Nama Karyawan</th>
-                                            <th>Subdit/Unit</th>
-                                            <th>Status Karyawan</th>
-                                            <th>Kompetensi</th>
-                                            <th>Jenis Dev. Karyawan</th>
-                                            <th>Pelatihan/Sertifikasi</th>
-                                            <th>Justifikasi Pengajuan</th>
-                                            <th>Metode Pembelajaran</th>
-                                            <th>Estimasi Biaya</th>
-                                            <th>Nama Penyelenggara</th>
-                                            <th>Waktu Pelaksanaan</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            <th class="text-center text-nowrap">ID TNA</th>
+                                            <th class="text-center text-nowrap">Nama Karyawan</th>
+                                            <th class="text-center text-nowrap">Subdit/Unit</th>
+                                            <th class="text-center text-nowrap">Status Karyawan</th>
+                                            <th class="text-center text-nowrap">Kompetensi</th>
+                                            <th class="text-center text-nowrap">Jenis Dev. Karyawan</th>
+                                            <th class="text-center text-nowrap">Pelatihan/Sertifikasi</th>
+                                            <th class="text-center text-nowrap">Justifikasi Pengajuan</th>
+                                            <th class="text-center text-nowrap">Metode Pembelajaran</th>
+                                            <th class="text-center text-nowrap">Estimasi Biaya</th>
+                                            <th class="text-center text-nowrap">Nama Penyelenggara</th>
+                                            <th class="text-center text-nowrap">Waktu Pelaksanaan</th>
+                                            <th class="text-center text-nowrap">Status</th>
+                                            <th class="text-center text-nowrap">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>       
@@ -198,7 +198,7 @@
     </div>
     
 </section>
-<?php $this->load->view('tna/usulan/modal_filter');?>
+<?php $this->load->view('tna/pengawalan/modal_filter');?>
 <?php $this->load->view('tna/usulan/modal_riwayat');?>
 <script type="text/javascript">
     

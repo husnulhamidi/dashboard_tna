@@ -32,56 +32,56 @@
                                <div class="col-md-10">: A002 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" style="padding-top:10px">
                             <div class="col-md-12">
                                <label class="col-md-2"> Nama Pelatihan </label>
                                <div class="col-md-10">: Legal Compliance </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" style="padding-top:10px">
                             <div class="col-md-12">
                                <label class="col-md-2"> Objective </label>
                                <div class="col-md-10">: - </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" style="padding-top:10px">
                             <div class="col-md-12">
                                <label class="col-md-2"> Jenis Pelatihan </label>
                                <div class="col-md-10">: Pelatihan </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" style="padding-top:10px">
                             <div class="col-md-12">
                                <label class="col-md-2"> Metode Pembelajaran </label>
                                <div class="col-md-10">: Online </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" style="padding-top:10px">
                             <div class="col-md-12">
                                <label class="col-md-2"> Jenis Pelatihan </label>
                                <div class="col-md-10">: Bussinies Support </div>
                             </div>
                         </div>
                         
-                         <div class="row">
+                         <div class="row" style="padding-top:10px">
                             <div class="col-md-12">
                                <label class="col-md-2"> Kompetensi</label>
                                <div class="col-md-10">: Bussinies Ebaler </div>
                             </div>
                         </div>
-                         <div class="row">
+                         <div class="row" style="padding-top:10px">
                             <div class="col-md-12">
                                <label class="col-md-2"> Nama Penyelenggara </label>
                                <div class="col-md-10">: Hukum Online </div>
                             </div>
                         </div>
-                         <div class="row">
+                         <div class="row" style="padding-top:10px">
                             <div class="col-md-12">
                                <label class="col-md-2"> Area </label>
                                <div class="col-md-10">: Nasional </div>
                             </div>
                         </div>
-                         <div class="row">
+                         <div class="row" style="padding-top:10px">
                             <div class="col-md-12">
                                <label class="col-md-2"> Waktu Pelaksanaan </label>
                                <div class="col-md-10">: 20 Juni 2023 </div>
