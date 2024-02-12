@@ -25,8 +25,10 @@ class Pengawalan extends CI_Controller {
 			'plugins/sweet-alert/sweetalert.css',
 			'plugins/select2/select2.min.css',
 			'plugins/datepicker/datepicker3.css',
+			'plugins/daterangepicker/daterangepicker-bs3.css'
 		); // css tambahan
 		$data['js']				= array(
+			'plugins/daterangepicker/moment.js',
 			'plugins/sweet-alert/sweetalert.min.js',
 			'plugins/select2/select2.full.min.js',
 			'plugins/datepicker/bootstrap-datepicker.js',
@@ -34,6 +36,7 @@ class Pengawalan extends CI_Controller {
 			'plugins/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js',
 			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js',
 			'js/module/Pengawalan/Pengawalan.js?random='.date("ymdHis"),
+			'plugins/daterangepicker/daterangepicker.js',
 		);
 
         if($active_tab=='verifikasi'){
@@ -51,6 +54,7 @@ class Pengawalan extends CI_Controller {
 	}
 
 	public function detail($id, $active_tab="riwayat_verifikasi"){
+		// echo $active_tab;
 		$data['breadcrumb'] 	= 'Pengawalan > Detail > '.ucwords(str_replace("-"," ",$active_tab));
         $data['active_menu'] 	= 'tna_pengawalan';
 		$data['title'] 			= 'Detail Pengawalan TNA / NON TNA';
@@ -74,6 +78,7 @@ class Pengawalan extends CI_Controller {
 			'js/module/Pengawalan/Pengawalan.js?random='.date("ymdHis"),
 			'plugins/daterangepicker/daterangepicker.js',
 		);
+
 
 		$pageindex = 'tna/pengawalan/detail';
 

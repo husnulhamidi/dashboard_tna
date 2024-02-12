@@ -45,7 +45,7 @@ class Tna extends CI_Controller {
         $data['breadcrumb'] 	= 'Tambah';
         $data['title'] 			= 'Tambah TNA';
 		$data['action'] 		= 'add';
-		$data['active_menu'] 	= 'tna';
+		$data['active_menu'] 	= 'tna_tna';
 		$data['action_url'] 	= site_url('tna/anggaran/submit');
 		$data['css'] 			= array(
             'plugins/select2/select2.min.css',
@@ -69,7 +69,7 @@ class Tna extends CI_Controller {
         $data['breadcrumb'] 	= 'Edit';
         $data['title'] 			= 'Edit TNA';
 		$data['action'] 		= 'edit';
-		$data['active_menu'] 	= 'tna';
+		$data['active_menu'] 	= 'tna_tna';
 		$data['action_url'] 	= site_url('tna/anggaran/submit');
 		$data['css'] 			= array(
             'plugins/select2/select2.min.css',
@@ -93,7 +93,7 @@ class Tna extends CI_Controller {
         $data['breadcrumb'] 	= 'Detail';
         $data['title'] 			= 'Detail TNA';
 		$data['action'] 		= 'detail';
-		$data['active_menu'] 	= 'tna';
+		$data['active_menu'] 	= 'tna_tna';
 		$data['action_url'] 	= site_url('tna/anggaran/submit');
 		$data['css'] 			= array(
             'plugins/select2/select2.min.css',

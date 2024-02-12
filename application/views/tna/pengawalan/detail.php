@@ -100,9 +100,9 @@
         </div>
     </div>
 </section>
-<?php $this->load->view('tna/pengawalan/modal_edit_tgl');?>
+<?php $this->load->view('tna/pengawalan/modal_popup/modal_edit_tgl');?>
 <script type="text/javascript">
-    $('#waktu_pelaksanaan').daterangepicker();
+    // $('#waktu_pelaksanaan').daterangepicker();
     function showModalEditTgl(){
         $('#modalEditTgl').modal('show')
     }

@@ -190,7 +190,7 @@ $route['tna/pengawalan/ditolak']    = 'tna/pengawalan/ditolak';
 $route['tna/pengawalan/disetujui']    = 'tna/pengawalan/disetujui';
 $route['tna/pengawalan/create']    = 'tna/pengawalan/create';
 $route['tna/pengawalan/edit']    = 'tna/pengawalan/edit';
-$route['tna/pengawalan/(:any)/(:any)']    = 'tna/Pengawalan/detail/$i/$1';
+$route['tna/pengawalan/(:any)/(:any)']    = 'tna/Pengawalan/detail/$1/$1';
 
 
 //=====================================================================================================================

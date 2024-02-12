@@ -15,7 +15,7 @@
                         <div class="row">
                            <label class="col-md-6"> Jadwal Pelaksanaan</label>
                            <div class="col-md-12">
-                               <div class="input-group">
+                                <div class="input-group">
                                     <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                     <input type="text" class="form-control pull-right" id="waktu_pelaksanaan" name="waktu_pelaksanaan">
                                 </div>
