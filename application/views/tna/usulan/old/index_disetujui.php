@@ -4,9 +4,63 @@
         <div class="col-md-12">
             <?php $this->load->view('layouts/alert'); ?>
             <?php // echo '<pre>'; print_r($this->session->userdata()); ?>
-
-            <?php $this->load->view('tna/usulan/view_dashlet');?>
             
+            <div class="row">
+                <div class="col-lg-2 col-4">
+                    <!-- small card -->
+                    <div class="small-box bg-primary">
+                        <div class="inner text-center">
+                            <h3 center>3</h3>
+                            <p>Draft</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-4">
+                    <!-- small card -->
+                    <div class="small-box bg-primary">
+                        <div class="inner text-center">
+                            <h3>3</h3>
+                            <p>Mgr.Lini</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-4">
+                    <!-- small card -->
+                    <div class="small-box bg-primary">
+                        <div class="inner text-center">
+                            <h3>5</h3>
+                            <p>Admin HCPD</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-4">
+                    <!-- small card -->
+                    <div class="small-box bg-primary">
+                        <div class="inner text-center">
+                            <h3>5</h3>
+                            <p>Mgr. HCPD</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-4">
+                    <!-- small card -->
+                    <div class="small-box bg-primary">
+                        <div class="inner text-center">
+                            <h3>3</h3>
+                            <p>AVP HCPD</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-4">
+                    <!-- small card -->
+                    <div class="small-box bg-primary">
+                        <div class="inner text-center">
+                            <h3>5</h3>
+                            <p>VP HCPD</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="nav-tabs-custom-aqua">
                 <div class="box box-info">
                     
@@ -16,7 +70,7 @@
                         <ul class="nav nav-tabs">
                             <?php $this->load->view('tna/usulan/header_tab');?>
                             <div class="pull-right">
-                                <a data-toggle='modal' data-target='#ModalFilterUsulan'> 
+                                <a data-toggle='modal' data-target='#upload_excel_node'> 
                                     <button class="btn btn-grey btn-sm">
                                         <i class="fa fa-filter"></i> Filter
                                     </button>
@@ -41,105 +95,27 @@
                        
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="table-responsive">
-                                <table  class="table table-striped table-bordered table-hover" id="table-usulan-tna" cellspacing="0" width="100%">
+                                <table  class="table table-striped table-bordered table-hover" id="table-node" cellspacing="0" width="100%">
                                     <thead>
-                                        
                                         <tr>
                                             <!-- <th width="7%">No</th> -->
-                                            <th>Action</th>
-                                            <th>Status</th>
                                             <th>ID TNA</th>
                                             <th>Nama Karyawan</th>
                                             <th>Subdit/Unit</th>
-                                            <th>TNA</th>
-                                            <th>Jenis Pelatihan/Sertifikasi</th>
+                                            <th>Status Karyawan</th>
                                             <th>Kompetensi</th>
                                             <th>Jenis Dev. Karyawan</th>
+                                            <th>Pelatihan/Sertifikasi</th>
                                             <th>Justifikasi Pengajuan</th>
                                             <th>Metode Pembelajaran</th>
                                             <th>Estimasi Biaya</th>
-                                            <th>Status Karyawan</th>
                                             <th>Nama Penyelenggara</th>
                                             <th>Waktu Pelaksanaan</th>
-                                            
-                                            
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>       
-                                    <!-- <tr>
-                                            <td>S0001001</td>
-                                            <td>8673444-Indah</td>
-                                            <td>Corporate Secretary</td>
-                                            <td>FTE</td>
-                                            <td>Busines Enabler</td>
-                                            <td>Sertifikasi</td>
-                                            <td>CTNA</td>
-                                            <td>-</td>
-                                            <td>Offline</td>
-                                            <td>Rp.2.000.000</td>
-                                            <td>Gajayana</td>
-                                            <td>Februari 2023</td>
-                                            <td>
-                                                Belum diusulkan <br>
-                                                <i class="fa fa-circle-o">
-                                                <i class="fa fa-circle-o">
-                                                <i class="fa fa-circle-o">
-                                                <i class="fa fa-circle-o">
-                                            
-
-                                            </td>
-                                            <td>
-                                                <div class="btn-group">
-                                                <button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle" data-toggle="dropdown" style="width: 80px;">
-                                                    Action  <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" role="menu">
-                                                    <li><a class="usulkantna">Usulkan</a></li>
-                                                   
-                                                    <li><a href="">Riwayat</a></li>
-                                                    <li><a href="">Edit</a></li>
-                                                    <li><a href="#" class="delete-tna">Hapus</a></li>
-                                                </ul>
-                                                </div>
-                                            </td>
-                                        </tr>  
-                                        <tr>
-                                            <td>P0002001</td>
-                                            <td>86744666-Firman</td>
-                                            <td>IT & Development</td>
-                                            <td>FTE</td>
-                                            <td>Busines Enabler</td>
-                                            <td>Pelatihan</td>
-                                            <td>Scrum Master</td>
-                                            <td>-</td>
-                                            <td>Online</td>
-                                            <td>Rp.1.000.000</td>
-                                            <td>Guruku</td>
-                                            <td>Mei 2023</td>
-                                            <td>
-                                                Menunggu verifikasi Mgr.Lini <br>
-                                                <i class="fa fa-check-circle text-success"></i>
-                                                <i class="fa fa-circle-o"></i>
-                                                <i class="fa fa-circle-o"></i>
-                                                <i class="fa fa-circle-o"></i>
-
-                                            </td>
-                                            <td>
-                                                <div class="btn-group">
-                                                <button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle" data-toggle="dropdown" style="width: 80px;">
-                                                    Action  <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" role="menu">
-                                                   
-                                                    <li><a href="">Detail</a></li>
-                                                    <li><a href="">Riwayat</a></li>
-                                                    <li><a href="">Edit</a></li>
-                                                    <li><a href="">Hapus</a></li>
-                                                </ul>
-                                                </div>
-                                            </td>
-                                        </tr>                           
+                                    <tbody>                                    
                                         <tr>
                                             <td>P0001001</td>
                                             <td>8674474-Citra Dewi</td>
@@ -154,12 +130,12 @@
                                             <td>Gajayana</td>
                                             <td>Maret 2023</td>
                                             <td>
-                                                Menunggu verifikasi admin HCPD <br>
+                                                Selesai <br>
                                                 <i class="fa fa-check-circle text-success"></i>
                                                 <i class="fa fa-check-circle text-success"></i>
-                                                <i class="fa fa-circle-o">
-                                                <i class="fa fa-circle-o">
-                                                <i class="fa fa-circle-o">
+                                                <i class="fa fa-check-circle text-success"></i>
+                                                <i class="fa fa-check-circle text-success"></i>
+                                                <i class="fa fa-check-circle text-success"></i>
 
                                             </td>
                                             <td>
@@ -168,22 +144,94 @@
                                                     Action  <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu" role="menu">
-                                                    <li><a href="javascript;">Usulkan</a></li>
-                                                    <li><a href="javascript;">Detail</a></li>
-                                                    <li><a href="javascript;" data-toggle='modal' data-target='#ModalRiwayatUsulan'>Riwayat</a></li>
-                                                    <li><a href="javascript;">Edit</a></li>
-                                                    <li><a href="javascript;">Hapus</a></li>
+                                                    <li>Usulkan</li>
+                                                    <li>Detail</li>
+                                                    <li>Riwayat</li>
+                                                    <li>Edit</li>
+                                                    <li>Hapus</li>
                                                 </ul>
                                                 </div>
                                             </td>
-                                        </tr> -->
+                                        </tr>
 
-                                        
+                                        <tr>
+                                            <td>P0002001</td>
+                                            <td>86744666-Firman</td>
+                                            <td>IT & Development</td>
+                                            <td>FTE</td>
+                                            <td>Busines Enabler</td>
+                                            <td>Pelatihan</td>
+                                            <td>Scrum Master</td>
+                                            <td>-</td>
+                                            <td>Online</td>
+                                            <td>Rp.1.000.000</td>
+                                            <td>Guruku</td>
+                                            <td>Mei 2023</td>
+                                            <td>
+                                                Selesai <br>
+                                                <i class="fa fa-check-circle text-success"></i>
+                                                <i class="fa fa-check-circle text-success"></i>
+                                                <i class="fa fa-check-circle text-success"></i>
+                                                <i class="fa fa-check-circle text-success"></i>
+                                                <i class="fa fa-check-circle text-success"></i>
 
-                                       
+                                            </td>
+                                            <td>
+                                                <div class="btn-group">
+                                                <button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle" data-toggle="dropdown" style="width: 80px;">
+                                                    Action  <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li>Usulkan</li>
+                                                    <li>Detail</li>
+                                                    <li>Riwayat</li>
+                                                    <li>Edit</li>
+                                                    <li>Hapus</li>
+                                                </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>S0001001</td>
+                                            <td>8673444-Indah</td>
+                                            <td>Corporate Secretary</td>
+                                            <td>FTE</td>
+                                            <td>Busines Enabler</td>
+                                            <td>Sertifikasi</td>
+                                            <td>CTNA</td>
+                                            <td>-</td>
+                                            <td>Offline</td>
+                                            <td>Rp.2.000.000</td>
+                                            <td>Gajayana</td>
+                                            <td>Februari 2023</td>
+                                            <td>
+                                                Selesai <br>
+                                                <i class="fa fa-check-circle text-success"></i>
+                                                <i class="fa fa-check-circle text-success"></i>
+                                                <i class="fa fa-check-circle text-success"></i>
+                                                <i class="fa fa-check-circle text-success"></i>
+                                                <i class="fa fa-check-circle text-success"></i>
+                                               
+                                              
+                                            </td>
+                                            <td>
+                                                <div class="btn-group">
+                                                <button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle" data-toggle="dropdown" style="width: 80px;">
+                                                    Action  <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li>Usulkan</li>
+                                                    <li>Detail</li>
+                                                    <li>Riwayat</li>
+                                                    <li>Edit</li>
+                                                    <li>Hapus</li>
+                                                </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
-                                </div>
                             </div>
                         </div>
                        
@@ -198,66 +246,42 @@
     </div>
     
 </section>
-<?php $this->load->view('tna/usulan/modal_filter');?>
-<?php $this->load->view('tna/usulan/modal_riwayat');?>
-<?php $this->load->view('tna/usulan/modal_form_usulkan');?>
-<?php $this->load->view('tna/usulan/modal_form_verifikasi');?>
+
 <script type="text/javascript">
     
     $(document).ready(function(){
-        
-        var data_project = "1";
+        $('#table-generate').DataTable();
 
-        $(document).on("click",".usulkantna",function(){
-            //var encrypt = this.value;
-            
-            swal({
-                title: "Anda yakin akan mengusulkan pengajuan TNA ini ?",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#00c0ef",
-                confirmButtonText: "Ya, Usulkan!",
-                closeOnConfirm: false
-            }, function () {
+        var data_project = "<?= $id_project;?>";
+      oTable = $('#table-node').DataTable({
+            processing: true, 
+            serverSide: true, 
+            order: [], 
+            ajax: {
+                url : "<?php echo site_url("node/get-data-node") ?>",
+                type : 'get',
+                data:{
+                    data: data_project
+                } 
 
-                $.ajax({
-                    type : "POST",
-                    url  : "<?php echo base_url();?>node/delete/",
-                    dataType: "JSON",
-                    data : "data="+encrypt,
-                    success:function(data){
-                        
-                        if(data.rc=='0000'){
-                            setTimeout(function() {
-                                swal({
-                                    title: "Notification!",
-                                    text: "Success Delete Data",
-                                    imageUrl: '<?= base_url("assets/img/success.png");?>'
-                                }, function() {
-                                   oTable.ajax.reload();
-                                });
-                            }, 1000);
-                        }else{
-                            setTimeout(function() {
-                                swal({
-                                    title: "Notification!",
-                                    text: "Delete Failed",
-                                    imageUrl: '<?= base_url("assets/img/danger-red2.png");?>'
-                                }, function() {
-                                     oTable.ajax.reload();
-                                });
-                            }, 1000);
-                        }
-                        
-                    }
 
-                });
-               
-            });
-                
+            },
+            columnDefs: [
+                {
+                    targets: [5,6,7],
+                    orderable: false,
+                    className: 'text-left',
+
+                },{
+                    targets: [8],
+                    orderable: false,
+                    className: 'text-center',
+
+                }
+
+            ],
         });
-
-        $(document).on("click",".delete-tna",function(){
+        $(document).on("click",".hapus-node",function(){
             var encrypt = this.value;
             
             swal({
@@ -306,7 +330,49 @@
                 
         });
 
-        
+        $(document).on("click",".btn-simpan-generate",function(){
+ 
+            var project_id = this.value;
+            $.ajax({
+                type : "POST",
+                url  : "<?php echo base_url();?>node/simpan_generate_tagihan/",
+                dataType: "JSON",
+                data : "data="+project_id,
+                success:function(response){
+                    console.log(response.rc);
+
+                     if(response.rc=='0000'){
+                            setTimeout(function() {
+                                swal({
+                                    title: "Notification!",
+                                    text: "Success simpan tagihan",
+                                    imageUrl: '<?= base_url("assets/img/success.png");?>'
+                                }, function() {
+                                   window.location.href = "<?= site_url('tagihan/data_tagihan/'.$id_project);?>";
+                                });
+                            }, 1000);
+                        }else{
+                            setTimeout(function() {
+                                swal({
+                                    title: "Notification!",
+                                    text: "Gagal simpan tagihan",
+                                    imageUrl: '<?= base_url("assets/img/danger-red2.png");?>'
+                                }, function() {
+                                    location.reload();
+                                });
+                            }, 1000);
+                        }
+                    /*console.log(JSON.parse(response));*/
+                    /*$.each(JSON.parse(response), function( index, item ) {*/
+                        //console.log(item.rc);
+                        /*$('#div-tagihan-temp').html(response.output);
+                        $('.tagihan-temp').show();*/
+                        
+                    //});
+                    
+                }
+            });
+        });
 
         $(document).on("click",".btn-update",function(){
             $('#edit-deskripsi').val($(this).attr('data-deskripsi'));

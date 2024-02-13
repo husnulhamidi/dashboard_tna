@@ -93,7 +93,7 @@
                                             <label class="col-sm-3 control-label">Justifikasi Pengajuan</label>
                                             <div class="col-sm-7">
                                                 <textarea type="text"  name="jenis_rek" id="jenis_rek"  class="form-control input-sm" >
-                                                    Untuk memahami pengelolaan asset telkomsat
+                                                    Untuk memahami pengelolaan asset 
                                                 </textarea>
                                             </div>
                                         </div>

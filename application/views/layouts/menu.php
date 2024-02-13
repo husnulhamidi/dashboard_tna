@@ -49,11 +49,11 @@ $sess = $this->session->userdata();
 
       
          
-        <!-- <li class="<?php echo $active_menu=='usulan_tna'? 'active':'';?>">
+        <li class="<?php echo $active_menu=='usulan_tna'? 'active':'';?>">
             <a href="<?php echo site_url('tna/usulan'); ?>">
                 <i class="glyphicon glyphicon-file"></i> <span>Usulan TNA</span>
             </a>
-        </li> -->
+        </li> 
 
         <!-- <li class="<?php echo $active_menu=='dashboard'? 'active':'';?>">
             <a href="<?php echo site_url('tna/home'); ?>">

@@ -6,12 +6,15 @@ class Usulan extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		if(!$this->session->userdata('user')){
-			redirect('auth/login');
-		}
+		// if(!$this->session->userdata('user')){
+		// 	redirect('auth/login');
+		// }
 		// if ($this->ion_auth->logged_in() != true) {
         //     Redirect(baseapplicationhcm, false);
         // }
+
+		//$this->sess = unserialize($this->session->userdata('tna'));
+		//$this->sessi = $this->session->userdata('session');
 		
 		$this->load->model(array(
             'lokasi_akun_model',
@@ -24,13 +27,13 @@ class Usulan extends CI_Controller {
 	public function index($active_tab="all")
 	{
         $data['breadcrumb'] 	= 'Usulan > '.ucwords(str_replace("-"," ",$active_tab));
-        $data['active_menu'] 	= 'usulan_tna';
+        $data['active_menu'] 	= 'Usulan TNA';
 		$data['title'] 			= 'Daftar Usulan';
         $data['active_tab'] 	= $active_tab;
 		$data['action_url_submit'] 	= site_url('tna/anggaran/submit');
 		$data['action_url_update'] 	= site_url('tna/anggaran/update');
-		$data['sess'] 			= @$this->session->userdata('session');
-		$data['subdit'] 		= $this->lokasi_akun_model->viewall_subdit()->result();
+		$data['sess'] 			= $this->session->userdata('session');
+		$data['subdit'] = $this->lokasi_akun_model->viewall_subdit()->result();
 		$data['css'] 			= array(
 			'plugins/sweet-alert/sweetalert.css',
 			'plugins/select2/select2.min.css',
@@ -43,16 +46,22 @@ class Usulan extends CI_Controller {
 			'js/jquery.validate.js',
 			'plugins/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js',
 			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js',
-			'js/module/usulan/listTNA.js',
-			'js/module/usulan/UsulanTNA.js',
+			'js/module/usulan/listTNA.js?random='.date("ymdHis"),
+			'js/module/usulan/UsulanTNA.js?random='.date("ymdHis"),
+			'js/module/usulan/verifikasi.js?random='.date("ymdHis"),
 		);
 
         if($active_tab=='proses-verifikasi'){
             $pageindex = 'tna/usulan/index_proses_verifikasi';
         }
         else if($active_tab=='verifikasi'){
-            $pageindex = 'tna/usulan/index_verifikasi_admhcpd';
-            //$pageindex = 'tna/usulan/index_verifikasi';
+			if(strtolower($this->sess['role']['name'])=='Admin Unit' OR strtolower($this->sess['role']['name'])=='manager unit lini' OR strtolower($this->sess['role']['name'])=='manager unit'){
+				$pageindex = 'tna/usulan/index_verifikasi';
+			}else{
+				//$pageindex = 'tna/usulan/index_verifikasi_admhcpd';
+				$pageindex = 'tna/usulan/index_verifikasi';
+			}
+            
         }
         else if($active_tab=='ditolak'){
             $pageindex = 'tna/usulan/index_ditolak';
@@ -68,7 +77,7 @@ class Usulan extends CI_Controller {
     public function manager($active_tab="all")
 	{
         $data['breadcrumb'] 	= 'Usulan > '.ucwords(str_replace("-"," ",$active_tab));
-        $data['active_menu'] 	= 'usulan_tna';
+        $data['active_menu'] 	= 'Usulan TNA';
 		$data['title'] 			= 'Daftar Usulan';
         $data['active_tab'] 	= $active_tab;
 		$data['action_url_submit'] 	= site_url('tna/anggaran/submit');
@@ -113,7 +122,7 @@ class Usulan extends CI_Controller {
         $data['breadcrumb'] 	= 'Usulan > Tambah';
         $data['title'] 			= 'Tambah Usulan';
 		$data['action'] 		= 'add';
-		$data['active_menu'] 	= 'usulan_tna';
+		$data['active_menu'] 	= 'Usulan TNA';
 		$data['submit_url'] 	= site_url('tna/usulan/submit');
 		$data['sess'] 			= $this->session->userdata('session');
 		$data['subdit'] 		= $this->lokasi_akun_model->viewall_subdit()->result();
@@ -136,7 +145,7 @@ class Usulan extends CI_Controller {
 			'js/jquery.validate.js',
 			'plugins/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js',
 			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js',
-			'js/module/usulan/UsulanTNA.js',
+			'js/module/usulan/UsulanTNA.js?random='.date("ymdHis"),
             
         );
 		
@@ -227,6 +236,106 @@ class Usulan extends CI_Controller {
 		}
 		
 		
+	}
+
+	public function submit_usulkan(){
+		try {
+			$usulan_id = decrypt_url($this->input->post('usulan_id'));
+			$check = $this->UsulanTnaModel->get_data_byid($usulan_id);
+			$tahapan = $this->UsulanTnaModel->get_tahapan_id(2,"Usulan TNA");
+			$data =array(
+				"tahapan_id"=>@$tahapan['r_tahapan_usulan_id']
+			);
+			$update = $this->UsulanTnaModel->update($data,$usulan_id);
+			if($update){
+				$h_usualan_id = $this->UsulanTnaModel->insert_h_usulan($tahapan['r_jenis_usulan_id'],$this->sessi['biodata_detail']->id);
+				$data = array(
+					"tgl" =>date("Y-m-d H:i:s"),
+					"keterangan" =>"Usulkan TNA",
+					"h_usulan_id" =>$h_usualan_id,
+					"r_tahapan_usulan_id" =>@$tahapan['r_tahapan_usulan_id'],
+					"m_karyawan_id" =>$this->sessi['biodata_detail']->id
+				);
+				$this->UsulanTnaModel->insert_h_riwayat_usulan($data);
+
+				$return = array(
+					'success'		=> true,
+					'status_code'	=> 200,
+					'msg'			=> "Data berhasil di simpan.",
+					'data'			=> array()
+				);
+			}else{
+				$return = array(
+					'success'		=> false,
+					'status_code'	=> 500,
+					'msg'			=> "Data gagal di simpan.",
+					'data'			=> array()
+				);
+			}
+
+			echo json_encode($return);
+
+		} catch (\Throwable $th) {
+			$return = array(
+				'success'		=> false,
+				'status_code'	=> 500,
+				'msg'			=> $th->getMessage(),
+				'data'			=> array()
+			);
+		
+			echo json_encode($return);
+		}
+	}
+
+	public function submit_verifikasi(){
+		try {
+			$usulan_id = decrypt_url($this->input->post('verifikasi_usulan_id'));
+			$check = $this->UsulanTnaModel->get_data_byid($usulan_id);
+			$urutan = $check['data']->urutan+1;
+			$tahapan = $this->UsulanTnaModel->get_tahapan_id($urutan,"Usulan TNA");
+			//echo json_encode($tahapan);die;
+			$data =array(
+				"tahapan_id"=>@$tahapan['r_tahapan_usulan_id']
+			);
+			$update = $this->UsulanTnaModel->update($data,$usulan_id);
+			if($update){
+				$h_usualan_id = $this->UsulanTnaModel->insert_h_usulan($tahapan['r_jenis_usulan_id'],$this->sessi['biodata_detail']->id);
+				$data = array(
+					"tgl" =>date("Y-m-d H:i:s"),
+					"keterangan" =>$this->input->post('keterangan'),
+					"h_usulan_id" =>$h_usualan_id,
+					"r_tahapan_usulan_id" =>@$tahapan['r_tahapan_usulan_id'],
+					"m_karyawan_id" =>$this->sessi['biodata_detail']->id
+				);
+				$this->UsulanTnaModel->insert_h_riwayat_usulan($data);
+
+				$return = array(
+					'success'		=> true,
+					'status_code'	=> 200,
+					'msg'			=> "Data berhasil di simpan.",
+					'data'			=> array()
+				);
+			}else{
+				$return = array(
+					'success'		=> false,
+					'status_code'	=> 500,
+					'msg'			=> "Data gagal di simpan.",
+					'data'			=> array()
+				);
+			}
+
+			echo json_encode($return);
+
+		} catch (\Throwable $th) {
+			$return = array(
+				'success'		=> false,
+				'status_code'	=> 500,
+				'msg'			=> $th->getMessage(),
+				'data'			=> array()
+			);
+		
+			echo json_encode($return);
+		}
 	}
 
 

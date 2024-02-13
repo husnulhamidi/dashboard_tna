@@ -5,62 +5,8 @@
             <?php $this->load->view('layouts/alert'); ?>
             <?php // echo '<pre>'; print_r($this->session->userdata()); ?>
             
-            <div class="row">
-                <div class="col-lg-2 col-4">
-                    <!-- small card -->
-                    <div class="small-box bg-primary">
-                        <div class="inner text-center">
-                            <h3 center>3</h3>
-                            <p>Draft</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-4">
-                    <!-- small card -->
-                    <div class="small-box bg-primary">
-                        <div class="inner text-center">
-                            <h3>3</h3>
-                            <p>Mgr.Lini</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-4">
-                    <!-- small card -->
-                    <div class="small-box bg-primary">
-                        <div class="inner text-center">
-                            <h3>5</h3>
-                            <p>Admin HCPD</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-4">
-                    <!-- small card -->
-                    <div class="small-box bg-primary">
-                        <div class="inner text-center">
-                            <h3>5</h3>
-                            <p>Mgr. HCPD</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-4">
-                    <!-- small card -->
-                    <div class="small-box bg-primary">
-                        <div class="inner text-center">
-                            <h3>3</h3>
-                            <p>AVP HCPD</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-4">
-                    <!-- small card -->
-                    <div class="small-box bg-primary">
-                        <div class="inner text-center">
-                            <h3>5</h3>
-                            <p>VP HCPD</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php $this->load->view('tna/usulan/view_dashlet');?>
+
             <div class="nav-tabs-custom-aqua">
                 <div class="box box-info">
                     
@@ -116,7 +62,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>                                    
-                                        <tr>
+                                        <!-- <tr>
                                             <td>P0001001</td>
                                             <td>8674474-Citra Dewi</td>
                                             <td>Corporate Secretary</td>
@@ -229,7 +175,7 @@
                                                 </ul>
                                                 </div>
                                             </td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>

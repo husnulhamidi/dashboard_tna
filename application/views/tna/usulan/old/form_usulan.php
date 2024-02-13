@@ -26,65 +26,76 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Subdit/Unit</label>
+                                            <label class="col-sm-3 control-label">Direktorat</label>
                                             <div class="col-sm-7">
-                                                Service Management & Operation
+                                                <select class="select2 form-control" name="pilih_produk" id="edit-pilih_produk">
+                                                    <option value="1">Pilih Direktorat ....?</option>
+                                                   
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Sub Unit</label>
+                                            <label class="col-sm-3 control-label">Subdit/Unit</label>
                                             <div class="col-sm-7">
-                                                Information Technology & Cyber Security
+                                                <select class="select2 form-control" name="pilih_produk" id="edit-pilih_produk">
+                                                    <option value="1">Pilih Subdit/Unit ....?</option>
+                                                   
+                                                </select>
                                             </div>
                                         </div>
-                                        
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Bidang</label>
                                             <div class="col-sm-7">
-                                                IT Enterprise & Automation System
+                                                <select class="select2 form-control" name="pilih_produk" id="edit-pilih_produk">
+                                                    <option value="1">Pilih Bidang ....?</option>
+                                                   
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Nama Karyawan</label>
                                             <div class="col-sm-7">
-                                                Wendi Maksalmina 
+                                                <select class="select2 form-control" name="pilih_produk" id="edit-pilih_produk">
+                                                    <option value="1">Pilih Karyawan ....?</option>
+                                                   
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Posisi</label>
                                             <div class="col-sm-7">
-                                                Officer 1 IT Enterprise & Automation System
+                                                <input  readonly class="form-control" name="pilih_produk" id="edit-pilih_produk"> 
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Status Karyawan</label>
                                             <div class="col-sm-7">
-                                               FTE
+                                                <input  readonly class="form-control" name="pilih_produk" id="edit-pilih_produk"> 
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Kompetensi</label>
                                             <div class="col-sm-7">
                                                 <select class="select2 form-control" name="pilih_produk" id="edit-pilih_produk">
-                                                    <option value="1">IT ASSET LIFECYCLE MANAGEMENT</option>
+                                                    <option value="1">Pilih Kompetensi ....?</option>
                                                    
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Kategori Pelatihan</label>
+                                            <label class="col-sm-3 control-label">Jenis Development Karyawan</label>
                                             <div class="col-sm-7">
                                                 <select class="select2 form-control" name="pilih_produk" id="edit-pilih_produk">
-                                                    <option value="1">Pelatihan</option>
+                                                    <option value="1">Pilih Jenis development Karyawan ....?</option>
                                                    
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Nama Pelatihan</label>
+                                            <label class="col-sm-3 control-label">Nama Pelatihan / Sertifikasi</label>
                                             <div class="col-sm-7">
                                                 <select class="select2 form-control" name="pilih_produk" id="edit-pilih_produk">
-                                                    <option value="1">Pelatihan IT Asset Lifecircle Management</option>
+                                                    <option value="1">Pilih Pelatihan/Sertifikasi ....?</option>
                                                    
                                                 </select>
                                             </div>
@@ -92,35 +103,33 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Justifikasi Pengajuan</label>
                                             <div class="col-sm-7">
-                                                <textarea type="text"  name="jenis_rek" id="jenis_rek"  class="form-control input-sm" >
-                                                    Untuk memahami pengelolaan asset telkomsat
-                                                </textarea>
+                                                <textarea type="text"  name="jenis_rek" id="jenis_rek"  class="form-control input-sm" ></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Metode Pembelajaran</label>
                                             <div class="col-sm-7">
                                                 <select class="select2 form-control" name="pilih_produk" id="edit-pilih_produk">
-                                                    <option value="1">Offline</option>
+                                                    <option value="1">Pilih ....?</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Estimasi Biaya</label>
                                             <div class="col-sm-7">
-                                                <input  class="form-control" name="pilih_produk" id="edit-pilih_produk" value="1.000.000"> 
+                                                <input  class="form-control" name="pilih_produk" id="edit-pilih_produk"> 
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Nama Penyelenggara</label>
                                             <div class="col-sm-7">
-                                                <input  class="form-control" name="pilih_produk" id="edit-pilih_produk" value="Pusditlat Telkom"> 
+                                                <input  class="form-control" name="pilih_produk" id="edit-pilih_produk"> 
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Waktu Pelaksanaan</label>
                                             <div class="col-sm-7">
-                                                <input type="date"  class="form-control" name="pilih_produk" id="edit-pilih_produk" value="2024-02-10"> 
+                                                <input  class="form-control" name="pilih_produk" id="edit-pilih_produk"> 
                                             </div>
                                         </div>
 

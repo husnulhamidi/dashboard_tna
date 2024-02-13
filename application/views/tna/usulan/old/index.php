@@ -4,9 +4,63 @@
         <div class="col-md-12">
             <?php $this->load->view('layouts/alert'); ?>
             <?php // echo '<pre>'; print_r($this->session->userdata()); ?>
-
-            <?php $this->load->view('tna/usulan/view_dashlet');?>
             
+            <div class="row">
+                <div class="col-lg-2 col-4">
+                    <!-- small card -->
+                    <div class="small-box bg-primary">
+                        <div class="inner text-center">
+                            <h3>1</h3>
+                            <p>Draft</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-4">
+                    <!-- small card -->
+                    <div class="small-box bg-primary">
+                        <div class="inner text-center">
+                            <h3>2</h3>
+                            <p>Mgr.Lini</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-4">
+                    <!-- small card -->
+                    <div class="small-box bg-primary">
+                        <div class="inner text-center">
+                            <h3>5</h3>
+                            <p>Admin HCPD</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-4">
+                    <!-- small card -->
+                    <div class="small-box bg-primary">
+                        <div class="inner text-center">
+                            <h3>5</h3>
+                            <p>Mgr. HCPD</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-4">
+                    <!-- small card -->
+                    <div class="small-box bg-primary">
+                        <div class="inner text-center">
+                            <h3>3</h3>
+                            <p>AVP HCPD</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-4">
+                    <!-- small card -->
+                    <div class="small-box bg-primary">
+                        <div class="inner text-center">
+                            <h3>5</h3>
+                            <p>VP HCPD</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="nav-tabs-custom-aqua">
                 <div class="box box-info">
                     
@@ -41,33 +95,29 @@
                        
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="table-responsive">
-                                <table  class="table table-striped table-bordered table-hover" id="table-usulan-tna" cellspacing="0" width="100%">
+                                <table  class="table table-striped table-bordered table-hover" id="table-node" cellspacing="0" width="100%">
                                     <thead>
                                         
                                         <tr>
                                             <!-- <th width="7%">No</th> -->
-                                            <th>Action</th>
-                                            <th>Status</th>
                                             <th>ID TNA</th>
                                             <th>Nama Karyawan</th>
                                             <th>Subdit/Unit</th>
-                                            <th>TNA</th>
-                                            <th>Jenis Pelatihan/Sertifikasi</th>
+                                            <th>Status Karyawan</th>
                                             <th>Kompetensi</th>
                                             <th>Jenis Dev. Karyawan</th>
+                                            <th>Pelatihan/Sertifikasi</th>
                                             <th>Justifikasi Pengajuan</th>
                                             <th>Metode Pembelajaran</th>
                                             <th>Estimasi Biaya</th>
-                                            <th>Status Karyawan</th>
                                             <th>Nama Penyelenggara</th>
                                             <th>Waktu Pelaksanaan</th>
-                                            
-                                            
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>       
-                                    <!-- <tr>
+                                    <tr>
                                             <td>S0001001</td>
                                             <td>8673444-Indah</td>
                                             <td>Corporate Secretary</td>
@@ -86,7 +136,13 @@
                                                 <i class="fa fa-circle-o">
                                                 <i class="fa fa-circle-o">
                                                 <i class="fa fa-circle-o">
-                                            
+                                               
+                                                <!-- <i class="fa fa-check-circle-o"></i>
+                                                <i class="fa fa-check-circle-o"></i>
+                                                <i class="fa fa-check-circle-o"></i>
+                                                <i class="fa fa-check-circle-o"></i>
+                                                <i class="fa fa-check-circle-o"></i>
+                                                <i class="fa fa-check-circle-o"></i> -->
 
                                             </td>
                                             <td>
@@ -96,7 +152,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu" role="menu">
                                                     <li><a class="usulkantna">Usulkan</a></li>
-                                                   
+                                                    <!-- <li><a href="">Detail</a></li> -->
                                                     <li><a href="">Riwayat</a></li>
                                                     <li><a href="">Edit</a></li>
                                                     <li><a href="#" class="delete-tna">Hapus</a></li>
@@ -131,7 +187,7 @@
                                                     Action  <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu" role="menu">
-                                                   
+                                                    <!-- <li>Usulkan</li> -->
                                                     <li><a href="">Detail</a></li>
                                                     <li><a href="">Riwayat</a></li>
                                                     <li><a href="">Edit</a></li>
@@ -168,7 +224,7 @@
                                                     Action  <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu" role="menu">
-                                                    <li><a href="javascript;">Usulkan</a></li>
+                                                    <!-- <li><a href="javascript;">Usulkan</a></li> -->
                                                     <li><a href="javascript;">Detail</a></li>
                                                     <li><a href="javascript;" data-toggle='modal' data-target='#ModalRiwayatUsulan'>Riwayat</a></li>
                                                     <li><a href="javascript;">Edit</a></li>
@@ -176,14 +232,13 @@
                                                 </ul>
                                                 </div>
                                             </td>
-                                        </tr> -->
+                                        </tr>
 
                                         
 
                                        
                                     </tbody>
                                 </table>
-                                </div>
                             </div>
                         </div>
                        
@@ -200,13 +255,40 @@
 </section>
 <?php $this->load->view('tna/usulan/modal_filter');?>
 <?php $this->load->view('tna/usulan/modal_riwayat');?>
-<?php $this->load->view('tna/usulan/modal_form_usulkan');?>
-<?php $this->load->view('tna/usulan/modal_form_verifikasi');?>
 <script type="text/javascript">
     
     $(document).ready(function(){
-        
+        $('#table-generate').DataTable();
+
         var data_project = "1";
+      /*oTable = $('#table-node').DataTable({
+            processing: true, 
+            serverSide: true, 
+            order: [], 
+            ajax: {
+                url : "",
+                type : 'get',
+                data:{
+                    data: data_project
+                } 
+
+
+            },
+            columnDefs: [
+                {
+                    targets: [5,6,7],
+                    orderable: false,
+                    className: 'text-left',
+
+                },{
+                    targets: [8],
+                    orderable: false,
+                    className: 'text-center',
+
+                }
+
+            ],
+        });*/
 
         $(document).on("click",".usulkantna",function(){
             //var encrypt = this.value;
