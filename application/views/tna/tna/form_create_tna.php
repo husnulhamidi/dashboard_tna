@@ -15,7 +15,7 @@
                     <form method="post" action="javascript:;" class="form-horizontal form-tna" enctype="multipart/form-data">
                         <input type="hidden" name="id" id="id" value=<?php echo @$id?>>
                         <input type="hidden" name="tahapan_id" value=<?php echo @$tahapan_id->id?> >
-                        <input type="hidden" name="code_tna" id="code_tna" >
+                        <input type="hidden" name="code_tna" id="code_tna" value="<?php echo @$detail->code_tna?>">
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-lg-12">
@@ -138,7 +138,15 @@
                                     <label class="col-sm-3 control-label">Rencana Waktu Pelaksanaan <span style="color: red">*</span></label>
                                     <div class="col-sm-8" id="date">
                                         <div class="input-group date">
-                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input autocomplete="off" type="text" class="form-control input-sm" name="waktu_pelaksanaan" id="waktu_pelaksanaan" value="<?php echo @$detail->waktu_pelaksanaan;?>">
+                                            <?php
+                                                $waktu = '';
+                                                if(@$detail->waktu_pelaksanaan){
+                                                    $tgl = explode('-',@$detail->waktu_pelaksanaan);
+                                                    $waktu = $tgl[2].'-'.$tgl[1].'-'.$tgl[0];
+                                                }
+                                                
+                                            ?>
+                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input autocomplete="off" type="text" class="form-control input-sm" name="waktu_pelaksanaan" id="waktu_pelaksanaan" value="<?php echo @$waktu;?>">
                                         </div>
                                     </div>
                                 </div>
@@ -151,13 +159,17 @@
                                         </div>
                                     </div>
                                     <div class="multi-fields">
-                                        <div class="multi-field">
+                                        <div class="multi-field1">
 
-                                            <span class="remove-field pull-right" data-toggle="tooltip" title="Hapus Peserta" > <button type="button" class="btn btn-danger btn-sm  "><li class="fa fa-trash"></li></button></span>
-                                            <div class="form-group" id="divParrent">
+                                            <span class="remove-field1 pull-right" data-toggle="tooltip" title="Hapus Peserta" > 
+                                                <button type="button" class="btn btn-danger btn-sm  ">
+                                                    <li class="fa fa-trash"></li>
+                                                </button>
+                                            </span>
+                                            <div class="form-group">
                                                 <label class="col-sm-3 control-label">Sub Direktorat / Unit <span style="color: red">*</span></label>
                                                 <div class="col-sm-8">
-                                                    <select class="select2 form-control" name="subdit" id="subdit">
+                                                    <select class="select2 form-control" name="subdit[]" id="subdit1" onchange="getKaryawanBySubdit(1)">
                                                         <option value="">--- Pilih Subdit ---</option>
                                                         <?php 
                                                         foreach ($subdit as $sb) {
@@ -174,7 +186,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Nama Karyawan <span style="color: red">*</span></label>
                                                 <div class="col-sm-8">
-                                                    <select class="select2 form-control" name="karyawan" id="karyawan">
+                                                    <select class="select2 form-control" name="karyawan[]" id="karyawan1" onchange="getDataDetailKaryawan(1)">
                                                         <option value="">---Pilih Karyawan ---</option>
 
                                                     </select>
@@ -183,19 +195,19 @@
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Jabatan / Posisi <span style="color: red">*</span></label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" readonly class="form-control" name="jabatan" id="jabatan"> 
+                                                    <input type="text" readonly class="form-control" name="jabatan[]" id="jabatan1"> 
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Status Karyawan <span style="color: red">*</span></label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" readonly class="form-control" name="status_karyawan" id="status_karyawan"> 
+                                                    <input type="text" readonly class="form-control" name="status_karyawan[]" id="status_karyawan1"> 
                                                 </div>
                                             </div>
                                             <div class="form-group">
 
                                                 <div class="col-sm-8">
-                                                    <input type="hidden" class="form-control" name="status_fte" id="status_fte"> 
+                                                    <input type="hidden" class="form-control" name="status_fte[]" id="status_fte1"> 
                                                 </div>
                                             </div>
                                             <hr>
@@ -224,8 +236,9 @@
 </section>
 <script>
 
+var count = 1;
 $(document).ready(function () {
-
+    
     $('.select2').select2();
 
     $('#date .input-group.date').datepicker({
@@ -237,68 +250,75 @@ $(document).ready(function () {
 
     $('.input_mask').mask('000.000.000.000', {reverse: true});
 
-    $('.multi-field-wrapper').each(function() {
-        var $wrapper = $('.multi-fields', this);
-        $(".add-field", $(this)).click(function(e) {
-            $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus();
-            $(".multi-field:last").find('select').select2();       
-        });
+    // $('.multi-field-wrapper').each(function() {
+    //     var $wrapper = $('.multi-fields', this);
+    //     $(".add-field", $(this)).click(function(e) {
+    //         $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus();
+    //         $(".multi-field:last").find('select').select2();       
+    //     });
 
-        $('.multi-field .remove-field', $wrapper).click(function() {
-            if ($('.multi-field', $wrapper).length > 1)
-                $(this).parent('.multi-field').remove();
-            //alert(x-1);
-        });
-    });
+    //     $('.multi-field .remove-field', $wrapper).click(function() {
+    //         if ($('.multi-field', $wrapper).length > 1)
+    //             $(this).parent('.multi-field').remove();
+    //         //alert(x-1);
+    //     });
+    // });
    
-    $('#karyawan').on('change', function(){
-        let subditId = $('#subdit').val();
-        let karyawanId = $('#karyawan').val();
-        getDataDetailKaryawan(subditId, karyawanId)
-    })
+    // $('#subdit'+count).on('change', function(){
+    //     console.log(count)
+    //     let subditId = $(this).val();
+    //     getKaryawanBySubdit(subditId,count)
+    // })
 
-    $('#subdit').on('change', function(){
-        let subditId = $(this).val();
-        getKaryawanBySubdit(subditId)
-    })
+    // $('#karyawan'+count).on('change', function(){
+    //     let subditId = $('#subdit').val();
+    //     let karyawanId = $('#karyawan').val();
+    //     getDataDetailKaryawan(subditId, karyawanId, count)
+    // })
 
     if($('#id').val()){
         $('#divBtnAdd').css('display','none')
         $('.remove-field').css('display','none')
         let subditId = $('#subdit').val();
         let karyawanId = '<?php echo @$detail->m_karyawan_id;?>'
-        getKaryawanBySubdit(subditId, karyawanId)
-        getDataDetailKaryawan(subditId, karyawanId)
+        getKaryawanBySubdit(1,karyawanId)
+        getDataDetailKaryawan(1, karyawanId)
     }
+
+     $(".add-field", $(this)).click(function(e) {
+        count = count + 1;
+        appendRow(count)
+    })
 
 });
 
-function getKaryawanBySubdit(subdiId, karyawanId = false){
+function getKaryawanBySubdit(count, karyawanId = false){
+    let subditId = $('#subdit'+count).val();
     $.ajax({
         url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_organisasi'); ?>',
         type: 'POST',
         async: false, 
-        data: { id: subdiId },
+        data: { id: subditId },
         dataType: 'json',
         success: function (result) {
-            $("#karyawan").empty(); 
-            $('#karyawan').append('<option value="">-- Pilih Karyawan --</option>');
+            $('#karyawan'+count).empty(); 
+            $('#karyawan'+count).append('<option value="">-- Pilih Karyawan --</option>');
             if(result !== null){
                 $.each(result, function(i, value) {
                     var selected = '';
                     if(value['id'] == karyawanId){
                         selected = 'selected';
                     }
-                    $('#karyawan').append('<option '+selected+' value=' + value['id'] + '>' + value['nama'] + ' | '+ value['nik_tg']+' | '+value['jabatan_nama']+'</option>');
+                    $('#karyawan'+count).append('<option '+selected+' value=' + value['id'] + '>' + value['nama'] + ' | '+ value['nik_tg']+' | '+value['jabatan_nama']+'</option>');
                 });
             }
         }
     });
 }
 
-function getDataDetailKaryawan(subdiId, karyawanId){
-    var subdit_id = $('#subdit').val();
-    var karyawan_id = $('#karyawan').val();
+function getDataDetailKaryawan(count, karyawanId = false){
+    var subdit_id = $('#subdit'+count).val();
+    var karyawan_id = $('#karyawan'+count).val();
     $.ajax({
         url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_karyawanid'); ?>',
         type: 'POST',
@@ -306,13 +326,13 @@ function getDataDetailKaryawan(subdiId, karyawanId){
         data: { karyawan_id:karyawan_id,subdit_id: subdit_id},
         dataType: 'json',
         success: function (result) {
-            $("#jabatan").empty(); 
+            $("#jabatan"+count).empty(); 
             if(result !== null){
                 $.each(result, function(i, value) {
                     sk = value['status_karyawan']+" ( "+value['status_fte']+" )";
-                    $('#jabatan').val(value['jabatan_nama']);
-                    $('#status_karyawan').val(sk);
-                    $('#status_fte').val(value['status_fte']);
+                    $('#jabatan'+count).val(value['jabatan_nama']);
+                    $('#status_karyawan'+count).val(sk);
+                    $('#status_fte'+count).val(value['status_fte']);
                 });
             }
         }
@@ -368,5 +388,65 @@ function getSum(pelatihanId) {
         }
     });
     });
+}
+
+function appendRow(count){
+    var html = `
+        <div class="multi-field`+count+`">
+            <span class="remove-field`+count+` pull-right" data-toggle="tooltip" title="Hapus Peserta" > 
+                <button type="button" class="btn btn-danger btn-sm  ">
+                    <li class="fa fa-trash"></li>
+                </button>
+            </span>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Sub Direktorat / Unit <span style="color: red">*</span></label>
+                <div class="col-sm-8">
+                    <select class="select2 form-control" name="subdit[]" id="subdit`+count+`" onchange="getKaryawanBySubdit(`+count+`)">
+                        <option value="">--- Pilih Subdit ---</option>
+                        <?php 
+                        foreach ($subdit as $sb) {
+                            $selected = '';
+                            if($sb->m_organisasi_id == @$detail->m_organisasi_id){
+                                $selected = 'selected';
+                            }
+                            echo "<option ".$selected." value='".$sb->m_organisasi_id."'>".$sb->nama.'</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Nama Karyawan <span style="color: red">*</span></label>
+                <div class="col-sm-8">
+                    <select class="select2 form-control" name="karyawan[]" id="karyawan`+count+`" onchange=getDataDetailKaryawan(`+count+`)>
+                        <option value="">---Pilih Karyawan ---</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Jabatan / Posisi <span style="color: red">*</span></label>
+                <div class="col-sm-8">
+                    <input type="text" readonly class="form-control" name="jabatan[]" id="jabatan`+count+`"> 
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Status Karyawan <span style="color: red">*</span></label>
+                <div class="col-sm-8">
+                    <input type="text" readonly class="form-control" name="status_karyawan[]" id="status_karyawan`+count+`"> 
+                </div>
+            </div>
+            <div class="form-group">
+
+                <div class="col-sm-8">
+                    <input type="hidden" class="form-control" name="status_fte[]" id="status_fte`+count+`"> 
+                </div>
+            </div>
+            <hr>
+        </div>
+    `
+
+    $('.multi-fields').append(html)
+    $('.select2').select2()
 }
 </script>

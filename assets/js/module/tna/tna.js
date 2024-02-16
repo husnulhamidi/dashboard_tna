@@ -15,6 +15,13 @@ jQuery(document).ready(function() {
        $('#ModalFilter').modal('hide')
         buildTable();
     })
+
+    $('.btn-reset').click(function(){
+        // location.reload();
+        $("#form-filter-tna").get(0).reset() 
+        $("#form-filter-tna .select2").trigger('change')
+        buildTable()
+    })
 })
 
 function showModalProses(id){

@@ -77,25 +77,25 @@
                         </div>
                       
                         
-                         <div class="row" style="padding-top:10px">
+                        <div class="row" style="padding-top:10px">
                             <div class="col-md-12">
                                <label class="col-md-2"> Kompetensi</label>
                                <div class="col-md-10">: <?php echo $detail->kompetensi ;?> </div>
                             </div>
                         </div>
-                         <div class="row" style="padding-top:10px">
+                        <div class="row" style="padding-top:10px">
                             <div class="col-md-12">
                                <label class="col-md-2"> Nama Penyelenggara </label>
                                <div class="col-md-10">: <?php echo $detail->nama_penyelenggara ;?> </div>
                             </div>
                         </div>
-                         <div class="row" style="padding-top:10px">
+                        <!-- <div class="row" style="padding-top:10px">
                             <div class="col-md-12">
                                <label class="col-md-2"> Area </label>
                                <div class="col-md-10">: Nasional </div>
                             </div>
-                        </div>
-                         <div class="row" style="padding-top:10px">
+                        </div> -->
+                        <div class="row" style="padding-top:10px">
                             <div class="col-md-12">
                                <label class="col-md-2"> Waktu Pelaksanaan </label>
                                <div class="col-md-10">: <?php echo date('d F Y', strtotime($detail->waktu_pelaksanaan)); ?> </div>

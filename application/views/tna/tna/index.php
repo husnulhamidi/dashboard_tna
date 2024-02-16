@@ -32,6 +32,9 @@
                                 <button class="btn btn-default btn-sm" data-toggle='modal' data-target='#ModalFilter'>
                                     <i class="fa fa-filter"></i> Filter
                                 </button>
+                                <button class="btn btn-danger btn-sm btn-reset">
+                                    <i class="fa fa-repeat"></i> Reset
+                                </button>
                                 <a href ="<?php echo base_url('tna/create'); ?>"><button class="btn btn-info btn-sm">
                                     <i class="glyphicon glyphicon-plus"></i> Tambah
                                 </button></a>

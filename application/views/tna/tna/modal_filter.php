@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="ModalFilter" tabindex="-1" role="dialog" aria-hidden="true" enctype="multipart/form-data">
+<div class="modal fade" id="ModalFilter" role="dialog" aria-hidden="true" enctype="multipart/form-data">
     <div class="modal-dialog modal-lg" >
         <div class="modal-content">
             <div class="modal-header bg-info">
@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <div>
-                    <form method="post" action="javascript:;" class="form-horizontal" enctype="multipart/form-data">
+                    <form method="post" action="javascript:;" class="form-horizontal" enctype="multipart/form-data" id="form-filter-tna">
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-lg-12">
@@ -29,7 +29,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label">Nama Karyawan</label>
                                         <div class="col-sm-8">
-                                            <select class="select2 form-control" name="filter_karyawan" id="filter_karyawan">
+                                            <select class="select2 form-control divFilterInput" name="filter_karyawan" id="filter_karyawan">
                                                 <option value="all">Semua</option>
 
                                             </select>
@@ -169,13 +169,48 @@
 </div> <!-- /.modal -->
 
 <script type="text/javascript">
-    $('.select2').select2({
-        placeholder: "Please Select"
-    });
+    $(document).ready(function(){
+        $(".divFilterInput").select2({
+            dropdownParent: $("#ModalFilter")
+        });
 
-    $('.tgl').datepicker({
-        fomat:'yyyy-mm-dd'
+        $('.select2').select2({
+            placeholder: "Please Select"
+        });
+
+        $('.tgl').datepicker({
+            fomat:'yyyy-mm-dd'
+        })
+
+        $('#filter_karyawan').select2({
+            minimumInputLength: 2,
+            ajax: {
+                url: base_url+'tna/get_karyawan',
+                dataType: 'json',
+                delay: 250, 
+                data:function(params){
+                    return{
+                        searchTerm:params.term
+                    }
+                },
+                processResults:function(response){
+                    return {
+                        results:response
+                    }
+                },
+                cache:true
+                
+                // processResults: function(data) {
+                //     console.log(data)
+                //     // return {
+                //     //     results: data // Data harus dalam format yang diharapkan oleh Select2
+                //     // };
+                // },
+                // cache: true
+            }
+        })
     })
+   
 </script>
 
 <style type="text/css">

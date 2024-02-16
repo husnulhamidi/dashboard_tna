@@ -158,9 +158,9 @@ class Tna extends CI_Controller {
 		// echo json_encode($data);
 		$tgl = explode('-', $this->input->post('waktu_pelaksanaan'));
 		$data = array(
-			'm_organisasi_id'	=> $this->input->post('subdit'),
-			'm_karyawan_id'	=> $this->input->post('karyawan'),
-			'status_karyawan'	=> $this->input->post('status_fte'),	
+			// 'm_organisasi_id'	=> $this->input->post('subdit'),
+			// 'm_karyawan_id'	=> $this->input->post('karyawan'),
+			// 'status_karyawan'	=> $this->input->post('status_fte'),	
 			'r_tna_kompetensi_id' => $this->input->post('kompetensi'),
 			'r_tna_traning_id' => $this->input->post('tna'),
 			'jenis_pelatihan' => $this->input->post('jenis_pelatihan'),
@@ -177,21 +177,24 @@ class Tna extends CI_Controller {
 		);
 		if($this->input->post('id')){
 			$data['updated_date'] = date('Y-m-d');
-			// $data['updated_by'] = $this->ion_auth->user()->row()->id;
+			$data['m_karyawan_id'] = $this->input->post('karyawan')[0];
+			$data['m_organisasi_id'] = $this->input->post('subdit')[0];
+			$data['status_karyawan'] = $this->input->post('status_fte')[0];
+			
 			$action = $this->TnaModel->updateData($data, $this->input->post('id'));
 		}else{
 			$data['created_date'] = date('Y-m-d');
 			// $data['created_by'] = $this->ion_auth->user()->row()->id;
-			$action = $this->TnaModel->insertData($data);
-			// foreach ($this->input->post('karyawan') as $key => $value) {
-			// 	if($value){
-			// 		$data['m_karyawan_id'] = $value;
-			// 		$data['m_organisasi_id'] = $this->input->post('subdit')[$key];
-			// 		$data['status_karyawan'] = $this->input->post('status_fte')[$key];
-			// 		$action = $this->TnaModel->insertData($data);
-			// 	}
+			// $action = $this->TnaModel->insertData($data);
+			foreach ($this->input->post('karyawan') as $key => $value) {
+				if($value){
+					$data['m_karyawan_id'] = $value;
+					$data['m_organisasi_id'] = $this->input->post('subdit')[$key];
+					$data['status_karyawan'] = $this->input->post('status_fte')[$key];
+					$action = $this->TnaModel->insertData($data);
+				}
 				
-			// }
+			}
 		}
 		
 
@@ -212,7 +215,6 @@ class Tna extends CI_Controller {
 		}
 		
 		echo json_encode($return);
-		
 	}
 
 	public function delete(){
@@ -254,6 +256,18 @@ class Tna extends CI_Controller {
 		}
 		
 		echo json_encode($return);
+	}
+
+	public function get_karyawan(){
+		$search = $this->input->get('searchTerm');
+		$data = $this->TnaModel->search_karyawan($search);
+
+		$result = array();
+		foreach ($data as $key => $value) {
+			$text = $value->nik_tg . ' | ' . $value->nama . ' | ' . $value->jabatan_nama;
+			$result[] = array("id" => $value->id,"text"=>$text);
+		}
+		echo json_encode($result);
 	}
 
 

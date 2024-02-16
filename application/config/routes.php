@@ -243,6 +243,7 @@ $route['tna/delete_tna']    = 'tna/tna/delete';
 $route['tna/get_code_training']    = 'tna/tna/get_code_training';
 $route['tna/get_sum_data']    = 'tna/tna/get_sum_data';
 $route['tna/proses_tna']    = 'tna/tna/proses_tna';
+$route['tna/get_karyawan']    = 'tna/tna/get_karyawan';
 
 
 //=====================================================================================================================

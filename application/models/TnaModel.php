@@ -55,7 +55,7 @@ class TnaModel extends CI_Model {
 		$this->db->where('ru.r_jenis_usulan_id = 29 and ru.urutan = 1');
 
 		if($post['filter_subdit'] !== 'all'){
-			$this->db->where('tp.m_organisasi_ids', $post['filter_subdit']);
+			$this->db->where('tp.m_organisasi_id', $post['filter_subdit']);
 		}
 		if($post['filter_kompetensi'] !== 'all'){
 			$this->db->where('tp.r_tna_kompetensi_id', $post['filter_kompetensi']);
@@ -67,7 +67,7 @@ class TnaModel extends CI_Model {
 			$this->db->where('tp.r_tna_traning_id', $post['filter_nama_pelatihan']);
 		}
 		if($post['filter_justifikasi'] !== ''){
-			$this->db->where('tp.justifikasi_pengajuan', $post['filter_justifikasi'],'both');
+			$this->db->like('tp.justifikasi_pengajuan', $post['filter_justifikasi'],'both');
 		}
 		if($post['filter_metoda_pembelajaran'] !== 'all'){
 			$this->db->where('tp.metoda_pembelajaran', $post['filter_metoda_pembelajaran']);
@@ -81,14 +81,14 @@ class TnaModel extends CI_Model {
 		}
 
 		if($post['filter_penyelenggara'] !== ''){
-			$this->db->where('tp.nama_penyelenggara', $post['filter_penyelenggara'],'both');
+			$this->db->like('tp.nama_penyelenggara', $post['filter_penyelenggara'],'both');
 		}
 		if($post['filter_karyawan'] !== 'all'){
 			$this->db->where('tp.m_karyawan_id', $post['filter_karyawan']);
 		}
 		
 		if($post['filter_status_karyawan'] !== 'all'){
-			$this->db->where('tp.status_karyawan', $post['filter_status_karyawan'],'both');
+			$this->db->where('tp.status_karyawan', $post['filter_status_karyawan']);
 		}
 
 		if($post['filter_waktu_awal']){
@@ -216,6 +216,28 @@ class TnaModel extends CI_Model {
 
     public function get_code_training($id){
     	return $this->db->from('r_tna_training')->where('id',$id)->select('code')->get()->row();
+    }
+
+    public function search_karyawan($search){
+    	// $this->db->select('id, nama, nik_tg')
+     //         ->from('m_karyawan')
+     //         ->like('nama', $search, 'both');
+
+	    // $query = $this->db->get();
+	    // return $query->result();
+	    $karyawan = $this->db->select('mk.id, mk.nama, mk.nik_tg, j.nama as jabatan_nama')
+            ->from('h_mutasi m')
+            ->join('m_karyawan mk', 'm.m_karyawan_id = mk.id')
+            ->join('r_jabatan j', 'm.r_jabatan_id = j.id')
+            ->join('users', 'users.m_karyawan_id = mk.id', 'left')
+            ->like('mk.nama', $search,'both')
+            ->where('m.is_aktif', 1)
+            ->where('mk.is_aktif', 1)
+            ->group_by('mk.id')
+            ->order_by('mk.nama', 'asc')
+            ->get()
+            ->result();
+        return $karyawan;
     }
 
 
