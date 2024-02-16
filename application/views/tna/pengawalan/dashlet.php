@@ -1,64 +1,113 @@
-<style>
-    input.largerCheckbox {
-        width: 40px;
-        height: 40px;
-
-    }
-    .divFont{
-        font-size: 14px
-    }
-</style>
-
-<div class="row" style="margin-bottom: 30px; margin-left: -30px">
-    <div class="col-lg-2 col-4" style="text-align: center;">
-        <input type="checkbox" id="rekonfirmasiPeserta" name="vehicle1" class="largerCheckbox" onclick="return false;">
-        <div class="divFont"> Rekonfirmasi <br> Peserta </div>
+<div class="row">
+    <div class="col-lg-2 col-4">
+        <!-- small card -->
+        <div class="small-box bg-primary">
+            <div class="inner text-center">
+                <h3><span id="rekonfirmasiPeserta" class="count">0</span></h3>
+                <p>Rekonfirmasi <br> Peserta</p>
+            </div>
+        </div>
     </div>
-    <div class="col-lg-2 col-4" style="text-align: center;">
-        <input type="checkbox" id="verifikasiMgrLini" name="vehicle1" class="largerCheckbox" onclick="return false;">
-        <div class="divFont"> Menunggu Verifikasi Mgr.lini </div>
+    <div class="col-lg-2 col-4">
+        <!-- small card -->
+        <div class="small-box bg-primary">
+            <div class="inner text-center">
+                <h3><span id="verifMgrLini" class="count">0</span></h3>
+                <p>Menunggu <br>Verifikasi Mgr.lini</p>
+            </div>
+        </div>
     </div>
-    <div class="col-lg-2 col-4" style="text-align: center;">
-        <input type="checkbox" id="verifikasiMgrHCPD" name="vehicle1" class="largerCheckbox" onclick="return false;">
-        <div class="divFont"> Menunggu Verifikasi Mgr.HCPD  </div>
+    <div class="col-lg-2 col-4">
+        <!-- small card -->
+        <div class="small-box bg-primary">
+            <div class="inner text-center">
+                <h3><span id="verifMgrHCPD" class="count">0</span></h3>
+                <p>Menunggu <br> Verifikasi Mgr.HCPD</p>
+            </div>
+        </div>
     </div>
-    <div class="col-lg-2 col-4" style="text-align: center;">
-        <input type="checkbox" id="verifikasiAVPHCPD" name="vehicle1" class="largerCheckbox" onclick="return false;">
-        <div class="divFont"> Menunggu Verifikasi AVP HCPD </div>
+    <div class="col-lg-2 col-4">
+        <!-- small card -->
+        <div class="small-box bg-primary">
+            <div class="inner text-center">
+                <h3><span id="verifAVPHCPD" class="count">0</span></h3>
+                <p>Menunggu <br> Verifikasi AVP HCPD</p>
+            </div>
+        </div>
     </div>
-    <div class="col-lg-2 col-4" style="text-align: center;">
-        <input type="checkbox" id="pernyataanPeserta" name="vehicle1" class="largerCheckbox" onclick="return false;">
-        <div class="divFont"> Menunggu Pernyataan Form Peserta </div>
+    <div class="col-lg-2 col-4">
+        <!-- small card -->
+        <div class="small-box bg-primary">
+            <div class="inner text-center">
+                <h3><span id="pernyataanFormPeserta" class="count">0</span></h3>
+                <p>Menunggu <br> Pernyataan Form Peserta</p>
+            </div>
+        </div>
     </div>
-    <div class="col-lg-2 col-4" style="text-align: center;">
-        <input type="checkbox" id="rekonfirmasiKuota" name="vehicle1" class="largerCheckbox" onclick="return false;">
-        <div class="divFont"> Rekonfirmasi Kuota </div>
+    <div class="col-lg-2 col-4">
+        <!-- small card -->
+        <div class="small-box bg-primary">
+            <div class="inner text-center">
+                <h3><span id="rekonfirmasiKuota" class="count">0</span></h3>
+                <p>Rekonfirmasi <br> Kuota</p>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="row" style="margin-bottom: 30px; margin-left: -30px">
-    <div class="col-lg-2 col-4" style="text-align: center;">
-        <input type="checkbox" id="kelengkapanDokumen" name="vehicle1" class="largerCheckbox" onclick="return false;">
-        <div class="divFont"> Proses Kelengkapan Dokumen </div>
+<div class="row" style="padding-top: 20px">
+    <div class="col-lg-2 col-4">
+        <!-- small card -->
+        <div class="small-box bg-primary">
+            <div class="inner text-center">
+                <h3><span id="kelengkapanDok" class="count">0</span></h3>
+                <p>Proses <br> Kelengkapan Dokumen</p>
+            </div>
+        </div>
     </div>
-    <div class="col-lg-2 col-4" style="text-align: center;">
-        <input type="checkbox" id="pembayaran" name="vehicle1" class="largerCheckbox" onclick="return false;">
-        <div class="divFont"> Menunggu Pembayaran </div>
+    <div class="col-lg-2 col-4">
+        <!-- small card -->
+        <div class="small-box bg-primary">
+            <div class="inner text-center">
+                <h3><span id="pembayaran" class="count">0</span></h3>
+                <p>Menunggu <br> Pembayaran</p>
+            </div>
+        </div>
     </div>
-    <div class="col-lg-2 col-4" style="text-align: center;">
-        <input type="checkbox" id="uplaodSerifikasi" name="vehicle1" class="largerCheckbox" onclick="return false;">
-        <div class="divFont"> Upload Sertifikasi </div>
+    <div class="col-lg-2 col-4">
+        <!-- small card -->
+        <div class="small-box bg-primary">
+            <div class="inner text-center">
+                <h3><span id="sertifikat" class="count">0</span></h3>
+                <p>Upload Sertifikat <br>&nbsp;</p>
+            </div>
+        </div>
     </div>
-    <div class="col-lg-2 col-4" style="text-align: center;">
-        <input type="checkbox" id="uplaodMateri" name="vehicle1" class="largerCheckbox" onclick="return false;">
-        <div class="divFont"> Upload Materi</div>
+    <div class="col-lg-2 col-4">
+        <!-- small card -->
+        <div class="small-box bg-primary">
+            <div class="inner text-center">
+                <h3><span id="materi" class="count">0</span></h3>
+                <p>Upload Materi <br>&nbsp;</p>
+            </div>
+        </div>
     </div>
-    <div class="col-lg-2 col-4" style="text-align: center;">
-        <input type="checkbox" id="jadwalInternalSharing" name="vehicle1" class="largerCheckbox" onclick="return false;">
-        <div class="divFont"> Menunggu Jadwal Internal Sharing </div>
+    <div class="col-lg-2 col-4">
+        <!-- small card -->
+        <div class="small-box bg-primary">
+            <div class="inner text-center">
+                <h3><span id="jadwal" class="count">0</span></h3>
+                <p>Menunggu <br> Jadwal Internal Sharing</p>
+            </div>
+        </div>
     </div>
-    <div class="col-lg-2 col-4" style="text-align: center;">
-        <input type="checkbox" id="evaluasi" name="vehicle1" class="largerCheckbox" onclick="return false;">
-        <div class="divFont"> Menunggu Penilaian Evaluasi Training </div>
+    <div class="col-lg-2 col-4">
+        <!-- small card -->
+        <div class="small-box bg-primary">
+            <div class="inner text-center">
+                <h3><span id="evaluasi" class="count">0</span></h3>
+                <p>Menunggu <br> Penilaian Evaluasi Training</p>
+            </div>
+        </div>
     </div>
 </div>

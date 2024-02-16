@@ -1,10 +1,9 @@
 <style type="text/css">
     .dropdown-menu {
-        left: auto;
-        right: 0;
         z-index: 5000 !important;
         position: relative;
-        margin-left: -100px
+        margin-left: -10px;
+        right: auto;
     }
 </style>
 <section class="content">
@@ -46,7 +45,8 @@
                                     <thead>
 
                                         <tr>
-                                            <!-- <th width="7%">No</th> -->
+                                            <th class="text-center text-nowrap">Action</th>
+                                            <th class="text-center text-nowrap" width="70px">Status</th>
                                             <th class="text-center text-nowrap">ID TNA</th>
                                             <th class="text-center text-nowrap">Nama Karyawan</th>
                                             <th class="text-center text-nowrap">Subdit/Unit</th>
@@ -59,12 +59,11 @@
                                             <th class="text-center text-nowrap">Estimasi Biaya</th>
                                             <th class="text-center text-nowrap">Nama Penyelenggara</th>
                                             <th class="text-center text-nowrap">Waktu Pelaksanaan</th>
-                                            <th class="text-center text-nowrap">Status</th>
-                                            <th class="text-center text-nowrap">Action</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>                              
-                                        <tr>
+                                        <!-- <tr>
                                             <td>P0001001</td>
                                             <td>8674474-Citra Dewi</td>
                                             <td>Corporate Secretary</td>
@@ -148,7 +147,7 @@
                                                     </ul>
                                                 </div>
                                             </td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>
@@ -176,4 +175,8 @@
 <?php $this->load->view('tna/pengawalan/modal_popup/modal_upload_materi');?>
 <?php $this->load->view('tna/pengawalan/modal_popup/modal_evaluasi');?>
 <?php $this->load->view('tna/pengawalan/modal_popup/modal_internal_sharing');?>
+
+<script type="text/javascript">
+    var url_detail = '<?php echo base_url('tna/pengawalan/detail/');?>';
+</script>
 

@@ -14,8 +14,7 @@ class Tna extends CI_Controller {
     
 	}
 
-	public function index()
-	{
+	public function index(){
         $data['breadcrumb'] 	= 'List TNA';
         $data['active_menu'] 	= 'tna_tna';
 		$data['title'] 			= 'Daftar TNA';

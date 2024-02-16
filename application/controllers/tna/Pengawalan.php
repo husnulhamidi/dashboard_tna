@@ -9,12 +9,12 @@ class Pengawalan extends CI_Controller {
 		if(!$this->session->userdata('user')){
 			redirect('auth/login');
 		}
+		$this->load->model(array('lokasi_akun_model','UsulanTnaModel','TnaModel','PengawalanModel'));
 		//Do your magic here
     
 	}
 
-	public function index($active_tab="all")
-	{
+	public function index($active_tab="all"){
         $data['breadcrumb'] 	= 'Pengawalan > '.ucwords(str_replace("-"," ",$active_tab));
         $data['active_menu'] 	= 'tna_pengawalan';
 		$data['title'] 			= 'Daftar Pengawalan TNA / NON TNA';
@@ -53,6 +53,45 @@ class Pengawalan extends CI_Controller {
 		$this->template->load('template',$pageindex,$data);
 	}
 
+	public function getData(){
+		$get = $this->input->get();
+		echo $this->PengawalanModel->getDataPengawalan($get);
+	}
+
+	public function getDataDashboard(){
+		echo json_encode($this->PengawalanModel->getDataDashboard());
+	}
+
+	public function verifikasi(){
+		$urutan = 1;
+		if($this->input->post('verifikasi') == 'ya'){
+			$urutan = $this->input->post('urutan') + 1;
+		}
+		
+		$thapanId = $this->TnaModel->get_tahapan_id($urutan);
+		$data = array(
+			'tahapan_id' => $thapanId->id
+		);
+		$action = $this->TnaModel->updateData($data, $this->input->post('id'));
+		if($action){
+			$return = array(
+				'success'		=> true,
+				'status_code'	=> 200,
+				'msg'			=> "Data berhasil diubah.",
+				'data'			=> $action
+			);
+		}else{
+			$return = array(
+				'success'		=> false,
+				'status_code'	=> 500,
+				'msg'			=> "Data gagal diubah.",
+				'data'			=> $action
+			);
+		}
+		
+		echo json_encode($return);
+	}
+
 	public function detail($id, $active_tab="riwayat_verifikasi"){
 		// echo $active_tab;
 		$data['breadcrumb'] 	= 'Pengawalan > Detail > '.ucwords(str_replace("-"," ",$active_tab));
@@ -87,8 +126,7 @@ class Pengawalan extends CI_Controller {
 		$this->template->load('template',$pageindex,$data);
 	}
 
-    public function manager($active_tab="all")
-	{
+    public function manager($active_tab="all"){
         $data['breadcrumb'] 	= 'Usulan > '.ucwords(str_replace("-"," ",$active_tab));
         $data['active_menu'] 	= 'usulan_tna';
 		$data['title'] 			= 'Daftar Usulan';
@@ -123,8 +161,7 @@ class Pengawalan extends CI_Controller {
 	}
 
 
-	public function create()
-	{
+	public function create(){
         $data = array();
         $data['breadcrumb'] 	= 'Usulan > Tambah';
         $data['title'] 			= 'Tambah Usulan';
@@ -143,8 +180,7 @@ class Pengawalan extends CI_Controller {
 		$this->template->load('template','tna/usulan/form_usulan', $data);
 	}
 
-	public function edit()
-	{
+	public function edit(){
         $data = array();
         $data['breadcrumb'] 	= 'Usulan > Edit';
         $data['title'] 			= 'Edit Usulan';

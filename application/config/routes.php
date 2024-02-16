@@ -185,6 +185,9 @@ $route['tna/combo/training'] = 'tna/combo/training';
 //=====================================================================================================================
 // pengawalan
 $route['tna/pengawalan/list/(:any)']    = 'tna/pengawalan/index/$1';
+$route['tna/pengawalan/getData']    = 'tna/pengawalan/getData';
+$route['tna/pengawalan/getDataDashboard']    = 'tna/pengawalan/getDataDashboard';
+$route['tna/pengawalan/verifikasi']    = 'tna/pengawalan/verifikasi';
 $route['tna/pengawalan/proses-verifikasi']    = 'tna/pengawalan/proses_verifikasi';
 $route['tna/pengawalan/ditolak']    = 'tna/pengawalan/ditolak';
 $route['tna/pengawalan/disetujui']    = 'tna/pengawalan/disetujui';

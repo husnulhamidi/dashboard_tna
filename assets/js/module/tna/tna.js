@@ -46,7 +46,7 @@ function showModalProses(id){
                     setTimeout(function() {
                         swal({
                             title: "Notifikasi!",
-                            text: "Data berhasil dihapus",
+                            text: "Data berhasil diproses",
                             imageUrl: img_icon_success
                         }, function() {
                              location.reload();
@@ -56,7 +56,7 @@ function showModalProses(id){
                     setTimeout(function() {
                         swal({
                             title: "Notifikasi!",
-                            text: "Data gagal dihapus",
+                            text: "Data gagal diproses",
                             imageUrl: img_icon_error
                         }, function() {
                              location.reload();

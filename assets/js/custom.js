@@ -1,3 +1,8 @@
+function nominalAngka(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+
 function formatRupiah(angka, prefix){
 	var number_string = angka.replace(/[^,\d]/g, '').toString(),
 	split   		= number_string.split(','),
