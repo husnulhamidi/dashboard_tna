@@ -1,10 +1,9 @@
 <style type="text/css">
     .dropdown-menu {
-        left: auto;
-        right: 0;
         z-index: 5000 !important;
         position: relative;
-        margin-left: -100px
+        margin-left: -10px;
+        right: auto;
     }
 </style>
 <section class="content">
@@ -48,10 +47,14 @@
                                 <table  class="table table-striped table-bordered table-hover" id="table-tna" cellspacing="0">
                                     <thead>
                                         <tr>
+                                            <th class="text-center text-nowrap">Aksi</th>
                                             <th class="text-center text-nowrap">ID TNA</th>
+                                            <th class="text-center text-nowrap">Sub Unit/Unit</th>
+                                            <th class="text-center text-nowrap">Nama Karyawan</th>
+                                            <th class="text-center text-nowrap">Status Karyawan</th>
                                             <th class="text-center text-nowrap">Nama Pelatihan</th>
                                             <th class="text-center text-nowrap">Objective</th>
-                                            <th class="text-center text-nowrap">Jeni/Development</th>
+                                            <th class="text-center text-nowrap">Jenis/Development</th>
                                             <th class="text-center text-nowrap">Metoda Pembelajaran</th>
                                             <th class="text-center text-nowrap">Jenis Pelatihan/Sertifikasi</th>
                                             <th class="text-center text-nowrap">Kompetensi</th>
@@ -59,46 +62,10 @@
                                             <th class="text-center text-nowrap">Lokasi</th>
                                             <th class="text-center text-nowrap">Waktu Pelaksanaan</th>
                                             <th class="text-center text-nowrap">Estimasi Biaya</th>
-                                            <th class="text-center text-nowrap">Jumlah Peserta</th>
-                                            <th class="text-center text-nowrap">Aksi</th>
+                                            
                                         </tr>
                                     </thead>
-                                    <tbody id="tbody" style="overflow-y: none;">
-                                        <tr>
-                                            <td> A001 </td>
-                                            <td> Legal Complianci </td>
-                                            <td></td>
-                                            <td> Pelatihan </td>
-                                            <td> Online </td>
-                                            <td> Business Support </td>
-                                            <td> Business Enabler </td>
-                                            <td> Hukum Online </td>
-                                            <td> Jakarta </td>
-                                            <td> Juni 2023 </td>
-                                            <td> 2.640.000 </td>
-                                            <td> 10 </td>
-                                            <td>
-                                                <div class="input-group-btn">
-                                                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Aksi
-                                                    <span class="fa fa-caret-down"></span></button>
-                                                  <ul class="dropdown-menu">
-                                                    <li>
-                                                        <a onclick="showModalProses()">
-                                                            Prosess / Usulkan 
-                                                        </a>
-                                                    </li>
-                                                    <li><a href="<?php echo base_url('tna/detail/1'); ?>"> Daftar Peserta </a></li>
-                                                    <li>
-                                                        <a href="<?php echo base_url('tna/edit/1'); ?>">Edit</a>
-                                                    </li>
-                                                    <li><a onclick="deleteData(1)">Hapus</a></li>
-                                                    
-                                                  </ul>
-                                                </div>
-
-                                            </td>
-                                        </tr>
-                                    </tbody>
+                                    <tbody id="tbody" style="overflow-y: none;"></tbody>
                                 </table>
                             </div>
                         </div>
@@ -112,5 +79,11 @@
 </section>
 <?php 
     $this->load->view('tna/tna/modal_upload');
+
     // $this->load->view('tna/common/form_import_excel');
 ?>
+<?php $this->load->view('tna/tna/modal_filter');?>
+<script type="text/javascript">
+    const url_detail = '<?php echo base_url('tna/detail/');?>';
+   var url_edit ='<?php echo base_url('tna/edit/');?>';
+</script>

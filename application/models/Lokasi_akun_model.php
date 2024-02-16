@@ -12,7 +12,7 @@ class Lokasi_akun_model extends CI_Model
     public function viewall_subdit()
     {
         return $this->db->query("select m_organisasi_id,nama from (select m_organisasi_id from h_lokasi_akun where is_aktif = 1 group by m_organisasi_id) a
-join m_organisasi b ON a.m_organisasi_id=b.id group by b.nama");
+join m_organisasi b ON a.m_organisasi_id=b.id group by b.nama,a.m_organisasi_id");
 
         
     }

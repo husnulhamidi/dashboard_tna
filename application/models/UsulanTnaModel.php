@@ -67,7 +67,7 @@ class UsulanTnaModel extends CI_Model {
 			}
 		}
 
-		if($post['action']=="verifikasi"){
+		if(@$post['action']=="verifikasi"){
 			if(strtolower($this->sess['role']['name'])=='manager unit lini' OR strtolower($this->sess['role']['name'])=='manager unit'){
 				$this->db->where("th.urutan",2);
 			}else if(strtolower($this->sess['role']['name'])=='admin hcpd' ){

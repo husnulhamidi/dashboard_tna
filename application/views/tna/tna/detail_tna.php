@@ -25,54 +25,68 @@
                 </div>
 
                 <div class="tab-content">
+                    <input type="hidden" name="id" id="id" value=<?php echo $detail->id ;?>>
                     <div class="tab-pane active">                       
                         <div class="row">
                             <div class="col-md-12">
                                <label class="col-md-2"> ID TNA </label>
-                               <div class="col-md-10">: A002 </div>
+                               <div class="col-md-10">: <?php echo $detail->code_tna ;?> </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top:10px">
+                            <div class="col-md-12">
+                               <label class="col-md-2"> Nama Karyawan </label>
+                               <div class="col-md-10">: <?php echo $detail->nama_karyawan ;?> </div>
+                            </div>
+                        </div> 
+                        <div class="row" style="padding-top:10px">
+                            <div class="col-md-12">
+                               <label class="col-md-2"> Subunit/Unit </label>
+                               <div class="col-md-10">: <?php echo $detail->nama_organisasi ;?> </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top:10px">
+                            <div class="col-md-12">
+                               <label class="col-md-2"> Status Karyawan </label>
+                               <div class="col-md-10">: <?php echo $detail->status_karyawan ;?> </div>
                             </div>
                         </div>
                         <div class="row" style="padding-top:10px">
                             <div class="col-md-12">
                                <label class="col-md-2"> Nama Pelatihan </label>
-                               <div class="col-md-10">: Legal Compliance </div>
+                               <div class="col-md-10">: <?php echo $detail->training ;?> </div>
                             </div>
                         </div>
                         <div class="row" style="padding-top:10px">
                             <div class="col-md-12">
                                <label class="col-md-2"> Objective </label>
-                               <div class="col-md-10">: - </div>
+                               <div class="col-md-10">: <?php echo $detail->objective ;?> </div>
                             </div>
                         </div>
                         <div class="row" style="padding-top:10px">
                             <div class="col-md-12">
                                <label class="col-md-2"> Jenis Pelatihan </label>
-                               <div class="col-md-10">: Pelatihan </div>
+                               <div class="col-md-10">: <?php echo $detail->jenis_pelatihan ;?> </div>
                             </div>
                         </div>
                         <div class="row" style="padding-top:10px">
                             <div class="col-md-12">
                                <label class="col-md-2"> Metode Pembelajaran </label>
-                               <div class="col-md-10">: Online </div>
+                               <div class="col-md-10">: <?php echo $detail->metoda_pembelajaran ;?> </div>
                             </div>
                         </div>
-                        <div class="row" style="padding-top:10px">
-                            <div class="col-md-12">
-                               <label class="col-md-2"> Jenis Pelatihan </label>
-                               <div class="col-md-10">: Bussinies Support </div>
-                            </div>
-                        </div>
+                      
                         
                          <div class="row" style="padding-top:10px">
                             <div class="col-md-12">
                                <label class="col-md-2"> Kompetensi</label>
-                               <div class="col-md-10">: Bussinies Ebaler </div>
+                               <div class="col-md-10">: <?php echo $detail->kompetensi ;?> </div>
                             </div>
                         </div>
                          <div class="row" style="padding-top:10px">
                             <div class="col-md-12">
                                <label class="col-md-2"> Nama Penyelenggara </label>
-                               <div class="col-md-10">: Hukum Online </div>
+                               <div class="col-md-10">: <?php echo $detail->nama_penyelenggara ;?> </div>
                             </div>
                         </div>
                          <div class="row" style="padding-top:10px">
@@ -84,60 +98,15 @@
                          <div class="row" style="padding-top:10px">
                             <div class="col-md-12">
                                <label class="col-md-2"> Waktu Pelaksanaan </label>
-                               <div class="col-md-10">: 20 Juni 2023 </div>
+                               <div class="col-md-10">: <?php echo date('d F Y', strtotime($detail->waktu_pelaksanaan)); ?> </div>
                             </div>
                         </div>
                         <div class="row">
                             <hr>
                         </div>
-                        <div class="row">
-                            <div class="pull-right" style="padding-right: 2%; padding-bottom: 10px">
-                                <button
-                                    onclick="btnAddPeserta()"
-                                    class="btn btn-sm btn-primary">
-                                    <i class="fa fa-plus"></i> 
-                                    &nbsp;Tambah Peserta 
-                                </button>
-                            </div>
-                            <div class="col-md-12">
-                                <table class="table" id="tbl-peserta">
-                                    <thead>
-                                        <tr>
-                                            <td> No </td>
-                                            <td> NIK </td>
-                                            <td> Nama Peserta </td>
-                                            <td> Subunit/Unit </td>
-                                            <td> Status Karyawan </td>
-                                            <td>Aksi</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td> 1 </td>
-                                            <td> 1234567 </td>
-                                            <td> Firman </td>
-                                            <td> IT & Digital </td>
-                                            <td> FTE </td>
-                                            <td>
-                                                <button 
-                                                    onclick="btnAddPeserta(1)" 
-                                                    class="btn-success btn-xs" 
-                                                    title="Edit">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                                <button class="btn-danger btn-xs" title="Hapus">
-                                                    <i class="fa fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
                        
                     </div>
                 </div>
-                <!-- /.tab-content -->
             </div>
         </div>
     </div>
@@ -149,6 +118,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         $('#tbl-peserta').DataTable()
+        // builTablePeserta();
     })
     function btnAddPeserta(id = false){
         var label = 'Form Tambah Peserta'
@@ -158,5 +128,102 @@
         }
         $('#labelPeserta').text(label)
         $('#modalTambahPeserta').modal('show')
+    }
+
+    function builTablePeserta(){
+        $('#tbl-peserta').DataTable({
+            processing: true, 
+            serverSide: true, 
+            scrollX: true,
+            order: [], 
+            ajax: {
+                url     : base_url+"tna/tna/getDataPeserta",
+                type    : "get",
+                datatype: "json",
+                data    : function(d){
+                    console.log(d)
+                }
+                          
+            },
+            columns: [
+                {
+                    "data": "id",
+                    "width": "50px",
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                { "data": "training" },
+                { 
+                    "data": "training",
+                    render:function(data, type, row, meta){
+                        return "-"
+                    } 
+                },
+                { "data": "jenis_development"},
+                { "data": "metoda_pembelajaran"},
+                { "data": "jenis_pelatihan"},
+                { "data": "kompetensi"},
+                { "data": "nama_penyelenggara"},
+                { 
+                    "data": "nama_penyelenggara",
+                    render:function(data,type,row,meta){
+                        return "lokasi"
+                    }
+                },
+                { 
+                    "data": "waktu_pelaksanaan",
+                    render:function(data, type, row, meta){
+                        let date = '-'
+                        if(data !== '0000-00-00'){
+                            date = formatDate(data)
+                        }
+                        return date
+                    }
+                },
+                { 
+                    "data": "estimasi_biaya",
+                    "class":"text-right",
+                    render:function(data,type,row, meta){
+                        return formatRupiah(data,'Rp.')
+                    }
+                },
+                { 
+                    "data": "nama_penyelenggara",
+                    render:function(data,type,row,meta){
+                        return "jumlah peserta"
+                    }
+                },
+                {
+                    "data": "id",
+                    "className": "text-center",
+                    "width": "80px",
+                    "orderable" : false,
+                    render: function (data, type, row, meta) {
+                       var action = `
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Aksi
+                                    <span class="fa fa-caret-down"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a onclick="showModalProses()">
+                                            Prosess / Usulkan 
+                                        </a>
+                                    </li>
+                                    <li><a href="`+url_detail+data+`"> Daftar Peserta </a></li>
+                                    <li>
+                                        <a href="`+url_edit+data+`">Edit</a>
+                                    </li>
+                                    <li><a onclick="deleteData(1)">Hapus</a></li>
+                                </ul>
+                            </div>
+
+                       `
+                       return action
+                    }
+                },
+            ],
+        });
     }
 </script>
