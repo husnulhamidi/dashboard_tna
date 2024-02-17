@@ -121,7 +121,7 @@ class InternalSharing_Model extends CI_Model {
     }
 
     public function get_direktorat(){
-    	return $this->db->from('m_organisasi')->where('is_aktif','1')->select('id,inisial,nama')->get()->result();
+    	return $this->db->from('m_organisasi')->where('level',3)->where('is_aktif','1')->select('id,inisial,nama')->get()->result();
     }
 
     public function get_pemateri($id){

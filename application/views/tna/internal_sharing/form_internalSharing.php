@@ -22,7 +22,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Judul Materi <span class="text-red">*</span></label>
                                         <div class="col-sm-6">
-                                            <input type="text" class="form-control" placeholder="Judul Pemateri" name="judul" id="judul" value="<?php echo @$detail->judul_materi;?>" >
+                                            <input type="text" class="form-control" placeholder="Judul materi" name="judul" id="judul" value="<?php echo @$detail->judul_materi;?>" >
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -136,7 +136,6 @@
     })
 
     function getDirektorat(unit){
-        console.log(unit)
         $('#direktorat').empty()
         $('#direktorat').append('<option></option')
         $.ajax({
@@ -144,7 +143,6 @@
             method: 'get',
             dataType: 'json',
             success: function(response){
-                // console.log(response)
                 for (var i = 0; i < response.length; i++) {
                     var selected = "";
                     if(unit == response[i]['id']){
@@ -162,9 +160,27 @@
             dirId = idDir
         }
        
-        $('#pemateri').empty()
-        $('#pemateri').append('<option></option')
         $.ajax({
+            url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_organisasi'); ?>',
+            type: 'POST',
+            async: false, 
+            data: { id: dirId },
+            dataType: 'json',
+            success: function (result) {
+                $("#pemateri").empty(); 
+                $('#pemateri').append('<option value="">-- Pilih Karyawan --</option>');
+                if(result !== null){
+                    $.each(result, function(i, value) {
+                        var selected = "";
+                        if(karyawan == value['id']){
+                            selected = "selected";
+                        }
+                        $('#pemateri').append('<option '+selected+' value=' + value['id'] + '>' + value['nama'] + ' | '+ value['nik_tg']+' | '+value['jabatan_nama']+'</option>');
+                    });
+                }
+            }
+        });
+        /*$.ajax({
             url:base_url+'tna/internalSharing/getPemateriByDirKom/'+dirId,
             method: 'get',
             dataType: 'json',
@@ -178,6 +194,6 @@
                     $('#pemateri').append('<option '+selected+' value='+response[i]['id']+'>'+response[i]['nama']+'</option>')
                 }
             }
-        });
+        });*/
     }
 </script>
