@@ -32,7 +32,7 @@ class PengawalanModel extends CI_Model {
 		$recordsTotal = 0;
         $this->db->start_cache();
 
-		$this->db->select('tp.id AS id, tp.code_tna AS id_tna, mk.nama AS nama_karyawan, mo.nama AS nama_organisasi, tp.status_karyawan, tk.name AS kompetensi, tp.jenis_development, rt.name AS pelatihan, tp.justifikasi_pengajuan, tp.metoda_pembelajaran, tp.estimasi_biaya, tp.nama_penyelenggara, tp.waktu_pelaksanaan, tu.nama AS status, tp.objective, tp.jenis_pelatihan,tp.tahapan_id,tu.urutan');
+		$this->db->select('tp.id AS id, tp.code_tna AS id_tna, mk.nama AS nama_karyawan,mk.id AS id_karyawan, mo.nama AS nama_organisasi, mo.id AS id_organisasi, tp.status_karyawan, tk.name AS kompetensi, tp.jenis_development, rt.name AS pelatihan, tp.justifikasi_pengajuan, tp.metoda_pembelajaran, tp.estimasi_biaya, tp.nama_penyelenggara, tp.waktu_pelaksanaan, tu.nama AS status, tp.objective, tp.jenis_pelatihan,tp.tahapan_id,tu.urutan, mk.nik_tg');
 		$this->db->from('m_tna_pengawalan tp');
 		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_traning_id');
 		$this->db->join('r_tna_kompetensi tk', 'tk.id = tp.r_tna_kompetensi_id');
@@ -134,11 +134,11 @@ class PengawalanModel extends CI_Model {
 				}
 			}else{
 				$verified = "";
-				for ($i=1; $i < $rec['urutan']; $i++) { 
+				for ($i=1; $i < $rec['urutan']-1; $i++) { 
 					$verified.="<i class='fa fa-check-circle text-green'></i> ";
 				}
 
-				for ($x=$rec['urutan']; $x < 13; $x++) { 
+				for ($x=$rec['urutan']-1; $x < 13; $x++) { 
 					$verified.="<i class='fa fa-circle-o text-muted'></i> ";
 				}
 
@@ -187,6 +187,30 @@ class PengawalanModel extends CI_Model {
 		$result = $query->row();
 		return $result;
 	}
+
+	public function get_id_organisasi($nama){
+		return $this->db->from('m_organisasi')->like('nama',$nama,'both')->select('id,nama')->get()->row();
+	}
+
+	public function save_waktu($data){
+		return $this->db->insert('m_tna_pengawalan_waktu_pelaksanaan', $data);
+	}
+
+	public function save_dokumen($data){
+		return $this->db->insert('m_tna_pengawalan_dokumen', $data);
+	}
+
+	public function save_nota_dinas($data){
+		return $this->db->insert('m_tna_pengawalan_nota_dinas', $data);
+	}
+
+	public function save_pembayaran($data){
+		return $this->db->insert('m_tna_pengawalan_pembayaran', $data);
+	}
+	public function save_materi($data){
+		return $this->db->insert('m_tna_pengawalan_materi', $data);
+	}
+
 	public function get_detail($id){
 		$this->db->select('tp.*, 
 							rt.name as training,  

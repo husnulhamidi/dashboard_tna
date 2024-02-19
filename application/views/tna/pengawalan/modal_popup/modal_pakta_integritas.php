@@ -8,8 +8,11 @@
             </div>
             <div class="modal-body">
                 <div>
-                <form method="post" action="javascript:;" class="form-horizontal form-confirm" id="form-confirm">
-                    <input type="hidden" name="jabatan" id="jabatan">
+                <form method="post" action="javascript:;" class="form-horizontal form-pakta-integritas" id="form-pakta-integritas" enctype="multipart/form-data">
+                    <input type="hidden" name="id" id="idPaktaIntegritas">
+                    <input type="hidden" name="urutanId" id="urutanIdPaktaIntegritas">
+                    <input type="hidden" name="tahapanId" id="tahapanIdPaktaIntegritas">
+                    <input type="hidden" name="tipe" id="tipe" value="pakta integritas">
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-12">
@@ -19,48 +22,53 @@
                         <div class="row" style="padding-top: 10px; margin-left:20px">
                             <div class="col-md-12">
                                 <label class="col-md-4"> Nama </label>
-                                <div class="col-md-6"> Anggi Wilyani Putri N </div>
+                                <div class="col-md-6"> <span id="namaKaryawanPaktaIntegritas"></span> </div>
                             </div>
                         </div>
                         <div class="row" style="padding-top: 10px; margin-left:20px">
                             <div class="col-md-12">
                                 <label class="col-md-4"> NIK </label>
-                                <div class="col-md-6"> 123456 </div>
+                                <div class="col-md-6"> <span id="nikPaktaIntegritas"></span> </div>
                             </div>
                         </div>
                         <div class="row" style="padding-top: 10px; margin-left:20px">
                             <div class="col-md-12">
                                 <label class="col-md-4"> Nama Penyelenggara </label>
-                                <div class="col-md-6"> Hukum Online </div>
+                                <div class="col-md-6"> <span id="penyelenggaraPaktaIntegritas"></span> </div>
                             </div>
                         </div>
                         <div class="row" style="padding-top: 10px; margin-left:20px">
                             <div class="col-md-12">
                                 <label class="col-md-4"> Pelatihan  </label>
-                                <div class="col-md-6"> Legal Compliance </div>
+                                <div class="col-md-6"> <span id="pelatihanPaktaIntegritas"></span> </div>
                             </div>
                         </div>
                         <div class="row" style="padding-top: 10px;margin-left:20px">
                             <div class="col-md-12">
                                 <label class="col-md-4"> Unit  </label>
-                                <div class="col-md-6"> Informasi Teknologi & Cyber Security </div>
+                                <div class="col-md-6"> <span id="organisasiPaktaIntegritas"></span> </div>
                             </div>
                         </div>
-                        <div class="row" style="padding-top: 10px">
+                      <!--   <div class="row" style="padding-top: 10px">
                             <div class="col-md-12">
                                 <div class="col-md-4"> Lampiran </div>
                                 <div class="col-md-6">
                                     <a href="#"> lihat Dokumen </a>
                                 </div>
                             </div>
-                        </div> 
+                        </div>  -->
                         <div class="row" style="padding-top: 10px">
                             <div class="col-md-12">
-                                <!-- <label class="col-md-1">&nbsp;</label> -->
-                                <div class="col-md-6">
-                                    <button class="btn btn-primary btn-block">
-                                        <i class="fa fa-file-o"></i> Upload File
-                                    </button>
+                                <div class="col-md-4">
+                                    <label class="btn btn-primary btn-block">
+                                        <i class="fa fa-file-o"></i> 
+                                        Upload File
+                                        <input type="file" name="fileName" id="file-pakta-integritas" style="display: none;" accept=".pdf">
+                                        <input type="hidden" name="file-pakta-integritas" value="file-pakta-integritas">
+                                    </label>
+                                </div>
+                                <div class="col-md-8">
+                                    <span class="fileName"></span>
                                 </div>
                             </div>
                         </div>                        
@@ -69,12 +77,11 @@
                         
                         <div class="">
                             <div class="pull-right"> 
-                                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="false">Tidak, Perbaiki</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="false">Batal</button>
                                 <button 
-                                    style="padding-left: 50px;padding-right: 50px" 
                                     type="submit" 
-                                    class="btn btn-info submit-confirm" id="submit-confirm">
-                                    Ya
+                                    class="btn btn-info submit-pakta-integritas" id="submit-pakta-integritas">
+                                    Simpan
                                 </button>
                                 
                             </div>
@@ -88,3 +95,11 @@
         </div> <!-- /.modal-content -->
     </div> <!-- /.modal-dialog -->
 </div> <!-- /.modal -->
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#fileName').change(function() {
+            var fileName = $(this).val().split('\\').pop();
+            $('.fileName').html('<b>Filename : </b>' + fileName)
+        });
+    })
+</script>

@@ -188,6 +188,17 @@ $route['tna/pengawalan/list/(:any)']    = 'tna/pengawalan/index/$1';
 $route['tna/pengawalan/getData']    = 'tna/pengawalan/getData';
 $route['tna/pengawalan/getDataDashboard']    = 'tna/pengawalan/getDataDashboard';
 $route['tna/pengawalan/verifikasi']    = 'tna/pengawalan/verifikasi';
+$route['tna/pengawalan/konfirmasi_jadwal']    = 'tna/pengawalan/konfirmasi_jadwal';
+$route['tna/pengawalan/pakta_integritas']    = 'tna/pengawalan/pakta_integritas';
+$route['tna/pengawalan/kelengkapan_dokumen']    = 'tna/pengawalan/kelengkapan_dokumen';
+$route['tna/pengawalan/nota_dinas']    = 'tna/pengawalan/nota_dinas';
+$route['tna/pengawalan/pembayaran']    = 'tna/pengawalan/pembayaran';
+$route['tna/pengawalan/get_id_organisasi']    = 'tna/pengawalan/get_id_organisasi';
+$route['tna/pengawalan/upload_serifikat']    = 'tna/pengawalan/upload_serifikat';
+$route['tna/pengawalan/upload_materi']    = 'tna/pengawalan/upload_materi';
+$route['tna/pengawalan/internal_sharing']    = 'tna/pengawalan/internal_sharing';
+
+
 $route['tna/pengawalan/proses-verifikasi']    = 'tna/pengawalan/proses_verifikasi';
 $route['tna/pengawalan/ditolak']    = 'tna/pengawalan/ditolak';
 $route['tna/pengawalan/disetujui']    = 'tna/pengawalan/disetujui';

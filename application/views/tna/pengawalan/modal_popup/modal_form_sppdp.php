@@ -1,4 +1,10 @@
 <!-- Modal -->
+<style type="text/css">
+    .select2-container {
+        position: absolute;
+        z-index: 9999; /* Atur z-index lebih tinggi dari elemen dropdown */
+    }
+</style>
 <div class="modal fade" id="modalFormSPPDP" role="dialog" aria-hidden="true" enctype="multipart/form-data" style="z-index: 2000">
     <div class="modal-dialog" >
         <div class="modal-content">
@@ -8,13 +14,13 @@
             </div>
             <div class="modal-body">
                 <div>
-                <form method="post" action="javascript:;" class="form-horizontal form-confirm" id="form-confirm">
+                    <form id="form-sppdp">
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-12">
                                 <label class="col-md-4"> Nilai SPPDP </label>
                                 <div class="col-md-8">
-                                    <input type="text" name="" class="form-control">
+                                    <input type="text" name="nilai_sppd" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -26,7 +32,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" class="form-control pull-right" id="tgl_pembayaran" name="tgl_pembayaran">
+                                        <input type="text" class="form-control pull-right" id="tgl_pembayaran" name="tgl_pembayaran_sppdp">
                                     </div>
                                 </div>
                             </div>
@@ -35,7 +41,7 @@
                             <div class="col-md-12">
                                 <label class="col-md-4">Mata Anggaran</label>
                                 <div class="col-md-8">
-                                    <select class="form-control">
+                                    <select class="form-control" name="sppdp_mata_anggaran" id="sppdp_mata_anggaran">
                                         <option> Pilih Mata Anggaran</option>
                                         <option> HCM </option>
                                         <option> Non HCM </option>
@@ -47,7 +53,7 @@
                             <div class="col-md-12">
                                 <label class="col-md-4">Nomor Mata Anggaran</label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control pull-right" name="tgl"  >
+                                    <input type="text" class="form-control pull-right" name="sppdp_nomor_mata_anggaran"  >
                                 </div>
                             </div>
                         </div>
@@ -55,33 +61,18 @@
                             <div class="col-md-12">
                                 <label class="col-md-4">Unit</label>
                                 <div class="col-md-8">
-                                    <select class="form-control">
-                                        <option> Pilih Unit</option>
-                                        <option> HCM </option>
-                                        <option> IT & Cyber Security </option>
-                                         <option> Finance </option>
+                                    <select class="form-control" name="sppdp_unit" id="unit_sppdp">
+                                        <option value=""> Pilih Unit</option>
+                                        <?php 
+                                            foreach ($subdit as $sb) {
+                                                echo "<option value='".$sb->m_organisasi_id."'>".$sb->nama.'</option>';
+                                            }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
                         </div>
-                       
                     </div>
-                    <!-- <div class="box-footer">
-                        
-                        <div class="">
-                            <div class="pull-right"> 
-                                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="false">Close</button>
-                                <button 
-                                    type="submit" 
-                                    class="btn btn-info submit-confirm" id="submit-confirm">
-                                    Submit
-                                </button>
-                                
-                            </div>
-                        </div>
-                        
-                    </div> -->
-                    <!-- /.box-footer -->
                     </form>
                 </div>
             </div>
@@ -89,5 +80,35 @@
     </div> <!-- /.modal-dialog -->
 </div> <!-- /.modal -->
 <script type="text/javascript">
-    $('#tgl_pembayaran').datepicker()
+    
+    $(document).ready(function(){
+        $('#unit_sppdp').select2()
+        $('#tgl_pembayaran').datepicker()
+
+        $('#sppdp_mata_anggaran').change(function(){
+            let mata_anggaran = $('#sppdp_mata_anggaran').val();
+            if(mata_anggaran == 'HCM'){
+                get_id_organisasi_sppdp(mata_anggaran);
+            }else{
+                $('#unit_sppdp').prop('disabled', false);
+                $('#unit_sppdp').val('').trigger('change');
+               
+            }
+        })
+    })
+
+     function get_id_organisasi_sppdp(name){
+        $.ajax({
+            type : "POST",
+            url  : base_url+"tna/pengawalan/get_id_organisasi",
+            data:{ name: name },
+            dataType: "JSON",
+            success:function(resp){
+
+                $('#unit_sppdp').append('<option value="' + resp.id + '"> ' + resp.name + ' </option>'); 
+                $('#unit_sppdp').val(resp.id).trigger('change');
+                $('#unit_sppdp').prop('disabled', true);
+            },
+        });
+    }
 </script>

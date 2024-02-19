@@ -3,14 +3,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Tna extends CI_Controller {
 
+	private $karyawanId;
+
 	public function __construct()
 	{
 		parent::__construct();
 		if(!$this->session->userdata('user')){
 			redirect('auth/login');
 		}
+		$this->load->helper('custom_helper');
 		$this->load->model(array('lokasi_akun_model','UsulanTnaModel','TnaModel'));
-		//Do your magic here
+		
+		$userData = $this->session->userdata('user');
+		$this->karyawanId = $userData['m_karyawan_id'];
     
 	}
 
@@ -87,8 +92,7 @@ class Tna extends CI_Controller {
 		$this->template->load('template','tna/tna/form_create_tna', $data);
 	}
 
-	public function edit($id)
-	{
+	public function edit($id){
         $data = array();
         $data['breadcrumb'] 	= 'Edit';
         $data['title'] 			= 'Edit TNA';
@@ -125,8 +129,7 @@ class Tna extends CI_Controller {
 		$this->template->load('template','tna/tna/form_create_tna', $data);
 	}
 
-	public function detail($id)
-	{
+	public function detail($id){
         $data = array();
         $data['breadcrumb'] 	= 'Detail';
         $data['title'] 			= 'Detail TNA';
@@ -153,8 +156,6 @@ class Tna extends CI_Controller {
 	}
 
 	public function submit(){
-		// $data = $this->input->post();
-		// echo json_encode($data);
 		$tgl = explode('-', $this->input->post('waktu_pelaksanaan'));
 		$data = array(
 			// 'm_organisasi_id'	=> $this->input->post('subdit'),
@@ -174,16 +175,20 @@ class Tna extends CI_Controller {
 			'objective' => $this->input->post('objective'),
 			'code_tna' => $this->input->post('code_tna')
 		);
+
+		
 		if($this->input->post('id')){
 			$data['updated_date'] = date('Y-m-d');
+			$data['updated_by'] = $this->karyawanId;
 			$data['m_karyawan_id'] = $this->input->post('karyawan')[0];
 			$data['m_organisasi_id'] = $this->input->post('subdit')[0];
 			$data['status_karyawan'] = $this->input->post('status_fte')[0];
 			
 			$action = $this->TnaModel->updateData($data, $this->input->post('id'));
 		}else{
+
 			$data['created_date'] = date('Y-m-d');
-			// $data['created_by'] = $this->ion_auth->user()->row()->id;
+			$data['created_by'] = $this->karyawanId;
 			// $action = $this->TnaModel->insertData($data);
 			foreach ($this->input->post('karyawan') as $key => $value) {
 				if($value){
@@ -191,9 +196,11 @@ class Tna extends CI_Controller {
 					$data['m_organisasi_id'] = $this->input->post('subdit')[$key];
 					$data['status_karyawan'] = $this->input->post('status_fte')[$key];
 					$action = $this->TnaModel->insertData($data);
-				}
-				
+				}	
 			}
+			
+			// $this->saveHistory($dataHistory);
+			save_history_pengawalan($action, $this->input->post('tahapan_id'), 'Ya','Pembuatan TNA',$this->karyawanId);
 		}
 		
 
@@ -235,9 +242,15 @@ class Tna extends CI_Controller {
 	public function proses_tna(){
 		$get_tahapan_id = $this->TnaModel->get_tahapan_id(2);
 		$data = array(
-			'tahapan_id' => $get_tahapan_id->id
+			'tahapan_id' => $get_tahapan_id->id,
+			'updated_date' => date('Y-m-d'),
+			'updated_by' => $this->karyawanId
 		);
+
 		$action = $this->TnaModel->updateData($data, $this->input->post('id'));
+
+		save_history_pengawalan($this->input->post('id'), $get_tahapan_id->id, 'Ya','Proses/Usulkan TNA', $this->karyawanId);
+
 		if($action){
 			$return = array(
 				'success'		=> true,

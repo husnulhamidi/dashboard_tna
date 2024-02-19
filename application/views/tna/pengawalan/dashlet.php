@@ -1,14 +1,6 @@
+
 <div class="row">
-    <div class="col-lg-2 col-4">
-        <!-- small card -->
-        <div class="small-box bg-primary">
-            <div class="inner text-center">
-                <h3><span id="rekonfirmasiPeserta" class="count">0</span></h3>
-                <p>Rekonfirmasi <br> Peserta</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-2 col-4">
+    <div class="col-lg-3 col-2">
         <!-- small card -->
         <div class="small-box bg-primary">
             <div class="inner text-center">
@@ -17,7 +9,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-2 col-4">
+    <div class="col-lg-2 col-2">
         <!-- small card -->
         <div class="small-box bg-primary">
             <div class="inner text-center">
@@ -26,7 +18,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-2 col-4">
+    <div class="col-lg-2 col-2">
         <!-- small card -->
         <div class="small-box bg-primary">
             <div class="inner text-center">
@@ -35,7 +27,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-2 col-4">
+    <div class="col-lg-2 col-2">
         <!-- small card -->
         <div class="small-box bg-primary">
             <div class="inner text-center">
@@ -44,19 +36,19 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-2 col-4">
+    <div class="col-lg-3 col-2">
         <!-- small card -->
         <div class="small-box bg-primary">
             <div class="inner text-center">
                 <h3><span id="rekonfirmasiKuota" class="count">0</span></h3>
-                <p>Rekonfirmasi <br> Kuota</p>
+                <p>Menunggu <br> Jadwal Pelaksanaan</p>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row" style="padding-top: 20px">
-    <div class="col-lg-2 col-4">
+<div class="row text-center" style="padding-top: 10px">
+    <div class="col-lg-3">
         <!-- small card -->
         <div class="small-box bg-primary">
             <div class="inner text-center">
@@ -65,7 +57,16 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-2 col-4">
+    <div class="col-lg-2">
+        <!-- small card -->
+        <div class="small-box bg-primary">
+            <div class="inner text-center">
+                <h3><span id="notaDinas" class="count">0</span></h3>
+                <p>Nota Dinas <br> Penugasan</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2">
         <!-- small card -->
         <div class="small-box bg-primary">
             <div class="inner text-center">
@@ -74,7 +75,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-2 col-4">
+    <div class="col-lg-2">
         <!-- small card -->
         <div class="small-box bg-primary">
             <div class="inner text-center">
@@ -83,7 +84,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-2 col-4">
+    <div class="col-lg-3">
         <!-- small card -->
         <div class="small-box bg-primary">
             <div class="inner text-center">
@@ -91,8 +92,11 @@
                 <p>Upload Materi <br>&nbsp;</p>
             </div>
         </div>
-    </div>
-    <div class="col-lg-2 col-4">
+    </div>  
+</div>
+
+<div class="row" style="padding-top: 10px">
+    <div class="col-lg-4 col-4">
         <!-- small card -->
         <div class="small-box bg-primary">
             <div class="inner text-center">
@@ -101,7 +105,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-2 col-4">
+    <div class="col-lg-4 col-4">
         <!-- small card -->
         <div class="small-box bg-primary">
             <div class="inner text-center">
@@ -110,4 +114,18 @@
             </div>
         </div>
     </div>
+    <div class="col-lg-4 col-4">
+        <!-- small card -->
+        <div class="small-box bg-primary">
+            <div class="inner text-center">
+                <h3><span id="selesai" class="count">0</span></h3>
+                <p>Selesai <br> &nbsp;</p>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
+
+

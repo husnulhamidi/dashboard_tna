@@ -8,8 +8,10 @@
             </div>
             <div class="modal-body">
                 <div>
-                <form method="post" action="javascript:;" class="form-horizontal form-confirm" id="form-confirm">
-                    <input type="hidden" name="jabatan" id="jabatan">
+                <form method="post" action="javascript:;" class="form-horizontal form-nota-dinas" id="form-nota-dinas" enctype="multipart/form-data">
+                    <input type="hidden" name="id" id="notaDinasId">
+                    <input type="hidden" name="urutanId" id="notaDinasUrutanId">
+                    <input type="hidden" name="tahapanId" id="notaDinasTahapanId">
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-12">
@@ -18,49 +20,54 @@
                         </div>
                         <div class="row" style="padding-top: 10px; margin-left: 20px">
                             <div class="col-md-12">
-                                <label class="col-md-4"> No NDE </label>
+                                <label class="col-md-4"> No NDE <span style="color:red">*</span></label>
                                 <div class="col-md-8">
-                                    <input type="text" name="" class="form-control" placeholder="No NDE">
+                                    <input type="text" name="no_nde" class="form-control" placeholder="No NDE">
                                 </div>
                             </div>
                         </div>
                         <div class="row" style="padding-top: 10px; margin-left: 20px">
                             <div class="col-md-12">
-                                <label class="col-md-4"> Perihal </label>
+                                <label class="col-md-4"> Perihal <span style="color:red">*</span></label>
                                 <div class="col-md-8">
-                                    <input type="text" name="" class="form-control" placeholder="Perihal">
+                                    <input type="text" name="perihal" class="form-control" placeholder="Perihal">
                                 </div>
                             </div>
                         </div>
                         <div class="row" style="padding-top: 10px; margin-left: 20px">
                             <div class="col-md-12">
-                                <label class="col-md-4"> Tanggal Rilis </label>
+                                <label class="col-md-4"> Tanggal Rilis <span style="color:red">*</span></label>
                                 <div class="col-md-8">
-                                    <input type="text" name="" class="form-control" placeholder="Tanggal Rilis" id="tgl_rilis">
+                                    <input type="text" name="tgl_rilis" class="form-control" placeholder="Tanggal Rilis" id="tgl_rilis">
                                 </div>
                             </div>
                         </div>
                         <div class="row" style="padding-top: 10px; margin-left: 20px">
                             <div class="col-md-12">
-                                <label class="col-md-4"> Disetujui Oleh </label>
+                                <label class="col-md-4"> Disetujui Oleh <span style="color:red">*</span></label>
                                 <div class="col-md-8">
-                                    <input type="text" name="" class="form-control" placeholder="Disetujui Oleh">
+                                    <!-- <input type="text" name="disetujui_oleh" class="form-control" placeholder="Disetujui Oleh"> -->
+                                    <select id="approved_by" class="select2 form-control" name="disetujui_oleh">
+                                        <option value=""> Disetujui Oleh</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                         <div class="row" style="padding-top: 10px; margin-left: 20px">
                             <div class="col-md-12">
-                                <label class="col-md-4"> Keterangan </label>
+                                <label class="col-md-4"> Keterangan <span style="color:red">*</span></label>
                                 <div class="col-md-8">
-                                    <textarea class="form-control"></textarea>
+                                    <textarea class="form-control" name="keterangan"></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="row" style="padding-top: 10px; margin-left: 20px">
                             <div class="col-md-12">
-                                <label class="col-md-4"> Uplaod Dokumen </label>
+                                <label class="col-md-4"> Uplaod Dokumen <span style="color:red">*</span></label>
                                 <div class="col-md-8">
-                                    <input type="file" name="" class="form-control">
+                                    <input type="file" name="upload_dokumen" id="upload_dokumen" class="form-control">
+
+                                    <input type="hidden" name="file_dokumen" value="upload_dokumen">
                                 </div>
                             </div>
                         </div>
@@ -73,7 +80,7 @@
                                 <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="false">Close</button>
                                 <button 
                                     type="submit" 
-                                    class="btn btn-info submit-confirm" id="submit-confirm">
+                                    class="btn btn-info submit-nota-dinas" id="submit-nota-dinas">
                                     Submit
                                 </button>
                                 
@@ -90,7 +97,30 @@
 </div> <!-- /.modal -->
 <?php $this->load->view('tna/pengawalan/modal_popup/modal_form_sppdp');?>
 <script type="text/javascript">
-    $('#tgl_rilis').datepicker({
-      autoclose: true
-    });
+    $(document).ready(function(){
+        $('#tgl_rilis').datepicker({
+          autoclose: true
+        });
+
+        $('#approved_by').select2({
+            minimumInputLength: 2,
+            ajax: {
+                url: base_url+'tna/get_karyawan',
+                dataType: 'json',
+                delay: 250, 
+                data:function(params){
+                    return{
+                        searchTerm:params.term
+                    }
+                },
+                processResults:function(response){
+                    return {
+                        results:response
+                    }
+                },
+                cache:true
+            }
+        })
+    })
+    
 </script>

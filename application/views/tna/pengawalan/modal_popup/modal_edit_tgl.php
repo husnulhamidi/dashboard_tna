@@ -17,7 +17,7 @@
                            <div class="col-md-12">
                                 <div class="input-group">
                                     <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                    <input type="text" class="form-control pull-right" id="waktu_pelaksanaan" name="waktu_pelaksanaan">
+                                    <input type="text" class="form-control pull-right waktu_pelaksanaan" id="waktu_pelaksanaan" name="waktu_pelaksanaan">
                                 </div>
                            </div>
                         </div>

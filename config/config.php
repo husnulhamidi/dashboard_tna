@@ -142,6 +142,8 @@ $config['subclass_prefix'] = 'MY_';
 
 $config['composer_autoload'] = 'vendor/autoload.php';
 
+$autoload['helper'] = array('custom_helper');
+
 
 /*
 |--------------------------------------------------------------------------

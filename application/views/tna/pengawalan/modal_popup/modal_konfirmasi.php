@@ -8,25 +8,27 @@
             </div>
             <div class="modal-body">
                 <div>
-                <form method="post" action="javascript:;" class="form-horizontal form-confirm" id="form-confirm">
-                    <input type="hidden" name="jabatan" id="jabatan">
+                <form method="post" action="javascript:;" class="form-horizontal form-confirm-schedule" id="form-confirm-schedule">
+                    <input type="hidden" name="id" id="idKonfirmasi">
+                    <input type="hidden" name="urutanId" id="urutanId">
+                    <input type="hidden" name="tahapanIdKonfirmasi" id="tahapanIdKonfirmasi">
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-12">
                                 <label class="col-md-4"> Karyawan </label>
-                                <div class="col-md-6"> NIK 001 - Citra Dewi</div>
+                                <div class="col-md-6"> NIK <span id="nik"></span> - <span id="namaKaryawan"></span></div>
                             </div>
                         </div>
                         <div class="row" style="padding-top: 10px">
                             <div class="col-md-12">
                                 <label class="col-md-4"> Nama Penyelenggara </label>
-                                <div class="col-md-6"> Hukum Online </div>
+                                <div class="col-md-6"> <span id="penyelenggara"></span> </div>
                             </div>
                         </div>
                         <div class="row" style="padding-top: 10px">
                             <div class="col-md-12">
                                 <label class="col-md-4"> Pelatihan  </label>
-                                <div class="col-md-6"> Legal Compliance </div>
+                                <div class="col-md-6"> <span id="pelatihan"></span> </div>
                             </div>
                         </div>
                         <div class="row" style="padding-top: 10px">
@@ -35,7 +37,7 @@
                                 <div class="col-md-8">
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                        <input type="text" class="form-control pull-right" id="waktu_pelaksanaan" name="waktu_pelaksanaan">
+                                        <input type="text" class="form-control pull-right waktu_pelaksanaan" id="waktu_pelaksanaan" name="waktu_pelaksanaan">
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +50,7 @@
                                 <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="false">Close</button>
                                 <button 
                                     type="submit" 
-                                    class="btn btn-info submit-confirm" id="submit-confirm">
+                                    class="btn btn-info submit-confirm-schedule" id="submit-confirm">
                                     Submit
                                 </button>
                                 
@@ -62,4 +64,5 @@
             </div>
         </div> <!-- /.modal-content -->
     </div> <!-- /.modal-dialog -->
-</div> <!-- /.modal -->
+</div>
+

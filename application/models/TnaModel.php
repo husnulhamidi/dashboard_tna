@@ -155,7 +155,13 @@ class TnaModel extends CI_Model {
 	}
 
 	public function insertData($data){
-		return $this->db->insert($this->table, $data);
+		// return $this->db->insert($this->table, $data);
+		$this->db->insert($this->table, $data);
+		return $this->db->insert_id();
+	}
+
+	public function insertDataHistory($data){
+		return $this->db->insert('m_tna_pengawalan_riwayat', $data);
 	}
 
 	public function get_detail($id){
@@ -180,7 +186,7 @@ class TnaModel extends CI_Model {
 		return $update;		
 	}
 
-	  public function delete($id){
+	public function delete($id){
         $this->db->where($this->id,$id);
         $delete = $this->db->delete($this->table);
 

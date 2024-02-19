@@ -8,25 +8,32 @@
             </div>
             <div class="modal-body">
                 <div>
-                <form method="post" action="javascript:;" class="form-horizontal form-confirm" id="form-confirm">
-                    <input type="hidden" name="jabatan" id="jabatan">
+                <form method="post" action="javascript:;" class="form-horizontal form-internal-sharing" id="form-internal-sharing">
+                    <input type="hidden" name="id" id="internal_sharing_id">
+                    <input type="hidden" name="urutanId" id="internal_sharing_urutanId">
+                    <input type="hidden" name="tahapanId" id="internal_sharing_tahapanId">
                     <div class="box-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label class="col-md-4"> Peserta </label>
-                                <div class="col-md-6"> NIK 001 - Citra Dewi</div>
+                        <div class="col-md-12">
+                            <label class="col-md-4"> Peserta </label>
+                            <div class="col-md-6"> NIK <span id="internal_sharing_nik"></span> - <span id="internal_sharing_nama"></span>
                             </div>
                         </div>
                         <div class="row" style="padding-top: 10px">
                             <div class="col-md-12">
                                 <label class="col-md-4"> Nama Penyelenggara </label>
-                                <div class="col-md-6"> Hukum Online </div>
+                                <div class="col-md-6"> <span id="internal_sharing_penyelenggara"></span></div>
                             </div>
                         </div>
                         <div class="row" style="padding-top: 10px">
                             <div class="col-md-12">
                                 <label class="col-md-4"> Pelatihan  </label>
-                                <div class="col-md-6"> Legal Compliance </div>
+                                <div class="col-md-6"> <span id="internal_sharing_pelatihan"></span> </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top: 10px">
+                            <div class="col-md-12">
+                                <label class="col-md-4"> Subdit/unit  </label>
+                                <div class="col-md-6"> <span id="internal_sharing_unit"></span> </div>
                             </div>
                         </div>
                         <div class="row" style="padding-top: 10px"><hr></div>
@@ -36,8 +43,11 @@
                             </div>
                         </div>
                         <div class="row" style="padding-top: 10px">
+                            <input type="hidden" name="judul" id="judul">
+                            <input type="hidden" name="direktorat" id="direktorat">
+                            <input type="hidden" name="pemateri" id="pemateri">
                             <div class="col-md-12">
-                                <label class="col-md-4"> Tanggal </label>
+                                <label class="col-md-4"> Tanggal  <span style="color:red">*</span> </label>
                                 <div class="col-md-8">
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
@@ -48,41 +58,41 @@
                         </div>
                         <div class="row" style="padding-top: 10px">
                             <div class="col-md-12">
-                                <label class="col-md-4">Waktu</label>
+                                <label class="col-md-4">Waktu <span style="color:red">*</span> </label>
                                 <div class="col-md-8">
-                                    <input type="time" name="" class="form-control">
+                                    <input type="time" name="waktu" id="waktu" class="form-control">
                                 </div>
                             </div>
                         </div>
                         <div class="row" style="padding-top: 10px">
                             <div class="col-md-12">
-                                <label class="col-md-4">Tempat</label>
+                                <label class="col-md-4">Tempat <span style="color:red">*</span> </label>
                                 <div class="col-md-8">
-                                    <input type="text" name="" class="form-control">
+                                    <input type="text" name="tempat" id="tempat" class="form-control">
                                 </div>
                             </div>
                         </div>
                         <div class="row" style="padding-top: 10px">
                             <div class="col-md-12">
-                                <label class="col-md-4">Biaya</label>
+                                <label class="col-md-4">Biaya <span style="color:red">*</span> </label>
                                 <div class="col-md-8">
-                                    <input type="text" name="" class="form-control">
+                                    <input type="text" name="biaya" id="biaya" class="form-control">
                                 </div>
                             </div>
                         </div>
                         <div class="row" style="padding-top: 10px">
                             <div class="col-md-12">
-                                <label class="col-md-4">Kuota</label>
+                                <label class="col-md-4">Kuota <span style="color:red">*</span> </label>
                                 <div class="col-md-8">
-                                    <input type="text" name="" class="form-control">
+                                    <input type="text" name="kuota" id="kuota" class="form-control">
                                 </div>
                             </div>
                         </div>
                         <div class="row" style="padding-top: 10px">
                             <div class="col-md-12">
-                                <label class="col-md-4">Peserta</label>
+                                <label class="col-md-4">Link Zoom  </label>
                                 <div class="col-md-8">
-                                    <a onclick="tambahPeserta()"> Tambah Peserta</a>
+                                    <input type="text" name="linkZoom" id="linkZoom" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -94,7 +104,7 @@
                                 <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="false">Close</button>
                                 <button 
                                     type="submit" 
-                                    class="btn btn-info submit-confirm" id="submit-confirm">
+                                    class="btn btn-info submit-internal-sharing" id="submit-internal-sharing">
                                     Submit
                                 </button>
                                 

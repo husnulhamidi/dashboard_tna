@@ -164,11 +164,13 @@
     </div>
 
 </section>
+<?php $this->load->view('tna/pengawalan/modal_popup/modal_filter');?>
 <?php $this->load->view('tna/pengawalan/modal_popup/modal_verifikasi');?>
 <?php $this->load->view('tna/pengawalan/modal_popup/modal_konfirmasi');?>
-<?php $this->load->view('tna/pengawalan/modal_popup/modal_filter');?>
+
 <?php $this->load->view('tna/pengawalan/modal_popup/modal_kelengkapan_dokumen');?>
 <?php $this->load->view('tna/pengawalan/modal_popup/modal_pakta_integritas');?>
+
 <?php $this->load->view('tna/pengawalan/modal_popup/modal_nota_dinas_penugasan');?>
 <?php $this->load->view('tna/pengawalan/modal_popup/modal_upload_pembayaran');?>
 <?php $this->load->view('tna/pengawalan/modal_popup/modal_upload_sertifikat');?>

@@ -17,7 +17,7 @@
             }
             body {
                 
-                background-image: url('<?php echo base_url('files/sertificate/template_cerif.png'); ?>');
+                background-image: url('<?php echo base_url('files/sertificate/background_sertifikat.jpg'); ?>');
                 background-size: 100% 100%;
                 background-repeat: no-repeat;
                 font-family: "Poppins";
