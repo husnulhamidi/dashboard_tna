@@ -4,8 +4,11 @@
         position: absolute;
         z-index: 9999; /* Atur z-index lebih tinggi dari elemen dropdown */
     }
+    /*.ui-datepicker {
+        z-index: 9600 !important; /* Sesuaikan dengan kebutuhan */
+    }*/
 </style>
-<div class="modal fade" id="modalFormSPPDP" role="dialog" aria-hidden="true" enctype="multipart/form-data" style="z-index: 2000">
+<div class="modal fade" id="modalFormSPPDP" role="dialog" aria-hidden="true" enctype="multipart/form-data" style="z-index: 1100">
     <div class="modal-dialog" >
         <div class="modal-content">
             <div class="modal-header bg-info">
@@ -20,7 +23,7 @@
                             <div class="col-md-12">
                                 <label class="col-md-4"> Nilai SPPDP </label>
                                 <div class="col-md-8">
-                                    <input type="text" name="nilai_sppd" class="form-control">
+                                    <input type="text" name="nilai_sppd" id="nilai_sppd" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -32,7 +35,7 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" class="form-control pull-right" id="tgl_pembayaran" name="tgl_pembayaran_sppdp">
+                                        <input type="text" class="form-control pull-right tgl" id="tgl_pembayaran" name="tgl_pembayaran_sppdp">
                                     </div>
                                 </div>
                             </div>
@@ -61,7 +64,8 @@
                             <div class="col-md-12">
                                 <label class="col-md-4">Unit</label>
                                 <div class="col-md-8">
-                                    <select class="form-control" name="sppdp_unit" id="unit_sppdp">
+                                    <input type="hidden" name="sppdp_unit" id="sppd_unit_tmp">
+                                    <select class="form-control" id="unit_sppdp">
                                         <option value=""> Pilih Unit</option>
                                         <?php 
                                             foreach ($subdit as $sb) {
@@ -97,14 +101,14 @@
         })
     })
 
-     function get_id_organisasi_sppdp(name){
+    function get_id_organisasi_sppdp(name){
         $.ajax({
             type : "POST",
             url  : base_url+"tna/pengawalan/get_id_organisasi",
             data:{ name: name },
             dataType: "JSON",
             success:function(resp){
-
+                $('#sppd_unit_tmp').val(resp.id)
                 $('#unit_sppdp').append('<option value="' + resp.id + '"> ' + resp.name + ' </option>'); 
                 $('#unit_sppdp').val(resp.id).trigger('change');
                 $('#unit_sppdp').prop('disabled', true);

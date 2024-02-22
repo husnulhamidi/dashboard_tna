@@ -8,6 +8,7 @@
                         <h3 class="box-title"><?php echo $title;?></h3>
                     </div>
                     <input type="hidden" name="id" id="id" value=<?php echo $detail->id;?> >
+                    <input type="hidden" name="urutan" id="urutan" value="<?php echo $detail->urutan;?>" >
                     <div class="box-body">
                         <div class="row" style="padding-top:10px">
                             <div class="col-md-12">
@@ -111,6 +112,7 @@
     </div>
 </section>
 <?php $this->load->view('tna/pengawalan/modal_popup/modal_edit_tgl');?>
+
 <script type="text/javascript">
     function showModalEditTgl(id, waktu){
         $('#id_edit_waktu').val(id)

@@ -9,7 +9,7 @@
             <div class="modal-body">
                 <div>
                 <form method="post" action="javascript:;" class="form-horizontal form-pembayaran" id="form-pembayaran" enctype="multipart/form-data">
-                    <input type="text" name="id" id="pembayaranId">
+                    <input type="hidden" name="id" id="pembayaranId">
                     <input type="hidden" name="urutanId" id="pembayaranUrutanId">
                     <input type="hidden" name="tahapanId" id="pembayaranTahapanId">
                     <div class="box-body">
@@ -82,8 +82,8 @@
                                 <label class="col-md-4">Ada Biaya SPDP <span style="color:red">*</span> </label>
                                 <div class="col-md-8">
                                     <div class="grid grid-cols-2">
-                                        <input type="radio" name="biayasppdp" value="ya" id="biayasppdp" onclick="showFormSPDP('ya')"><span style="margin-right: 50px"> Ya </span>
-                                        <input type="radio" name="biayasppdp" value="tidak" id="biayasppdp" onclick="showFormSPDP('tidak')"> Tidak
+                                        <input type="radio" name="biayasppdp" value="ya" id="biayasppdpYa" onclick="showFormSPDP('ya')"><span style="margin-right: 50px"> Ya </span>
+                                        <input type="radio" name="biayasppdp" value="tidak" id="biayasppdpTidak" onclick="showFormSPDP('tidak')"> Tidak
                                     </div>
                                 </div>
                             </div>
@@ -97,7 +97,7 @@
                                 <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="false">Close</button>
                                 <button 
                                     type="submit" 
-                                    class="btn btn-info submit-pembayaran" id="submit-pembayaran">
+                                    class="btn btn-info submit-pembayaran-edit" id="submit-pembayaran">
                                     Submit
                                 </button>
                                 
@@ -117,8 +117,8 @@
     $(document).ready(function(){
         $('#unit').select2()
 
-        $('#mata_anggaran').change(function(){
-            let mata_anggaran = $('#mata_anggaran').val();
+        $('#edit_mata_anggaran').change(function(){
+            let mata_anggaran = $('#edit_mata_anggaran').val();
             if(mata_anggaran == 'HCM'){
                 get_id_organisasi(mata_anggaran);
             }else{

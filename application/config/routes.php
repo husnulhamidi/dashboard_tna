@@ -207,6 +207,8 @@ $route['tna/pengawalan/get_detail_peserta_intenal_sharing']    = 'tna/pengawalan
 $route['tna/pengawalan/edit_waktu']    = 'tna/pengawalan/edit_waktu';
 $route['tna/pengawalan/add_peserta']    = 'tna/pengawalan/add_peserta';
 $route['tna/pengawalan/edit_internal_sharing']    = 'tna/pengawalan/edit_internal_sharing';
+$route['tna/pengawalan/edit_pembayaran']    = 'tna/pengawalan/edit_pembayaran';
+$route['tna/pengawalan/complete_internal_sharing']    = 'tna/pengawalan/complete_internal_sharing';
 
 
 $route['tna/pengawalan/proses-verifikasi']    = 'tna/pengawalan/proses_verifikasi';

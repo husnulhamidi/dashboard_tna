@@ -582,6 +582,7 @@ class Pengawalan extends CI_Controller {
 		$data['action_url_submit'] 	= site_url('tna/anggaran/submit');
 		$data['action_url_update'] 	= site_url('tna/anggaran/update');
 		$data['detail'] = $this->PengawalanModel->get_detail($id);
+		$data['subdit'] 		= $this->lokasi_akun_model->viewall_subdit()->result();
 		$data['css'] 			= array(
 			'plugins/sweet-alert/sweetalert.css',
 			'plugins/select2/select2.min.css',
@@ -727,7 +728,105 @@ class Pengawalan extends CI_Controller {
 			);
 		}
 		echo json_encode($return);
+	}
 
+	public function edit_pembayaran(){
+		if($this->input->post('file-bukti-pembayaran')){
+			$fileName = $this->input->post('file-bukti-pembayaran');
+			$pathName = './files/upload/tna/bukti_pembayaran';
+			$allowed_types = '*';
+			$upload_file = upload_file($fileName, $pathName, $allowed_types, $this);
+		}
+
+		$tgl_rilis = explode('/', $this->input->post('tgl'));
+		$unit = $this->input->post('unit');
+		if($this->input->post('unit_tmp') != ''){
+			$unit = $this->input->post('unit_tmp');
+		}
+		$data = array(
+			'nominal'				=> $this->input->post('nilai'),
+			'tanggal'				=> $tgl_rilis[2].'-'.$tgl_rilis[0].'-'.$tgl_rilis[1],
+			'mata_anggaran'			=> $this->input->post('mata_anggaran'),
+			'no_mata_anggaran'		=> $this->input->post('nomor_mata_anggaran'),
+			'm_organisasi_id'		=> $unit,
+			// 'bukti_pembayaran'		=> $upload_file['data'],
+			'is_sppd'				=> $this->input->post('biayasppdp') == 'ya' ? 1 : 0,
+		);
+
+		if($this->input->post('biayasppdp') == 'ya'){
+			$sppdpData = $this->input->post('sppdp');
+			parse_str($sppdpData, $sppdpArray);
+
+			$tgl_spp = explode('/', $sppdpArray['tgl_pembayaran_sppdp']);
+
+			$data['nominal_sppd']			= $sppdpArray['nilai_sppd'];
+			$data['tanggal_sppd']			= $tgl_spp[2].'-'.$tgl_spp[0].'-'.$tgl_spp[1];
+			$data['mata_anggaran_sppd']		= $sppdpArray['sppdp_mata_anggaran'];
+			$data['no_mata_anggaran_sppd']	= $sppdpArray['sppdp_nomor_mata_anggaran'];
+			$data['m_organisasi_id_sppd']	= $sppdpArray['sppdp_unit'];
+		}
+
+		// echo json_encode($data);
+		if($upload_file['data']){
+			$data['bukti_pembayaran']			= $upload_file['data'];
+		}
+		
+		$action = $this->PengawalanModel->edit_pembayaran($data, $this->input->post('id'));
+		if($action){
+			$return = array(
+				'success'		=> true,
+				'status_code'	=> 201,
+				'msg'			=> "Data berhasil diubah.",
+				'data'			=> array()
+			);
+			
+		}else{
+			$return = array(
+				'success'		=> false,
+				'status_code'	=> 500,
+				'msg'			=> "Data gagal diubah.",
+				'data'			=> array()
+			);
+		}
+
+		echo json_encode($return);	
+	}
+
+	public function complete_internal_sharing(){
+		// echo json_encode($this->input->post());
+		// ubah intenal sharing
+		$dataInternalSharing = array(
+			'is_complete' => 1
+		);
+		$action = $this->PengawalanModel->updateInternalSharing($dataInternalSharing, $this->input->post('internalSharingId') );
+		if($action){
+			// cek pengawalan
+			$cekData = $this->PengawalanModel->get_detail($this->input->post('pengawalanId'));
+			$is_evaluasi = $cekData->is_evaluasi;
+			$tahapan_id = $cekData->tahapan_id;
+			if($is_evaluasi == 1){
+				save_history_pengawalan($this->input->post('pengawalanId'), 190, 'Ya','Selseai', $this->karyawanId);
+
+				update_pengawalan($this->input->post('pengawalanId'), 190, $this->karyawanId );
+
+			}
+			$return = array(
+				'success'		=> true,
+				'status_code'	=> 201,
+				'msg'			=> "Data berhasil diubah.",
+				'data'			=> array()
+			);
+		}else{
+			$return = array(
+				'success'		=> false,
+				'status_code'	=> 500,
+				'msg'			=> "Data gagal diubah.",
+				'data'			=> array()
+			);
+		}
+
+		
+		echo json_encode($return);
 	}
 
     public function manager($active_tab="all"){

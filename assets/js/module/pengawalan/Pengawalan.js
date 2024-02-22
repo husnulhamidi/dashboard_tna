@@ -298,6 +298,7 @@ function getDataDashboard(){
             $('#materi').text(resp.materi)
             $('#jadwal').text(resp.internal_sharing)
             $('#evalusi').text(resp.evalusi)
+            $('#selesai').text(resp.selesai)
         },
         complete: function (data) {
             $('.count').each(function () {
@@ -700,7 +701,7 @@ function showFormSPDP(ket){
 
 function submitPembayaran(){
 	$(".form-pembayaran").validate({
-         rules: {
+        rules: {
             nilai: "required",
             tgl: "required",
             mata_anggaran: "required",

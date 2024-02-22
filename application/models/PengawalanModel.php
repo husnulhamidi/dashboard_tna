@@ -206,6 +206,7 @@ class PengawalanModel extends CI_Model {
 		$this->db->select('COUNT(CASE WHEN tu.nama = "Upload Materi" THEN 1 END) AS materi');
 		$this->db->select('COUNT(CASE WHEN tu.nama = "Internal Sharing" THEN 1 END) AS internal_sharing');
 		$this->db->select('COUNT(CASE WHEN tu.nama = "Evaluasi" THEN 1 END) AS evalusi');
+		$this->db->select('COUNT(CASE WHEN tu.nama = "Selesai" THEN 1 END) AS selesai');
 
 
 		$this->db->from('m_tna_pengawalan as tp');
@@ -236,6 +237,7 @@ class PengawalanModel extends CI_Model {
 	public function save_pembayaran($data){
 		return $this->db->insert('m_tna_pengawalan_pembayaran', $data);
 	}
+
 	public function save_materi($data){
 		return $this->db->insert('m_tna_pengawalan_materi', $data);
 	}
@@ -254,13 +256,15 @@ class PengawalanModel extends CI_Model {
 							mk.nik_tg as nik,
 							mo.nama as nama_organisasi,
 							mis.is_complete,
-                    		mis.id as internal_sharing');
+                    		mis.id as internal_sharing,
+                    		tu.urutan');
 		$this->db->from('m_tna_pengawalan tp');
 		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_traning_id');
 		$this->db->join('r_tna_kompetensi tk', 'tk.id = tp.r_tna_kompetensi_id');
 		$this->db->join('m_karyawan mk', 'mk.id = tp.m_karyawan_id');
 		$this->db->join('m_organisasi mo', 'mo.id = tp.m_organisasi_id');
 		$this->db->join('m_tna_internal_sharing mis', 'mis.m_tna_pengawalan_id = tp.id', 'left');
+		$this->db->join('r_tahapan_usulan tu', 'tu.id = tp.tahapan_id');
 		$this->db->where('tp.id', $id);
 		$query = $this->db->get();
 		return $query->row();
@@ -570,6 +574,13 @@ class PengawalanModel extends CI_Model {
 	public function updateInternalSharing($data, $id){
 		$this->db->where('id',$id);
 		$update = $this->db->update('m_tna_internal_sharing',$data);
+		return $update;	
+	}
+
+	public function edit_pembayaran($data, $id){
+		// return $this->db->insert('m_tna_pengawalan_pembayaran', $data);
+		$this->db->where('id',$id);
+		$update = $this->db->update('m_tna_pengawalan_pembayaran',$data);
 		return $update;	
 	}
 
