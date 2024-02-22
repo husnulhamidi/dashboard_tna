@@ -197,6 +197,16 @@ $route['tna/pengawalan/get_id_organisasi']    = 'tna/pengawalan/get_id_organisas
 $route['tna/pengawalan/upload_serifikat']    = 'tna/pengawalan/upload_serifikat';
 $route['tna/pengawalan/upload_materi']    = 'tna/pengawalan/upload_materi';
 $route['tna/pengawalan/internal_sharing']    = 'tna/pengawalan/internal_sharing';
+$route['tna/pengawalan/evaluasi']    = 'tna/pengawalan/evaluasi';
+$route['tna/pengawalan/riwayat_verifikasi']    = 'tna/pengawalan/riwayat_verifikasi';
+$route['tna/pengawalan/get_detail_dokumen']    = 'tna/pengawalan/get_detail_dokumen';
+$route['tna/pengawalan/get_detail_pembayaran']    = 'tna/pengawalan/get_detail_pembayaran';
+$route['tna/pengawalan/get_detail_materi']    = 'tna/pengawalan/get_detail_materi';
+$route['tna/pengawalan/get_detail_intenal_sharing']    = 'tna/pengawalan/get_detail_intenal_sharing';
+$route['tna/pengawalan/get_detail_peserta_intenal_sharing']    = 'tna/pengawalan/get_detail_peserta_intenal_sharing';
+$route['tna/pengawalan/edit_waktu']    = 'tna/pengawalan/edit_waktu';
+$route['tna/pengawalan/add_peserta']    = 'tna/pengawalan/add_peserta';
+$route['tna/pengawalan/edit_internal_sharing']    = 'tna/pengawalan/edit_internal_sharing';
 
 
 $route['tna/pengawalan/proses-verifikasi']    = 'tna/pengawalan/proses_verifikasi';

@@ -33,11 +33,22 @@
                         </div>
                         <div class="row" style="padding-top: 10px">
                             <div class="col-md-12">
-                                <label class="col-md-4"> Waktu Pelaksanaan </label>
+                                <label class="col-md-4"> Waktu Awal Pelaksanaan <span style="color:red">*</span></label>
                                 <div class="col-md-8">
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                        <input type="text" class="form-control pull-right waktu_pelaksanaan" id="waktu_pelaksanaan" name="waktu_pelaksanaan">
+                                        <input type="text" class="form-control pull-right tgl" id="tanggalPertama" name="waktu_pelaksanaan_awal">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="row" style="padding-top: 10px">
+                            <div class="col-md-12">
+                                <label class="col-md-4"> Waktu Akhir Pelaksanaan <span style="color:red">*</span></label>
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                        <input type="text" class="form-control pull-right tgl" id="tanggalKedua" name="waktu_pelaksanaan_akhir">
                                     </div>
                                 </div>
                             </div>

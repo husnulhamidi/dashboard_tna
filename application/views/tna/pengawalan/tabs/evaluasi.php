@@ -7,7 +7,8 @@
 <div class="tab-content">
     <div class="tab-pane active">
         <div class="col-md-12" style="padding-top: 10px">
-            <label> Evaluasi  </label>
+            <label style="margin-bottom: 10px"><h3> Evaluasi </h3></label>
+            <hr style="margin-top: -10px">
            
         </div>
     </div>

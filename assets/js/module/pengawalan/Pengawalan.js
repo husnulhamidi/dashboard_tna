@@ -2,19 +2,24 @@ $(document).ready(function(){
 	$('.waktu_pelaksanaan').daterangepicker();
 	$('#tgl').datepicker();
 	$('.tgl').datepicker();
+
 	const active_tab = $('#active_tab').val()
 	var table;
+    var tabs;
 	if(active_tab == 'all'){
+        tabs = 'all';
 		table = '#table-pengawalan'
 	}
 	if(active_tab == 'verifikasi'){
+        tabs = 'varifikasi';
 		table = '#table-verifikasi'
 	}
 	if(active_tab == 'selesai'){
+        tabs = 'finish';
 		table = '#table-finish'
 	}
 
-	builTable(table);
+	builTable(table,tabs);
 	getDataDashboard();
 
 	$('.submit-verifikasi').click(function(){
@@ -52,11 +57,27 @@ $(document).ready(function(){
     $('.submit-internal-sharing').click(function(){
         submitInterlSharing()
     })
+
+    $('.submit-evaluasi').click(function(){
+        submitEvaluasi()
+    })
+
+    $('.btn-filter').click(function(){
+        $('#modalFilter').modal('hide')
+        builTable(table,tabs)
+    })
+
+    $('.btn-reset').click(function(){
+        // location.reload();
+        $("#form-filter").get(0).reset() 
+        $("#form-filter .select2").trigger('change')
+        builTable(table,tabs)
+    })
 })
 
-function builTable(table){
+function builTable(table,tabs){
 	if ($.fn.DataTable.isDataTable(table)) {
-        $('#table-tna').DataTable().destroy();
+        $(table).DataTable().destroy();
     }
      oTable = $(table).DataTable({
         processing: true, 
@@ -68,20 +89,24 @@ function builTable(table){
             type    : "get",
             datatype: "json",
             data    : function(d){
-                // d.filter_subdit = $('#filter_subdit').val()
-                // d.filter_kompetensi = $('#filter_kompetensi').val()
-                // d.filter_jenis_development = $('#filter_jenis_development').val()
-                // d.filter_nama_pelatihan = $('#filter_nama_pelatihan').val()
-                // d.filter_justifikasi = $('#filter_justifikasi').val()
-                // d.filter_metoda_pembelajaran = $('#filter_metoda_pembelajaran').val()
-                // d.filter_biaya_min = $('#filter_biaya_min').val()
-                // d.filter_biaya_max = $('#filter_biaya_max').val()
-                // d.filter_penyelenggara = $('#filter_penyelenggara').val()
+                d.tabs = tabs
+                d.filter_peserta = $('#filter_peserta').val()
+                d.filter_unit = $('#filter_unit').val()
+                d.filter_pelatihan = $('#filter_pelatihan').val()
+                d.filter_penyelenggara = $('#filter_penyelenggara').val()
+                d.filter_kompetensi = $('#filter_kompetensi').val()
+                d.filter_development = $('#filter_development').val()
+                d.filter_pembelajaran = $('#filter_pembelajaran').val()
+                d.filter_biaya_min = $('#filter_biaya_min').val()
+                d.filter_biaya_max = $('#filter_biaya_max').val()
+                d.filter_tgl_mulai = $('#filter_tgl_mulai').val()
+                d.filter_tgl_selesai = $('#filter_tgl_selesai').val()
+                d.filter_tahapan = $('#filter_tahapan').val()
+               
                 // d.filter_karyawan = $('#filter_karyawan').val()
                 // d.filter_status_karyawan = $('#filter_status_karyawan').val()
 
-                // d.filter_waktu_awal = $('#filter_waktu_awal').val()
-                // d.filter_waktu_akhir = $('#filter_waktu_akhir').val()
+               
 
                 console.log(d)
             }
@@ -177,19 +202,23 @@ function builTable(table){
                                     </li>
                                 	`
                                 }
-                                 if(row.urutan == 12 || row.urutan == 13 || row.urutan == 14){
-                                	action += `
-                                    <li>
-                                        <a 
-                                            onclick="internalSharing(`+params+`,`+row.id_karyawan+`,`+row.id_organisasi+`)"> Jadwal Internal Sharing
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a 
-                                           onclick="evaluasi()"> Evaluasi
-                                        </a>
-                                    </li>
-                                	`
+                                if(row.urutan == 12 || row.urutan == 13 || row.urutan == 14){
+                                    if(row.internal_sharing == null){
+                                        action += `
+                                            <li>
+                                                <a 
+                                                    onclick="internalSharing(`+params+`,`+row.id_karyawan+`,`+row.id_organisasi+`)"> Jadwal Internal Sharing
+                                                </a>
+                                            </li>`;
+                                    }
+                                	
+                                    if(row.is_evaluasi == 0){
+                                       action += `<li>
+                                                    <a 
+                                                       onclick="evaluasi(`+params+`,`+row.is_complete+`)"> Evaluasi
+                                                    </a>
+                                                </li>` 
+                                    }
                                 }
                                 
                             `</ul>
@@ -440,10 +469,14 @@ function konfirmasiJadwal(id,tahapanId,urutanId,namaKaryawan, penyelenggara, pel
 function submitConfirmSchedule(){
 	$(".form-confirm-schedule").validate({
 		rules: {
-            waktu_pelaksanaan: "required",
+            waktu_pelaksanaan_awal: "required",
+            waktu_pelaksanaan_akhir: "required",
         },
         messages: {
-            waktu_pelaksanaan:{
+            waktu_pelaksanaan_awal:{
+                required:"<i class='fa fa-times'></i> Waktu Pelaksanaan Wajib diisi"
+            },  
+            waktu_pelaksanaan_akhir:{
                 required:"<i class='fa fa-times'></i> Waktu Pelaksanaan Wajib diisi"
             },            
         },
@@ -660,7 +693,6 @@ function showFormSPDP(ket){
 		if(!$('#modalFormSPPDP').is(':visible')){
 			$('#modalFormSPPDP').modal('show')
 		}
-		
 	}else{
 		$('#modalFormSPPDP').modal('hide')
 	}
@@ -668,6 +700,34 @@ function showFormSPDP(ket){
 
 function submitPembayaran(){
 	$(".form-pembayaran").validate({
+         rules: {
+            nilai: "required",
+            tgl: "required",
+            mata_anggaran: "required",
+            nomor_mata_anggaran: "required",
+            unit: "required",
+            biayasppdp: "required",
+        },
+        messages: {
+            nilai:{
+                required:"<i class='fa fa-times'></i> Nilai pembayaran wajib diisi"
+            }, 
+            tgl:{
+                required:"<i class='fa fa-times'></i> Tanggal pembayaran wajib diisi"
+            }, 
+            mata_anggaran:{
+                required:"<i class='fa fa-times'></i> Mata anggaran rilis wajib diisi"
+            }, 
+            nomor_mata_anggaran:{
+                required:"<i class='fa fa-times'></i> Nomor mata anggaran oleh wajib diisi"
+            }, 
+            unit:{
+                required:"<i class='fa fa-times'></i> Unit wajib diisi"
+            },
+            biayasppdp:{
+                required:"<i class='fa fa-times'></i> Pilihan biaya sppdp wajib diisi"
+            },            
+        },
         submitHandler: function(form) {
             const formData = new FormData();
             const pembayaranFormData = new FormData($("#form-pembayaran")[0]);
@@ -871,9 +931,9 @@ function internalSharing(id,tahapanId,urutanId,namaKaryawan, penyelenggara, pela
     $('#internal_sharing_nama').text(namaKaryawan)
     $('#internal_sharing_penyelenggara').text(penyelenggara)
     $('#internal_sharing_pelatihan').text(pelatihan)
-    $('#judul').text(pelatihan)
-    $('#direktorat').text(id_organisasi)
-    $('#pemateri').text(id_karyawan)
+    $('#judul').val(pelatihan)
+    $('#direktorat').val(id_organisasi)
+    $('#pemateri').val(id_karyawan)
     $('#internal_sharing_unit').text(unit)
     $('#modalInternalSharing').modal('show')
 }
@@ -949,7 +1009,50 @@ function submitInterlSharing(){
 }
 
 
-function evaluasi(){
+function evaluasi(id,tahapanId,urutanId,namaKaryawan, penyelenggara, pelatihan, nik,unit, estimasi_biaya,is_complete){
+    $('#evaluasi_id').val(id)
+    $('#evaluasi_urutanId').val(urutanId)
+    $('#evaluasi_tahapanId').val(tahapanId)
+    $('#evaluasi_isComplete').val(is_complete)
+    $('#evaluasi_nik').text(nik)
+    $('#evaluasi_nama').text(namaKaryawan)
+    $('#evaluasi_penyelenggara').text(penyelenggara)
+    $('#evaluasi_pelatihan').text(pelatihan)
+    $('#evaluasi_unit').text(unit)
 	$('#modalEvaluasi').modal('show')
+}
+
+function submitEvaluasi(){
+     $.ajax({
+        url: base_url+"tna/pengawalan/evaluasi",
+        type: 'POST',
+        dataType: "JSON",
+        data: $('#form-evaluasi').serialize(),
+        success: function(response) {
+            console.log(response);
+            // if(response.success){
+            //     setTimeout(function() {
+            //         swal({
+            //             title: "Notifikasi!",
+            //             text: "Data berhasil diubah",
+            //             imageUrl: img_icon_success
+            //         }, function(d) {
+            //             location.reload();
+            //         });
+            //     }, 1000);
+            // }else{
+            //     setTimeout(function() {
+            //         swal({
+            //             title: "Notifikasi!",
+            //             text: "Data gagal diubah",
+            //             imageUrl: img_icon_error
+            //         }, function() {
+            //             location.reload();
+            //         });
+            //     }, 1000);
+            // }
+            
+        }            
+    });
 }
 

@@ -12,8 +12,8 @@ class PengawalanModel extends CI_Model {
 	}
 
 	public function getDataPengawalan($post){
-		$column_order = array('id,training,code_tna,jenis_development,metoda_pembelajaran,jenis_pelatihan,kompetensi,nama_penyelenggara,waktu_pelaksanaan,estimasi_biaya');
-		$column_search = array('id,training,code_tna,jenis_development,metoda_pembelajaran,jenis_pelatihan,kompetensi,nama_penyelenggara,waktu_pelaksanaan,estimasi_biaya');
+		$column_order = array('tp.id','tu.nama','tp.code_tna','mk.nama','mo.nama','tp.status_karyawan','tk.name','tp.jenis_development','rt.name','tp.justifikasi_pengajuan','tp.metoda_pembelajaran','tp.estimasi_biaya','tp.nama_penyelenggara','tp.waktu_pelaksanaan');
+		$column_search = array('tp.id','tu.nama','tp.code_tna','mk.nama','mo.nama','tp.status_karyawan','tk.name','tp.jenis_development','rt.name','tp.justifikasi_pengajuan','tp.metoda_pembelajaran','tp.estimasi_biaya','tp.nama_penyelenggara','tp.waktu_pelaksanaan');
 
         $draw = $post['draw'];
         $start = $post['start'];
@@ -32,65 +32,94 @@ class PengawalanModel extends CI_Model {
 		$recordsTotal = 0;
         $this->db->start_cache();
 
-		$this->db->select('tp.id AS id, tp.code_tna AS id_tna, mk.nama AS nama_karyawan,mk.id AS id_karyawan, mo.nama AS nama_organisasi, mo.id AS id_organisasi, tp.status_karyawan, tk.name AS kompetensi, tp.jenis_development, rt.name AS pelatihan, tp.justifikasi_pengajuan, tp.metoda_pembelajaran, tp.estimasi_biaya, tp.nama_penyelenggara, tp.waktu_pelaksanaan, tu.nama AS status, tp.objective, tp.jenis_pelatihan,tp.tahapan_id,tu.urutan, mk.nik_tg');
+		$this->db->select('tp.id AS id, 
+                    tp.code_tna AS id_tna, 
+                    mk.nama AS nama_karyawan,
+                    mk.id AS id_karyawan, 
+                    mo.nama AS nama_organisasi, 
+                    mo.id AS id_organisasi, 
+                    tp.status_karyawan, 
+                    tk.name AS kompetensi, 
+                    tp.jenis_development, 
+                    rt.name AS pelatihan, 
+                    tp.justifikasi_pengajuan, 
+                    tp.metoda_pembelajaran, 
+                    tp.estimasi_biaya, 
+                    tp.nama_penyelenggara, 
+                    tp.waktu_pelaksanaan, 
+                    tu.nama AS status, 
+                    tp.objective, 
+                    tp.jenis_pelatihan, 
+                    tp.tahapan_id, 
+                    tu.urutan, 
+                    mk.nik_tg, 
+                    tp.is_evaluasi,
+                    mis.is_complete,
+                    tp.jenis_development,
+                    mis.id as internal_sharing');
 		$this->db->from('m_tna_pengawalan tp');
 		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_traning_id');
 		$this->db->join('r_tna_kompetensi tk', 'tk.id = tp.r_tna_kompetensi_id');
 		$this->db->join('r_tahapan_usulan tu', 'tu.id = tp.tahapan_id');
 		$this->db->join('m_karyawan mk', 'mk.id = tp.m_karyawan_id');
 		$this->db->join('m_organisasi mo', 'mo.id = tp.m_organisasi_id');
+		$this->db->join('m_tna_internal_sharing mis', 'mis.m_tna_pengawalan_id = tp.id', 'left');
 		$this->db->where('tu.r_jenis_usulan_id', 29);
-		$this->db->where('tu.urutan <>', 1);
 
-		// if($post['filter_subdit'] !== 'all'){
-		// 	$this->db->where('tp.m_organisasi_id', $post['filter_subdit']);
-		// }
-		// if($post['filter_kompetensi'] !== 'all'){
-		// 	$this->db->where('tp.r_tna_kompetensi_id', $post['filter_kompetensi']);
-		// }
-		// if($post['filter_jenis_development'] !== 'all'){
-		// 	$this->db->where('tp.jenis_development', $post['filter_jenis_development']);
-		// }
-		// if($post['filter_nama_pelatihan'] !== 'all'){
-		// 	$this->db->where('tp.r_tna_traning_id', $post['filter_nama_pelatihan']);
-		// }
-		// if($post['filter_justifikasi'] !== ''){
-		// 	$this->db->like('tp.justifikasi_pengajuan', $post['filter_justifikasi'],'both');
-		// }
-		// if($post['filter_metoda_pembelajaran'] !== 'all'){
-		// 	$this->db->where('tp.metoda_pembelajaran', $post['filter_metoda_pembelajaran']);
-		// }
-		// if($post['filter_biaya_min'] !== ''){
-		// 	$this->db->where('tp.estimasi_biaya >=', $post['filter_biaya_min']);
-		// }
-
-		// if($post['filter_biaya_max'] !== ''){
-		// 	$this->db->where('tp.estimasi_biaya <=', $post['filter_biaya_max']);
-		// }
-
-		// if($post['filter_penyelenggara'] !== ''){
-		// 	$this->db->like('tp.nama_penyelenggara', $post['filter_penyelenggara'],'both');
-		// }
-		// if($post['filter_karyawan'] !== 'all'){
-		// 	$this->db->where('tp.m_karyawan_id', $post['filter_karyawan']);
-		// }
+		if($post['tabs'] == 'all'){
+			$this->db->where('tu.urutan <>', 1);
+		}
+		if($post['tabs'] == 'verifikasi'){
+			$this->db->where('tu.urutan <>', 1);
+		}
+		if($post['tabs'] == 'finish'){
+			$this->db->where('tu.urutan', 14);
+		}
 		
-		// if($post['filter_status_karyawan'] !== 'all'){
-		// 	$this->db->where('tp.status_karyawan', $post['filter_status_karyawan']);
-		// }
 
-		// if($post['filter_waktu_awal']){
-  //           $tgl1 = $this->chageDate($post['filter_waktu_awal']);
-  //           $this->db->where('tp.waktu_pelaksanaan >=',$tgl1);
-  //       }
+		if($post['filter_peserta'] !== 'all'){
+			$this->db->like('mk.nama', $post['filter_peserta'],'both');
+		}
+		if($post['filter_unit'] !== 'all'){
+			$this->db->where('mo.id', $post['filter_unit']);
+		}
+		if($post['filter_pelatihan'] !== 'all'){
+			$this->db->like('rt.name', $post['filter_pelatihan'],'both');
+		}
+		if($post['filter_penyelenggara'] !== ''){
+			$this->db->like('tp.nama_penyelenggara', $post['filter_penyelenggara'],'both');
+		}
+		if($post['filter_kompetensi'] !== 'all'){
+			$this->db->where('tp.r_tna_kompetensi_id', $post['filter_kompetensi']);
+		}
+		if($post['filter_development'] !== 'all'){
+			$this->db->where('tp.jenis_development', $post['filter_development']);
+		}
+		if($post['filter_pembelajaran'] !== 'all'){
+			$this->db->where('tp.metoda_pembelajaran', $post['filter_pembelajaran']);
+		}
+		if($post['filter_biaya_min'] !== ''){
+			$this->db->where('tp.estimasi_biaya >=', $post['filter_biaya_min']);
+		}
 
-  //       if($post['filter_waktu_akhir']){
-  //           $tgl2 = $this->chageDate($post['filter_waktu_akhir']);
-  //           $this->db->where('tp.waktu_pelaksanaan <=',$tgl2);
-  //       }
+		if($post['filter_biaya_max'] !== ''){
+			$this->db->where('tp.estimasi_biaya <=', $post['filter_biaya_max']);
+		}
 
-		// $query = $this->db->get();
-		// $result = $query->result();
+		if($post['filter_tgl_mulai']){
+            $tgl1 = $this->chageDate($post['filter_tgl_mulai']);
+            $this->db->where('tp.waktu_pelaksanaan >=',$tgl1);
+        }
+
+        if($post['filter_tgl_selesai']){
+            $tgl2 = $this->chageDate($post['filter_tgl_selesai']);
+            $this->db->where('tp.waktu_pelaksanaan <=',$tgl2);
+        }
+
+        if($post['filter_tahapan'] !== 'all'){
+			$this->db->where('tp.tahapan_id', $post['filter_tahapan']);
+		}
+		
 		IF($post['search']['value']!=""){
 			$i = 0;
 			foreach ($column_search as $item) // looping awal
@@ -211,19 +240,337 @@ class PengawalanModel extends CI_Model {
 		return $this->db->insert('m_tna_pengawalan_materi', $data);
 	}
 
+	public function update_evaluasi($id, $data){
+		$this->db->where($this->id,$id);
+		$update = $this->db->update($this->table,$data);
+		return $update;	
+	}
+
 	public function get_detail($id){
 		$this->db->select('tp.*, 
 							rt.name as training,  
 							tk.name as kompetensi,
-							mk.nama as nama_karyawan,mo.nama as nama_organisasi,tp.status_karyawan');
+							mk.nama as nama_karyawan,
+							mk.nik_tg as nik,
+							mo.nama as nama_organisasi,
+							mis.is_complete,
+                    		mis.id as internal_sharing');
 		$this->db->from('m_tna_pengawalan tp');
 		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_traning_id');
 		$this->db->join('r_tna_kompetensi tk', 'tk.id = tp.r_tna_kompetensi_id');
 		$this->db->join('m_karyawan mk', 'mk.id = tp.m_karyawan_id');
 		$this->db->join('m_organisasi mo', 'mo.id = tp.m_organisasi_id');
+		$this->db->join('m_tna_internal_sharing mis', 'mis.m_tna_pengawalan_id = tp.id', 'left');
 		$this->db->where('tp.id', $id);
 		$query = $this->db->get();
 		return $query->row();
+	}
+
+	public function riwayat_verifikasi($post){
+		$column_order = array('tp.id','mk.nama','j.nama','tpr.keterangan','tpr.status','tpr.created_date');
+		$column_search = array('tp.id','mk.nama','j.nama','tpr.keterangan','tpr.status','tpr.created_date');
+
+        $draw = $post['draw'];
+        $start = $post['start'];
+        $length = $post['length'];
+
+        if ($length != null) {
+            $pageSize = $length;
+        } else {
+            $pageSize = 0;
+        }
+        if ($start != null) {
+            $skip = $start;
+        } else {
+            $skip = 0;
+        }
+		$recordsTotal = 0;
+        $this->db->start_cache();
+
+		$this->db->select('tp.id,mk.nama as verifikator, j.nama as jabatan, tpr.keterangan, tpr.status, tpr.created_date');
+		$this->db->from('m_tna_pengawalan tp');
+		$this->db->join('m_tna_pengawalan_riwayat tpr', 'tp.id = tpr.m_tna_pengawalan_id');
+		$this->db->join('m_karyawan mk', 'mk.id = tpr.created_by');
+		$this->db->join('h_mutasi hm', 'hm.m_karyawan_id = mk.id');
+		$this->db->join('r_jabatan j', 'j.id = hm.r_jabatan_id');
+		$this->db->where('tp.id', $post['id']);
+				
+		IF($post['search']['value']!=""){
+			$i = 0;
+			foreach ($column_search as $item) // looping awal
+			{
+				if($post['search']['value']) // jika datatable mengirimkan pencarian dengan metode POST
+				{
+					if($i===0){
+						$this->db->group_start(); 
+						$this->db->like($item, $post['search']['value']);
+					}else{
+						$this->db->or_like($item, $post['search']['value']);
+					}
+
+					if(count($column_search) - 1 == $i)$this->db->group_end(); 
+					
+				}
+				$i++;
+			}
+		}
+		
+		$this->db->stop_cache();
+		$x = $this->db->count_all_results();
+
+		if (!empty($post['order'])) {
+			$this->db->order_by($column_order[$post['order']['0']['column']], $post['order']['0']['dir']);
+		} else {
+			$this->db->order_by('id', 'desc');
+		}
+
+		$this->db->limit($pageSize, $skip);
+		$query = $this->db->get();
+		//echo $this->db->last_query();
+		$data = $query->result_array();
+		$this->db->flush_cache();
+		
+		foreach ($data as $i => $rec) {
+			$data[$i]['encrypt_id'] = encrypt_url($rec['id']);
+			# code...
+		}
+		$output = array(
+            "draw" => $draw,
+            "recordsTotal" => $x,
+            "recordsFiltered" => $x,
+            "data" => $data,
+        );
+        //print_r($output);exit;
+        //output to json format
+        echo json_encode($output);
+		exit();
+	}
+
+	public function get_detail_dokumen($id){
+		$this->db->select('pd.nama_dokumen, pd.tipe');
+		$this->db->from('m_tna_pengawalan p');
+		$this->db->join('m_tna_pengawalan_dokumen pd', 'p.id = pd.m_tna_pengawalan_id');
+		$this->db->where('p.id', $id);
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	public function get_detail_pembayaran($id){
+		$this->db->select('pp.*, mo.nama as unit, mo2.nama as unit_sppdp');
+		$this->db->from('m_tna_pengawalan p');
+		$this->db->join('m_tna_pengawalan_pembayaran pp', 'p.id = pp.m_tna_pengawalan_id');
+		$this->db->join('m_organisasi mo','mo.id = pp.m_organisasi_id');
+		$this->db->join('m_organisasi mo2','mo2.id = pp.m_organisasi_id_sppd','left');
+		$this->db->where('p.id', $id);
+		$query = $this->db->get();
+		return $query->row();
+	}
+
+	public function get_detail_materi($post){
+		$column_order = array('tp.id','pm.nama_materi','pm.dokumen');
+		$column_search = array('tp.id','pm.nama_materi','pm.dokumen');
+
+        $draw = $post['draw'];
+        $start = $post['start'];
+        $length = $post['length'];
+
+        if ($length != null) {
+            $pageSize = $length;
+        } else {
+            $pageSize = 0;
+        }
+        if ($start != null) {
+            $skip = $start;
+        } else {
+            $skip = 0;
+        }
+		$recordsTotal = 0;
+        $this->db->start_cache();
+
+		$this->db->select('tp.id,pm.nama_materi,pm.dokumen');
+		$this->db->from('m_tna_pengawalan tp');
+		$this->db->join('m_tna_pengawalan_materi pm', 'tp.id = pm.m_tna_pengawalan_id');
+		$this->db->where('tp.id', $post['id']);
+				
+		IF($post['search']['value']!=""){
+			$i = 0;
+			foreach ($column_search as $item) // looping awal
+			{
+				if($post['search']['value']) // jika datatable mengirimkan pencarian dengan metode POST
+				{
+					if($i===0){
+						$this->db->group_start(); 
+						$this->db->like($item, $post['search']['value']);
+					}else{
+						$this->db->or_like($item, $post['search']['value']);
+					}
+
+					if(count($column_search) - 1 == $i)$this->db->group_end(); 
+					
+				}
+				$i++;
+			}
+		}
+		
+		$this->db->stop_cache();
+		$x = $this->db->count_all_results();
+
+		if (!empty($post['order'])) {
+			$this->db->order_by($column_order[$post['order']['0']['column']], $post['order']['0']['dir']);
+		} else {
+			$this->db->order_by('id', 'desc');
+		}
+
+		$this->db->limit($pageSize, $skip);
+		$query = $this->db->get();
+		//echo $this->db->last_query();
+		$data = $query->result_array();
+		$this->db->flush_cache();
+		
+		foreach ($data as $i => $rec) {
+			$data[$i]['encrypt_id'] = encrypt_url($rec['id']);
+			# code...
+		}
+		$output = array(
+            "draw" => $draw,
+            "recordsTotal" => $x,
+            "recordsFiltered" => $x,
+            "data" => $data,
+        );
+        //print_r($output);exit;
+        //output to json format
+        echo json_encode($output);
+		exit();
+	}
+
+	public function get_detail_intenal_sharing($id){
+		$this->db->select('p.id,
+							is.id as id_internal_sharing,
+							is.judul_materi,
+							mk.nik_tg,
+							mk.nama,
+							is.tanggal,
+							is.jam,
+							is.tempat,
+							is.kuota,
+							is.link_zoom,
+							is.biaya');
+		$this->db->from('m_tna_pengawalan p');
+		$this->db->join('m_tna_internal_sharing is', 'p.id = is.m_tna_pengawalan_id','left');
+		$this->db->join('m_karyawan mk','mk.id = is.m_karyawan_id');
+		$this->db->where('p.id', $id);
+		$query = $this->db->get();
+		return $query->row();
+	}
+
+	public function get_detail_peserta_intenal_sharing($post){
+		$column_order = array('is.id');
+		$column_search = array('is.id');
+
+        $draw = $post['draw'];
+        $start = $post['start'];
+        $length = $post['length'];
+
+        if ($length != null) {
+            $pageSize = $length;
+        } else {
+            $pageSize = 0;
+        }
+        if ($start != null) {
+            $skip = $start;
+        } else {
+            $skip = 0;
+        }
+		$recordsTotal = 0;
+        $this->db->start_cache();
+
+		// $this->db->select('is.id,mk.nik_tg,mk.nama');
+		// $this->db->from('m_tna_internal_sharing is');
+		// $this->db->join('m_tna_internal_sharing_peserta isp', 'is.id = isp.m_tna_internal_sharing_id');
+		// $this->db->join('m_karyawan mk', 'mk.id = isp.m_karyawan_id');
+		// // $this->db->join('m_organisasi mo', 'mo.id = is.m_organisasi_id');
+		// $this->db->join('h_mutasi hm', 'hm.m_karyawan_id = mk.id');
+		// $this->db->join('r_status_karyawan sk', 'sk.id = mk.r_status_karyawan_id', 'left');
+		// $this->db->where('tp.id', $post['id']);
+		$this->db->select('tis.id, 
+							mk.nik_tg, 
+							mk.nama, 
+							mo.nama as subunit, 
+							IF(sk.id IN (2,4,5),"FTE","Non FTE") as status_fte,
+							isp.id as idPeserta')
+         ->from('m_tna_internal_sharing_peserta as isp')
+         ->join('m_karyawan mk', 'mk.id = isp.m_karyawan_id')
+         ->join('m_tna_internal_sharing tis', 'tis.id = isp.m_tna_internal_sharing_id')
+         ->join('h_mutasi hm', 'hm.m_karyawan_id = mk.id')
+         // ->join('r_jabatan j', 'j.id = hm.r_jabatan_id')
+         ->join('m_organisasi mo', 'mo.id = hm.m_organisasi_id')
+         ->join('r_status_karyawan sk', 'sk.id = mk.r_status_karyawan_id', 'left')
+         ->where('tis.id', $post['id']);
+				
+		IF($post['search']['value']!=""){
+			$i = 0;
+			foreach ($column_search as $item) // looping awal
+			{
+				if($post['search']['value']) // jika datatable mengirimkan pencarian dengan metode POST
+				{
+					if($i===0){
+						$this->db->group_start(); 
+						$this->db->like($item, $post['search']['value']);
+					}else{
+						$this->db->or_like($item, $post['search']['value']);
+					}
+
+					if(count($column_search) - 1 == $i)$this->db->group_end(); 
+					
+				}
+				$i++;
+			}
+		}
+		
+		$this->db->stop_cache();
+		$x = $this->db->count_all_results();
+
+		if (!empty($post['order'])) {
+			$this->db->order_by($column_order[$post['order']['0']['column']], $post['order']['0']['dir']);
+		} else {
+			$this->db->order_by('id', 'desc');
+		}
+
+		$this->db->limit($pageSize, $skip);
+		$query = $this->db->get();
+		//echo $this->db->last_query();
+		$data = $query->result_array();
+		$this->db->flush_cache();
+		
+		foreach ($data as $i => $rec) {
+			$data[$i]['encrypt_id'] = encrypt_url($rec['id']);
+			# code...
+		}
+		$output = array(
+            "draw" => $draw,
+            "recordsTotal" => $x,
+            "recordsFiltered" => $x,
+            "data" => $data,
+        );
+        //print_r($output);exit;
+        //output to json format
+        echo json_encode($output);
+		exit();
+	}
+
+	public function getDataInternalSharing($id){
+		return $this->db->from('m_tna_internal_sharing')->where('m_tna_pengawalan_id', $id)->get()->row();
+	}
+
+	public function tahapan_proses(){
+		$data = $this->db->where('r_jenis_usulan_id', 29)->get('r_tahapan_usulan')->result();
+		return $data;
+	}
+
+	public function updateInternalSharing($data, $id){
+		$this->db->where('id',$id);
+		$update = $this->db->update('m_tna_internal_sharing',$data);
+		return $update;	
 	}
 
 	

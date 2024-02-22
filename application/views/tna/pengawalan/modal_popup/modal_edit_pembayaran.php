@@ -1,57 +1,23 @@
 <!-- Modal -->
-<div class="modal fade" id="modalUploadPembayaran" role="dialog" aria-hidden="true" enctype="multipart/form-data">
+<div class="modal fade" id="modalEditPembayaran" role="dialog" aria-hidden="true" enctype="multipart/form-data">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-info">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="false">&times;</button>
-                <h4 class="modal-title" id="myModalLabel"> Upload Pembayaran </h4>
+                <h4 class="modal-title" id="myModalLabel"> Edit Pembayaran </h4>
             </div>
             <div class="modal-body">
                 <div>
                 <form method="post" action="javascript:;" class="form-horizontal form-pembayaran" id="form-pembayaran" enctype="multipart/form-data">
-                    <input type="hidden" name="id" id="pembayaranId">
+                    <input type="text" name="id" id="pembayaranId">
                     <input type="hidden" name="urutanId" id="pembayaranUrutanId">
                     <input type="hidden" name="tahapanId" id="pembayaranTahapanId">
                     <div class="box-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h5> <b> Telah didaftarkan peserta training pada kegiatan : </b></h5>
-                            </div>
-                        </div>
-                        <div class="row" style="padding-top: 10px">
-                            <div class="col-md-12">
-                                <label class="col-md-4"> Nama Peserta </label>
-                                <div class="col-md-6"><span id="pembayaran_nama"></span></div>
-                            </div>
-                        </div>
-                        <div class="row" style="padding-top: 10px">
-                            <div class="col-md-12">
-                                <label class="col-md-4"> Nama Pelatihan  </label>
-                                <div class="col-md-6"> <span id="pembayaran_pelatihan"></span> </div>
-                            </div>
-                        </div>
-                        <div class="row" style="padding-top: 10px">
-                            <div class="col-md-12">
-                                <label class="col-md-4"> Nama Penyelenggara </label>
-                                <div class="col-md-6"> <span id="pembayaran_penyelenggara"></span> </div>
-                            </div>
-                        </div>
-                        <div class="row" style="padding-top: 10px">
-                            <div class="col-md-12">
-                                <label class="col-md-4"> Biaya </label>
-                                <div class="col-md-6"> <span id="pembayaran_biaya"></span> </div>
-                            </div>
-                        </div>
-                        <div class="row" style="padding-top: 10px">
-                            <div class="col-md-12">
-                                <hr>
-                            </div>
-                        </div>
                         <div class="row" style="padding-top: 10px">
                             <div class="col-md-12">
                                 <label class="col-md-4">Nilai Pembayaran <span style="color:red">*</span> </label>
                                 <div class="col-md-8">
-                                    <input type="text" name="nilai" class="form-control">
+                                    <input type="text" name="nilai" id="edit_nilai" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -60,7 +26,7 @@
                                 <label class="col-md-4">Tanggal Pembayaran <span style="color:red">*</span> </label>
                                 <div class="col-md-8">
                                     <div class="input-group">
-                                        <input type="text" class="form-control pull-right" id="tgl" name="tgl"  >
+                                        <input type="text" class="form-control pull-right tgl" id="edit_tgl" name="tgl"  >
                                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                     </div>
                                 </div>
@@ -70,7 +36,7 @@
                             <div class="col-md-12">
                                 <label class="col-md-4">Mata Anggaran <span style="color:red">*</span> </label>
                                 <div class="col-md-8">
-                                    <select class="form-control" name="mata_anggaran" id="mata_anggaran">
+                                    <select class="form-control" name="mata_anggaran" id="edit_mata_anggaran">
                                         <option> Pilih Mata Anggaran</option>
                                         <option> HCM </option>
                                         <option> Non HCM </option>
@@ -82,7 +48,7 @@
                             <div class="col-md-12">
                                 <label class="col-md-4">Nomor Mata Anggaran <span style="color:red">*</span> </label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control pull-right" name="nomor_mata_anggaran"  >
+                                    <input type="text" class="form-control pull-right" name="nomor_mata_anggaran"  id="edit_nomor_mata_anggaran">
                                 </div>
                             </div>
                         </div>
@@ -146,6 +112,7 @@
         </div> <!-- /.modal-content -->
     </div> <!-- /.modal-dialog -->
 </div> <!-- /.modal -->
+<?php $this->load->view('tna/pengawalan/modal_popup/modal_form_sppdp');?>
 <script type="text/javascript">
     $(document).ready(function(){
         $('#unit').select2()

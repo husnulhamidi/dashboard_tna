@@ -27,11 +27,17 @@ class Pengawalan extends CI_Controller {
 		$data['action_url_submit'] 	= site_url('tna/anggaran/submit');
 		$data['action_url_update'] 	= site_url('tna/anggaran/update');
 		$data['subdit'] 		= $this->lokasi_akun_model->viewall_subdit()->result();
+		$data['kompetensi'] = $this->UsulanTnaModel->get_kompetensi();
+		$data['jenis_pelatihan'] = $this->UsulanTnaModel->get_jenis_pelatihan();
+		$data['jenis_development'] = $this->UsulanTnaModel->get_jenis_development();
+		$data['metoda'] = $this->UsulanTnaModel->get_metoda_pelatihan();
+		$data['tna'] = $this->UsulanTnaModel->get_training();
+		$data['tahapan_proses'] = $this->PengawalanModel->tahapan_proses();
 		$data['css'] 			= array(
 			'plugins/sweet-alert/sweetalert.css',
-            'plugins/select2/select2.min.css',
-            'plugins/datepicker/datepicker3.css',
-            'plugins/daterangepicker/daterangepicker-bs3.css'
+			'plugins/select2/select2.min.css',
+			'plugins/datepicker/datepicker3.css',
+			'plugins/daterangepicker/daterangepicker-bs3.css'
 		); // css tambahan
 		$data['js']				= array(
 			'plugins/daterangepicker/moment.js',
@@ -137,9 +143,9 @@ class Pengawalan extends CI_Controller {
 
 	public function konfirmasi_jadwal(){
 		// save waktu pelaksanaan 
-		$tgl = explode('-', trim($this->input->post('waktu_pelaksanaan')));
-		$tgl1 = explode('/', trim($tgl[0]));
-		$tgl2 = explode('/', trim($tgl[1]));
+		// $tgl = explode('-', trim($this->input->post('waktu_pelaksanaan')));
+		$tgl1 = explode('/', trim($this->input->post('waktu_pelaksanaan_awal')));
+		$tgl2 = explode('/', trim($this->input->post('waktu_pelaksanaan_akhir')));
 		$data_waktu = array(
 			'm_tna_pengawalan_id' 	=> $this->input->post('id'),
 			'tanggal_mulai'			=> $tgl1[2].'-'.$tgl1[0].'-'.$tgl1[1],
@@ -289,6 +295,17 @@ class Pengawalan extends CI_Controller {
 			'created_date'			=> date('Y-m-d')
 		);
 		$action = $this->PengawalanModel->save_nota_dinas($data);
+
+		$data = array(
+			'm_tna_pengawalan_id'	=> $this->input->post('id'),
+			'nama_dokumen'			=> $upload_file['data'],
+			'tipe'					=> 'nota dinas',
+			'created_by'			=> $this->karyawanId,
+			'created_date'			=> date('Y-m-d')
+		);
+		$action = $this->PengawalanModel->save_dokumen($data);
+
+
 		if($action){
 			$urutan = $this->input->post('urutanId') + 1;
 			$thapanId = $this->TnaModel->get_tahapan_id($urutan);
@@ -347,8 +364,8 @@ class Pengawalan extends CI_Controller {
 		
 
 		if($this->input->post('biayasppdp') == 'ya'){
-			$sppdpData = $this->input->post('sppdp'); // Mengambil nilai dari kunci 'sppdp'
-			parse_str($sppdpData, $sppdpArray); // Parsing string menjadi array
+			$sppdpData = $this->input->post('sppdp');
+			parse_str($sppdpData, $sppdpArray);
 
 			$tgl_spp = explode('/', $sppdpArray['tgl_pembayaran_sppdp']);
 
@@ -404,7 +421,7 @@ class Pengawalan extends CI_Controller {
 			'm_tna_pengawalan_id'	=> $this->input->post('id'),
 			'nama_dokumen'			=> $upload_file['data'],
 			'no_dokumen'			=> $this->input->post('nomor_serifikat'),
-			'tipe'					=> 'Sertifikat',
+			'tipe'					=> 'sertifikat',
 			'tanggal_berlaku_awal'	=> $tgl[2].'-'.$tgl[0].'-'.$tgl[1],
 			'tanggal_berlaku_akhir'	=> $tgl2[2].'-'.$tgl2[0].'-'.$tgl2[1],
 			'created_by'			=> $this->karyawanId,
@@ -479,7 +496,6 @@ class Pengawalan extends CI_Controller {
 	}
 
 	public function internal_sharing(){
-		// echo json_encode($this->input->post());
 		$waktu = explode("-", $this->input->post('tgl'));
 		$tgl1 = explode("/", $waktu[0]);
 		$tgl = $tgl1[2].'-'.$tgl1[0].'-'.$tgl1[1];
@@ -507,6 +523,12 @@ class Pengawalan extends CI_Controller {
 				'created_date' => date('Y-m-d')
 			);
 			$this->InternalSharing->insertDataHistory($dataHistory);
+
+			$urutan = $this->input->post('urutanId') + 1;
+			$thapanId = $this->TnaModel->get_tahapan_id($urutan);
+			// update_pengawalan($this->input->post('id'), $thapanId->id, $this->karyawanId );
+			save_history_pengawalan($this->input->post('id'), $thapanId->id, 'Ya','Internal Sharing', $this->karyawanId);
+
 			$return = array(
 				'success'		=> true,
 				'status_code'	=> 201,
@@ -524,6 +546,28 @@ class Pengawalan extends CI_Controller {
 		echo json_encode($return);
 	}
 
+	public function evaluasi(){
+		// cek dulu ke tabel internal sharing
+		$urutan = $this->input->post('urutanId') + 1;
+		$thapanId = $this->TnaModel->get_tahapan_id($urutan);
+		if($this->input->post('is_complete') == 1){
+			update_pengawalan($this->input->post('id'), $thapanId->id, $this->karyawanId );
+		}
+
+		save_history_pengawalan($this->input->post('id'), $thapanId->id, 'Ya','Evaluasi', $this->karyawanId);
+
+		$dataEvaluasi = array(
+			'is_evalausi' => 1
+		);
+		$action = $this->PengawalanModel->update_evaluasi($this->input->post('id'), $dataEvaluasi);
+		$return = array(
+			'success'		=> true,
+			'status_code'	=> 201,
+			'msg'			=> "Data berhasil diubah.",
+			'data'			=> array()
+		);	
+	}
+
 	public function get_id_organisasi(){
 		$data = $this->PengawalanModel->get_id_organisasi($this->input->post('name'));
 		echo json_encode($data);
@@ -537,6 +581,7 @@ class Pengawalan extends CI_Controller {
         $data['active_tab'] 	= $active_tab;
 		$data['action_url_submit'] 	= site_url('tna/anggaran/submit');
 		$data['action_url_update'] 	= site_url('tna/anggaran/update');
+		$data['detail'] = $this->PengawalanModel->get_detail($id);
 		$data['css'] 			= array(
 			'plugins/sweet-alert/sweetalert.css',
 			'plugins/select2/select2.min.css',
@@ -561,6 +606,128 @@ class Pengawalan extends CI_Controller {
 
         $data['active_tab'] = $active_tab;
 		$this->template->load('template',$pageindex,$data);
+	}
+
+	public function riwayat_verifikasi(){
+		$get = $this->input->get();
+		$data = $this->PengawalanModel->riwayat_verifikasi($get);
+		echo json_encode($data);
+	}
+
+	public function get_detail_dokumen(){
+		$id = $this->input->get('id');
+		$data = $this->PengawalanModel->get_detail_dokumen($id);
+		echo json_encode($data);
+	}
+
+	public function get_detail_pembayaran(){
+		$id = $this->input->get('id');
+		$data = $this->PengawalanModel->get_detail_pembayaran($id);
+		echo json_encode($data);
+	}
+
+	public function get_detail_materi(){
+		$get = $this->input->get();
+		$data = $this->PengawalanModel->get_detail_materi($get);
+		echo json_encode($data);
+	}
+
+	public function get_detail_intenal_sharing(){
+		$id = $this->input->get('id');
+		$data = $this->PengawalanModel->get_detail_intenal_sharing($id);
+		echo json_encode($data);
+	}
+
+	public function get_detail_peserta_intenal_sharing(){
+		$get = $this->input->get();
+		$data = $this->PengawalanModel->get_detail_peserta_intenal_sharing($get);
+		echo json_encode($data);
+	}
+
+	public function edit_waktu(){
+		// echo json_encode($this->input->post());
+		$tgl = explode('/', $this->input->post('waktu_pelaksanaan'));
+		$data = array(
+			'waktu_pelaksanaan' => $tgl[2].'-'.$tgl[0].'-'.$tgl[1]
+		);
+		$action = $this->TnaModel->updateData($data, $this->input->post('id_pengawalan'));
+		if($action){
+			$return = array(
+				'success'		=> true,
+				'status_code'	=> 201,
+				'msg'			=> "Data berhasil di simpan.",
+				'data'			=> $action
+			);
+		}else{
+			$return = array(
+				'success'		=> false,
+				'status_code'	=> 500,
+				'msg'			=> "Data gagal di simpan.",
+				'data'			=> $action
+			);
+		}
+		echo json_encode($return);
+	}
+
+	public function add_peserta(){
+		$data = array(
+    		'm_tna_internal_sharing_id' => $this->input->post('isId'),
+    		'm_karyawan_id' => $this->input->post('peserta'),
+    		'created_date'	=> date('Y-m-d'),
+    		'created_by'	=> $this->karyawanId
+    	);
+		$action = $this->InternalSharing->insertDataPeserta($data);
+		if($action){
+			$return = array(
+				'success'		=> true,
+				'status_code'	=> 201,
+				'msg'			=> "Data berhasil di simpan.",
+				'data'			=> $action
+			);
+		}else{
+			$return = array(
+				'success'		=> false,
+				'status_code'	=> 500,
+				'msg'			=> 'Data gagal di simpan.',
+				'data'			=> array()
+			);
+		}
+		echo json_encode($return);	
+	}
+
+	public function edit_internal_sharing(){
+		// echo json_encode($this->input->post());
+		$waktu = explode("-", $this->input->post('tgl'));
+		$tgl1 = explode("/", $waktu[0]);
+		$tgl = $tgl1[2].'-'.$tgl1[0].'-'.$tgl1[1];
+
+    	$data = array(
+    		'biaya' => $this->input->post('biaya'),
+    		'kuota' => $this->input->post('kuota'),
+			'link_zoom' => $this->input->post('linkZoom'),
+			'tempat' => $this->input->post('tempat'),
+			'jam' => $this->input->post('waktu'),
+			'tanggal' => $tgl
+		);
+
+		$action = $this->PengawalanModel->updateInternalSharing($data, $this->input->post('id'));
+		if($action){
+			$return = array(
+				'success'		=> true,
+				'status_code'	=> 201,
+				'msg'			=> "Data berhasil di simpan.",
+				'data'			=> $action
+			);
+		}else{
+			$return = array(
+				'success'		=> false,
+				'status_code'	=> 500,
+				'msg'			=> 'Data gagal di simpan.',
+				'data'			=> array()
+			);
+		}
+		echo json_encode($return);
+
 	}
 
     public function manager($active_tab="all"){

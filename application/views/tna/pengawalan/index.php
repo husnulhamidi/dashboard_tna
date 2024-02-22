@@ -5,7 +5,11 @@
         margin-left: -10px;
         right: auto;
     }
+    .select2 {
+        width:96%!important;
+    }
 </style>
+
 <section class="content">
     <!-- Main row -->
     <div class="row">
@@ -27,6 +31,9 @@
                                             <i class="fa fa-filter"></i> Filter
                                         </button>
                                     </a>
+                                    <button class="btn btn-danger btn-sm btn-reset">
+                                        <i class="fa fa-repeat"></i> Reset
+                                    </button>
                                     <a href ="<?php echo base_url('tna/pengawalan/create'); ?>">
                                         <button class="btn btn-info btn-sm">
                                             <i class="glyphicon glyphicon-download"></i> Export
@@ -62,93 +69,7 @@
                                             
                                         </tr>
                                     </thead>
-                                    <tbody>                              
-                                        <!-- <tr>
-                                            <td>P0001001</td>
-                                            <td>8674474-Citra Dewi</td>
-                                            <td>Corporate Secretary</td>
-                                            <td>FTE</td>
-                                            <td>Busines Enabler</td>
-                                            <td>Pelatihan</td>
-                                            <td>Legal Compliance</td>
-                                            <td>-</td>
-                                            <td>Offline</td>
-                                            <td>Rp.1.000.000</td>
-                                            <td>Gajayana</td>
-                                            <td>Maret 2023</td>
-                                            <td>
-                                                Menunggu verifikasi admin HCPD <br>
-                                                <i class="fa fa-check-circle text-success"></i>
-                                                <i class="fa fa-check-circle text-success"></i>
-                                                <i class="fa fa-circle-o"></i>
-                                                <i class="fa fa-circle-o"></i>
-                                                <i class="fa fa-circle-o"></i>
-
-                                            </td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle" data-toggle="dropdown" style="width: 80px;">
-                                                        Action  <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" role="menu">
-                                                        <li>
-                                                            <a href="<?php echo base_url('tna/pengawalan/detail/1/riwayat_verifikasi') ;?>">Detail</a>
-                                                        </li>
-                                                        <li>
-                                                            <a 
-                                                                onclick="verifikasi('Mgr. Lini')"> Verifikasi
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a 
-                                                                onclick="konfirmasiJadwal()"> Konfirmasi Jadwal
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a 
-                                                                onclick="kelengkapanDokumen()"> Kelengkapan Dokumen
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a 
-                                                                onclick="paktaIntegritas()"> Pakta Integritas
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a 
-                                                                onclick="notaDinasPenugasan()"> Nota Dinas Penugasan
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a 
-                                                                onclick="uploadPembayaran()"> Upload Pembayaran
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a 
-                                                                onclick="uploadSertifikat()"> Upload Sertifikat
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a 
-                                                                onclick="uploadMateri()"> Upload Materi
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a 
-                                                                onclick="evaluasi()"> Evaluasi
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a 
-                                                                onclick="internalSharing()"> Jadwal Internal Sharing
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr> -->
-                                    </tbody>
+                                    <tbody></tbody>
                                 </table>
                             </div>
                         </div>

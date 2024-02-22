@@ -8,23 +8,22 @@
             </div>
             <div class="modal-body">
                 <div>
-                <form method="post" action="javascript:;" class="form-horizontal form-confirm" id="form-confirm">
-                    <input type="hidden" name="ket" id="ket">
-                    <input type="hidden" name="idSharing" id="idSharing">
+                <form method="post" action="javascript:;" class="form-horizontal form-edit-waktu" id="form-edit-waktu">
+                    <input type="hidden" name="id_pengawalan" id="id_edit_waktu">
                     <div class="box-body">
                         <div class="row">
                            <label class="col-md-6"> Jadwal Pelaksanaan</label>
                            <div class="col-md-12">
                                 <div class="input-group">
                                     <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                    <input type="text" class="form-control pull-right waktu_pelaksanaan" id="waktu_pelaksanaan" name="waktu_pelaksanaan">
+                                    <input type="text" class="form-control pull-right tgl" id="waktu_awal" name="waktu_pelaksanaan">
                                 </div>
                            </div>
                         </div>
                         <div class="row" style="padding-top: 10px">
                            <label class="col-md-6"> Alasan </label>
                            <div class="col-md-12">
-                               <textarea class="form-control" placeholder="Alasan"></textarea>
+                               <textarea class="form-control" placeholder="Alasan" name="alasan"></textarea>
                            </div>
                         </div>
                     </div>
@@ -35,7 +34,7 @@
                                 <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="false">Close</button>
                                 <button 
                                     type="submit" 
-                                    class="btn btn-info submit-confirm" id="submit-confirm">
+                                    class="btn btn-info submit-edit-waktu" id="submit-edit-waktu">
                                     Submit
                                 </button>
                                 

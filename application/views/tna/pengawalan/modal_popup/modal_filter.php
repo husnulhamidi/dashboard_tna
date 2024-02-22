@@ -32,7 +32,12 @@
                                         <label class="col-sm-3 control-label"> Subunit/unit</label>
                                         <div class="col-sm-9">
                                             <select class="select2 form-control" placeholder="Pilih Unir" name="filter_unit" id="filter_unit">
-                                                <option value=""></option>
+                                                <option value="all"> Semua </option>
+                                                <?php 
+                                                    foreach ($subdit as $sb) {
+                                                        echo "<option value='".$sb->m_organisasi_id."'>".$sb->nama.'</option>';
+                                                    }
+                                                ?>
                                             </select>
                                         </div>
                                     </div>
@@ -65,7 +70,12 @@
                                         <label class="col-sm-3 control-label"> Jenis Development </label>
                                         <div class="col-sm-9">
                                             <select class="select2 form-control" placeholder="Pilih Unir" name="filter_development" id="filter_development">
-                                                <option value=""></option>
+                                               <option value="all">Semua</option>
+                                                <?php 
+                                                foreach ($jenis_development as $jd) {
+                                                    echo "<option  value='".$jd->label."'>".$jd->label.'</option>';
+                                                }
+                                                ?>
                                             </select>
                                         </div>
                                     </div>
@@ -77,13 +87,18 @@
                                         <label class="col-sm-3 control-label"> Metode Pembelajaran</label>
                                         <div class="col-sm-9">
                                             <select class="select2 form-control" placeholder="Pilih Unir" name="filter_pembelajaran" id="filter_pembelajaran">
-                                                <option value=""></option>
+                                                <option value="all">Semua</option>
+                                                <?php 
+                                                foreach ($metoda as $mt) {
+                                                    echo "<option  value='".$mt->label."'>".$mt->label.'</option>';
+                                                }
+                                                ?>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label"> Jenis Pelatihan/Sertifikasi</label>
@@ -94,20 +109,20 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label"> Kompetensi </label>
                                         <div class="col-sm-9">
                                             <select class="select2 form-control" placeholder="Pilih Unir" name="filter_kompetensi" id="filter_kompetensi">
-                                                <option value=""></option>
+                                                <option value="all"></option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Lokasi </label>
@@ -116,7 +131,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="form-group">
                                 <label class="col-sm-3 control-label">Waktu Pelaksanaan</label>
                                 <div class="col-sm-4">
@@ -138,14 +153,14 @@
                                 <label class="col-sm-3 control-label">Masa Berlaku Sertifikasi</label>
                                 <div class="col-sm-4">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="filter_tgl_mulai" id="filter_tgl_mulai">
+                                        <input type="text" class="form-control" name="filter_tgl_mulai_sertifikat" id="filter_tgl_mulai_sertifikat">
                                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                     </div>
                                 </div>
                                 <div class="col-sm-1">s/d</div>
                                 <div class="col-sm-4">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="filter_tgl_selesai" id="filter_tgl_selesai">
+                                        <input type="text" class="form-control" name="filter_tgl_selesai_sertifikat" id="filter_tgl_selesai_sertifikat">
                                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                     </div>
 
@@ -168,8 +183,13 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label"> Tahapan Proses (Status) </label>
                                         <div class="col-sm-9">
-                                            <select class="select2 form-control" placeholder="Pilih Unir" name="filter_kompetensi" id="filter_kompetensi">
-                                                <option value=""></option>
+                                            <select class="select2 form-control" placeholder="Pilih Unir" name="filter_tahapan" id="filter_tahapan">
+                                                <option value="all">semua</option>
+                                                 <?php 
+                                                foreach ($tahapan_proses as $tp) {
+                                                    echo "<option  value='".$tp->id."'>".$tp->nama.'</option>';
+                                                }
+                                                ?>
                                             </select>
                                         </div>
                                     </div>

@@ -63,8 +63,8 @@
                                     <label class="btn btn-primary btn-block">
                                         <i class="fa fa-file-o"></i> 
                                         Upload File
-                                        <input type="file" name="fileName" id="file-pakta-integritas" style="display: none;" accept=".pdf">
-                                        <input type="hidden" name="file-pakta-integritas" value="file-pakta-integritas">
+                                        <input type="file" name="fileName" id="fileName" style="display: none;" accept=".pdf">
+                                        <input type="hidden" name="file-pakta-integritas" value="fileName">
                                     </label>
                                 </div>
                                 <div class="col-md-8">

@@ -39,7 +39,7 @@
                         <div class="row" style="padding-top: 10px"><hr></div>
                         <div class="row" style="padding-top: 10px">
                             <div class="col-md-12">
-                                <label class="col-md-4"> Nama Dokumen </label>
+                                <label class="col-md-4"> Nama Dokumen <span style="color: red">*</span></label>
                                 <div class="col-md-12">
                                     <input type="text" name="nama_dokumen" class="form-control">
                                 </div>

@@ -13,7 +13,7 @@ function upload_file($fileName, $pathName, $allowed_types, $ci_instance){
         if ($ci_instance->upload->do_upload($fileName)){
             $upload_data  = $ci_instance->upload->data();
             $file_extension = $upload_data['file_ext'];
-            $fileDoc = $fileName.'-'.date('ymdHis').$file_extension;
+            $fileDoc = $pathName .'/'. $fileName.'-'.date('ymdHis').$file_extension;
         }else{
             $error = $ci_instance->upload->display_errors();
             $dataError = array(

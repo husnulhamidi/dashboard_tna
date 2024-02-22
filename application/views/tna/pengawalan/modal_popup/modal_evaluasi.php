@@ -8,8 +8,11 @@
             </div>
             <div class="modal-body">
                 <div>
-                <form method="post" action="javascript:;" class="form-horizontal form-confirm" id="form-confirm">
-                    <input type="hidden" name="jabatan" id="jabatan">
+                <form method="post" action="javascript:;" class="form-horizontal form-evaluasi" id="form-evaluasi">
+                    <input type="hidden" name="id" id="evaluasi_id">
+                    <input type="hidden" name="urutanId" id="evaluasi_urutanId">
+                    <input type="hidden" name="tahapanId" id="evaluasi_tahapanId">
+                    <input type="hidden" name="is_complete" id="evaluasi_isComplete">
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-12">
@@ -19,29 +22,21 @@
                         <div class="row" style="padding-top: 10px; margin-left:20px">
                             <div class="col-md-12">
                                 <label class="col-md-4"> Nama </label>
-                                <div class="col-md-6"> Anggi Wilyani Putri N </div>
+                                <div class="col-md-6"> <span id="evaluasi_nama"></span> </div>
                             </div>
                         </div>
                         <div class="row" style="padding-top: 10px; margin-left:20px">
                             <div class="col-md-12">
                                 <label class="col-md-4"> NIK </label>
-                                <div class="col-md-6"> 123456 </div>
+                                <div class="col-md-6"> <span id="evaluasi_nik"></span> </div>
                             </div>
                         </div>
                         <div class="row" style="padding-top: 10px;margin-left:20px">
                             <div class="col-md-12">
                                 <label class="col-md-4"> Unit  </label>
-                                <div class="col-md-6"> Informasi Teknologi & Cyber Security </div>
+                                <div class="col-md-6"> <span id="evaluasi_unit"></span> </div>
                             </div>
                         </div>
-                        <div class="row" style="padding-top: 10px">
-                            <div class="col-md-12">
-                                <div class="col-md-4"> Lampiran </div>
-                                <div class="col-md-6">
-                                    <a href="#"> lihat Dokumen Hasil Evaluasi </a>
-                                </div>
-                            </div>
-                        </div> 
                     </div>
                     <div class="box-footer">
                         
@@ -50,7 +45,7 @@
                                 <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="false">Close</button>
                                 <button 
                                     type="submit" 
-                                    class="btn btn-info submit-confirm" id="submit-confirm">
+                                    class="btn btn-info submit-evaluasi" id="submit-evaluasi">
                                     Submit
                                 </button>
                                 
