@@ -18,7 +18,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Subunit/unit <span style="color: red">*</span> </label>
                                     <div class="col-sm-10">
-                                         <select class="select2 form-control" placeholder="Pilih SubUnit" id="direktorat" name="direktorat" onchange="getDataPemateri()">
+                                         <select class="select2 form-control" placeholder="Pilih SubUnit" id="direktorat" name="direktorat" onchange="getDataPesertaByOrg()">
                                             <option value=""></option>
                                         </select>
                                     </div>
@@ -83,27 +83,48 @@
         });
     }
 
-    function getDataPemateri(idDir = false, karyawan = false){
-        var dirId = $('#direktorat').val()
-        if(dirId == ''){
-            dirId = idDir
-        }
+    // function getDataPemateri(idDir = false, karyawan = false){
+    //     var dirId = $('#direktorat').val()
+    //     if(dirId == ''){
+    //         dirId = idDir
+    //     }
        
+    //     $('#pemateri').empty()
+    //     $('#pemateri').append('<option></option')
+    //     $.ajax({
+    //         url:base_url+'tna/internalSharing/getPemateriByDirKom/'+dirId,
+    //         method: 'get',
+    //         dataType: 'json',
+    //         success: function(response){
+    //             console.log(response)
+                // for (var i = 0; i < response.length; i++) {
+                //     var selected = "";
+                //     if(karyawan == response[i]['id']){
+                //         selected = "selected";
+                //     }
+                //     $('#peserta').append('<option '+selected+' value='+response[i]['id']+'>'+response[i]['nama']+'</option>')
+                // }
+    //         }
+    //     });
+    // }
+
+    function getDataPesertaByOrg(){
+        var dirId = $('#direktorat').val()
+        
         $('#pemateri').empty()
         $('#pemateri').append('<option></option')
         $.ajax({
-            url:base_url+'tna/internalSharing/getPemateriByDirKom/'+dirId,
-            method: 'get',
+            url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_organisasi'); ?>',
+            type: 'POST',
+            async: false, 
+            data: { id: dirId },
             dataType: 'json',
             success: function(response){
                 console.log(response)
                 for (var i = 0; i < response.length; i++) {
-                    var selected = "";
-                    if(karyawan == response[i]['id']){
-                        selected = "selected";
-                    }
-                    $('#peserta').append('<option '+selected+' value='+response[i]['id']+'>'+response[i]['nama']+'</option>')
+                    $('#peserta').append('<option value='+response[i]['id']+'>'+response[i]['nama']+'</option>')
                 }
+                
             }
         });
     }

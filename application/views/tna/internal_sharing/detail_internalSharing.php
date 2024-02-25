@@ -69,10 +69,6 @@
                     </div>
                    	<div class="box-body">
                    		<div class="row">
-	                   		<div class="col-md-12">
-	                   			<label class="col-md-2"> ID Internal Sharing </label>
-	                   			<div class="col-md-10"><b> <?php echo $detail->id ;?> </b> </div>
-	                   		</div>
 	                   		<div class="col-md-12 mt-10" style="padding-top: 10px">
 	                   			<label class="col-md-2"> Nama TNA </label>
 	                   			<div class="col-md-10"><b> <?php echo $detail->judul_materi ;?> </b> </div>
@@ -234,7 +230,6 @@
                    					<thead>
                    						<tr>
                    							<th> No </th>
-                   							<th> ID Internal Sharing </th>
                    							<th> Nama Peserta </th>
                    							<th> Jabatan </th>
                    							<th> Subunit/Unit </th>

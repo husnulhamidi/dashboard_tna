@@ -11,8 +11,8 @@ class InternalSharing_Model extends CI_Model {
     }
 
     public function getDataInternalSharing($post, $karyawanId){
-    	$column_order = array('judul_materi,narasumber, organisasi,jam,tanggal,tempat,biaya,kuota');
-		$column_search = array('judul_materi,narasumber, organisasi,jam,tanggal,tempat,biaya,kuota');
+    	$column_order = array('mti.id','mti.judul_materi','mk.nama','mo.nama','mti.jam','mti.tanggal','mti.tempat','mti.biaya','mti.kuota');
+		$column_search = array('mti.id','mti.judul_materi','mk.nama','mo.nama','mti.jam','mti.tanggal','mti.tempat','mti.biaya','mti.kuota');
 
         $draw = $post['draw'];
         $start = $post['start'];
@@ -332,10 +332,11 @@ class InternalSharing_Model extends CI_Model {
          ->join('m_karyawan mk', 'mk.id = isp.m_karyawan_id')
          ->join('m_tna_internal_sharing tis', 'tis.id = isp.m_tna_internal_sharing_id')
          ->join('h_mutasi hm', 'hm.m_karyawan_id = mk.id')
-         ->join('r_jabatan j', 'j.id = hm.r_jabatan_id')
+         ->join('r_jabatan j', 'j.id = hm.r_jabatan_id','left')
          ->join('m_organisasi mo', 'mo.id = hm.m_organisasi_id')
          ->join('r_status_karyawan sk', 'sk.id = mk.r_status_karyawan_id', 'left')
-         ->where('tis.id', $id);
+         ->where('tis.id', $id)
+         ->group_by('mk.nama');
          // ->get();
 
                  

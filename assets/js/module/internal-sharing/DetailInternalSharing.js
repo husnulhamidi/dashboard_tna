@@ -277,7 +277,6 @@ function getPeserta(id){
                     return meta.row + meta.settings._iDisplayStart + 1;
                 }
             },
-            { "data": "id" },
             { "data": "nama" },
             { "data": "jabatan" },
             { "data": "subunit" },

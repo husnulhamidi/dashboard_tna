@@ -10,12 +10,10 @@ class TrainingMandiri extends CI_Controller {
 			redirect('auth/login');
 		}
 		$this->load->model('Training_Mandiri_model', 'trainingMandiri');
-		//Do your magic here
     
 	}
 
-	public function index()
-	{
+	public function index(){
         $data['breadcrumb'] 	= 'Usulan > '.ucwords(str_replace("-"," ",$active_tab));
         $data['active_menu'] 	= 'usulan_tna';
 		$data['title'] 			= 'Daftar Usulan';
@@ -39,8 +37,7 @@ class TrainingMandiri extends CI_Controller {
 		$this->template->load('template',$pageindex,$data);
 	}
 
-    public function list()
-	{
+    public function list(){
         $data['breadcrumb'] 	= 'Training Mandiri';
         $data['active_menu'] 	= 'training-mandiri';
 		$data['title'] 			= 'List Training Mandiri';
@@ -71,8 +68,7 @@ class TrainingMandiri extends CI_Controller {
 		echo $this->trainingMandiri->getDataTrainingMandiri($get);
 	}
 
-    public function listhcpd()
-	{
+    public function listhcpd(){
         $data['breadcrumb'] 	= 'Training Mandiri Admin';
         $data['active_menu'] 	= 'training-mandiri-hcpd';
 		$data['title'] 			= 'List Training Mandiri Admin';
@@ -97,33 +93,56 @@ class TrainingMandiri extends CI_Controller {
 		$this->template->load('template','tna/karyawan/index_training_mandiri_hcpd',$data);
 	}
 
-    public function profile($id="")
-	{
+    public function profile($id=""){
         $data['breadcrumb'] 	= 'Profile Training Karyawan';
         $data['active_menu'] 	= 'dashboard-training';
 		$data['title'] 			= '';
 		$data['action_url_submit'] 	= site_url('tna/anggaran/submit');
 		$data['action_url_update'] 	= site_url('tna/anggaran/update');
-		$data['css'] 			= array(
+		$data['getCountDashboard']  = $this->trainingMandiri->getCountDashboard($id);
+		$data['detailKaryawan']  = $this->trainingMandiri->detailKaryawan($id);
+		// echo json_encode($data['detailKaryawan']);
+		$data['id']					= $id;
+		$data['css'] 				= array(
 			'plugins/sweet-alert/sweetalert.css',
 			'plugins/select2/select2.min.css',
 			'plugins/datepicker/datepicker3.css',
 		); // css tambahan
-		$data['js']				= array(
+		$data['js']					= array(
 			'plugins/sweet-alert/sweetalert.min.js',
 			'plugins/select2/select2.full.min.js',
 			'plugins/datepicker/bootstrap-datepicker.js',
 			'js/jquery.validate.js',
 			'plugins/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js',
-			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js'
+			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js',
 		);
 
 
 		$this->template->load('template','tna/karyawan/profile_training_personal',$data);
 	}
 
-	public function profile_all_karyawan($id="")
-	{
+	public function getKompetensi(){
+		// echo json_encode($this->input->post());
+		$data = $this->trainingMandiri->getKompetensi($this->input->post('jabatan_id'),$this->input->post('karyawan_id'));
+		echo json_encode($data);
+	}
+
+	public function getTraining(){
+		$data = $this->trainingMandiri->getTraining($this->input->post('karyawan_id'));
+		echo json_encode($data);
+	}
+	
+	public function getRekomendasiTraining(){
+		$data = $this->trainingMandiri->getRekomendasiTraining($this->input->post('jabatan_id'),$this->input->post('karyawan_id'));
+		echo json_encode($data);
+	}
+
+	public function getNextTraining(){
+		$data = $this->trainingMandiri->getNextTraining($this->input->post('karyawan_id'));
+		echo json_encode($data);
+	}
+
+	public function profile_all_karyawan($id=""){
         $data['breadcrumb'] 	= 'Profile Training Karyawan';
         $data['active_menu'] 	= 'dashboard-training';
 		$data['title'] 			= '';

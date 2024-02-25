@@ -6,18 +6,7 @@ $sess = $this->session->userdata();
     <div class="profile sidebar-form" style="border-style: none">
         <ul>
             <li>
-                 <?php
-                 /*
-                if (!empty($sess['karyawan'])) {
-                    ?>
-                    <img src="<?php echo !empty($sess['karyawan']['url']) ? base_url($sess['karyawan']['url']) : base_url('assets/img/user.jpg'); ?>" class="img-circle">
-                <?php
-                } else {
-                    ?>
-                    <img src="<?php echo base_url('assets/img/'); ?>user.jpg" class="img-circle" alt="User Image">
-                <?php
-                }*/
-                ?> 
+                
                 <img src="<?php echo base_url('assets/img/'); ?>user.jpg" class="img-circle" alt="User Image">
             </li>
             <?php
@@ -29,25 +18,18 @@ $sess = $this->session->userdata();
                 echo "<li style='color:white'>TNA</li>";
             }
             ?>
-            <!-- <li style='color:white'><small>GROUP : <?php echo strtoupper($sess['subdit']['nama']); ?></small></li> -->
+           
         </ul>
     </div>
 
     <ul class="sidebar-menu">
-        <!-- <li class="nav-header">Admin Unit</li> -->
 
-        <!-- <li class="<?php echo $active_menu=='dashboard-training'? 'active':'';?>">
+       <li class="<?php echo $active_menu=='dashboard-training'? 'active':'';?>">
             <a href="<?php echo site_url('tna/dashboard-training'); ?>">
                 <i class="glyphicon glyphicon-home"></i> <span>Dashboard Training</span>
             </a>
         </li>
-        <li class="<?php echo $active_menu=='training-mandiri'? 'active':'';?>">
-            <a href="<?php echo site_url('tna/training-mandiri'); ?>">
-                <i class="fa fa-file-text"></i> <span>Training Mandiri</span>
-            </a>
-        </li> -->
-
-      
+        
          
         <li class="<?php echo $active_menu=='usulan_tna'? 'active':'';?>">
             <a href="<?php echo site_url('tna/usulan'); ?>">
@@ -55,13 +37,7 @@ $sess = $this->session->userdata();
             </a>
         </li> 
 
-        <!-- <li class="<?php echo $active_menu=='dashboard'? 'active':'';?>">
-            <a href="<?php echo site_url('tna/home'); ?>">
-                <i class="glyphicon glyphicon-home"></i> <span>Dashboard</span>
-            </a>
-        </li> -->
-      
-
+       
 
         <li class="<?php echo $active_menu=='dashboard'? 'active':'';?>">
             <a href="<?php echo site_url('tna/home'); ?>">
@@ -105,11 +81,7 @@ $sess = $this->session->userdata();
             </a>
         </li>
      
-        <!-- <li class="<?php echo $active_menu=='tna_anggran'? 'active':'';?> ">
-            <a href="<?php echo site_url('tna/anggaran'); ?>">
-                <i class="fa fa-money"></i> <span>Anggaran</span>
-            </a>
-        </li> -->
+    
        
         <li class="treeview <?php echo $active_menu=='reference'? 'active':'';?> ">
             <a href="#">
