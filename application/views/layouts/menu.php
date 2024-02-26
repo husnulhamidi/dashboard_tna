@@ -106,11 +106,11 @@ $sess = $this->session->userdata();
                 <i class="fa fa-gear"></i> <span>Setting TTD</span>
             </a>
         </li>
-        <!-- <li class="<?php echo $active_menu=='tna_materi'? 'active':'';?> ">
+         <li class="<?php echo $active_menu=='tna_materi'? 'active':'';?> ">
             <a href="<?php echo site_url('tna/library_materi'); ?>">
                 <i class="fa fa-cube"></i> <span>Library Materi</span>
             </a>
-        </li> -->
+        </li>
 
          <!-- <li class="<?php echo $active_menu=='pelanggan'? 'active':'';?> ">
             <a href="<?php echo site_url('pelanggan/data_pelanggan'); ?>">

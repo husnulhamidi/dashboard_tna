@@ -6,19 +6,19 @@ class LibraryMateri extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		if(!$this->session->userdata('user')){
-			redirect('auth/login');
-		}
+		// if(!$this->session->userdata('user')){
+		// 	redirect('auth/login');
+		// }
 		//Do your magic here
 
-		$this->load->model('Bank_model');
+		//$this->load->model('Bank_model');
 	}
 
 	public function index()
 	{
 		$data['active_menu'] 	= 'library_materi';
 		$data['title'] 			= 'Daftar Materi';
-		$data['bank'] 		 	= $this->Bank_model->get_bank();
+		//$data['bank'] 		 	= $this->Bank_model->get_bank();
 		$data['action_url_submit'] 	= site_url('tna/anggaran/submit');
 		$data['action_url_update'] 	= site_url('tna/anggaran/update');
 		//$data['css'] 	     	= array('plugins/sweet-alert/sweetalert.css','plugins/select2/select2.min.css'); // css tambahan
@@ -43,7 +43,7 @@ class LibraryMateri extends CI_Controller {
 	{
 		$data['active_menu'] 	= 'anggaran';
 		$data['title'] 			= 'Daftar Anggaran';
-		$data['bank'] 		 	= $this->Bank_model->get_bank();
+		//$data['bank'] 		 	= $this->Bank_model->get_bank();
 		$data['action_url_submit'] 	= site_url('tna/anggaran/submit');
 		$data['action_url_update'] 	= site_url('tna/anggaran/update');
 		//$data['css'] 	     	= array('plugins/sweet-alert/sweetalert.css','plugins/select2/select2.min.css'); // css tambahan
