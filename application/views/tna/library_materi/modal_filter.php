@@ -1,45 +1,54 @@
 <!-- Modal -->
-<div class="modal fade" id="AddFilterLibraryMateri" tabindex="-1" role="dialog" aria-hidden="true" enctype="multipart/form-data">
+<div class="modal fade" id="AddFilterLibraryMateri" role="dialog" aria-hidden="true" enctype="multipart/form-data">
     <div class="modal-dialog modal-md" >
         <div class="modal-content">
             <div class="modal-header bg-info">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="false">&times;</button>
-                <h4 class="modal-title" id="myModalLabel"> Form Filter Materi</h4>
+                <h4 class="modal-title" id="myModalLabel"> Form Filter Library Materi</h4>
             </div>
             <div class="modal-body">
                 <div>
-                <form method="post" action="<?php echo $action_url_submit;?>" class="form-horizontal form-add" enctype="multipart/form-data">
+                <form method="post" action="javascript:;" class="form-horizontal form-filter" enctype="multipart/form-data">
                     <div class="box-body">
                         <div class="row">
                             <div class="col-lg-12">
 
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Nominal</label>
+                                    <label class="col-sm-3 control-label">Nama Pelatihan / Sertifikasi</label>
                                     <div class="col-sm-9">
-                                        <input type="text"  name="nominal" id="nominal" placeholder="" class="form-control input-sm input_mask">
-                                    </div>
-                                </div>
-                                <div class="form-group">                    
-                                    <label class="col-sm-3 control-label">Tahun</label>
-                                    <div class="col-sm-9" id="year">
-                                        <div class="input-group date">
-                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input autocomplete="off" type="text" class="form-control input-sm" name="tahun" id="tahun" >
-                                        </div>
+                                        <input type="text" name="filter_nama_pelatihan" id="filter_nama_pelatihan" placeholder="" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Tipe</label>
+                                    <label class="col-sm-3 control-label"> Kompetensi </label>
                                     <div class="col-sm-9">
-                                        <select name="tipe" id="tipe" class="select2 form-control input-sm">
-                                            <option value="">-------</option>
-                                            <option value="tna">TNA</option>
-                                            <option value="nontna">Non TNA</option>
+                                        <input type="text" name="filter_kompetensi" id="filter_kompetensi" placeholder="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"> Penyelenggara </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="filter_penyelenggara" id="filter_penyelenggara" placeholder="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"> Tahun TR/Cert </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="thn_tr" id="thn_tr" placeholder="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"> Jenis Development </label>
+                                    <div class="col-sm-9">
+                                        <!-- <input type="text" name="filter_penyelenggara" id="filter_penyelenggara" placeholder="" class="form-control"> -->
+                                        <select class="form-control" name="filter_development" id="filter_development">
+                                            <option value="all"> Semua </option>
+                                            <option> Pelatihan </option>
+                                            <option> Sertifikasi </option>
                                         </select>
                                     </div>
                                 </div>
                                 
-                                
-                             
 
                             </div> <!-- end col-12 -->
                             
@@ -52,7 +61,7 @@
                         <div class="">
                             <div class="pull-right"> 
                                 <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="false">Close</button>
-                                <button type="submit" class="btn btn-info ">Filter</button>
+                                <button type="submit" class="btn btn-info btn-filter">Filter</button>
                                 
                             </div>
                         </div>

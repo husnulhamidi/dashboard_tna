@@ -287,6 +287,7 @@ $route['tna/get_karyawan']    = 'tna/tna/get_karyawan';
 //=====================================================================================================================
 // library materi
 $route['tna/library_materi']    = 'tna/LibraryMateri/index';
+$route['tna/library_materi/getData']    = 'tna/LibraryMateri/getData';
 
 
 

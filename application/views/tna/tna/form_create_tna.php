@@ -161,11 +161,11 @@
                                     <div class="multi-fields">
                                         <div class="multi-field1">
 
-                                            <span class="remove-field1 pull-right" data-toggle="tooltip" title="Hapus Peserta" > 
+                                            <!-- <span class="remove-field1 pull-right" data-toggle="tooltip" title="Hapus Peserta" > 
                                                 <button type="button" class="btn btn-danger btn-sm  ">
                                                     <li class="fa fa-trash"></li>
                                                 </button>
-                                            </span>
+                                            </span> -->
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Sub Direktorat / Unit <span style="color: red">*</span></label>
                                                 <div class="col-sm-8">
@@ -394,7 +394,7 @@ function appendRow(count){
     var html = `
         <div class="multi-field`+count+`">
             <span class="remove-field`+count+` pull-right" data-toggle="tooltip" title="Hapus Peserta" > 
-                <button type="button" class="btn btn-danger btn-sm  ">
+                <button type="button" class="btn btn-danger btn-sm" onclick="deleteRow(${count})">
                     <li class="fa fa-trash"></li>
                 </button>
             </span>
@@ -448,5 +448,9 @@ function appendRow(count){
 
     $('.multi-fields').append(html)
     $('.select2').select2()
+}
+
+function deleteRow(id){
+    $(".multi-field"+id).remove();
 }
 </script>
