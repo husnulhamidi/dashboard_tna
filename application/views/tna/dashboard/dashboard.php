@@ -41,7 +41,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <h3 class="widget-user-username"><b>PELATIHAN</b></h3>
-                                <h2 class="widget-user-desc">100</h2>
+                                <h2 class="widget-user-desc"><span class="count" id="pelatihan">100</span></h2>
                             </div>
                             <div class="col-md-6">
 
@@ -54,14 +54,14 @@
                     <div class="row" style="margin-top:-20px">
                         <div class="col-sm-12" style="border-bottom:1px dashed #ccc">
                         <div class="description-block">
-                            <h5 class="description-header">250</h5>
+                            <h5 class="description-header"><span class="count" id="peserta_pelatihan">100</span></h5>
                             <span class="description-text">JUMLAH PESERTA</span>
                         </div>
                         <!-- /.description-block -->
                         </div>
                         <div class="col-sm-4 border-right">
                         <div class="description-block">
-                            <h5 class="description-header">200</h5>
+                            <h5 class="description-header"><span class="count" id="peserta_pelatihan_fte">100</span></h5>
                             <span class="description-text">FTE</span>
                         </div>
                         <!-- /.description-block -->
@@ -69,7 +69,7 @@
                         <!-- /.col -->
                         <div class="col-sm-4 border-right">
                         <div class="description-block">
-                            <h5 class="description-header">50</h5>
+                            <h5 class="description-header"><span class="count" id="peserta_pelatihan_non_fte">100</span></h5>
                             <span class="description-text">NON FTE</span>
                         </div>
                         <!-- /.description-block -->
@@ -77,7 +77,7 @@
                         <!-- /.col -->
                         <div class="col-sm-4">
                         <div class="description-block">
-                            <h5 class="description-header">0</h5>
+                            <h5 class="description-header"><span class="count" id="peserta_pelatihan_tba">100</span></h5>
                             <span class="description-text">TBA</span>
                         </div>
                         <!-- /.description-block -->
@@ -98,20 +98,20 @@
                     <!-- Add the bg color to the header using any of the bg-* classes -->
                     <div class="widget-user-header bg-aqua-active">
                     <h3 class="widget-user-username"><b>SERTIFIKASI</b></h3>
-                    <h2 class="widget-user-desc">100</h2>
+                    <h2 class="widget-user-desc"><span class="count" id="sertifikasi">100</span></h2>
                     </div>
                     <div class="box-footer">
                     <div class="row" style="margin-top:-20px">
                         <div class="col-sm-12" style="border-bottom:1px dashed #ccc">
                         <div class="description-block">
-                            <h5 class="description-header">200</h5>
+                            <h5 class="description-header"><span class="count" id="peserta_sertifikasi">100</span></h5>
                             <span class="description-text">JUMLAH PESERTA</span>
                         </div>
                         <!-- /.description-block -->
                         </div>
                         <div class="col-sm-4 border-right">
                         <div class="description-block">
-                            <h5 class="description-header">150</h5>
+                            <h5 class="description-header"><span class="count" id="peserta_sertifikasi_fte">100</span></h5>
                             <span class="description-text">FTE</span>
                         </div>
                         <!-- /.description-block -->
@@ -119,7 +119,7 @@
                         <!-- /.col -->
                         <div class="col-sm-4 border-right">
                         <div class="description-block">
-                            <h5 class="description-header">50</h5>
+                            <h5 class="description-header"><span class="count" id="peserta_sertifikasi_non_fte">100</span></h5>
                             <span class="description-text">NON FTE</span>
                         </div>
                         <!-- /.description-block -->
@@ -127,7 +127,7 @@
                         <!-- /.col -->
                         <div class="col-sm-4">
                         <div class="description-block">
-                            <h5 class="description-header">0</h5>
+                            <h5 class="description-header"><span class="count" id="peserta_sertifikasi_tba">100</span></h5>
                             <span class="description-text">TBA</span>
                         </div>
                         <!-- /.description-block -->
@@ -148,20 +148,20 @@
                     <!-- Add the bg color to the header using any of the bg-* classes -->
                     <div class="widget-user-header bg-orange-active">
                         <h3 class="widget-user-username"><b>INTERNAL SHARING</b></h3>
-                        <h2 class="widget-user-desc">100</h2>
+                        <h2 class="widget-user-desc"><span class="count" id="internal_sharing">100</span></h2>
                     </div>
                     <div class="box-footer">
                     <div class="row" style="margin-top:-20px">
                         <div class="col-sm-12" style="border-bottom:1px dashed #ccc">
                             <div class="description-block">
-                                <h5 class="description-header">100</h5>
+                                <h5 class="description-header"><span class="count" id="internal_sharing_rencana">100</span></h5>
                                 <span class="description-text">RENCANA</span>
                             </div>
                             <!-- /.description-block -->
                         </div>
                         <div class="col-sm-6">
                             <div class="description-block border-right">
-                                <h5 class="description-header">70</h5>
+                                <h5 class="description-header"><span class="count" id="internal_sharing_realisasi">100</span></h5>
                                 <span class="description-text">REALISASI</span>
                             </div>
                             <!-- /.description-block -->
@@ -170,7 +170,7 @@
                           <!-- /.col -->
                           <div class="col-sm-6">
                             <div class="description-block">
-                                <h5 class="description-header">30</h5>
+                                <h5 class="description-header"><span class="count" id="internal_sharing_todo">100</span></h5>
                                 <span class="description-text">TODO</span>
                             </div>
                             <!-- /.description-block -->
@@ -1816,10 +1816,6 @@
             }
            
         ]
-    });
-
-    
-
-    
+    });  
 });
 </script>

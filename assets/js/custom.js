@@ -72,5 +72,6 @@ function getCurrentDateTime() {
 
 
 
+
 $("#alert").alert();
 window.setTimeout(function() { $(".alert1").alert('close'); }, 2000);

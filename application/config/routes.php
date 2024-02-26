@@ -55,6 +55,8 @@ $route['translate_uri_dashes'] = FALSE;
 
 //TNA
 $route['tna/home'] = 'tna/home';
+$route['tna/home/getCountDashboard'] = 'tna/home/getCountDashboard';
+
 $route['tna/home1'] = 'tna/home/index1';
 $route['tna/report'] = 'tna/Report';
 $route['tna/dashboard-training']    = 'tna/DashboardTraining';
