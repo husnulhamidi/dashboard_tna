@@ -24,8 +24,6 @@ class Home extends CI_Controller {
 		//echo json_encode($this->sess);die;
 		//echo json_encode($this->session->userdata('session'));die;
 		//print_r($user);die;
-		
-		//print_r($user);die;
 		if(@$this->input->get('filter_year')!=""){
 			$filter_year=$this->input->get('filter_year');
 		}else{
