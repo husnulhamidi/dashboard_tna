@@ -86,27 +86,24 @@
         });
     }
 
-    function getDataPemateri(idDir = false, karyawan = false){
+    function getDataPemateri(){
         var dirId = $('#direktorat').val()
-        if(dirId == ''){
-            dirId = idDir
-        }
        
         $('#pemateri').empty()
         $('#pemateri').append('<option></option')
+        
         $.ajax({
-            url:base_url+'tna/internalSharing/getPemateriByDirKom/'+dirId,
-            method: 'get',
+            url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_organisasi'); ?>',
+            type: 'POST',
+            async: false, 
+            data: { id: dirId },
             dataType: 'json',
             success: function(response){
                 console.log(response)
                 for (var i = 0; i < response.length; i++) {
-                    var selected = "";
-                    if(karyawan == response[i]['id']){
-                        selected = "selected";
-                    }
-                    $('#peserta').append('<option '+selected+' value='+response[i]['id']+'>'+response[i]['nama']+'</option>')
+                    $('#peserta').append('<option value='+response[i]['id']+'>'+response[i]['nama']+'</option>')
                 }
+                
             }
         });
     }

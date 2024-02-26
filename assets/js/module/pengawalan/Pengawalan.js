@@ -79,7 +79,7 @@ function builTable(table,tabs){
 	if ($.fn.DataTable.isDataTable(table)) {
         $(table).DataTable().destroy();
     }
-     oTable = $(table).DataTable({
+    oTable = $(table).DataTable({
         processing: true, 
         serverSide: true, 
         scrollX: true,

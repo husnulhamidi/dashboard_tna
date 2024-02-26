@@ -57,8 +57,13 @@ $route['translate_uri_dashes'] = FALSE;
 $route['tna/home'] = 'tna/home';
 $route['tna/home1'] = 'tna/home/index1';
 $route['tna/report'] = 'tna/Report';
-$route['tna/dashboard-training']    = 'tna/home/dashboard_training';
-$route['tna/profil-training-personal/(:any)']    = 'tna/TrainingMandiri/profile/$1';
+$route['tna/dashboard-training']    = 'tna/DashboardTraining';
+$route['tna/dashboard-training/getDataDashboard']    = 'tna/DashboardTraining/getDataDashboard';
+$route['tna/dashboard-training/getDataKaryawanDashboard']    = 'tna/DashboardTraining/getDataKaryawanDashboard';
+$route['tna/dashboard-training/getListDataKaryawan']    = 'tna/DashboardTraining/getListDataKaryawan';
+
+
+
 $route['tna/profil-training-karyawan/(:any)']    = 'tna/TrainingMandiri/profile_all_karyawan/$1';
 
 // =================== TRAINING MANDIRI
@@ -70,6 +75,13 @@ $route['tna/training-mandiri/createOrUpdate']    = 'tna/TrainingMandiri/createOr
 $route['tna/training-mandiri/edit/(:any)']    = 'tna/TrainingMandiri/edit/$1';
 $route['tna/training-mandiri/delete_training_mandiri']    = 'tna/TrainingMandiri/delete_training_mandiri';
 $route['tna/training-mandiri/verifikasi']    = 'tna/TrainingMandiri/verifikasi';
+
+$route['tna/profil-training-personal/(:any)']    = 'tna/TrainingMandiri/profile/$1';
+$route['tna/getKompetensi']    = 'tna/TrainingMandiri/getKompetensi';
+$route['tna/getTraining']    = 'tna/TrainingMandiri/getTraining';
+$route['tna/getTraining']    = 'tna/TrainingMandiri/getTraining';
+$route['tna/getRekomendasiTraining']    = 'tna/TrainingMandiri/getRekomendasiTraining';
+$route['tna/getNextTraining']    = 'tna/TrainingMandiri/getNextTraining';
 
 
 

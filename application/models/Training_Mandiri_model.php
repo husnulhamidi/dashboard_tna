@@ -145,4 +145,169 @@ class Training_Mandiri_model extends CI_Model{
 		return $return;
 	}
 
+	public function getCountDashboard($idKaryawan){
+        // Pelatihan
+        $this->db->select('COUNT(*) as Pelatihan');
+        $this->db->from('m_tna_pengawalan');
+		$this->db->join('r_tahapan_usulan rtu', 'rtu.id = m_tna_pengawalan.tahapan_id', 'left');
+        $this->db->where('jenis_development', 'Pelatihan');
+        $this->db->where('m_karyawan_id', $idKaryawan);
+		$this->db->where('rtu.urutan >', 9);
+        $query = $this->db->get();
+        $pelatihan_result = $query->row_array();
+        $pelatihan_count = $pelatihan_result['Pelatihan'] ?? 0;
+
+        // Sertifikasi
+        $this->db->select('COUNT(*) as Sertifikasi');
+        $this->db->from('m_tna_pengawalan');
+		$this->db->join('r_tahapan_usulan rtu', 'rtu.id = m_tna_pengawalan.tahapan_id', 'left');
+        $this->db->where('jenis_development', 'Sertifikasi');
+        $this->db->where('m_karyawan_id', $idKaryawan);
+		$this->db->where('rtu.urutan >', 9);
+        $query = $this->db->get();
+        $sertifikasi_result = $query->row_array();
+        $sertifikasi_count = $sertifikasi_result['Sertifikasi'] ?? 0;
+
+        // Internal Sharing
+        $this->db->select('COUNT(*) as internal_sharing');
+        $this->db->from('m_tna_internal_sharing mis');
+        $this->db->join('m_tna_internal_sharing_peserta isp','isp.m_tna_internal_sharing_id = mis.id');
+        $this->db->where('tanggal <', date('Y-m-d'));
+        $this->db->where('isp.m_karyawan_id', $idKaryawan);
+        $this->db->group_by('isp.m_karyawan_id');
+
+        $query = $this->db->get();
+        $internal_sharing_result = $query->row_array();
+        $internal_sharing_count = $internal_sharing_result['internal_sharing'] ?? 0;
+        
+
+        return array(
+            'Pelatihan' => $pelatihan_count,
+            'Sertifikasi' => $sertifikasi_count,
+            'internal_sharing' => $internal_sharing_count
+        );
+	}
+
+	public function detailKaryawan($id){
+		$karyawan = $this->db->select('mk.id, mk.nama, mk.nik_tg, mk.inisial, j.id as
+						jabatan_id, j.nama as jabatan_nama, j.level, m.m_organisasi_id as org_id, users.id
+						as users_id,sk.nama status_karyawan,IF(sk.id IN (2,4,5),"FTE","Non FTE") as
+						status_fte')
+					->from('h_mutasi m')
+					->join('m_karyawan mk', 'm.m_karyawan_id = mk.id')
+					->join('r_jabatan j', 'm.r_jabatan_id = j.id')
+					->join('r_status_karyawan sk', 'sk.id = mk.r_status_karyawan_id', 'LEFT')
+					->join('users', 'users.m_karyawan_id = mk.id', 'left')
+					->where('m.m_karyawan_id', $id)
+					->where('m.is_aktif', 1)
+					->where('mk.is_aktif', 1)
+					->group_by('mk.id')
+					->order_by('mk.nama', 'asc')
+					->get()
+					->row();
+		return $karyawan;
+
+	}
+
+	public function getKompetensi($jabatan_id, $karyawan_id){
+		$jobRole_Utama = $this->db->select('jr.code as job_role_code, jr.name as job_role_utama, kom.code as kompetensi_code, kom.name as nama_kompetensi')
+			->from('r_tna_job_role_jabatan jrj')
+			->join('r_tna_job_role jr', 'jr.id = jrj.r_tna_job_role_id', 'left')
+			->join('r_tna_kompetensi kom', 'kom.r_tna_job_role_code = jr.code', 'left')
+			->where('(jrj.r_jabatan_id = '.$jabatan_id.' AND jrj.m_karyawan_id = '.$karyawan_id.') OR jrj.r_jabatan_id ='.$jabatan_id)
+			->group_by('kom.id')
+			->get()
+			->result_array();
+
+		$jobRole_1 = $this->db->select('jr.code as job_role_code, jr.name as job_role_utama, kom.code as kompetensi_code, kom.name as nama_kompetensi')
+			->from('r_tna_job_role_jabatan jrj')
+			->join('r_tna_job_role jr', 'jr.id = jrj.r_tna_job_role_id_1', 'left')
+			->join('r_tna_kompetensi kom', 'kom.r_tna_job_role_code = jr.code', 'left')
+			->where('(jrj.r_jabatan_id = '.$jabatan_id.' AND jrj.m_karyawan_id = '.$karyawan_id.') OR jrj.r_jabatan_id ='.$jabatan_id)
+			->group_by('kom.id')
+			->get()
+			->result_array();
+
+		
+		$result = array_merge($jobRole_Utama, $jobRole_1);
+		return $result;
+	}
+
+	public function getTraining($karyawan_id){
+		$internalSharing = $this->db->select('mis.judul_materi as training')
+							->from('m_tna_internal_sharing mis')
+							->join('m_tna_internal_sharing_peserta isp', 'isp.m_tna_internal_sharing_id = mis.id')
+							->where('mis.tanggal <=', date('Y-m-d'))
+							->where('isp.m_karyawan_id', $karyawan_id)
+							->get()
+							->result_array();
+
+		$pengawalan = $this->db->select('tr.name as training, tp.jenis_development as kategori')
+						->from('m_tna_pengawalan tp')
+						->join('r_tahapan_usulan tu', 'tu.id = tp.tahapan_id')
+						->join('r_tna_training tr', 'tr.id = tp.r_tna_traning_id')
+						->where('tu.r_jenis_usulan_id', 29)
+						->where('tu.urutan >', 9)
+						->where('tp.waktu_pelaksanaan <=', date('Y-m-d'))
+						->where('tp.m_karyawan_id', $karyawan_id)
+						->get()
+						->result_array();
+		
+		$result = array_merge($internalSharing, $pengawalan);
+		return $result;
+		// $query = $this->db->get();
+		// $result = $query->result();
+	}
+
+	public function getRekomendasiTraining($jabatan_id, $karyawan_id){
+		$jobRole_Utama = $this->db->select('jr.code as job_role_code, jr.name as job_role_utama, kom.code as kompetensi_code, kom.name as nama_kompetensi, tr.code, tr.name as nama_training, tr.type')
+							->from('r_tna_job_role_jabatan as jrj')
+							->join('r_tna_job_role as jr', 'jr.id = jrj.r_tna_job_role_id', 'left')
+							->join('r_tna_kompetensi as kom', 'kom.r_tna_job_role_code = jr.code', 'left')
+							->join('r_tna_training as tr', 'tr.r_tna_kompetensi_code = kom.code', 'left')
+							->where('(jrj.r_jabatan_id = 397 AND jrj.m_karyawan_id = '.$karyawan_id.') OR jrj.r_jabatan_id = 397')
+							->group_by('tr.id')
+							->get()
+							->result_array();
+
+		$jobRole_1 = $this->db->select('jr.code as job_role_code, jr.name as job_role_utama, kom.code as kompetensi_code, kom.name as nama_kompetensi, tr.code, tr.name as nama_training, tr.type')
+							->from('r_tna_job_role_jabatan as jrj')
+							->join('r_tna_job_role as jr', 'jr.id = jrj.r_tna_job_role_id_1', 'left')
+							->join('r_tna_kompetensi as kom', 'kom.r_tna_job_role_code = jr.code', 'left')
+							->join('r_tna_training as tr', 'tr.r_tna_kompetensi_code = kom.code', 'left')
+							->where('(jrj.r_jabatan_id = 397 AND jrj.m_karyawan_id = '.$karyawan_id.') OR jrj.r_jabatan_id =397')
+							->group_by('tr.id')
+							->get()
+							->result_array();
+		
+		$result = array_merge($jobRole_Utama, $jobRole_1);
+		return $result;
+	}
+
+	public function getNextTraining($karyawan_id){
+		$internalSharing = $this->db->select('mis.judul_materi as training')
+							->from('m_tna_internal_sharing mis')
+							->join('m_tna_internal_sharing_peserta isp', 'isp.m_tna_internal_sharing_id = mis.id')
+							->where('mis.tanggal >=', date('Y-m-d'))
+							->where('isp.m_karyawan_id', $karyawan_id)
+							->get()
+							->result_array();
+
+		$pengawalan = $this->db->select('tr.name as training, tp.jenis_development as kategori')
+						->from('m_tna_pengawalan tp')
+						->join('r_tahapan_usulan tu', 'tu.id = tp.tahapan_id')
+						->join('r_tna_training tr', 'tr.id = tp.r_tna_traning_id')
+						->where('tu.r_jenis_usulan_id', 29)
+						->where('tu.urutan >', 9)
+						->where('tp.waktu_pelaksanaan >=', date('Y-m-d'))
+						->where('tp.m_karyawan_id', $karyawan_id)
+						->get()
+						->result_array();
+		
+		$result = array_merge($internalSharing, $pengawalan);
+		return $result;
+		// $query = $this->db->get();
+		// $result = $query->result();
+	}
+
 }
