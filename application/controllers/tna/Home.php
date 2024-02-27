@@ -91,15 +91,15 @@ class Home extends CI_Controller {
 
 	public function chartPelatihan(){
 		$thn = $this->input->post('thn');
-		$quarter = $this->input->post('quarter');
-		$data = $this->dashboard->chartPelatihan($thn, $quarter);
+		$quartal = $this->input->post('quartal');
+		$data = $this->dashboard->chartPelatihan($thn, $quartal);
 		echo json_encode($data);
 	}
 
 	public function chartSertifikasi(){
 		$thn = $this->input->post('thn');
-		$quarter = $this->input->post('quarter');
-		$data = $this->dashboard->chartSertifikasi($thn, $quarter);
+		$quartal = $this->input->post('quartal');
+		$data = $this->dashboard->chartSertifikasi($thn, $quartal);
 		echo json_encode($data);
 	}
 
@@ -112,6 +112,12 @@ class Home extends CI_Controller {
 	public function realisasiPesertaInternalSharing(){
 		$thn = $this->input->post('thn');
 		$data = $this->dashboard->realisasiPesertaInternalSharing($thn);
+		echo json_encode($data);
+	}
+
+	public function anggaranTNA(){
+		$thn = $this->input->post('thn');
+		$data = $this->dashboard->anggaranTNA($thn);
 		echo json_encode($data);
 	}
 	

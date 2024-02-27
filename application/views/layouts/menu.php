@@ -23,27 +23,28 @@ $sess = $this->session->userdata();
     </div>
 
     <ul class="sidebar-menu">
-
-       <li class="<?php echo $active_menu=='dashboard-training'? 'active':'';?>">
-            <a href="<?php echo site_url('tna/dashboard-training'); ?>">
-                <i class="glyphicon glyphicon-home"></i> <span>Dashboard Training</span>
+        <li class="treeview <?php echo ($active_menu == 'dashboard' || $active_menu == 'dashboard-training') ? 'active' : ''; ?> ">
+            <a href="#">
+                <i class="fa fa-home"></i> <span>Dashboard</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
             </a>
-        </li>
-        
-         
-        <li class="<?php echo $active_menu=='usulan_tna'? 'active':'';?>">
-            <a href="<?php echo site_url('tna/usulan'); ?>">
-                <i class="glyphicon glyphicon-file"></i> <span>Usulan TNA</span>
-            </a>
+            <ul class="treeview-menu">
+                
+                <li class="<?php echo ($active_menu == 'dashboard' || $active_menu == 'dashboard-training') ? 'active' : ''; ?>">
+                    <a href="<?php echo site_url('tna/home'); ?>">
+                        <i class="fa fa-circle-o"></i> <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="<?php echo $active_menu=='dashboard-training'? 'active':'';?>">
+                    <a href="<?php echo site_url('tna/dashboard-training'); ?>">
+                        <i class="fa fa-circle-o"></i> <span>Training</span>
+                    </a>
+                </li>
+            </ul>
         </li> 
-
-       
-
-        <li class="<?php echo $active_menu=='dashboard'? 'active':'';?>">
-            <a href="<?php echo site_url('tna/home'); ?>">
-                <i class="glyphicon glyphicon-home"></i> <span>Beranda</span>
-            </a>
-        </li>
+      
         <li class="<?php echo $active_menu=='training-mandiri'? 'active':'';?>">
             <a href="<?php echo site_url('tna/training-mandiri'); ?>">
                 <i class="fa fa-file-text"></i> <span>Training Mandiri</span>
@@ -70,19 +71,32 @@ $sess = $this->session->userdata();
             </a>
         </li>
 
-        <li class="<?php echo $active_menu=='tna_tna'? 'active':'';?> ">
-            <a href="<?php echo site_url('tna'); ?>">
-                <i class="fa fa-clone"></i> <span>TNA</span>
+        <li class="treeview <?php echo ($active_menu == 'usulan_tna' || $active_menu == 'tna_tna' || $active_menu == 'tna_pengawalan') ? 'active' : ''; ?> ">
+            <a href="#">
+            <i class="fa fa-clone"></i>TNA</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
             </a>
-        </li>
-       <li class="<?php echo $active_menu=='tna_pengawalan'? 'active':'';?> ">
-            <a href="<?php echo site_url('tna/pengawalan'); ?>">
-                <i class="fa fa-clone"></i> <span>Pengawalan TNA & Non TNA</span>
-            </a>
-        </li>
-     
-    
-       
+            <ul class="treeview-menu">
+                <li class="<?php echo $active_menu=='usulan_tna'? 'active':'';?>">
+                    <a href="<?php echo site_url('tna/usulan'); ?>">
+                        <i class="fa fa-circle-o"></i> <span>Usulan TNA</span>
+                    </a>
+                </li> 
+                <li class="<?php echo $active_menu=='tna_tna'? 'active':'';?> ">
+                    <a href="<?php echo site_url('tna'); ?>">
+                        <i class="fa fa-circle-o"></i> <span>TNA</span>
+                    </a>
+                </li>
+                <li class="<?php echo $active_menu=='tna_pengawalan'? 'active':'';?> ">
+                    <a href="<?php echo site_url('tna/pengawalan'); ?>">
+                        <i class="fa fa-circle-o"></i> <span>Pengawalan TNA & Non TNA</span>
+                    </a>
+                </li>
+            </ul>
+        </li> 
+
         <li class="treeview <?php echo $active_menu=='reference'? 'active':'';?> ">
             <a href="#">
             <i class="fa fa-cubes"></i> <span>Katalog</span>

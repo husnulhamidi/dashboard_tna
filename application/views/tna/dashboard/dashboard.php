@@ -476,15 +476,15 @@
                     <!-- USERS LIST -->
                     <div class="box box-default">
                         <div class="box-header with-border">
-                        <h3 class="box-title">Anggaran TNA <?php echo $filter_year;?></h3>
+                            <h3 class="box-title">Anggaran TNA <span id="thn_anggaran_tna"></span></h3>
 
-                        <div class="box-tools pull-right">
-                            <!-- <span class="label label-danger">10 karyawan</span> -->
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
-                            </button>
-                        </div>
+                            <div class="box-tools pull-right">
+                                <!-- <span class="label label-danger">10 karyawan</span> -->
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                                </button>
+                            </div>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body no-padding">
@@ -496,7 +496,7 @@
                                         <div class="info-box-content">
                                         <span class="info-box-text">Rencana</span>
                                         <br>
-                                        <span class="info-box-number">Rp. 300.000.000</span>
+                                        <span class="info-box-number"><span count="count_rencana_anggaran" id="count_rencana_anggaran"></span></span>
                                         
                                         <div class="progress">
                                             <div class="progress-bar" style="width: 100%"></div>
@@ -515,7 +515,7 @@
                                         <div class="info-box-content">
                                         <span class="info-box-text">Realisasi</span>
                                         <br>
-                                        <span class="info-box-number">Rp. 270.000.000</span>
+                                        <span class="info-box-number"><span count="count_rencana_anggaran" id="count_realisasi_anggaran"></span></span>
                                         <div class="progress">
                                             <div class="progress-bar" style="width: 80%"></div>
                                         </div>
@@ -548,7 +548,7 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body no-padding">
-                            <div class="rowx">
+                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="info-box bg-yellow">
                                         <span class="info-box-icon"><i class="fa fa-hourglass"></i></span>
@@ -556,7 +556,7 @@
                                         <div class="info-box-content">
                                         <span class="info-box-text">Rencana</span>
                                         <br>
-                                        <span class="info-box-number">Rp. 300.000.000</span>
+                                        <span class="info-box-number"><span count="count_rencana_anggaran" id="count_rencana_anggaran_non_tna"></span></span>
                                         <div class="progress">
                                             <div class="progress-bar" style="width: 100%"></div>
                                         </div>
@@ -574,7 +574,7 @@
                                         <div class="info-box-content">
                                         <span class="info-box-text">Realisasi</span>
                                         <br>
-                                        <span class="info-box-number">Rp. 270.000.000</span>
+                                        <span class="info-box-number"><span count="count_rencana_anggaran" id="count_realisasi_anggaran_non_tna"></span></span>
                                         <div class="progress">
                                             <div class="progress-bar" style="width: 80%"></div>
                                         </div>

@@ -157,6 +157,13 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group" id="typeSertifikasi">
+                                    <label class="col-sm-3 control-label"> TNA / Non TNA</label>
+                                    <div class="col-sm-8">
+                                        <input type="radio" id="is_tna" name="is_tna" value="1" /> TNA
+                                        <input type="radio" id="is_non_tna" name="is_tna" value="0" style="margin-left:20px"/> Non TNA
+                                    </div>
+                                </div>
                                 <hr>
                                 <div class="multi-field-wrapper">
                                     <div class="form-group" id="divBtnAdd">
@@ -272,6 +279,14 @@ $(document).ready(function () {
             let jenis_sertifikasi = '<?php echo @$detail->jenis_sertifikasi;?>';
             console.log(jenis_sertifikasi)
             $("#"+jenis_sertifikasi).prop("checked", true);
+        }
+
+        let is_tna = '<?php echo @$detail->is_tna;?>';
+        console.log(is_tna)
+        if(is_tna == 0){
+            $("#is_non_tna").prop("checked", true);
+        }else{
+            $("#is_tna").prop("checked", true);
         }
     }
 

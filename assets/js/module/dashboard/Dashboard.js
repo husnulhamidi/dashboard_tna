@@ -1,36 +1,11 @@
 $(document).ready(function(){
-    getDataDashboad()
-    getChartPelatihanQ1();
-    getChartPelatihanQ2();
-    getChartPelatihanQ3();
-    getChartPelatihanQ4();
-    
-    getChartSertifikasiQ1();
-    getChartSertifikasiQ2();
-    getChartSertifikasiQ3();
-    getChartSertifikasiQ4();
-    realisasiInternalSharing()
-    realisasiPesertaInternalSharing()
-
-    $('#tahun_filter').html($('#filter_year').val())
-    $('#tahun_filter_sertifikasi').html($('#filter_year').val())
+    let thn = $('#filter_year').val();
+    loadData(thn)
     $( ".btn-flat" ).on( "click", function() {
-        $('#tahun_filter').html($('#filter_year').val())
-        $('#tahun_filter_sertifikasi').html($('#filter_year').val())
-        getDataDashboad()
-        getChartPelatihanQ1();
-        getChartPelatihanQ2();
-        getChartPelatihanQ3();
-        getChartPelatihanQ4();
-
-        getChartSertifikasiQ1();
-        getChartSertifikasiQ2();
-        getChartSertifikasiQ3();
-        getChartSertifikasiQ4();
-        realisasiInternalSharing()
-        realisasiPesertaInternalSharing()
+        let thn = $('#filter_year').val();
+        loadData(thn)
     })
-    getDataDashboardPengawalan()
+    
 
     Highcharts.setOptions({
         colors: ['#76d86b', '#4bb7e4', '#f6c811', '#ff6232'],
@@ -79,6 +54,26 @@ $(document).ready(function(){
     });
    
 })
+
+function loadData(thn){
+    $('#tahun_filter').html(thn)
+    $('#tahun_filter_sertifikasi').html(thn)
+    $('#thn_anggaran_tna').html(thn)
+    getDataDashboad()
+    getChartPelatihanQ1();
+    getChartPelatihanQ2();
+    getChartPelatihanQ3();
+    getChartPelatihanQ4();
+    getChartSertifikasiQ1();
+    getChartSertifikasiQ2();
+    getChartSertifikasiQ3();
+    getChartSertifikasiQ4();
+    realisasiInternalSharing()
+    realisasiPesertaInternalSharing()
+    getDataDashboardPengawalan()
+    anggaranTNA()
+
+}
 
 function getDataDashboad() {
     var thn = $('#filter_year').val();
@@ -171,7 +166,7 @@ function getChartPelatihanQ1(){
         url  : base_url+"tna/home/chartPelatihan",
         data:{
                 thn:thn,
-                quarter : 1
+                quartal : 1
             },
         dataType: "JSON",
         success:function(resp){
@@ -282,7 +277,7 @@ function getChartPelatihanQ2(){
         url  : base_url+"tna/home/chartPelatihan",
         data:{
                 thn:thn,
-                quarter : 2
+                quartal : 2
             },
         dataType: "JSON",
         success:function(resp){
@@ -393,7 +388,7 @@ function getChartPelatihanQ3(){
         url  : base_url+"tna/home/chartPelatihan",
         data:{
                 thn:thn,
-                quarter : 2
+                quartal : 2
             },
         dataType: "JSON",
         success:function(resp){
@@ -504,7 +499,7 @@ function getChartPelatihanQ4(){
         url  : base_url+"tna/home/chartPelatihan",
         data:{
                 thn:thn,
-                quarter : 2
+                quartal : 2
             },
         dataType: "JSON",
         success:function(resp){
@@ -615,7 +610,7 @@ function getChartSertifikasiQ1(){
         url  : base_url+"tna/home/chartSertifikasi",
         data:{
                 thn:thn,
-                quarter : 2
+                quartal : 2
             },
         dataType: "JSON",
         success:function(resp){
@@ -729,7 +724,7 @@ function getChartSertifikasiQ2(){
         url  : base_url+"tna/home/chartSertifikasi",
         data:{
                 thn:thn,
-                quarter : 2
+                quartal : 2
             },
         dataType: "JSON",
         success:function(resp){
@@ -843,7 +838,7 @@ function getChartSertifikasiQ3(){
         url  : base_url+"tna/home/chartSertifikasi",
         data:{
                 thn:thn,
-                quarter : 2
+                quartal : 2
             },
         dataType: "JSON",
         success:function(resp){
@@ -957,7 +952,7 @@ function getChartSertifikasiQ4(){
         url  : base_url+"tna/home/chartSertifikasi",
         data:{
                 thn:thn,
-                quarter : 2
+                quartal : 2
             },
         dataType: "JSON",
         success:function(resp){
@@ -1287,6 +1282,39 @@ function realisasiPesertaInternalSharing(){
             ]
         });
           
+        }
+    }); 
+}
+
+function anggaranTNA(){
+    var thn = $('#filter_year').val();
+	$.ajax({
+        type : "POST",
+        url  : base_url+"tna/home/anggaranTNA",
+        data:{
+                thn:thn
+            },
+        dataType: "JSON",
+        success:function(resp){
+            // console.log(resp.rencana_anggaran_non_tna)
+            $('#count_realisasi_anggaran').html(resp.realisasi_anggaran_tna !== 0 ? formatRupiah(resp.realisasi_anggaran_tna,'Rp.') : 0);
+            $('#count_rencana_anggaran').html(resp.rencana_anggaran_tna !== 0 ? formatRupiah(resp.rencana_anggaran_tna,'Rp.') : 0);
+            $('#count_realisasi_anggaran_non_tna').html(resp.realisasi_anggaran_non_tna !== 0 ? formatRupiah(resp.realisasi_anggaran_non_tna,'Rp.') : 0);
+            $('#count_rencana_anggaran_non_tna').html(resp.rencana_anggaran_non_tna !== 0 ? formatRupiah(resp.rencana_anggaran_non_tna,'Rp.') : 0);
+          
+        },
+        complete: function (data) {
+            $('.count_rencana_anggaran').each(function () {
+			    $(this).prop('Counter', 0).animate({
+			        Counter: $(this).text()
+			    }, {
+			        duration: 1000,
+			        easing: 'swing',
+			        step: function (now) {
+			            $(this).text(nominalAngka(Math.ceil(now)));
+			        }
+			    });
+			});
         }
     }); 
 }

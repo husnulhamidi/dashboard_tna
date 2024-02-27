@@ -147,6 +147,51 @@ class DashboardModel extends CI_Model {
 
     }
 
+    public function anggaranTNA($thn){
+        $this->db->select_sum('nominal');
+        $this->db->from('m_tna_anggaran');
+        $this->db->where('year', $thn);
+        $this->db->where('type', 'TNA');
+        $query = $this->db->get();
+        $result = $query->row();
+        $rencana_anggaran_tna = $result->nominal ?? 0;
+
+        $this->db->select_sum('nominal');
+        $this->db->from('m_tna_anggaran');
+        $this->db->where('year', $thn);
+        $this->db->where('type', 'NON TNA');
+        $query = $this->db->get();
+        $result = $query->row();
+        $rencana_anggaran_non_tna = $result->nominal ?? 0;
+
+        $this->db->select('SUM(IFNULL(pp.nominal, 0)) + SUM(IFNULL(pp.nominal_sppd, 0)) AS total_nominal');
+        $this->db->from('m_tna_pengawalan_pembayaran pp');
+        $this->db->join('m_tna_pengawalan p', 'p.id = pp.m_tna_pengawalan_id');
+        $this->db->where('YEAR(p.waktu_pelaksanaan)', $thn);
+        $this->db->where('p.is_tna', '1');
+        $query = $this->db->get();
+        $result = $query->row();
+        $realisasi_anggaran_tna = $result->total_nominal ?? 0;
+
+        $this->db->select('SUM(IFNULL(pp.nominal, 0)) + SUM(IFNULL(pp.nominal_sppd, 0)) AS total_nominal');
+        $this->db->from('m_tna_pengawalan_pembayaran pp');
+        $this->db->join('m_tna_pengawalan p', 'p.id = pp.m_tna_pengawalan_id');
+        $this->db->where('YEAR(p.waktu_pelaksanaan)', $thn);
+        $this->db->where('p.is_tna', '0');
+        $query = $this->db->get();
+        $result = $query->row();
+        $realisasi_anggaran_non_tna = $result->total_nominal ?? 0;
+
+        return array (
+            'rencana_anggaran_tna' => $rencana_anggaran_tna,
+            'rencana_anggaran_non_tna'  => $rencana_anggaran_non_tna,
+
+            'realisasi_anggaran_tna' => $realisasi_anggaran_tna,
+            'realisasi_anggaran_non_tna' => $realisasi_anggaran_non_tna,
+            
+        );
+    }
+
     private function quartal($quartal, $thn){
         if($quartal == 1){
             $date1 = $thn.'-01-01';
