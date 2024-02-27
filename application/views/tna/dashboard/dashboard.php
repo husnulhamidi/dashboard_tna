@@ -54,14 +54,14 @@
                     <div class="row" style="margin-top:-20px">
                         <div class="col-sm-12" style="border-bottom:1px dashed #ccc">
                         <div class="description-block">
-                            <h5 class="description-header"><span class="count" id="peserta_pelatihan">100</span></h5>
+                            <h5 class="description-header"><span class="count_dashboard" id="peserta_pelatihan">100</span></h5>
                             <span class="description-text">JUMLAH PESERTA</span>
                         </div>
                         <!-- /.description-block -->
                         </div>
                         <div class="col-sm-4 border-right">
                         <div class="description-block">
-                            <h5 class="description-header"><span class="count" id="peserta_pelatihan_fte">100</span></h5>
+                            <h5 class="description-header"><span class="count_dashboard" id="peserta_pelatihan_fte">100</span></h5>
                             <span class="description-text">FTE</span>
                         </div>
                         <!-- /.description-block -->
@@ -69,7 +69,7 @@
                         <!-- /.col -->
                         <div class="col-sm-4 border-right">
                         <div class="description-block">
-                            <h5 class="description-header"><span class="count" id="peserta_pelatihan_non_fte">100</span></h5>
+                            <h5 class="description-header"><span class="count_dashboard" id="peserta_pelatihan_non_fte">100</span></h5>
                             <span class="description-text">NON FTE</span>
                         </div>
                         <!-- /.description-block -->
@@ -77,7 +77,7 @@
                         <!-- /.col -->
                         <div class="col-sm-4">
                         <div class="description-block">
-                            <h5 class="description-header"><span class="count" id="peserta_pelatihan_tba">100</span></h5>
+                            <h5 class="description-header"><span class="count_dashboard" id="peserta_pelatihan_tba">100</span></h5>
                             <span class="description-text">TBA</span>
                         </div>
                         <!-- /.description-block -->
@@ -98,20 +98,20 @@
                     <!-- Add the bg color to the header using any of the bg-* classes -->
                     <div class="widget-user-header bg-aqua-active">
                     <h3 class="widget-user-username"><b>SERTIFIKASI</b></h3>
-                    <h2 class="widget-user-desc"><span class="count" id="sertifikasi">100</span></h2>
+                    <h2 class="widget-user-desc"><span class="count_dashboard" id="sertifikasi">100</span></h2>
                     </div>
                     <div class="box-footer">
                     <div class="row" style="margin-top:-20px">
                         <div class="col-sm-12" style="border-bottom:1px dashed #ccc">
                         <div class="description-block">
-                            <h5 class="description-header"><span class="count" id="peserta_sertifikasi">100</span></h5>
+                            <h5 class="description-header"><span class="count_dashboard" id="peserta_sertifikasi">100</span></h5>
                             <span class="description-text">JUMLAH PESERTA</span>
                         </div>
                         <!-- /.description-block -->
                         </div>
                         <div class="col-sm-4 border-right">
                         <div class="description-block">
-                            <h5 class="description-header"><span class="count" id="peserta_sertifikasi_fte">100</span></h5>
+                            <h5 class="description-header"><span class="count_dashboard" id="peserta_sertifikasi_fte">100</span></h5>
                             <span class="description-text">FTE</span>
                         </div>
                         <!-- /.description-block -->
@@ -119,7 +119,7 @@
                         <!-- /.col -->
                         <div class="col-sm-4 border-right">
                         <div class="description-block">
-                            <h5 class="description-header"><span class="count" id="peserta_sertifikasi_non_fte">100</span></h5>
+                            <h5 class="description-header"><span class="count_dashboard" id="peserta_sertifikasi_non_fte">100</span></h5>
                             <span class="description-text">NON FTE</span>
                         </div>
                         <!-- /.description-block -->
@@ -127,7 +127,7 @@
                         <!-- /.col -->
                         <div class="col-sm-4">
                         <div class="description-block">
-                            <h5 class="description-header"><span class="count" id="peserta_sertifikasi_tba">100</span></h5>
+                            <h5 class="description-header"><span class="count_dashboard" id="peserta_sertifikasi_tba">100</span></h5>
                             <span class="description-text">TBA</span>
                         </div>
                         <!-- /.description-block -->
@@ -148,20 +148,20 @@
                     <!-- Add the bg color to the header using any of the bg-* classes -->
                     <div class="widget-user-header bg-orange-active">
                         <h3 class="widget-user-username"><b>INTERNAL SHARING</b></h3>
-                        <h2 class="widget-user-desc"><span class="count" id="internal_sharing">100</span></h2>
+                        <h2 class="widget-user-desc"><span class="count_dashboard" id="internal_sharing"></span></h2>
                     </div>
                     <div class="box-footer">
                     <div class="row" style="margin-top:-20px">
                         <div class="col-sm-12" style="border-bottom:1px dashed #ccc">
                             <div class="description-block">
-                                <h5 class="description-header"><span class="count" id="internal_sharing_rencana">100</span></h5>
+                                <h5 class="description-header"><span class="count_dashboard" id="internal_sharing_rencana">100</span></h5>
                                 <span class="description-text">RENCANA</span>
                             </div>
                             <!-- /.description-block -->
                         </div>
                         <div class="col-sm-6">
                             <div class="description-block border-right">
-                                <h5 class="description-header"><span class="count" id="internal_sharing_realisasi">100</span></h5>
+                                <h5 class="description-header"><span class="count_dashboard" id="internal_sharing_realisasi">100</span></h5>
                                 <span class="description-text">REALISASI</span>
                             </div>
                             <!-- /.description-block -->
@@ -170,7 +170,7 @@
                           <!-- /.col -->
                           <div class="col-sm-6">
                             <div class="description-block">
-                                <h5 class="description-header"><span class="count" id="internal_sharing_todo">100</span></h5>
+                                <h5 class="description-header"><span class="count_dashboard" id="internal_sharing_todo">100</span></h5>
                                 <span class="description-text">TODO</span>
                             </div>
                             <!-- /.description-block -->
@@ -187,7 +187,7 @@
             <!-- /.row -->
             <div class="row">
                 <div class="col-sm-12">
-                    <h3> STATISTIK PLANING DAN REALISASI PELATIHAN PER QUARTAL <?php echo $filter_year;?></h3>
+                    <h3> STATISTIK PLANING DAN REALISASI PELATIHAN PER QUARTAL <span id="tahun_filter" class=".tahun_filter"></span></h3>
                 </div>
                 <div class="col-md-3">
                     <div class="panel">
@@ -215,7 +215,7 @@
 
             <div class="row">
                 <div class="col-sm-12">
-                    <h3> STATISTIK PLANING DAN REALISASI SERTIFIKASI PER QUARTAL <?php echo $filter_year;?></h3>
+                    <h3> STATISTIK PLANING DAN REALISASI SERTIFIKASI PER QUARTAL <span class="tahun_filter" id="tahun_filter_sertifikasi"></span></h3>
                 </div>
                 <div class="col-md-3 animated fadeInUp">
                     <div class="panel">
@@ -244,7 +244,7 @@
             <div class="row">
                 <div class="col-md-6 animated fadeInUp">
                     <div class="panel">
-                        <div id="internal_sharing"></div>
+                        <div id="internal_sharing_chart"></div>
                     </div>
                 </div>
                 <div class="col-md-6 animated fadeInUp">
@@ -259,9 +259,9 @@
                     <!-- small box -->
                     <div class="small-box bg-aqua">
                         <div class="inner">
-                        <h3>30</h3>
+                            <h3><span id="draft" class="draft"> 30 </span></h3>
 
-                        <p>Draft</p>
+                            <p>Draft</p>
                         </div>
                         <div class="icon">
                             <i class="fa fa-briefcase"></i>
@@ -274,9 +274,8 @@
                 <!-- small box -->
                     <div class="small-box bg-aqua">
                         <div class="inner">
-                        <h3>53</sup></h3>
-
-                        <p>Menunggu Verifikasi Mgr. Lini</p>
+                            <h3><span id="verifMgrLini" class="count">10</span></h3>
+                            <p>Menunggu Verifikasi Mgr. Lini</p>
                         </div>
                         <div class="icon">
                         <i class="fa fa-file-zip-o"></i>
@@ -289,7 +288,7 @@
                     <!-- small box -->
                     <div class="small-box bg-aqua">
                         <div class="inner">
-                        <h3>44</h3>
+                        <h3><span id="verifMgrHCPD" class="count">44</span></h3>
 
                         <p>Menunggu Verifikasi Mgr.HCPD</p>
                         </div>
@@ -304,7 +303,7 @@
                     <!-- small box -->
                     <div class="small-box bg-aqua">
                         <div class="inner">
-                        <h3>65</h3>
+                        <h3><span id="verifAVPHCPD" class="count">65</span></h3>
 
                         <p>Menunggu Verifikasi AVP. HCPD</p>
                         </div>
@@ -320,7 +319,7 @@
                     <!-- small box -->
                     <div class="small-box bg-aqua">
                         <div class="inner">
-                        <h3>30</h3>
+                        <h3><span id="pernyataanFormPeserta" class="count">30</span></h3>
 
                         <p>Menunggu <br>Form Pernyataan Peserta</p>
                         </div>
@@ -335,7 +334,7 @@
                 <!-- small box -->
                     <div class="small-box bg-aqua">
                         <div class="inner">
-                        <h3>53</sup></h3>
+                        <h3><span id="rekonfirmasiKuota" class="count">53</span></h3>
 
                         <p>Menunggu <br>Konfirmasi Jadwal Pelaksanaan</p>
                         </div>
@@ -350,7 +349,7 @@
                     <!-- small box -->
                     <div class="small-box bg-aqua">
                         <div class="inner">
-                        <h3>44</h3>
+                        <h3><span id="kelengkapanDok" class="count">44</span></h3>
 
                         <p>Menunggu <br>Kelengkapan Dokumen Pendaftaran</p>
                         </div>
@@ -365,7 +364,7 @@
                     <!-- small box -->
                     <div class="small-box bg-aqua">
                         <div class="inner">
-                        <h3>65</h3>
+                        <h3><span id="notaDinas" class="count">65</span></h3>
 
                         <p>Menunggu <br>Nota Dinas Penugasan</p>
                         </div>
@@ -382,7 +381,7 @@
                     <!-- small box -->
                     <div class="small-box bg-aqua">
                         <div class="inner">
-                        <h3>30</h3>
+                        <h3><span id="pembayaran" class="count">30</span></h3>
 
                         <p>Menunggu Pembayaran</p>
                         </div>
@@ -397,7 +396,7 @@
                 <!-- small box -->
                     <div class="small-box bg-aqua">
                         <div class="inner">
-                        <h3>53</sup></h3>
+                        <h3><span id="sertifikat" class="count">53</span></h3>
 
                         <p>Menunggu Upload Sertifikasi</p>
                         </div>
@@ -412,7 +411,7 @@
                     <!-- small box -->
                     <div class="small-box bg-aqua">
                         <div class="inner">
-                        <h3>44</h3>
+                        <h3><span id="materi" class="count">44</span></h3>
 
                         <p>Menunggu Upload Materi</p>
                         </div>
@@ -427,7 +426,7 @@
                     <!-- small box -->
                     <div class="small-box bg-aqua">
                         <div class="inner">
-                        <h3>65</h3>
+                        <h3><span id="jadwal" class="count">65</span></h3>
 
                         <p>Menunggu Internal Sharing</p>
                         </div>
@@ -447,7 +446,7 @@
                     <!-- small box -->
                     <div class="small-box bg-aqua">
                         <div class="inner">
-                        <h3>150</h3>
+                        <h3><span id="evaluasi" class="count">250</span></h3>
                         <p>Menunggu Evaluasi Atasan</p>
                         </div>
                         <div class="icon">
@@ -460,7 +459,7 @@
                     <!-- small box -->
                     <div class="small-box bg-aqua">
                         <div class="inner">
-                            <h3>53</sup></h3>
+                            <h3><span id="selesai" class="count">53</span></sup></h3>
                             <p>Selesai</p>
                         </div>
                         <div class="icon">
@@ -752,878 +751,725 @@
                     </div>
                 </div>
                 
-            </div>
-            
-            
-
-            
-            
-    
-
-            
+            </div>   
         </div>
     </div>
 </section>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/highcharts-more.js"></script>
-    <!-- <script src="https://code.highcharts.com/modules/series-label.js"></script> -->
-    <!-- <script src="https://code.highcharts.com/modules/exporting.js"></script> -->
-    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<!-- <script src="https://code.highcharts.com/modules/series-label.js"></script> -->
+<!-- <script src="https://code.highcharts.com/modules/exporting.js"></script> -->
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 <script type="text/javascript">
-    
-     $('#year .input-group.date').datepicker({
-        format: "yyyy",
-        viewMode: "years", 
-        minViewMode: "years",
-        autoclose: true
-    });
-    $(document).ready(function() {
-        let filter_year = $('#filter_year').val();
 
-        Highcharts.setOptions({
-        colors: ['#76d86b', '#4bb7e4', '#f6c811', '#ff6232'],
-        navigation: {
-            buttonOptions: {
-                symbolSize: 12,
-                symbolStrokeWidth: 1,
-                enabled: true //change to false to hide
-            }
-        },
-        xAxis: {
-            labels: {
-                style: {
-                    color: '#000',
-                    letterSpacing: '2px',
-                    textTransform: 'uppercase',
-                    fontSize: '10px',
-                }
-            },
-        },
-        plotOptions: {
-            series: {
-                borderWidth: 0,
-                dataLabels: {
-                    allowOverlap: true,
-                    padding: 0,
-                }
-            }
-        },
-        yAxis: {
-            labels: {
-                style: {
-                    color: '#000',
-                    fontWeight: '1000',
-                    fontSize: '8px'
-                },
-            },
-            title: {
-                style: {
-                    color: '#000',
-                    fontSize: '12px'
-                }
-            },
-            gridLineColor: '#dadce2'
-        }
-    });
-    
-    Highcharts.chart('pelatihan_q1', {
-        chart: {
-            type: 'column'
-        },
-        title: {
-            useHTML: true,
-            text: '<h3 class="title">Quartal 1</h3>',
-            align: 'center',
-            x: 0
-        },
-        // subtitle: {
-        //     text: 'REGIONAL'
-        // },
-        xAxis: {
-            categories: ['Pelatihan', 'Peserta'],
-            //crosshair: false
-        },
-        plotOptions: {
-            series: {
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.y:.2f} ',
-                }
-            }
-        },
+$('#year .input-group.date').datepicker({
+    format: "yyyy",
+    viewMode: "years", 
+    minViewMode: "years",
+    autoclose: true
+});
 
-        yAxis: { // Primary yAxis
-            labels: {
-                format: '{value} ',
-                style: {
-                    color: '#000'
-                }
-            },
-            title: {
-                text: ' ',
-                style: {
-                    color: '#000'
-                }
-            },
-            gridLineColor: '#d8dade'
-        },
+$(document).ready(function() {
+    let filter_year = $('#filter_year').val();
 
-        tooltip: {
-            headerFormat: '<table><tr><td colspan="2"><h3>{point.key}</h3></td></tr>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.2f} </b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
-        },
-        credits: {
-            enabled: false, // Enable/Disable the credits
-            text: 'This is a credit'
-        },
+    // Highcharts.chart('pelatihan_q2', {
+    //     chart: {
+    //         type: 'column'
+    //     },
+    //     title: {
+    //         useHTML: true,
+    //         text: '<h3 class="title">Quartal 2</h3>',
+    //         align: 'center',
+    //         x: 0
+    //     },
+    //     // subtitle: {
+    //     //     text: 'REGIONAL'
+    //     // },
+    //     xAxis: {
+    //         categories: ['Pelatihan', 'Peserta'],
+    //         //crosshair: false
+    //     },
+    //     plotOptions: {
+    //         series: {
+    //             dataLabels: {
+    //                 enabled: true,
+    //                 format: '{point.y:.2f} ',
+    //             }
+    //         }
+    //     },
+
+    //     yAxis: { // Primary yAxis
+    //         labels: {
+    //             format: '{value} ',
+    //             style: {
+    //                 color: '#000'
+    //             }
+    //         },
+    //         title: {
+    //             text: ' ',
+    //             style: {
+    //                 color: '#000'
+    //             }
+    //         },
+    //         gridLineColor: '#d8dade'
+    //     },
+
+    //     tooltip: {
+    //         headerFormat: '<table><tr><td colspan="2"><h3>{point.key}</h3></td></tr>',
+    //         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+    //             '<td style="padding:0"><b>{point.y:.2f} </b></td></tr>',
+    //         footerFormat: '</table>',
+    //         shared: true,
+    //         useHTML: true
+    //     },
+    //     credits: {
+    //         enabled: false, // Enable/Disable the credits
+    //         text: 'This is a credit'
+    //     },
 
 
-        series: [{
-                name: 'Rencana',
-                type: 'column',
-                color: {
-                    linearGradient: [0, 400, 0, 0],
-                    stops: [
-                        [0.1, '#169aed'],
-                        [0.9, '#8cd0fb'],
-                    ]
-                },
-                data: [53.71, 42.57],
-                tooltip: {
-                    valueSuffix: 'T'
-                },
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[1],
-                    fillColor: 'white'
-                }
-            },
-            {
-                name: 'Realisasi',
-                type: 'column',
-                color: {
-                    linearGradient: [0, 400, 0, 0],
-                    stops: [
-                        [0.1, '#2fcea3'],
-                        [0.325, '#9bdd4e']
-                    ]
-                },
-                data: [16.69, 7.89 ],
-                tooltip: {
-                    valueSuffix: 'T'
-                },
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[1],
-                    fillColor: 'white'
-                }
-            }
-           
-        ]
-    });
+    //     series: [{
+    //             name: 'Rencana',
+    //             type: 'column',
+    //             color: {
+    //                 linearGradient: [0, 400, 0, 0],
+    //                 stops: [
+    //                     [0.1, '#169aed'],
+    //                     [0.9, '#8cd0fb'],
+    //                 ]
+    //             },
+    //             data: [53.71, 42.57],
+    //             tooltip: {
+    //                 valueSuffix: 'T'
+    //             },
+    //             marker: {
+    //                 lineWidth: 2,
+    //                 lineColor: Highcharts.getOptions().colors[1],
+    //                 fillColor: 'white'
+    //             }
+    //         },
+    //         {
+    //             name: 'Realisasi',
+    //             type: 'column',
+    //             color: {
+    //                 linearGradient: [0, 400, 0, 0],
+    //                 stops: [
+    //                     [0.1, '#2fcea3'],
+    //                     [0.325, '#9bdd4e']
+    //                 ]
+    //             },
+    //             data: [16.69, 7.89 ],
+    //             tooltip: {
+    //                 valueSuffix: 'T'
+    //             },
+    //             marker: {
+    //                 lineWidth: 2,
+    //                 lineColor: Highcharts.getOptions().colors[1],
+    //                 fillColor: 'white'
+    //             }
+    //         }
+        
+    //     ]
+    // });
 
-    Highcharts.chart('pelatihan_q2', {
-        chart: {
-            type: 'column'
-        },
-        title: {
-            useHTML: true,
-            text: '<h3 class="title">Quartal 2</h3>',
-            align: 'center',
-            x: 0
-        },
-        // subtitle: {
-        //     text: 'REGIONAL'
-        // },
-        xAxis: {
-            categories: ['Pelatihan', 'Peserta'],
-            //crosshair: false
-        },
-        plotOptions: {
-            series: {
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.y:.2f} ',
-                }
-            }
-        },
+    // Highcharts.chart('pelatihan_q3', {
+    //     chart: {
+    //         type: 'column'
+    //     },
+    //     title: {
+    //         useHTML: true,
+    //         text: '<h3 class="title">Quartal 3</h3>',
+    //         align: 'center',
+    //         x: 0
+    //     },
+    //     // subtitle: {
+    //     //     text: 'REGIONAL'
+    //     // },
+    //     xAxis: {
+    //         categories: ['Pelatihan', 'Peserta'],
+    //         //crosshair: false
+    //     },
+    //     plotOptions: {
+    //         series: {
+    //             dataLabels: {
+    //                 enabled: true,
+    //                 format: '{point.y:.2f} ',
+    //             }
+    //         }
+    //     },
 
-        yAxis: { // Primary yAxis
-            labels: {
-                format: '{value} ',
-                style: {
-                    color: '#000'
-                }
-            },
-            title: {
-                text: ' ',
-                style: {
-                    color: '#000'
-                }
-            },
-            gridLineColor: '#d8dade'
-        },
+    //     yAxis: { // Primary yAxis
+    //         labels: {
+    //             format: '{value} ',
+    //             style: {
+    //                 color: '#000'
+    //             }
+    //         },
+    //         title: {
+    //             text: ' ',
+    //             style: {
+    //                 color: '#000'
+    //             }
+    //         },
+    //         gridLineColor: '#d8dade'
+    //     },
 
-        tooltip: {
-            headerFormat: '<table><tr><td colspan="2"><h3>{point.key}</h3></td></tr>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.2f} </b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
-        },
-        credits: {
-            enabled: false, // Enable/Disable the credits
-            text: 'This is a credit'
-        },
-
-
-        series: [{
-                name: 'Rencana',
-                type: 'column',
-                color: {
-                    linearGradient: [0, 400, 0, 0],
-                    stops: [
-                        [0.1, '#169aed'],
-                        [0.9, '#8cd0fb'],
-                    ]
-                },
-                data: [53.71, 42.57],
-                tooltip: {
-                    valueSuffix: 'T'
-                },
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[1],
-                    fillColor: 'white'
-                }
-            },
-            {
-                name: 'Realisasi',
-                type: 'column',
-                color: {
-                    linearGradient: [0, 400, 0, 0],
-                    stops: [
-                        [0.1, '#2fcea3'],
-                        [0.325, '#9bdd4e']
-                    ]
-                },
-                data: [16.69, 7.89 ],
-                tooltip: {
-                    valueSuffix: 'T'
-                },
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[1],
-                    fillColor: 'white'
-                }
-            }
-           
-        ]
-    });
-
-    Highcharts.chart('pelatihan_q3', {
-        chart: {
-            type: 'column'
-        },
-        title: {
-            useHTML: true,
-            text: '<h3 class="title">Quartal 3</h3>',
-            align: 'center',
-            x: 0
-        },
-        // subtitle: {
-        //     text: 'REGIONAL'
-        // },
-        xAxis: {
-            categories: ['Pelatihan', 'Peserta'],
-            //crosshair: false
-        },
-        plotOptions: {
-            series: {
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.y:.2f} ',
-                }
-            }
-        },
-
-        yAxis: { // Primary yAxis
-            labels: {
-                format: '{value} ',
-                style: {
-                    color: '#000'
-                }
-            },
-            title: {
-                text: ' ',
-                style: {
-                    color: '#000'
-                }
-            },
-            gridLineColor: '#d8dade'
-        },
-
-        tooltip: {
-            headerFormat: '<table><tr><td colspan="2"><h3>{point.key}</h3></td></tr>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.2f} </b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
-        },
-        credits: {
-            enabled: false, // Enable/Disable the credits
-            text: 'This is a credit'
-        },
+    //     tooltip: {
+    //         headerFormat: '<table><tr><td colspan="2"><h3>{point.key}</h3></td></tr>',
+    //         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+    //             '<td style="padding:0"><b>{point.y:.2f} </b></td></tr>',
+    //         footerFormat: '</table>',
+    //         shared: true,
+    //         useHTML: true
+    //     },
+    //     credits: {
+    //         enabled: false, // Enable/Disable the credits
+    //         text: 'This is a credit'
+    //     },
 
 
-        series: [{
-                name: 'Rencana',
-                type: 'column',
-                color: {
-                    linearGradient: [0, 400, 0, 0],
-                    stops: [
-                        [0.1, '#169aed'],
-                        [0.9, '#8cd0fb'],
-                    ]
-                },
-                data: [53.71, 42.57],
-                tooltip: {
-                    valueSuffix: 'T'
-                },
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[1],
-                    fillColor: 'white'
-                }
-            },
-            {
-                name: 'Realisasi',
-                type: 'column',
-                color: {
-                    linearGradient: [0, 400, 0, 0],
-                    stops: [
-                        [0.1, '#2fcea3'],
-                        [0.325, '#9bdd4e']
-                    ]
-                },
-                data: [16.69, 7.89 ],
-                tooltip: {
-                    valueSuffix: 'T'
-                },
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[1],
-                    fillColor: 'white'
-                }
-            }
-           
-        ]
-    });
+    //     series: [{
+    //             name: 'Rencana',
+    //             type: 'column',
+    //             color: {
+    //                 linearGradient: [0, 400, 0, 0],
+    //                 stops: [
+    //                     [0.1, '#169aed'],
+    //                     [0.9, '#8cd0fb'],
+    //                 ]
+    //             },
+    //             data: [53.71, 42.57],
+    //             tooltip: {
+    //                 valueSuffix: 'T'
+    //             },
+    //             marker: {
+    //                 lineWidth: 2,
+    //                 lineColor: Highcharts.getOptions().colors[1],
+    //                 fillColor: 'white'
+    //             }
+    //         },
+    //         {
+    //             name: 'Realisasi',
+    //             type: 'column',
+    //             color: {
+    //                 linearGradient: [0, 400, 0, 0],
+    //                 stops: [
+    //                     [0.1, '#2fcea3'],
+    //                     [0.325, '#9bdd4e']
+    //                 ]
+    //             },
+    //             data: [16.69, 7.89 ],
+    //             tooltip: {
+    //                 valueSuffix: 'T'
+    //             },
+    //             marker: {
+    //                 lineWidth: 2,
+    //                 lineColor: Highcharts.getOptions().colors[1],
+    //                 fillColor: 'white'
+    //             }
+    //         }
+        
+    //     ]
+    // });
 
-    Highcharts.chart('pelatihan_q4', {
-        chart: {
-            type: 'column'
-        },
-        title: {
-            useHTML: true,
-            text: '<h3 class="title">Quartal 4</h3>',
-            align: 'center',
-            x: 0
-        },
-        xAxis: {
-            categories: ['Pelatihan', 'Peserta'],
-            //crosshair: false
-        },
-        plotOptions: {
-            series: {
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.y:.2f} ',
-                }
-            }
-        },
+    // Highcharts.chart('pelatihan_q4', {
+    //     chart: {
+    //         type: 'column'
+    //     },
+    //     title: {
+    //         useHTML: true,
+    //         text: '<h3 class="title">Quartal 4</h3>',
+    //         align: 'center',
+    //         x: 0
+    //     },
+    //     xAxis: {
+    //         categories: ['Pelatihan', 'Peserta'],
+    //         //crosshair: false
+    //     },
+    //     plotOptions: {
+    //         series: {
+    //             dataLabels: {
+    //                 enabled: true,
+    //                 format: '{point.y:.2f} ',
+    //             }
+    //         }
+    //     },
 
-        yAxis: { // Primary yAxis
-            labels: {
-                format: '{value} ',
-                style: {
-                    color: '#000'
-                }
-            },
-            title: {
-                text: ' ',
-                style: {
-                    color: '#000'
-                }
-            },
-            gridLineColor: '#d8dade'
-        },
+    //     yAxis: { // Primary yAxis
+    //         labels: {
+    //             format: '{value} ',
+    //             style: {
+    //                 color: '#000'
+    //             }
+    //         },
+    //         title: {
+    //             text: ' ',
+    //             style: {
+    //                 color: '#000'
+    //             }
+    //         },
+    //         gridLineColor: '#d8dade'
+    //     },
 
-        tooltip: {
-            headerFormat: '<table><tr><td colspan="2"><h3>{point.key}</h3></td></tr>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.2f} </b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
-        },
-        credits: {
-            enabled: false, // Enable/Disable the credits
-            text: 'This is a credit'
-        },
-
-
-        series: [{
-                name: 'Rencana',
-                type: 'column',
-                color: {
-                    linearGradient: [0, 400, 0, 0],
-                    stops: [
-                        [0.1, '#169aed'],
-                        [0.9, '#8cd0fb'],
-                    ]
-                },
-                data: [53.71, 42.57],
-                tooltip: {
-                    valueSuffix: 'T'
-                },
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[1],
-                    fillColor: 'white'
-                }
-            },
-            {
-                name: 'Realisasi',
-                type: 'column',
-                color: {
-                    linearGradient: [0, 400, 0, 0],
-                    stops: [
-                        [0.1, '#2fcea3'],
-                        [0.325, '#9bdd4e']
-                    ]
-                },
-                data: [16.69, 7.89 ],
-                tooltip: {
-                    valueSuffix: 'T'
-                },
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[1],
-                    fillColor: 'white'
-                }
-            }
-           
-        ]
-    });
-
-    Highcharts.chart('sertifikasi_q1', {
-        chart: {
-            type: 'bar'
-        },
-        title: {
-            useHTML: true,
-            text: '<h3 class="title">Quartal 1</h3>',
-            align: 'center',
-            x: 0
-        },
-        // subtitle: {
-        //     text: 'REGIONAL'
-        // },
-        xAxis: {
-            categories: ['Sertifikasi', 'Peserta'],
-            //crosshair: false
-        },
-        plotOptions: {
-            series: {
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.y:.2f} ',
-                }
-            }
-        },
-
-        yAxis: { // Primary yAxis
-            labels: {
-                format: '{value} ',
-                style: {
-                    color: '#000'
-                }
-            },
-            title: {
-                text: ' ',
-                style: {
-                    color: '#000'
-                }
-            },
-            gridLineColor: '#d8dade'
-        },
-
-        tooltip: {
-            headerFormat: '<table><tr><td colspan="2"><h3>{point.key}</h3></td></tr>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.2f} </b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
-        },
-        credits: {
-            enabled: false, // Enable/Disable the credits
-            text: 'This is a credit'
-        },
+    //     tooltip: {
+    //         headerFormat: '<table><tr><td colspan="2"><h3>{point.key}</h3></td></tr>',
+    //         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+    //             '<td style="padding:0"><b>{point.y:.2f} </b></td></tr>',
+    //         footerFormat: '</table>',
+    //         shared: true,
+    //         useHTML: true
+    //     },
+    //     credits: {
+    //         enabled: false, // Enable/Disable the credits
+    //         text: 'This is a credit'
+    //     },
 
 
-        series: [{
-                name: 'Rencana',
-                type: 'column',
-                color: {
-                    linearGradient: [0, 400, 0, 0],
-                    stops: [
-                        [0.1, '#ff5d5d'],
-                        [0.325, '#ff9d33']
-                    ]
-                },
-                data: [53.71, 42.57],
-                tooltip: {
-                    valueSuffix: 'T'
-                },
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[1],
-                    fillColor: 'white'
-                }
-            },
-            {
-                name: 'Realisasi',
-                type: 'column',
-                color: {
-                    linearGradient: [0, 400, 0, 0],
-                    stops: [
-                        [0.1, '#2fcea3'],
-                        [0.325, '#9bdd4e']
-                    ]
-                },
-                data: [16.69, 7.89 ],
-                tooltip: {
-                    valueSuffix: 'T'
-                },
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[1],
-                    fillColor: 'white'
-                }
-            }
-           
-        ]
-    });
+    //     series: [{
+    //             name: 'Rencana',
+    //             type: 'column',
+    //             color: {
+    //                 linearGradient: [0, 400, 0, 0],
+    //                 stops: [
+    //                     [0.1, '#169aed'],
+    //                     [0.9, '#8cd0fb'],
+    //                 ]
+    //             },
+    //             data: [53.71, 42.57],
+    //             tooltip: {
+    //                 valueSuffix: 'T'
+    //             },
+    //             marker: {
+    //                 lineWidth: 2,
+    //                 lineColor: Highcharts.getOptions().colors[1],
+    //                 fillColor: 'white'
+    //             }
+    //         },
+    //         {
+    //             name: 'Realisasi',
+    //             type: 'column',
+    //             color: {
+    //                 linearGradient: [0, 400, 0, 0],
+    //                 stops: [
+    //                     [0.1, '#2fcea3'],
+    //                     [0.325, '#9bdd4e']
+    //                 ]
+    //             },
+    //             data: [16.69, 7.89 ],
+    //             tooltip: {
+    //                 valueSuffix: 'T'
+    //             },
+    //             marker: {
+    //                 lineWidth: 2,
+    //                 lineColor: Highcharts.getOptions().colors[1],
+    //                 fillColor: 'white'
+    //             }
+    //         }
+        
+    //     ]
+    // });
 
-    Highcharts.chart('sertifikasi_q2', {
-        chart: {
-            type: 'bar'
-        },
-        title: {
-            useHTML: true,
-            text: '<h3 class="title">Quartal 2</h3>',
-            align: 'center',
-            x: 0
-        },
-        // subtitle: {
-        //     text: 'REGIONAL'
-        // },
-        xAxis: {
-            categories: ['Sertifikasi', 'Peserta'],
-            //crosshair: false
-        },
-        plotOptions: {
-            series: {
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.y:.2f} ',
-                }
-            }
-        },
+    // Highcharts.chart('sertifikasi_q1', {
+    //     chart: {
+    //         type: 'bar'
+    //     },
+    //     title: {
+    //         useHTML: true,
+    //         text: '<h3 class="title">Quartal 1</h3>',
+    //         align: 'center',
+    //         x: 0
+    //     },
+    //     // subtitle: {
+    //     //     text: 'REGIONAL'
+    //     // },
+    //     xAxis: {
+    //         categories: ['Sertifikasi', 'Peserta'],
+    //         //crosshair: false
+    //     },
+    //     plotOptions: {
+    //         series: {
+    //             dataLabels: {
+    //                 enabled: true,
+    //                 format: '{point.y:.2f} ',
+    //             }
+    //         }
+    //     },
 
-        yAxis: { // Primary yAxis
-            labels: {
-                format: '{value} ',
-                style: {
-                    color: '#000'
-                }
-            },
-            title: {
-                text: ' ',
-                style: {
-                    color: '#000'
-                }
-            },
-            gridLineColor: '#d8dade'
-        },
+    //     yAxis: { // Primary yAxis
+    //         labels: {
+    //             format: '{value} ',
+    //             style: {
+    //                 color: '#000'
+    //             }
+    //         },
+    //         title: {
+    //             text: ' ',
+    //             style: {
+    //                 color: '#000'
+    //             }
+    //         },
+    //         gridLineColor: '#d8dade'
+    //     },
 
-        tooltip: {
-            headerFormat: '<table><tr><td colspan="2"><h3>{point.key}</h3></td></tr>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.2f} </b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
-        },
-        credits: {
-            enabled: false, // Enable/Disable the credits
-            text: 'This is a credit'
-        },
-
-
-        series: [{
-                name: 'Rencana',
-                type: 'column',
-                color: {
-                    linearGradient: [0, 400, 0, 0],
-                    stops: [
-                        [0.1, '#ff5d5d'],
-                        [0.325, '#ff9d33']
-                    ]
-                },
-                data: [53.71, 42.57],
-                tooltip: {
-                    valueSuffix: 'T'
-                },
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[1],
-                    fillColor: 'white'
-                }
-            },
-            {
-                name: 'Realisasi',
-                type: 'column',
-                color: {
-                    linearGradient: [0, 400, 0, 0],
-                    stops: [
-                        [0.1, '#2fcea3'],
-                        [0.325, '#9bdd4e']
-                    ]
-                },
-                data: [16.69, 7.89 ],
-                tooltip: {
-                    valueSuffix: 'T'
-                },
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[1],
-                    fillColor: 'white'
-                }
-            }
-           
-        ]
-    });
-
-    Highcharts.chart('sertifikasi_q3', {
-        chart: {
-            type: 'bar'
-        },
-        title: {
-            useHTML: true,
-            text: '<h3 class="title">Quartal 3</h3>',
-            align: 'center',
-            x: 0
-        },
-        // subtitle: {
-        //     text: 'REGIONAL'
-        // },
-        xAxis: {
-            categories: ['Sertifikasi', 'Peserta'],
-            //crosshair: false
-        },
-        plotOptions: {
-            series: {
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.y:.2f} ',
-                }
-            }
-        },
-
-        yAxis: { // Primary yAxis
-            labels: {
-                format: '{value} ',
-                style: {
-                    color: '#000'
-                }
-            },
-            title: {
-                text: ' ',
-                style: {
-                    color: '#000'
-                }
-            },
-            gridLineColor: '#d8dade'
-        },
-
-        tooltip: {
-            headerFormat: '<table><tr><td colspan="2"><h3>{point.key}</h3></td></tr>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.2f} </b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
-        },
-        credits: {
-            enabled: false, // Enable/Disable the credits
-            text: 'This is a credit'
-        },
+    //     tooltip: {
+    //         headerFormat: '<table><tr><td colspan="2"><h3>{point.key}</h3></td></tr>',
+    //         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+    //             '<td style="padding:0"><b>{point.y:.2f} </b></td></tr>',
+    //         footerFormat: '</table>',
+    //         shared: true,
+    //         useHTML: true
+    //     },
+    //     credits: {
+    //         enabled: false, // Enable/Disable the credits
+    //         text: 'This is a credit'
+    //     },
 
 
-        series: [{
-                name: 'Rencana',
-                type: 'column',
-                color: {
-                    linearGradient: [0, 400, 0, 0],
-                    stops: [
-                        [0.1, '#ff5d5d'],
-                        [0.325, '#ff9d33']
-                    ]
-                },
-                data: [53.71, 42.57],
-                tooltip: {
-                    valueSuffix: 'T'
-                },
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[1],
-                    fillColor: 'white'
-                }
-            },
-            {
-                name: 'Realisasi',
-                type: 'column',
-                color: {
-                    linearGradient: [0, 400, 0, 0],
-                    stops: [
-                        [0.1, '#2fcea3'],
-                        [0.325, '#9bdd4e']
-                    ]
-                },
-                data: [16.69, 7.89 ],
-                tooltip: {
-                    valueSuffix: 'T'
-                },
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[1],
-                    fillColor: 'white'
-                }
-            }
-           
-        ]
-    });
+    //     series: [{
+    //             name: 'Rencana',
+    //             type: 'column',
+    //             color: {
+    //                 linearGradient: [0, 400, 0, 0],
+    //                 stops: [
+    //                     [0.1, '#ff5d5d'],
+    //                     [0.325, '#ff9d33']
+    //                 ]
+    //             },
+    //             data: [53.71, 42.57],
+    //             tooltip: {
+    //                 valueSuffix: 'T'
+    //             },
+    //             marker: {
+    //                 lineWidth: 2,
+    //                 lineColor: Highcharts.getOptions().colors[1],
+    //                 fillColor: 'white'
+    //             }
+    //         },
+    //         {
+    //             name: 'Realisasi',
+    //             type: 'column',
+    //             color: {
+    //                 linearGradient: [0, 400, 0, 0],
+    //                 stops: [
+    //                     [0.1, '#2fcea3'],
+    //                     [0.325, '#9bdd4e']
+    //                 ]
+    //             },
+    //             data: [16.69, 7.89 ],
+    //             tooltip: {
+    //                 valueSuffix: 'T'
+    //             },
+    //             marker: {
+    //                 lineWidth: 2,
+    //                 lineColor: Highcharts.getOptions().colors[1],
+    //                 fillColor: 'white'
+    //             }
+    //         }
+        
+    //     ]
+    // });
 
-    Highcharts.chart('sertifikasi_q4', {
-        chart: {
-            type: 'bar'
-        },
-        title: {
-            useHTML: true,
-            text: '<h3 class="title">Quartal 4</h3>',
-            align: 'center',
-            x: 0
-        },
-        xAxis: {
-            categories: ['Sertifikasi', 'Peserta'],
-            //crosshair: false
-        },
-        plotOptions: {
-            series: {
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.y:.2f} ',
-                }
-            }
-        },
+    // Highcharts.chart('sertifikasi_q2', {
+    //     chart: {
+    //         type: 'bar'
+    //     },
+    //     title: {
+    //         useHTML: true,
+    //         text: '<h3 class="title">Quartal 2</h3>',
+    //         align: 'center',
+    //         x: 0
+    //     },
+    //     // subtitle: {
+    //     //     text: 'REGIONAL'
+    //     // },
+    //     xAxis: {
+    //         categories: ['Sertifikasi', 'Peserta'],
+    //         //crosshair: false
+    //     },
+    //     plotOptions: {
+    //         series: {
+    //             dataLabels: {
+    //                 enabled: true,
+    //                 format: '{point.y:.2f} ',
+    //             }
+    //         }
+    //     },
 
-        yAxis: { // Primary yAxis
-            labels: {
-                format: '{value} ',
-                style: {
-                    color: '#000'
-                }
-            },
-            title: {
-                text: ' ',
-                style: {
-                    color: '#000'
-                }
-            },
-            gridLineColor: '#d8dade'
-        },
+    //     yAxis: { // Primary yAxis
+    //         labels: {
+    //             format: '{value} ',
+    //             style: {
+    //                 color: '#000'
+    //             }
+    //         },
+    //         title: {
+    //             text: ' ',
+    //             style: {
+    //                 color: '#000'
+    //             }
+    //         },
+    //         gridLineColor: '#d8dade'
+    //     },
 
-        tooltip: {
-            headerFormat: '<table><tr><td colspan="2"><h3>{point.key}</h3></td></tr>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.2f} </b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
-        },
-        credits: {
-            enabled: false, // Enable/Disable the credits
-            text: 'This is a credit'
-        },
+    //     tooltip: {
+    //         headerFormat: '<table><tr><td colspan="2"><h3>{point.key}</h3></td></tr>',
+    //         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+    //             '<td style="padding:0"><b>{point.y:.2f} </b></td></tr>',
+    //         footerFormat: '</table>',
+    //         shared: true,
+    //         useHTML: true
+    //     },
+    //     credits: {
+    //         enabled: false, // Enable/Disable the credits
+    //         text: 'This is a credit'
+    //     },
 
 
-        series: [{
-                name: 'Rencana',
-                type: 'column',
-                color: {
-                    linearGradient: [0, 400, 0, 0],
-                    stops: [
-                        [0.1, '#ff5d5d'],
-                        [0.325, '#ff9d33']
-                    ]
-                },
-                data: [53.71, 42.57],
-                tooltip: {
-                    valueSuffix: 'T'
-                },
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[1],
-                    fillColor: 'white'
-                }
-            },
-            {
-                name: 'Realisasi',
-                type: 'column',
-                color: {
-                    linearGradient: [0, 400, 0, 0],
-                    stops: [
-                        [0.1, '#2fcea3'],
-                        [0.325, '#9bdd4e']
-                    ]
-                },
-                data: [16.69, 7.89 ],
-                tooltip: {
-                    valueSuffix: 'T'
-                },
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[1],
-                    fillColor: 'white'
-                }
-            }
-           
-        ]
-    });
+    //     series: [{
+    //             name: 'Rencana',
+    //             type: 'column',
+    //             color: {
+    //                 linearGradient: [0, 400, 0, 0],
+    //                 stops: [
+    //                     [0.1, '#ff5d5d'],
+    //                     [0.325, '#ff9d33']
+    //                 ]
+    //             },
+    //             data: [53.71, 42.57],
+    //             tooltip: {
+    //                 valueSuffix: 'T'
+    //             },
+    //             marker: {
+    //                 lineWidth: 2,
+    //                 lineColor: Highcharts.getOptions().colors[1],
+    //                 fillColor: 'white'
+    //             }
+    //         },
+    //         {
+    //             name: 'Realisasi',
+    //             type: 'column',
+    //             color: {
+    //                 linearGradient: [0, 400, 0, 0],
+    //                 stops: [
+    //                     [0.1, '#2fcea3'],
+    //                     [0.325, '#9bdd4e']
+    //                 ]
+    //             },
+    //             data: [16.69, 7.89 ],
+    //             tooltip: {
+    //                 valueSuffix: 'T'
+    //             },
+    //             marker: {
+    //                 lineWidth: 2,
+    //                 lineColor: Highcharts.getOptions().colors[1],
+    //                 fillColor: 'white'
+    //             }
+    //         }
+        
+    //     ]
+    // });
+
+    // Highcharts.chart('sertifikasi_q3', {
+    //     chart: {
+    //         type: 'bar'
+    //     },
+    //     title: {
+    //         useHTML: true,
+    //         text: '<h3 class="title">Quartal 3</h3>',
+    //         align: 'center',
+    //         x: 0
+    //     },
+    //     // subtitle: {
+    //     //     text: 'REGIONAL'
+    //     // },
+    //     xAxis: {
+    //         categories: ['Sertifikasi', 'Peserta'],
+    //         //crosshair: false
+    //     },
+    //     plotOptions: {
+    //         series: {
+    //             dataLabels: {
+    //                 enabled: true,
+    //                 format: '{point.y:.2f} ',
+    //             }
+    //         }
+    //     },
+
+    //     yAxis: { // Primary yAxis
+    //         labels: {
+    //             format: '{value} ',
+    //             style: {
+    //                 color: '#000'
+    //             }
+    //         },
+    //         title: {
+    //             text: ' ',
+    //             style: {
+    //                 color: '#000'
+    //             }
+    //         },
+    //         gridLineColor: '#d8dade'
+    //     },
+
+    //     tooltip: {
+    //         headerFormat: '<table><tr><td colspan="2"><h3>{point.key}</h3></td></tr>',
+    //         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+    //             '<td style="padding:0"><b>{point.y:.2f} </b></td></tr>',
+    //         footerFormat: '</table>',
+    //         shared: true,
+    //         useHTML: true
+    //     },
+    //     credits: {
+    //         enabled: false, // Enable/Disable the credits
+    //         text: 'This is a credit'
+    //     },
+
+
+    //     series: [{
+    //             name: 'Rencana',
+    //             type: 'column',
+    //             color: {
+    //                 linearGradient: [0, 400, 0, 0],
+    //                 stops: [
+    //                     [0.1, '#ff5d5d'],
+    //                     [0.325, '#ff9d33']
+    //                 ]
+    //             },
+    //             data: [53.71, 42.57],
+    //             tooltip: {
+    //                 valueSuffix: 'T'
+    //             },
+    //             marker: {
+    //                 lineWidth: 2,
+    //                 lineColor: Highcharts.getOptions().colors[1],
+    //                 fillColor: 'white'
+    //             }
+    //         },
+    //         {
+    //             name: 'Realisasi',
+    //             type: 'column',
+    //             color: {
+    //                 linearGradient: [0, 400, 0, 0],
+    //                 stops: [
+    //                     [0.1, '#2fcea3'],
+    //                     [0.325, '#9bdd4e']
+    //                 ]
+    //             },
+    //             data: [16.69, 7.89 ],
+    //             tooltip: {
+    //                 valueSuffix: 'T'
+    //             },
+    //             marker: {
+    //                 lineWidth: 2,
+    //                 lineColor: Highcharts.getOptions().colors[1],
+    //                 fillColor: 'white'
+    //             }
+    //         }
+        
+    //     ]
+    // });
+
+    // Highcharts.chart('sertifikasi_q4', {
+    //     chart: {
+    //         type: 'bar'
+    //     },
+    //     title: {
+    //         useHTML: true,
+    //         text: '<h3 class="title">Quartal 4</h3>',
+    //         align: 'center',
+    //         x: 0
+    //     },
+    //     xAxis: {
+    //         categories: ['Sertifikasi', 'Peserta'],
+    //         //crosshair: false
+    //     },
+    //     plotOptions: {
+    //         series: {
+    //             dataLabels: {
+    //                 enabled: true,
+    //                 format: '{point.y:.2f} ',
+    //             }
+    //         }
+    //     },
+
+    //     yAxis: { // Primary yAxis
+    //         labels: {
+    //             format: '{value} ',
+    //             style: {
+    //                 color: '#000'
+    //             }
+    //         },
+    //         title: {
+    //             text: ' ',
+    //             style: {
+    //                 color: '#000'
+    //             }
+    //         },
+    //         gridLineColor: '#d8dade'
+    //     },
+
+    //     tooltip: {
+    //         headerFormat: '<table><tr><td colspan="2"><h3>{point.key}</h3></td></tr>',
+    //         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+    //             '<td style="padding:0"><b>{point.y:.2f} </b></td></tr>',
+    //         footerFormat: '</table>',
+    //         shared: true,
+    //         useHTML: true
+    //     },
+    //     credits: {
+    //         enabled: false, // Enable/Disable the credits
+    //         text: 'This is a credit'
+    //     },
+
+
+    //     series: [{
+    //             name: 'Rencana',
+    //             type: 'column',
+    //             color: {
+    //                 linearGradient: [0, 400, 0, 0],
+    //                 stops: [
+    //                     [0.1, '#ff5d5d'],
+    //                     [0.325, '#ff9d33']
+    //                 ]
+    //             },
+    //             data: [53.71, 42.57],
+    //             tooltip: {
+    //                 valueSuffix: 'T'
+    //             },
+    //             marker: {
+    //                 lineWidth: 2,
+    //                 lineColor: Highcharts.getOptions().colors[1],
+    //                 fillColor: 'white'
+    //             }
+    //         },
+    //         {
+    //             name: 'Realisasi',
+    //             type: 'column',
+    //             color: {
+    //                 linearGradient: [0, 400, 0, 0],
+    //                 stops: [
+    //                     [0.1, '#2fcea3'],
+    //                     [0.325, '#9bdd4e']
+    //                 ]
+    //             },
+    //             data: [16.69, 7.89 ],
+    //             tooltip: {
+    //                 valueSuffix: 'T'
+    //             },
+    //             marker: {
+    //                 lineWidth: 2,
+    //                 lineColor: Highcharts.getOptions().colors[1],
+    //                 fillColor: 'white'
+    //             }
+    //         }
+        
+    //     ]
+    // });
 
         //==================================================================================================================================
     // internal sharing
 
-    Highcharts.chart('internal_sharing', {
+    Highcharts.chart('internal_sharing_chart', {
         chart: {
             type: 'bar'
         },
@@ -1697,7 +1543,7 @@
                     fillColor: 'white'
                 }
             }
-           
+        
         ]
     });
 
@@ -1814,8 +1660,8 @@
                     fillColor: 'white'
                 }
             }
-           
+        
         ]
-    });  
+    });
 });
 </script>

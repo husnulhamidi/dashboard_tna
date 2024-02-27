@@ -70,6 +70,36 @@ class DashboardModel extends CI_Model {
         );
 	}
 
+    public function chartPelatihan($thn, $quartal){
+        $dateQuartal = $this->quartal($quartal, $thn);
+        $this->db->select('COUNT(DISTINCT nama_kegiatan) as rencana_pelatihan');
+        $this->db->select('COUNT(DISTINCT tp.m_karyawan_id) as rencana_peserta');
+        $this->db->select('COUNT(DISTINCT CASE WHEN tp.waktu_pelaksanaan <= NOW() THEN nama_kegiatan END) AS realisasi_pelatihan', FALSE);
+        $this->db->select('COUNT(CASE WHEN tu.urutan > 9 THEN tp.m_karyawan_id END) AS realisasi_peserta', FALSE);
+        $this->db->from('m_tna_pengawalan tp');
+        $this->db->join('r_tahapan_usulan tu', 'tp.tahapan_id = tu.id');
+        $this->db->where('tp.jenis_development', 'Pelatihan');
+        $this->db->where('waktu_pelaksanaan >=', $dateQuartal['date1']);
+        $this->db->where('waktu_pelaksanaan <=', $dateQuartal['date2']);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+
+    public function chartSertifikasi($thn, $quartal){
+        $dateQuartal = $this->quartal($quartal, $thn);
+        $this->db->select('COUNT(DISTINCT nama_kegiatan) as rencana_sertifikasi');
+        $this->db->select('COUNT(DISTINCT tp.m_karyawan_id) as rencana_peserta');
+        $this->db->select('COUNT(DISTINCT CASE WHEN tp.waktu_pelaksanaan <= NOW() THEN nama_kegiatan END) AS realisasi_sertifikasi', FALSE);
+        $this->db->select('COUNT(CASE WHEN tu.urutan > 9 THEN tp.m_karyawan_id END) AS realisasi_peserta', FALSE);
+        $this->db->from('m_tna_pengawalan tp');
+        $this->db->join('r_tahapan_usulan tu', 'tp.tahapan_id = tu.id');
+        $this->db->where('tp.jenis_development', 'Sertifikasi');
+        $this->db->where('waktu_pelaksanaan >=', $dateQuartal['date1']);
+        $this->db->where('waktu_pelaksanaan <=', $dateQuartal['date2']);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+
     private function quartal($quartal, $thn){
         if($quartal == 1){
             $date1 = $thn.'-01-01';
@@ -93,7 +123,4 @@ class DashboardModel extends CI_Model {
             'date2' => $date2,
         );
     }
-
-	
-
 }

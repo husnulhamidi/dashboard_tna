@@ -194,6 +194,7 @@ class PengawalanModel extends CI_Model {
 	}
 
 	public function getDataDashboard(){
+		$this->db->select('COUNT(CASE WHEN tu.nama = "Draft" THEN 1 END) AS draft');
 		$this->db->select('COUNT(CASE WHEN tu.nama = "Verifikasi Mgr.Lini" THEN 1 END) AS mgrLini');
 		$this->db->select('COUNT(CASE WHEN tu.nama = "Verifikasi Manager HCPD" THEN 1 END) AS mgrHCPD');
 		$this->db->select('COUNT(CASE WHEN tu.nama = "Verifikasi AVP HCM" THEN 1 END) AS appHCM');

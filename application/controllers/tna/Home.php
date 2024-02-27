@@ -36,6 +36,7 @@ class Home extends CI_Controller {
 		$data['js']				= array(
 			'plugins/datepicker/bootstrap-datepicker.js',
 			'js/module/Dashboard/Dashboard.js?random='.date("ymdHis"),
+			'js/custom.js?random='.date("ymdHis"),
 		);
 		$this->template->load('template','tna/dashboard/dashboard', $data);
 	}
@@ -86,6 +87,20 @@ class Home extends CI_Controller {
 			'plugins/datepicker/bootstrap-datepicker.js',
 		);
 		$this->template->load('template','tna/dashboard/dashboard_training', $data);
+	}
+
+	public function chartPelatihan(){
+		$thn = $this->input->post('thn');
+		$quarter = $this->input->post('quarter');
+		$data = $this->dashboard->chartPelatihan($thn, $quarter);
+		echo json_encode($data);
+	}
+
+	public function chartSertifikasi(){
+		$thn = $this->input->post('thn');
+		$quarter = $this->input->post('quarter');
+		$data = $this->dashboard->chartSertifikasi($thn, $quarter);
+		echo json_encode($data);
 	}
 	
 

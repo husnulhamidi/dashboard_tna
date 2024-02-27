@@ -49,6 +49,7 @@ class Pengawalan extends CI_Controller {
 			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js',
 			'js/module/Pengawalan/Pengawalan.js?random='.date("ymdHis"),
 			'plugins/daterangepicker/daterangepicker.js',
+			'js/custom.js?random='.date("ymdHis"),
 		);
 
         if($active_tab=='verifikasi'){
