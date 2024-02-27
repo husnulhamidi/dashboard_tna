@@ -11,14 +11,12 @@ class DashboardModel extends CI_Model {
         }
         // return $dateQuartal;
         // Pelatihan
-        $this->db->select('COUNT(DISTINCT tp.nama_kegiatan) AS pelatihan, 
-                   COUNT(DISTINCT mk.nama) AS peserta, 
-                   COUNT(DISTINCT CASE WHEN sk.id IN (2, 4, 5) THEN mk.id END) AS status_fte, 
-                   COUNT(DISTINCT CASE WHEN sk.id NOT IN (2, 4, 5) THEN mk.id END) AS status_non_fte');
+        $this->db->select('COUNT(tp.id) AS pelatihan, 
+                   COUNT(DISTINCT tp.m_karyawan_id) AS peserta, 
+                   COUNT(CASE WHEN tp.status_karyawan = "FTE" THEN 1 END) AS status_fte, 
+                   COUNT(CASE WHEN tp.status_karyawan = "Non FTE" THEN 1 END) AS status_non_fte');
         $this->db->from('m_tna_pengawalan AS tp');
         $this->db->join('r_tahapan_usulan rtu', 'rtu.id = tp.tahapan_id', 'left');
-        $this->db->join('m_karyawan AS mk', 'mk.id = tp.m_karyawan_id');
-        $this->db->join('r_status_karyawan AS sk', 'sk.id = mk.r_status_karyawan_id', 'left');
         $this->db->where('YEAR(tp.waktu_pelaksanaan)', $thn);
         $this->db->where('rtu.urutan >', 9);
         $this->db->where('tp.jenis_development', 'Pelatihan');
@@ -30,14 +28,12 @@ class DashboardModel extends CI_Model {
         $pelatihan_result = $query->row_array();
 
         // Sertifikasi
-        $this->db->select('COUNT(DISTINCT tp.nama_kegiatan) AS sertifikasi, 
-                COUNT(DISTINCT mk.nama) AS peserta, 
-                COUNT(DISTINCT CASE WHEN sk.id IN (2, 4, 5) THEN mk.id END) AS status_fte, 
-                COUNT(DISTINCT CASE WHEN sk.id NOT IN (2, 4, 5) THEN mk.id END) AS status_non_fte');
+        $this->db->select('COUNT(tp.id) AS sertifikasi, 
+                   COUNT(DISTINCT tp.m_karyawan_id) AS peserta, 
+                   COUNT(CASE WHEN tp.status_karyawan = "FTE" THEN 1 END) AS status_fte, 
+                   COUNT(CASE WHEN tp.status_karyawan = "Non FTE" THEN 1 END) AS status_non_fte');
         $this->db->from('m_tna_pengawalan AS tp');
         $this->db->join('r_tahapan_usulan rtu', 'rtu.id = tp.tahapan_id', 'left');
-        $this->db->join('m_karyawan AS mk', 'mk.id = tp.m_karyawan_id');
-        $this->db->join('r_status_karyawan AS sk', 'sk.id = mk.r_status_karyawan_id', 'left');
         $this->db->where('YEAR(tp.waktu_pelaksanaan)', $thn);
         $this->db->where('rtu.urutan >', 9);
         $this->db->where('tp.jenis_development', 'Sertifikasi');
