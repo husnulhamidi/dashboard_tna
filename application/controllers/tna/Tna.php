@@ -173,8 +173,15 @@ class Tna extends CI_Controller {
 			'waktu_pelaksanaan' => $tgl[2].'-'.$tgl[1].'-'.$tgl[0],
 			'tahapan_id' => $this->input->post('tahapan_id'),
 			'objective' => $this->input->post('objective'),
-			'code_tna' => $this->input->post('code_tna')
+			'code_tna' => $this->input->post('code_tna'),
 		);
+
+		if($this->input->post('jenis_development') == 'Sertifikasi'){
+			$data['jenis_sertifikasi'] ='Nasional';
+			if($this->input->post('jenis_sertifikasi')){
+				$data['jenis_sertifikasi'] =$this->input->post('jenis_sertifikasi');
+			}
+		}
 
 		
 		if($this->input->post('id')){

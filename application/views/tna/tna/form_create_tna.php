@@ -70,6 +70,13 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="form-group" id="typeSertifikasi" style="display:none">
+                                        <label class="col-sm-3 control-label">&nbsp;</label>
+                                        <div class="col-sm-8">
+                                            <input type="radio" id="Nasional" name="jenis_sertifikasi" value="Nasional" /> Nasional
+                                            <input type="radio" id="Internasional" name="jenis_sertifikasi" value="Internasional" style="margin-left:20px"/> Internasional
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Pelatihan / Sertifikasi (TNA) <span style="color: red">*</span></label>
                                         <div class="col-sm-8">
@@ -250,31 +257,6 @@ $(document).ready(function () {
 
     $('.input_mask').mask('000.000.000.000', {reverse: true});
 
-    // $('.multi-field-wrapper').each(function() {
-    //     var $wrapper = $('.multi-fields', this);
-    //     $(".add-field", $(this)).click(function(e) {
-    //         $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus();
-    //         $(".multi-field:last").find('select').select2();       
-    //     });
-
-    //     $('.multi-field .remove-field', $wrapper).click(function() {
-    //         if ($('.multi-field', $wrapper).length > 1)
-    //             $(this).parent('.multi-field').remove();
-    //         //alert(x-1);
-    //     });
-    // });
-   
-    // $('#subdit'+count).on('change', function(){
-    //     console.log(count)
-    //     let subditId = $(this).val();
-    //     getKaryawanBySubdit(subditId,count)
-    // })
-
-    // $('#karyawan'+count).on('change', function(){
-    //     let subditId = $('#subdit').val();
-    //     let karyawanId = $('#karyawan').val();
-    //     getDataDetailKaryawan(subditId, karyawanId, count)
-    // })
 
     if($('#id').val()){
         $('#divBtnAdd').css('display','none')
@@ -283,6 +265,14 @@ $(document).ready(function () {
         let karyawanId = '<?php echo @$detail->m_karyawan_id;?>'
         getKaryawanBySubdit(1,karyawanId)
         getDataDetailKaryawan(1, karyawanId)
+
+        let jenis_development = '<?php echo @$detail->jenis_development;?>';
+        if(jenis_development == 'Sertifikasi'){
+            $('#typeSertifikasi').css('display','block')
+            let jenis_sertifikasi = '<?php echo @$detail->jenis_sertifikasi;?>';
+            console.log(jenis_sertifikasi)
+            $("#"+jenis_sertifikasi).prop("checked", true);
+        }
     }
 
      $(".add-field", $(this)).click(function(e) {

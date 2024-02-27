@@ -22,6 +22,15 @@ jQuery(document).ready(function() {
         $("#form-filter-tna .select2").trigger('change')
         buildTable()
     })
+
+    $('#jenis_development').change(function(){
+        let jenis = $('#jenis_development').val()
+        $('#typeSertifikasi').css('display','none')
+        if(jenis == 'Sertifikasi'){
+            $('#typeSertifikasi').css('display','block')
+        }
+
+    });
 })
 
 function showModalProses(id){
