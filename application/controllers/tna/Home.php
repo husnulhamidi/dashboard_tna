@@ -102,6 +102,18 @@ class Home extends CI_Controller {
 		$data = $this->dashboard->chartSertifikasi($thn, $quarter);
 		echo json_encode($data);
 	}
+
+	public function realisasiInternalSharing(){
+		$thn = $this->input->post('thn');
+		$data = $this->dashboard->realisasiInternalSharing($thn);
+		echo json_encode($data);
+	}
+
+	public function realisasiPesertaInternalSharing(){
+		$thn = $this->input->post('thn');
+		$data = $this->dashboard->realisasiPesertaInternalSharing($thn);
+		echo json_encode($data);
+	}
 	
 
 }

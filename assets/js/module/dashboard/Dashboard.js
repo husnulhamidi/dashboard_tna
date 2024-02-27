@@ -9,6 +9,8 @@ $(document).ready(function(){
     getChartSertifikasiQ2();
     getChartSertifikasiQ3();
     getChartSertifikasiQ4();
+    realisasiInternalSharing()
+    realisasiPesertaInternalSharing()
 
     $('#tahun_filter').html($('#filter_year').val())
     $('#tahun_filter_sertifikasi').html($('#filter_year').val())
@@ -25,6 +27,8 @@ $(document).ready(function(){
         getChartSertifikasiQ2();
         getChartSertifikasiQ3();
         getChartSertifikasiQ4();
+        realisasiInternalSharing()
+        realisasiPesertaInternalSharing()
     })
     getDataDashboardPengawalan()
 
@@ -88,7 +92,6 @@ function getDataDashboad() {
             },
         dataType: "JSON",
         success:function(resp){
-            console.log(resp)
             $('#pelatihan').text(resp.Pelatihan ? formatRupiah(resp.Pelatihan.pelatihan) : resp.Pelatihan.pelatihan)
             $('#peserta_pelatihan').text(resp.Pelatihan.peserta ? formatRupiah(resp.Pelatihan.peserta) : resp.Pelatihan.peserta)
             $('#peserta_pelatihan_fte').text(resp.Pelatihan.status_fte ? formatRupiah(resp.Pelatihan.status_fte) : resp.Pelatihan.status_fte)
@@ -1057,6 +1060,233 @@ function getChartSertifikasiQ4(){
                 
                 ]
             });
+        }
+    }); 
+}
+
+function realisasiInternalSharing(){
+    var thn = $('#filter_year').val();
+	$.ajax({
+        type : "POST",
+        url  : base_url+"tna/home/realisasiInternalSharing",
+        data:{
+                thn:thn
+            },
+        dataType: "JSON",
+        success:function(resp){
+            Highcharts.chart('internal_sharing_chart', {
+                chart: {
+                    type: 'bar'
+                },
+                title: {
+                    useHTML: true,
+                    text: '<h4 class="title">REALISASI INTERNAL SHARING (PER QUARTAL) '+thn+'</h4>',
+                    align: 'center',
+                    x: 0
+                },
+                xAxis: {
+                    categories: ['Quartal 1', 'Quartal 2','Quartal 3','Quartal 4'],
+                    //crosshair: false
+                },
+                plotOptions: {
+                    series: {
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y:.2f} ',
+                        }
+                    }
+                },
+        
+                yAxis: { // Primary yAxis
+                    labels: {
+                        format: '{value} ',
+                        style: {
+                            color: '#000'
+                        }
+                    },
+                    title: {
+                        text: ' ',
+                        style: {
+                            color: '#000'
+                        }
+                    },
+                    gridLineColor: '#d8dade'
+                },
+        
+                tooltip: {
+                    headerFormat: '<table><tr><td colspan="2"><h3>{point.key}</h3></td></tr>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y:.2f} </b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                credits: {
+                    enabled: false, // Enable/Disable the credits
+                    text: 'This is a credit'
+                },
+        
+        
+                series: [
+                    {
+                        name: 'Realisasi',
+                        type: 'column',
+                        color: {
+                            linearGradient: [0, 400, 0, 0],
+                            stops: [
+                                [0.1, '#2fcea3'],
+                                [0.325, '#9bdd4e']
+                            ]
+                        },
+                        // data: [16.69, 7.89, 10, 17 ],
+                        data: [parseFloat(resp.quartal1), parseFloat(resp.quartal2),parseFloat(resp.quartal3),parseFloat(resp.quartal4)],
+                        tooltip: {
+                            valueSuffix: 'T'
+                        },
+                        marker: {
+                            lineWidth: 2,
+                            lineColor: Highcharts.getOptions().colors[1],
+                            fillColor: 'white'
+                        }
+                    }
+                
+                ]
+            });
+        }
+    }); 
+}
+
+function realisasiPesertaInternalSharing(){
+    var thn = $('#filter_year').val();
+	$.ajax({
+        type : "POST",
+        url  : base_url+"tna/home/realisasiPesertaInternalSharing",
+        data:{
+                thn:thn
+            },
+        dataType: "JSON",
+        success:function(resp){
+           console.log(resp)
+           Highcharts.chart('peserta_internal_sharing', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                useHTML: true,
+                text: '<h4 class="title">REALISASI JUMLAH PESERTA INTERNAL SHARING <br> (PER QUARTAL) '+thn+'</h4>',
+                align: 'center',
+                x: 0
+            },
+            xAxis: {
+                categories: ['Quartal 1', 'Quartal 2', ' Quartal 3',' Quartal 4'],
+                //crosshair: false
+            },
+            plotOptions: {
+                series: {
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.y:.2f} ',
+                    }
+                }
+            },
+    
+            yAxis: { // Primary yAxis
+                labels: {
+                    format: '{value} ',
+                    style: {
+                        color: '#000'
+                    }
+                },
+                title: {
+                    text: ' ',
+                    style: {
+                        color: '#000'
+                    }
+                },
+                gridLineColor: '#d8dade'
+            },
+    
+            tooltip: {
+                headerFormat: '<table><tr><td colspan="2"><h3>{point.key}</h3></td></tr>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.2f} </b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            credits: {
+                enabled: false, // Enable/Disable the credits
+                text: 'This is a credit'
+            },
+    
+    
+            series: [{
+                    name: 'Total Peserta',
+                    type: 'column',
+                    color: {
+                        linearGradient: [0, 400, 0, 0],
+                        stops: [
+                            [0.1, '#ff5d5d'],
+                            [0.325, '#ff9d33']
+                        ]
+                    },
+                    // data: [53, 42, 40, 45],
+                    data: [parseFloat(resp.quartal1.total_peserta), parseFloat(resp.quartal2.total_peserta),parseFloat(resp.quartal3.total_peserta),parseFloat(resp.quartal4.total_peserta)],
+                    tooltip: {
+                        valueSuffix: 'T'
+                    },
+                    marker: {
+                        lineWidth: 2,
+                        lineColor: Highcharts.getOptions().colors[1],
+                        fillColor: 'white'
+                    }
+                },
+                {
+                    name: 'FTE',
+                    type: 'column',
+                    color: {
+                        linearGradient: [0, 400, 0, 0],
+                        stops: [
+                            [0.1, '#2fcea3'],
+                            [0.325, '#9bdd4e']
+                        ]
+                    },
+                    // data: [16, 7, 5,7],
+                    data: [parseFloat(resp.quartal1.status_fte), parseFloat(resp.quartal2.status_fte),parseFloat(resp.quartal3.status_fte),parseFloat(resp.quartal4.status_fte)],
+                    tooltip: {
+                        valueSuffix: 'T'
+                    },
+                    marker: {
+                        lineWidth: 2,
+                        lineColor: Highcharts.getOptions().colors[1],
+                        fillColor: 'white'
+                    }
+                },
+                {
+                    name: 'NON FTE',
+                    type: 'column',
+                    color: {
+                        linearGradient: [0, 400, 0, 0],
+                        stops: [
+                            [0.1, '#169aed'],
+                            [0.9, '#8cd0fb'],
+                        ]
+                    },
+                    // data: [16, 7, 5,7],
+                    data: [parseFloat(resp.quartal1.status_non_fte), parseFloat(resp.quartal2.status_non_fte),parseFloat(resp.quartal3.status_non_fte),parseFloat(resp.quartal4.status_non_fte)],
+                    tooltip: {
+                        valueSuffix: 'T'
+                    },
+                    marker: {
+                        lineWidth: 2,
+                        lineColor: Highcharts.getOptions().colors[1],
+                        fillColor: 'white'
+                    }
+                }
+            
+            ]
+        });
+          
         }
     }); 
 }

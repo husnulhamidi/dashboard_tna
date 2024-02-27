@@ -58,6 +58,8 @@ $route['tna/home'] = 'tna/home';
 $route['tna/home/getCountDashboard'] = 'tna/home/getCountDashboard';
 $route['tna/home/chartPelatihan'] = 'tna/home/chartPelatihan';
 $route['tna/home/chartSertifikasi'] = 'tna/home/chartSertifikasi';
+$route['tna/home/realisasiInternalSharing'] = 'tna/home/realisasiInternalSharing';
+$route['tna/home/realisasiPesertaInternalSharing'] = 'tna/home/realisasiPesertaInternalSharing';
 
 $route['tna/home1'] = 'tna/home/index1';
 $route['tna/report'] = 'tna/Report';

@@ -96,6 +96,57 @@ class DashboardModel extends CI_Model {
         return $query->row_array();
     }
 
+    public function realisasiInternalSharing($thn){
+        $quartals = array();
+        $quarters = array(
+            array('01-01', '03-31'),
+            array('04-01', '06-30'),
+            array('07-01', '09-30'),
+            array('10-01', '12-31')
+        );
+        foreach ($quarters as $index => $quarter) {
+            $this->db->select('COUNT(id) as total');
+            $this->db->from('m_tna_internal_sharing');
+            $this->db->where('YEAR(tanggal)', $thn);
+            $this->db->where('tanggal <= NOW()');
+            $this->db->where('tanggal >=', $thn . '-' . $quarter[0]);
+            $this->db->where('tanggal <=', $thn . '-' . $quarter[1]);
+            $query = $this->db->get();
+            $result = $query->row_array();
+            $quartals['quartal' . ($index + 1)] = $result['total'];
+        }
+        return $quartals;
+
+    }
+
+    public function realisasiPesertaInternalSharing($thn){
+        $quartals = array();
+        $quarters = array(
+            array('01-01', '03-31'),
+            array('04-01', '06-30'),
+            array('07-01', '09-30'),
+            array('10-01', '12-31')
+        );
+        foreach ($quarters as $index => $quarter) {
+            $this->db->select('COUNT(DISTINCT isp.m_karyawan_id) as total_peserta');
+            $this->db->select('COUNT(DISTINCT CASE WHEN sk.id IN (2, 4, 5) THEN mk.id END) AS status_fte');
+            $this->db->select('COUNT(DISTINCT CASE WHEN sk.id NOT IN (2, 4, 5) THEN 1 END) AS status_non_fte');
+            $this->db->from('m_tna_internal_sharing tis');
+            $this->db->join('m_tna_internal_sharing_peserta isp', 'tis.id = isp.id');
+            $this->db->join('m_karyawan AS mk', 'mk.id = isp.m_karyawan_id', 'left');
+            $this->db->join('r_status_karyawan AS sk', 'sk.id = mk.r_status_karyawan_id', 'left');
+            $this->db->where('YEAR(tis.tanggal)', $thn);
+            $this->db->where('tis.tanggal <= NOW()');
+            $this->db->where('tis.tanggal >=', $thn . '-' . $quarter[0]);
+            $this->db->where('tis.tanggal <=', $thn . '-' . $quarter[1]);
+            $query = $this->db->get();
+            $result = $query->row_array();
+            $quartals['quartal' . ($index + 1)] = $result;
+        }
+        return $quartals;
+
+    }
+
     private function quartal($quartal, $thn){
         if($quartal == 1){
             $date1 = $thn.'-01-01';

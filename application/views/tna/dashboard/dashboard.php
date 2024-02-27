@@ -1469,199 +1469,121 @@ $(document).ready(function() {
         //==================================================================================================================================
     // internal sharing
 
-    Highcharts.chart('internal_sharing_chart', {
-        chart: {
-            type: 'bar'
-        },
-        title: {
-            useHTML: true,
-            text: '<h4 class="title">REALISASI INTERNAL SHARING (PER QUARTAL) '+filter_year+'</h4>',
-            align: 'center',
-            x: 0
-        },
-        xAxis: {
-            categories: ['Quartal 1', 'Quartal 2','Quartal 3','Quartal 4'],
-            //crosshair: false
-        },
-        plotOptions: {
-            series: {
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.y:.2f} ',
-                }
-            }
-        },
+    // Highcharts.chart('peserta_internal_sharing', {
+    //     chart: {
+    //         type: 'column'
+    //     },
+    //     title: {
+    //         useHTML: true,
+    //         text: '<h4 class="title">REALISASI JUMLAH PESERTA INTERNAL SHARING <br> (PER QUARTAL) '+filter_year+'</h4>',
+    //         align: 'center',
+    //         x: 0
+    //     },
+    //     xAxis: {
+    //         categories: ['Quartal 1', 'Quartal 2', ' Quartal 3',' Quartal 4'],
+    //         //crosshair: false
+    //     },
+    //     plotOptions: {
+    //         series: {
+    //             dataLabels: {
+    //                 enabled: true,
+    //                 format: '{point.y:.2f} ',
+    //             }
+    //         }
+    //     },
 
-        yAxis: { // Primary yAxis
-            labels: {
-                format: '{value} ',
-                style: {
-                    color: '#000'
-                }
-            },
-            title: {
-                text: ' ',
-                style: {
-                    color: '#000'
-                }
-            },
-            gridLineColor: '#d8dade'
-        },
+    //     yAxis: { // Primary yAxis
+    //         labels: {
+    //             format: '{value} ',
+    //             style: {
+    //                 color: '#000'
+    //             }
+    //         },
+    //         title: {
+    //             text: ' ',
+    //             style: {
+    //                 color: '#000'
+    //             }
+    //         },
+    //         gridLineColor: '#d8dade'
+    //     },
 
-        tooltip: {
-            headerFormat: '<table><tr><td colspan="2"><h3>{point.key}</h3></td></tr>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.2f} </b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
-        },
-        credits: {
-            enabled: false, // Enable/Disable the credits
-            text: 'This is a credit'
-        },
+    //     tooltip: {
+    //         headerFormat: '<table><tr><td colspan="2"><h3>{point.key}</h3></td></tr>',
+    //         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+    //             '<td style="padding:0"><b>{point.y:.2f} </b></td></tr>',
+    //         footerFormat: '</table>',
+    //         shared: true,
+    //         useHTML: true
+    //     },
+    //     credits: {
+    //         enabled: false, // Enable/Disable the credits
+    //         text: 'This is a credit'
+    //     },
 
 
-        series: [
-            {
-                name: 'Realisasi',
-                type: 'column',
-                color: {
-                    linearGradient: [0, 400, 0, 0],
-                    stops: [
-                        [0.1, '#2fcea3'],
-                        [0.325, '#9bdd4e']
-                    ]
-                },
-                data: [16.69, 7.89, 10, 17 ],
-                tooltip: {
-                    valueSuffix: 'T'
-                },
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[1],
-                    fillColor: 'white'
-                }
-            }
+    //     series: [{
+    //             name: 'Total Peserta',
+    //             type: 'column',
+    //             color: {
+    //                 linearGradient: [0, 400, 0, 0],
+    //                 stops: [
+    //                     [0.1, '#ff5d5d'],
+    //                     [0.325, '#ff9d33']
+    //                 ]
+    //             },
+    //             data: [53, 42, 40, 45],
+    //             tooltip: {
+    //                 valueSuffix: 'T'
+    //             },
+    //             marker: {
+    //                 lineWidth: 2,
+    //                 lineColor: Highcharts.getOptions().colors[1],
+    //                 fillColor: 'white'
+    //             }
+    //         },
+    //         {
+    //             name: 'FTE',
+    //             type: 'column',
+    //             color: {
+    //                 linearGradient: [0, 400, 0, 0],
+    //                 stops: [
+    //                     [0.1, '#2fcea3'],
+    //                     [0.325, '#9bdd4e']
+    //                 ]
+    //             },
+    //             data: [16, 7, 5,7],
+    //             tooltip: {
+    //                 valueSuffix: 'T'
+    //             },
+    //             marker: {
+    //                 lineWidth: 2,
+    //                 lineColor: Highcharts.getOptions().colors[1],
+    //                 fillColor: 'white'
+    //             }
+    //         },
+    //         {
+    //             name: 'NON FTE',
+    //             type: 'column',
+    //             color: {
+    //                 linearGradient: [0, 400, 0, 0],
+    //                 stops: [
+    //                     [0.1, '#169aed'],
+    //                     [0.9, '#8cd0fb'],
+    //                 ]
+    //             },
+    //             data: [16, 7, 5,7],
+    //             tooltip: {
+    //                 valueSuffix: 'T'
+    //             },
+    //             marker: {
+    //                 lineWidth: 2,
+    //                 lineColor: Highcharts.getOptions().colors[1],
+    //                 fillColor: 'white'
+    //             }
+    //         }
         
-        ]
-    });
-
-    Highcharts.chart('peserta_internal_sharing', {
-        chart: {
-            type: 'column'
-        },
-        title: {
-            useHTML: true,
-            text: '<h4 class="title">REALISASI JUMLAH PESERTA INTERNAL SHARING <br> (PER QUARTAL) '+filter_year+'</h4>',
-            align: 'center',
-            x: 0
-        },
-        xAxis: {
-            categories: ['Quartal 1', 'Quartal 2', ' Quartal 3',' Quartal 4'],
-            //crosshair: false
-        },
-        plotOptions: {
-            series: {
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.y:.2f} ',
-                }
-            }
-        },
-
-        yAxis: { // Primary yAxis
-            labels: {
-                format: '{value} ',
-                style: {
-                    color: '#000'
-                }
-            },
-            title: {
-                text: ' ',
-                style: {
-                    color: '#000'
-                }
-            },
-            gridLineColor: '#d8dade'
-        },
-
-        tooltip: {
-            headerFormat: '<table><tr><td colspan="2"><h3>{point.key}</h3></td></tr>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.2f} </b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
-        },
-        credits: {
-            enabled: false, // Enable/Disable the credits
-            text: 'This is a credit'
-        },
-
-
-        series: [{
-                name: 'Total Peserta',
-                type: 'column',
-                color: {
-                    linearGradient: [0, 400, 0, 0],
-                    stops: [
-                        [0.1, '#ff5d5d'],
-                        [0.325, '#ff9d33']
-                    ]
-                },
-                data: [53, 42, 40, 45],
-                tooltip: {
-                    valueSuffix: 'T'
-                },
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[1],
-                    fillColor: 'white'
-                }
-            },
-            {
-                name: 'FTE',
-                type: 'column',
-                color: {
-                    linearGradient: [0, 400, 0, 0],
-                    stops: [
-                        [0.1, '#2fcea3'],
-                        [0.325, '#9bdd4e']
-                    ]
-                },
-                data: [16, 7, 5,7],
-                tooltip: {
-                    valueSuffix: 'T'
-                },
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[1],
-                    fillColor: 'white'
-                }
-            },
-            {
-                name: 'NON FTE',
-                type: 'column',
-                color: {
-                    linearGradient: [0, 400, 0, 0],
-                    stops: [
-                        [0.1, '#169aed'],
-                        [0.9, '#8cd0fb'],
-                    ]
-                },
-                data: [16, 7, 5,7],
-                tooltip: {
-                    valueSuffix: 'T'
-                },
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[1],
-                    fillColor: 'white'
-                }
-            }
-        
-        ]
-    });
+    //     ]
+    // });
 });
 </script>
