@@ -59,6 +59,8 @@ function loadData(thn){
     $('#tahun_filter').html(thn)
     $('#tahun_filter_sertifikasi').html(thn)
     $('#thn_anggaran_tna').html(thn)
+    $('#thn_summary').html(thn)
+    $('#thn_summary_non_tna').html(thn)
     getDataDashboad()
     getChartPelatihanQ1();
     getChartPelatihanQ2();
@@ -72,6 +74,7 @@ function loadData(thn){
     realisasiPesertaInternalSharing()
     getDataDashboardPengawalan()
     anggaranTNA()
+    summary()
 
 }
 
@@ -127,7 +130,7 @@ function getDataDashboardPengawalan(){
         url  : base_url+"tna/pengawalan/getDataDashboard",
         dataType: "JSON",
         success:function(resp){
-            // console.log(resp)
+            // 
             $('#draft').text(resp.draft)
             $('#verifMgrLini').text(resp.mgrLini)
             $('#verifMgrHCPD').text(resp.mgrHCPD)
@@ -1161,7 +1164,7 @@ function realisasiPesertaInternalSharing(){
             },
         dataType: "JSON",
         success:function(resp){
-           console.log(resp)
+           
            Highcharts.chart('peserta_internal_sharing', {
             chart: {
                 type: 'column'
@@ -1296,7 +1299,7 @@ function anggaranTNA(){
             },
         dataType: "JSON",
         success:function(resp){
-            // console.log(resp.rencana_anggaran_non_tna)
+            // console.log(JSON.stringify(resp))
             $('#count_realisasi_anggaran').html(resp.realisasi_anggaran_tna !== 0 ? formatRupiah(resp.realisasi_anggaran_tna,'Rp.') : 0);
             $('#count_rencana_anggaran').html(resp.rencana_anggaran_tna !== 0 ? formatRupiah(resp.rencana_anggaran_tna,'Rp.') : 0);
             $('#count_realisasi_anggaran_non_tna').html(resp.realisasi_anggaran_non_tna !== 0 ? formatRupiah(resp.realisasi_anggaran_non_tna,'Rp.') : 0);
@@ -1305,6 +1308,45 @@ function anggaranTNA(){
         },
         complete: function (data) {
             $('.count_rencana_anggaran').each(function () {
+			    $(this).prop('Counter', 0).animate({
+			        Counter: $(this).text()
+			    }, {
+			        duration: 1000,
+			        easing: 'swing',
+			        step: function (now) {
+			            $(this).text(nominalAngka(Math.ceil(now)));
+			        }
+			    });
+			});
+        }
+    }); 
+}
+
+function summary(){
+    var thn = $('#filter_year').val();
+	$.ajax({
+        type : "POST",
+        url  : base_url+"tna/home/summary",
+        data:{
+                thn:thn
+            },
+        dataType: "JSON",
+        success:function(resp){
+            // console.log(JSON.stringify(resp))
+            // console.log(formatRupiah(resp.tna_quartal1))
+            // let summary_tna_q1 = resp.tna_quartal1
+            // console.log(formatRupiah(summary_tna_q1.toString(),'Rp.'))
+            $('#summary_tna_q1').text(resp.tna_quartal1)
+            $('#summary_tna_q2').html(resp.tna_quartal2)
+            $('#summary_tna_q3').html(resp.tna_quartal3)
+            $('#summary_tna_q4').html(resp.tna_quartal4)
+            $('#summary_non_tna_q1').html(resp.non_tna_quartal1)
+            $('#summary_non_tna_q2').html(resp.non_tna_quartal2)
+            $('#summary_non_tna_q3').html(resp.non_tna_quartal3)
+            $('#summary_non_tna_q4').html(resp.non_tna_quartal4)
+        },
+        complete: function (data) {
+            $('.summary_tna').each(function () {
 			    $(this).prop('Counter', 0).animate({
 			        Counter: $(this).text()
 			    }, {

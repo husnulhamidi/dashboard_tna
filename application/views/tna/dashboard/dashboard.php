@@ -595,7 +595,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <h3>SUMMARY - TOTAL REALISASI COST TNA <?php echo $filter_year;?>
+                    <h3>SUMMARY - TOTAL REALISASI COST TNA <span id="thn_summary"></span>
                 </div>
                 <div class="col-md-3">
                     <div class="info-box bg-yellow">
@@ -604,7 +604,7 @@
                         <div class="info-box-content">
                         <span class="info-box-text">Quartal 1</span>
                         <br>
-                        <span class="info-box-number">Rp. 75.000.000</span>
+                        <span class="info-box-number summary_tna" id="summary_tna_q1"></span>
                     
                         <div class="progress">
                             <div class="progress-bar" style="width: 25%"></div>
@@ -623,7 +623,7 @@
                         <div class="info-box-content">
                         <span class="info-box-text">Quartal 2</span>
                         <br>
-                        <span class="info-box-number">Rp. 60.000.000</span>
+                        <span class="info-box-number summary_tna" id="summary_tna_q2"></span>
                         
                         <div class="progress">
                             <div class="progress-bar" style="width: 20%"></div>
@@ -642,7 +642,7 @@
                         <div class="info-box-content">
                         <span class="info-box-text">Quartal 3</span>
                         <br>
-                        <span class="info-box-number">Rp. 120.000.000</span>
+                        <span class="info-box-number summary_tna" id="summary_tna_q3"></span>
                         <div class="progress">
                             <div class="progress-bar" style="width: 40%"></div>
                         </div>
@@ -660,7 +660,7 @@
                         <div class="info-box-content">
                         <span class="info-box-text">Quartal 4</span>
                         <br>
-                        <span class="info-box-number">Rp. 45.000.000</span>
+                        <span class="info-box-number summary_tna" id="summary_tna_q"></span>
                         <div class="progress">
                             <div class="progress-bar" style="width: 15%"></div>
                         </div>
@@ -674,7 +674,7 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <h3>SUMMARY - TOTAL REALISASI COST NON TNA <?php echo $filter_year;?>
+                    <h3>SUMMARY - TOTAL REALISASI COST NON TNA <span id="thn_summary_non_tna"></span>
                 </div>
                 <div class="col-md-3">
                     <div class="info-box bg-yellow">
@@ -683,7 +683,7 @@
                         <div class="info-box-content">
                         <span class="info-box-text">Quartal 1</span>
                         <br>
-                        <span class="info-box-number">Rp. 75.000.000</span>
+                        <span class="info-box-number summary_tna" id="summary_non_tna_q1"></span>
                         
                         <div class="progress">
                             <div class="progress-bar" style="width: 25%"></div>
@@ -702,7 +702,7 @@
                         <div class="info-box-content">
                         <span class="info-box-text">Quartal 2</span>
                         <br>
-                        <span class="info-box-number">Rp. 60.000.000</span>
+                        <span class="info-box-number summary_tna" id="summary_non_tna_q2"></span>
                        
                         <div class="progress">
                             <div class="progress-bar" style="width: 20%"></div>
@@ -721,7 +721,7 @@
                         <div class="info-box-content">
                         <span class="info-box-text">Quartal 3</span>
                         <br>
-                        <span class="info-box-number">Rp. 120.000.000</span>
+                        <span class="info-box-number summary_tna" id="summary_non_tna_q3"></span>
                         
                         <div class="progress">
                             <div class="progress-bar" style="width: 40%"></div>
@@ -740,7 +740,7 @@
                         <div class="info-box-content">
                         <span class="info-box-text">Quartal 4</span>
                         <br>
-                        <span class="info-box-number">Rp. 45.000.000</span>
+                        <span class="info-box-number summary_tna" id="summary_non_tna_q4"></span>
                         
                         <div class="progress">
                             <div class="progress-bar" style="width: 15%"></div>

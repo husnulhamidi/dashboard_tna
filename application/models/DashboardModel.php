@@ -192,6 +192,58 @@ class DashboardModel extends CI_Model {
         );
     }
 
+    public function summary($thn) {
+        $quartals = array();
+        $quarters = array(
+            array('01-01', '03-31'),
+            array('04-01', '06-30'),
+            array('07-01', '09-30'),
+            array('10-01', '12-31')
+        );
+    
+        foreach ($quarters as $index => $quarter) {
+            $start_date = $thn . '-' . $quarter[0];
+            $end_date = $thn . '-' . $quarter[1];
+    
+            // TNA
+            $this->db->select('SUM(IFNULL(pp.nominal, 0)) + SUM(IFNULL(pp.nominal_sppd, 0)) AS total_nominal');
+            $this->db->from('m_tna_pengawalan_pembayaran pp');
+            $this->db->join('m_tna_pengawalan p', 'p.id = pp.m_tna_pengawalan_id');
+            $this->db->where('p.is_tna', '1');
+            $this->db->where('p.waktu_pelaksanaan >=', $start_date);
+            $this->db->where('p.waktu_pelaksanaan <=', $end_date);
+            $query = $this->db->get();
+            $result_tna = $query->row();
+            
+            // Total Biaya
+            $this->db->select_sum('biaya');
+            $this->db->from('m_tna_internal_sharing');
+            $this->db->where('YEAR(tanggal)', $thn);
+            $this->db->where('tanggal >=', $start_date);
+            $this->db->where('tanggal <=', $end_date);
+            $query_biaya = $this->db->get();
+            $result_biaya = $query_biaya->row();
+            $total_biaya = $result_biaya->biaya ?? 0;
+    
+            $total_tna = $result_tna->total_nominal + $total_biaya;
+            $quartals['tna_quartal' . ($index + 1)] = $total_tna ?? 0;
+    
+            // Non-TNA
+            $this->db->select('SUM(IFNULL(pp.nominal, 0)) + SUM(IFNULL(pp.nominal_sppd, 0)) AS total_nominal');
+            $this->db->from('m_tna_pengawalan_pembayaran pp');
+            $this->db->join('m_tna_pengawalan p', 'p.id = pp.m_tna_pengawalan_id');
+            $this->db->where('p.is_tna', '0');
+            $this->db->where('p.waktu_pelaksanaan >=', $start_date);
+            $this->db->where('p.waktu_pelaksanaan <=', $end_date);
+            $query_non_tna = $this->db->get();
+            $result_non_tna = $query_non_tna->row();
+            $total_non_tna = $result_non_tna->total_nominal + $total_biaya;
+            $quartals['non_tna_quartal' . ($index + 1)] = $total_non_tna ?? 0;
+        }
+        return $quartals;
+    }
+    
+
     private function quartal($quartal, $thn){
         if($quartal == 1){
             $date1 = $thn.'-01-01';

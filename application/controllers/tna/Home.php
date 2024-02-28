@@ -120,6 +120,12 @@ class Home extends CI_Controller {
 		$data = $this->dashboard->anggaranTNA($thn);
 		echo json_encode($data);
 	}
+
+	public function summary(){
+		$thn = $this->input->post('thn');
+		$data = $this->dashboard->summary($thn);
+		echo json_encode($data);
+	}
 	
 
 }
