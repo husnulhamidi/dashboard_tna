@@ -65,41 +65,45 @@ function submitForm($btn){
             $(element).parent().parent().removeClass("has-error")
         },
         submitHandler: function(form) {
-                $.ajax({
-                    url: base_url+"tna/usulan/submit",
-                    type: 'POST',
-                    dataType: "JSON",
-                    data: $(form).serialize(),
-                    success: function(response) {
-                        if(response.success){
-                            //$('#table-training').DataTable().ajax.reload( null, false );
-                            //$('#AddTraining').modal('hide');
+            var formData1 = $(form).serializeArray();
+            var formData2 = $('#form-add-penyelenggara').serializeArray();
 
-                            setTimeout(function() {
-                                swal({
-                                    title: "Notifikasi!",
-                                    text: response.msg,
-                                    imageUrl: img_icon_success
-                                }, function() {
+            var combinedData = formData1.concat(formData2);
+            $.ajax({
+                url: base_url+"tna/usulan/submit",
+                type: 'POST',
+                dataType: "JSON",
+                data: combinedData,
+                success: function(response) {
+                    if(response.success){
+                        //$('#table-training').DataTable().ajax.reload( null, false );
+                        //$('#AddTraining').modal('hide');
+
+                        setTimeout(function() {
+                            swal({
+                                title: "Notifikasi!",
+                                text: response.msg,
+                                imageUrl: img_icon_success
+                            }, function() {
+                            //location.reload();
+                                //$('#AddTraining').modal('hide');
+                            });
+                        }, 1000);
+                    }else{
+                        setTimeout(function() {
+                            swal({
+                                title: "Notifikasi!",
+                                text: response.msg,
+                                imageUrl: img_icon_error
+                            }, function() {
                                 //location.reload();
-                                    //$('#AddTraining').modal('hide');
-                                });
-                            }, 1000);
-                        }else{
-                            setTimeout(function() {
-                                swal({
-                                    title: "Notifikasi!",
-                                    text: response.msg,
-                                    imageUrl: img_icon_error
-                                }, function() {
-                                    //location.reload();
-                                });
-                            }, 1000);
-                        }
-                        
-                    }            
-                });
-            }
+                            });
+                        }, 1000);
+                    }
+                    
+                }            
+            });
+        }
     });
 }
 
