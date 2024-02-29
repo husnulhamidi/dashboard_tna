@@ -242,7 +242,128 @@ class DashboardModel extends CI_Model {
         }
         return $quartals;
     }
-    
+
+    public function getDataDetail($post){
+        $dateQuartal = $this->quartal($post['quartal'], $post['thn']);
+        $type = 0;
+        if($post['type'] == 'tna'){
+            $type = 1;
+        }
+		$column_order = array('tp.id', 'tp.code_tna', 'mk.nama', 'mo.nama', 'tp.status_karyawan', 'rt.name', 'tp.nama_penyelenggara', 'tp.waktu_pelaksanaan', 'tu.nama', 'tu.urutan');
+		$column_search = array('tp.id', 'tp.code_tna', 'mk.nama', 'mo.nama', 'tp.status_karyawan', 'rt.name', 'tp.nama_penyelenggara', 'tp.waktu_pelaksanaan', 'tu.nama', 'tu.urutan');
+
+        $draw = $post['draw'];
+        $start = $post['start'];
+        $length = $post['length'];
+
+        if ($length != null) {
+            $pageSize = $length;
+        } else {
+            $pageSize = 0;
+        }
+        if ($start != null) {
+            $skip = $start;
+        } else {
+            $skip = 0;
+        }
+		$recordsTotal = 0;
+        $this->db->start_cache();
+
+		$this->db->select('tp.id AS id, 
+                    tp.code_tna AS id_tna, 
+                    mk.nama AS nama_karyawan,
+                    mo.nama AS nama_organisasi, 
+                    tp.status_karyawan, 
+                    rt.name AS pelatihan, 
+                    tp.nama_penyelenggara, 
+                    tp.waktu_pelaksanaan, 
+                    tu.nama AS status, 
+                    tu.urutan');
+		$this->db->from('m_tna_pengawalan tp');
+		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_traning_id');
+		$this->db->join('r_tna_kompetensi tk', 'tk.id = tp.r_tna_kompetensi_id');
+		$this->db->join('r_tahapan_usulan tu', 'tu.id = tp.tahapan_id');
+		$this->db->join('m_karyawan mk', 'mk.id = tp.m_karyawan_id');
+		$this->db->join('m_organisasi mo', 'mo.id = tp.m_organisasi_id');
+		$this->db->join('m_tna_internal_sharing mis', 'mis.m_tna_pengawalan_id = tp.id', 'left');
+		$this->db->where('tu.r_jenis_usulan_id', 29);
+        $this->db->where('tp.is_tna', strval($type));
+        $this->db->where('tp.waktu_pelaksanaan >=', $dateQuartal['date1']);
+        $this->db->where('tp.waktu_pelaksanaan <=', $dateQuartal['date2']);
+
+		
+		IF($post['search']['value']!=""){
+			$i = 0;
+			foreach ($column_search as $item) // looping awal
+			{
+				if($post['search']['value']) // jika datatable mengirimkan pencarian dengan metode POST
+				{
+					if($i===0){
+						$this->db->group_start(); 
+						$this->db->like($item, $post['search']['value']);
+					}else{
+						$this->db->or_like($item, $post['search']['value']);
+					}
+
+					if(count($column_search) - 1 == $i)$this->db->group_end(); 
+					
+				}
+				$i++;
+			}
+		}
+		
+		$this->db->stop_cache();
+		$x = $this->db->count_all_results();
+
+		if (!empty($post['order'])) {
+			$this->db->order_by($column_order[$post['order']['0']['column']], $post['order']['0']['dir']);
+		} else {
+			$this->db->order_by('id', 'desc');
+		}
+
+		$this->db->limit($pageSize, $skip);
+		$query = $this->db->get();
+		//echo $this->db->last_query();
+		$data = $query->result_array();
+		$this->db->flush_cache();
+		foreach ($data as $key => $rec) {
+			$total_tahapan=13;
+			if($rec['urutan']==1){
+				$status_proses = "";
+				for ($i=1; $i < 14; $i++) { 
+					$status_proses.="<i class='fa fa-circle-o text-muted'></i> ";
+				}
+			}else{
+				$verified = "";
+				for ($i=1; $i < $rec['urutan']; $i++) { 
+					$verified.="<i class='fa fa-check-circle text-green'></i> ";
+				}
+
+				for ($x=$rec['urutan']; $x < 14; $x++) { 
+					$verified.="<i class='fa fa-circle-o text-muted'></i> ";
+				}
+
+				$status_proses = $verified;
+				
+			}
+			$data[$key]['tahapan_proses'] = $status_proses;
+		}
+
+		foreach ($data as $i => $rec) {
+			$data[$i]['encrypt_id'] = encrypt_url($rec['id']);
+			# code...
+		}
+		$output = array(
+            "draw" => $draw,
+            "recordsTotal" => $x,
+            "recordsFiltered" => $x,
+            "data" => $data,
+        );
+        //print_r($output);exit;
+        //output to json format
+        echo json_encode($output);
+		exit();
+	}
 
     private function quartal($quartal, $thn){
         if($quartal == 1){

@@ -30,6 +30,7 @@ class Home extends CI_Controller {
 		$data['title'] 				= 'home';
 		$data['active_menu'] 		= 'dashboard';
 		$data['filter_year'] 		= $filter_year;
+		$data['base_url'] 			= site_url('tna/home/detail');
 		$data['css'] 			= array(
 			'plugins/datepicker/datepicker3.css',
 		); // css tambahan
@@ -125,6 +126,35 @@ class Home extends CI_Controller {
 		$thn = $this->input->post('thn');
 		$data = $this->dashboard->summary($thn);
 		echo json_encode($data);
+	}
+
+	public function detail($type, $quartal, $thn){
+		$quartalName = 'Quartal 1';
+		if($quartal == '2') $quartalName = 'Quartal 1';
+		if($quartal == '3') $quartalName = 'Quartal 2';
+		if($quartal == '3') $quartalName = 'Quartal 3';
+		$data['title'] 				= 'Detail ' . strtoupper($type) . ' ' . $quartalName;
+		$data['breadcrumb'] 		= 'Dashboard > Datail > '. strtoupper($type) . ' > ' . $quartalName;
+		$data['active_menu'] 		= 'dashboard';
+		$data['base_url'] 			= site_url('tna/home/detail');
+		$data['type']				= $type;
+		$data['quartal']			= $quartal;
+		$data['thn']			= $thn;
+		$data['css'] 			= array(
+			'plugins/datepicker/datepicker3.css',
+		); // css tambahan
+		$data['js']				= array(
+			'plugins/datepicker/bootstrap-datepicker.js',
+			'js/module/Dashboard/Dashboard.js?random='.date("ymdHis"),
+			'js/custom.js?random='.date("ymdHis"),
+		);
+		$this->template->load('template','tna/dashboard/detail', $data);
+	}
+
+	public function dataDetail(){
+		$get = $this->input->get();
+		// echo json_encode($get);
+		echo $this->dashboard->getDataDetail($get);
 	}
 	
 

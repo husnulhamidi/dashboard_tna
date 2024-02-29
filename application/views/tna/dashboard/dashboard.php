@@ -598,76 +598,84 @@
                     <h3>SUMMARY - TOTAL REALISASI COST TNA <span id="thn_summary"></span>
                 </div>
                 <div class="col-md-3">
-                    <div class="info-box bg-yellow">
-                        <span class="info-box-icon"><i class="fa fa-hourglass"></i></span>
+                    <a onclick="redirectDetail('tna',1)" style="cursor:pointer">
+                        <div class="info-box bg-yellow">
+                            <span class="info-box-icon"><i class="fa fa-hourglass"></i></span>
 
-                        <div class="info-box-content">
-                        <span class="info-box-text">Quartal 1</span>
-                        <br>
-                        <span class="info-box-number summary_tna" id="summary_tna_q1"></span>
-                    
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 25%"></div>
-                        </div>
+                            <div class="info-box-content">
+                            <span class="info-box-text">Quartal 1</span>
+                            <br>
+                            <span class="info-box-number summary_tna" id="summary_tna_q1"></span>
                         
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 25%"></div>
+                            </div>
+                            
+                            </div>
+                            <!-- /.info-box-content -->
                         </div>
-                        <!-- /.info-box-content -->
-                    </div>
+                    </a>
                 </div>
 
                 <div class="col-md-3">
                     <!-- /.info-box -->
-                    <div class="info-box bg-green">
-                        <span class="info-box-icon"><i class="fa fa-hourglass-end"></i></span>
+                    <a onclick="redirectDetail('tna',2)" style="cursor:pointer">
+                        <div class="info-box bg-green">
+                            <span class="info-box-icon"><i class="fa fa-hourglass-end"></i></span>
 
-                        <div class="info-box-content">
-                        <span class="info-box-text">Quartal 2</span>
-                        <br>
-                        <span class="info-box-number summary_tna" id="summary_tna_q2"></span>
-                        
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 20%"></div>
+                            <div class="info-box-content">
+                            <span class="info-box-text">Quartal 2</span>
+                            <br>
+                            <span class="info-box-number summary_tna" id="summary_tna_q2"></span>
+                            
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 20%"></div>
+                            </div>
+                
+                            </div>
+                            <!-- /.info-box-content -->
                         </div>
-            
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
+                    </a>
                 </div>
 
                 <div class="col-md-3">
                     <!-- /.info-box -->
-                    <div class="info-box bg-blue">
-                        <span class="info-box-icon"><i class="fa fa-hourglass-end"></i></span>
+                    <a onclick="redirectDetail('tna',3)" style="cursor:pointer">
+                        <div class="info-box bg-blue">
+                            <span class="info-box-icon"><i class="fa fa-hourglass-end"></i></span>
 
-                        <div class="info-box-content">
-                        <span class="info-box-text">Quartal 3</span>
-                        <br>
-                        <span class="info-box-number summary_tna" id="summary_tna_q3"></span>
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 40%"></div>
+                            <div class="info-box-content">
+                            <span class="info-box-text">Quartal 3</span>
+                            <br>
+                            <span class="info-box-number summary_tna" id="summary_tna_q3"></span>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 40%"></div>
+                            </div>
+                
+                            </div>
+                            <!-- /.info-box-content -->
                         </div>
-            
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
+                    </a>
                 </div>
 
                 <div class="col-md-3">
                     <!-- /.info-box -->
-                    <div class="info-box bg-orange">
-                        <span class="info-box-icon"><i class="fa fa-hourglass-end"></i></span>
+                    <a onclick="redirectDetail('tna',4)" style="cursor:pointer">
+                        <div class="info-box bg-orange">
+                            <span class="info-box-icon"><i class="fa fa-hourglass-end"></i></span>
 
-                        <div class="info-box-content">
-                        <span class="info-box-text">Quartal 4</span>
-                        <br>
-                        <span class="info-box-number summary_tna" id="summary_tna_q"></span>
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 15%"></div>
+                            <div class="info-box-content">
+                            <span class="info-box-text">Quartal 4</span>
+                            <br>
+                            <span class="info-box-number summary_tna" id="summary_tna_q"></span>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 15%"></div>
+                            </div>
+                
+                            </div>
+                            <!-- /.info-box-content -->
                         </div>
-            
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
+                    </a>
                 </div>
                 
             </div>
@@ -677,78 +685,86 @@
                     <h3>SUMMARY - TOTAL REALISASI COST NON TNA <span id="thn_summary_non_tna"></span>
                 </div>
                 <div class="col-md-3">
-                    <div class="info-box bg-yellow">
-                        <span class="info-box-icon"><i class="fa fa-hourglass"></i></span>
+                    <a onclick="redirectDetail('non-tna',1)" style="cursor:pointer">
+                        <div class="info-box bg-yellow">
+                            <span class="info-box-icon"><i class="fa fa-hourglass"></i></span>
 
-                        <div class="info-box-content">
-                        <span class="info-box-text">Quartal 1</span>
-                        <br>
-                        <span class="info-box-number summary_tna" id="summary_non_tna_q1"></span>
-                        
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 25%"></div>
+                            <div class="info-box-content">
+                            <span class="info-box-text">Quartal 1</span>
+                            <br>
+                            <span class="info-box-number summary_tna" id="summary_non_tna_q1"></span>
+                            
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 25%"></div>
+                            </div>
+                            
+                            </div>
+                            <!-- /.info-box-content -->
                         </div>
-                        
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
+                    </a>
                 </div>
 
                 <div class="col-md-3">
                     <!-- /.info-box -->
-                    <div class="info-box bg-green">
-                        <span class="info-box-icon"><i class="fa fa-hourglass-end"></i></span>
+                    <a onclick="redirectDetail('non-tna',2)" style="cursor:pointer">
+                        <div class="info-box bg-green">
+                            <span class="info-box-icon"><i class="fa fa-hourglass-end"></i></span>
 
-                        <div class="info-box-content">
-                        <span class="info-box-text">Quartal 2</span>
-                        <br>
-                        <span class="info-box-number summary_tna" id="summary_non_tna_q2"></span>
-                       
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 20%"></div>
+                            <div class="info-box-content">
+                            <span class="info-box-text">Quartal 2</span>
+                            <br>
+                            <span class="info-box-number summary_tna" id="summary_non_tna_q2"></span>
+                        
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 20%"></div>
+                            </div>
+                
+                            </div>
+                            <!-- /.info-box-content -->
                         </div>
-            
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
+                    </a>
                 </div>
 
                 <div class="col-md-3">
                     <!-- /.info-box -->
-                    <div class="info-box bg-blue">
-                        <span class="info-box-icon"><i class="fa fa-hourglass-end"></i></span>
+                    <a onclick="redirectDetail('non-tna',3)" style="cursor:pointer">
+                        <div class="info-box bg-blue">
+                            <span class="info-box-icon"><i class="fa fa-hourglass-end"></i></span>
 
-                        <div class="info-box-content">
-                        <span class="info-box-text">Quartal 3</span>
-                        <br>
-                        <span class="info-box-number summary_tna" id="summary_non_tna_q3"></span>
-                        
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 40%"></div>
+                            <div class="info-box-content">
+                            <span class="info-box-text">Quartal 3</span>
+                            <br>
+                            <span class="info-box-number summary_tna" id="summary_non_tna_q3"></span>
+                            
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 40%"></div>
+                            </div>
+                
+                            </div>
+                            <!-- /.info-box-content -->
                         </div>
-            
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
+                    </a>
                 </div>
 
                 <div class="col-md-3">
                     <!-- /.info-box -->
-                    <div class="info-box bg-orange">
-                        <span class="info-box-icon"><i class="fa fa-hourglass-end"></i></span>
+                    <a onclick="redirectDetail('non-tna',4)" style="cursor:pointer">
+                        <div class="info-box bg-orange">
+                            <span class="info-box-icon"><i class="fa fa-hourglass-end"></i></span>
 
-                        <div class="info-box-content">
-                        <span class="info-box-text">Quartal 4</span>
-                        <br>
-                        <span class="info-box-number summary_tna" id="summary_non_tna_q4"></span>
-                        
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 15%"></div>
+                            <div class="info-box-content">
+                            <span class="info-box-text">Quartal 4</span>
+                            <br>
+                            <span class="info-box-number summary_tna" id="summary_non_tna_q4"></span>
+                            
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 15%"></div>
+                            </div>
+                
+                            </div>
+                            <!-- /.info-box-content -->
                         </div>
-            
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
+                    </a>
                 </div>
                 
             </div>   

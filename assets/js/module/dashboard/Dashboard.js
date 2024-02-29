@@ -1,59 +1,73 @@
 $(document).ready(function(){
-    let thn = $('#filter_year').val();
-    loadData(thn)
-    $( ".btn-flat" ).on( "click", function() {
+    
+    if($('#type').val()){
+        let type = $('#type').val()
+        let quartal = $('#quartal').val()
+        let thn = $('#thn').val()
+        detail(type, quartal, thn)
+    }else{
         let thn = $('#filter_year').val();
         loadData(thn)
-    })
-    
-
-    Highcharts.setOptions({
-        colors: ['#76d86b', '#4bb7e4', '#f6c811', '#ff6232'],
-        navigation: {
-            buttonOptions: {
-                symbolSize: 12,
-                symbolStrokeWidth: 1,
-                enabled: true //change to false to hide
-            }
-        },
-        xAxis: {
-            labels: {
-                style: {
-                    color: '#000',
-                    letterSpacing: '2px',
-                    textTransform: 'uppercase',
-                    fontSize: '10px',
+        $( ".btn-flat" ).on( "click", function() {
+            let thn = $('#filter_year').val();
+            loadData(thn)
+        })
+        Highcharts.setOptions({
+            colors: ['#76d86b', '#4bb7e4', '#f6c811', '#ff6232'],
+            navigation: {
+                buttonOptions: {
+                    symbolSize: 12,
+                    symbolStrokeWidth: 1,
+                    enabled: true //change to false to hide
                 }
             },
-        },
-        plotOptions: {
-            series: {
-                borderWidth: 0,
-                dataLabels: {
-                    allowOverlap: true,
-                    padding: 0,
-                }
-            }
-        },
-        yAxis: {
-            labels: {
-                style: {
-                    color: '#000',
-                    fontWeight: '1000',
-                    fontSize: '8px'
+            xAxis: {
+                labels: {
+                    style: {
+                        color: '#000',
+                        letterSpacing: '2px',
+                        textTransform: 'uppercase',
+                        fontSize: '10px',
+                    }
                 },
             },
-            title: {
-                style: {
-                    color: '#000',
-                    fontSize: '12px'
+            plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        allowOverlap: true,
+                        padding: 0,
+                    }
                 }
             },
-            gridLineColor: '#dadce2'
-        }
-    });
+            yAxis: {
+                labels: {
+                    style: {
+                        color: '#000',
+                        fontWeight: '1000',
+                        fontSize: '8px'
+                    },
+                },
+                title: {
+                    style: {
+                        color: '#000',
+                        fontSize: '12px'
+                    }
+                },
+                gridLineColor: '#dadce2'
+            }
+        });
+    }
+   
    
 })
+
+function redirectDetail(paramsType, paramsQuartal) {
+    let thn = $('#filter_year').val();
+    var dynamic_url = base_url + 'tna/home/detail/'+paramsType+'/'+paramsQuartal +'/'+ thn;
+    window.location.href = dynamic_url;
+}
+
 
 function loadData(thn){
     $('#tahun_filter').html(thn)
@@ -61,6 +75,7 @@ function loadData(thn){
     $('#thn_anggaran_tna').html(thn)
     $('#thn_summary').html(thn)
     $('#thn_summary_non_tna').html(thn)
+    
     getDataDashboad()
     getChartPelatihanQ1();
     getChartPelatihanQ2();
@@ -1359,4 +1374,59 @@ function summary(){
 			});
         }
     }); 
+}
+
+function detail(type, quartal, thn){
+    $('#tbl-detail-dashboard').DataTable({
+        processing: true, 
+        serverSide: true, 
+        scrollX: true,
+        order: [], 
+        ajax: {
+            url     : base_url+"tna/home/dataDetail",
+            type    : "get",
+            datatype: "json",
+            data    : function(d){
+                console.log(d)
+                d.type = type
+                d.quartal = quartal
+                d.thn = thn
+            },          
+        },
+        columns: [
+            {
+                "data": "id",
+                "width": "50px",
+                render: function (data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                }
+            },
+            {"data":"id_tna"},
+            {"data":"pelatihan"},
+            {"data":"nama_penyelenggara"},
+            {"data":"nama_karyawan"},
+            {"data":"nama_organisasi"},
+            {
+                "data": "status",
+                render:function(data, type, row, meta){
+                    
+                    var statusMapping = {
+                        'Verifikasi Mgr.Lini': 'Menunggu Verifikasi Mgr.Lini',
+                        'Verifikasi Manager HCPD': 'Menunggu Verifikasi Manager HCPD',
+                        'Verifikasi AVP HCM': 'Menunggu Verifikasi AVP HCM',
+                        'Form Pernyataan Peserta': 'Menunggu Form Pernyataan Peserta',
+                        'Pembayaran' : 'Manunggu Pembayaran',
+                        'Jadwal Pelaksanaan (Konfirmasi Kuota)' : 'Konfirmasi Kuota',
+                        'Kelengkapan Dokumen' : 'Proses Kelengkapan Dokumen',
+                        'Internal Sharing' : 'Menunggu Internal Sharing',
+                        'Evaluasi' : 'Menunggu Penilaian Evaluasi Training'
+                    };
+
+                    var respon = statusMapping[data] || data;
+                    return row.tahapan_proses+'<br>'+respon
+                }
+            },
+        ]
+        
+    });
 }

@@ -62,6 +62,8 @@ $route['tna/home/realisasiInternalSharing'] = 'tna/home/realisasiInternalSharing
 $route['tna/home/realisasiPesertaInternalSharing'] = 'tna/home/realisasiPesertaInternalSharing';
 $route['tna/home/anggaranTNA'] = 'tna/home/anggaranTNA';
 $route['tna/home/summary'] = 'tna/home/summary';
+$route['tna/home/dataDetail'] = 'tna/home/dataDetail';
+$route['tna/home/detail/(:any)/(:any)/(:any)'] = 'tna/home/detail/$1/$2/$3';
 
 $route['tna/home1'] = 'tna/home/index1';
 $route['tna/report'] = 'tna/Report';
