@@ -17,11 +17,12 @@ class Setting_ttd_model extends CI_Model {
     }
 
     public function get_nama(){
-        $this->db->select('mk.nama, mo.nama as jabatan');
+        $this->db->select('mk.nama, jb.nama as jabatan');
         $this->db->from('m_karyawan mk');
         $this->db->join('h_mutasi hm', 'mk.id = hm.m_karyawan_id and hm.is_aktif = 1');
         $this->db->join('m_organisasi mo', 'mo.id = hm.m_organisasi_id');
-        $this->db->where('mo.id', 23);
+        $this->db->join('r_jabatan jb', 'jb.id = hm.r_jabatan_id');
+        $this->db->where('mo.id', 427);
 
         $query = $this->db->get();
         $result = $query->result();

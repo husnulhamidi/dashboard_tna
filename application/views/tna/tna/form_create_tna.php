@@ -137,10 +137,26 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Nama Penyelenggara <span style="color: red">*</span></label>
-                                    <div class="col-sm-8">
-                                        <input  class="form-control" name="penyelenggara" id="penyelenggara" value="<?php echo @$detail->nama_penyelenggara;?>"> 
+                                    <div class="col-sm-6">
+                                        <select class="select2 form-control" name="penyelenggara" id="penyelenggara">
+                                            <option value=""> Pilih Lembaga</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2" id="divBtnAddPenyelenggara">
+                                        <button class="btn btn-info btn-sm pull-left" id="btnText" onclick="addPenyelenggara()"><b> <li class="fa fa-plus"></li> Tambah Penyelenggara</b> </button>
                                     </div>
                                 </div>
+
+                                <div class="form-group" id="divNewPeneyelenggara" style="display:none">
+                                    <label class="col-sm-3 control-label"> &nbsp; </label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" readonly="" id="tmpPenyelenggara">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-danger btn-sm pull-left " onclick="deletePenyelenggara()"><b> <li class="fa fa-close"></li></b> </button>
+                                    </div>
+                                </div>
+                                
                                 <div class="form-group">                    
                                     <label class="col-sm-3 control-label">Rencana Waktu Pelaksanaan <span style="color: red">*</span></label>
                                     <div class="col-sm-8" id="date">
@@ -248,6 +264,7 @@
         </div>
     </div>
 </section>
+<?php $this->load->view('tna/tna/modal_add_penyelenggara'); ?>
 <script>
 
 var count = 1;
@@ -272,6 +289,10 @@ $(document).ready(function () {
         let karyawanId = '<?php echo @$detail->m_karyawan_id;?>'
         getKaryawanBySubdit(1,karyawanId)
         getDataDetailKaryawan(1, karyawanId)
+
+        let trainingId = '<?php echo @$detail->r_tna_traning_id;?>'
+        let plembaga = '<?php echo @$detail->nama_penyelenggara;?>'
+        getDataLembaga(trainingId, plembaga)
 
         let jenis_development = '<?php echo @$detail->jenis_development;?>';
         if(jenis_development == 'Sertifikasi'){
@@ -346,11 +367,10 @@ function getDataDetailKaryawan(count, karyawanId = false){
 
 function getCode() {
     var countData;
-
     let pelatihanId = $('#tna').val();
+    getDataLembaga(pelatihanId)
     getSum(pelatihanId)
     .then(function(result) {
-        // console.log('getSum result:', result);
         countData = parseInt(result)+1
         if(countData < 1000){
             countData = '000'+countData
@@ -394,6 +414,58 @@ function getSum(pelatihanId) {
     });
     });
 }
+
+function getDataLembaga(pelatihanId, dataPenyelenggara = false){
+    console.log(dataPenyelenggara)
+    $('#penyelenggara').empty()
+    $('#penyelenggara').append('<option value="">Pilih Penyelenggara</option')
+    $.ajax({
+        url:base_url+'tna/tna/getPenyelenggara',
+        method: 'post',
+        dataType: 'json',
+        data: { pelatihanId:pelatihanId},
+        success: function(response){
+            console.log(response)
+            for (var i = 0; i < response.length; i++) {
+                var selected = "";
+                if(dataPenyelenggara && dataPenyelenggara == response[i]['nama_lembaga']){
+                    selected = "selected";
+                }
+                $('#penyelenggara').append('<option '+selected+' >'+response[i]['nama_lembaga']+'</option>')
+            }
+        }
+    });
+}
+
+function addPenyelenggara(){
+    // alert('tamabah')
+    $('#modalTambahPenyelenggara').modal({backdrop: 'static', keyboard: false}) 
+    $('#modalTambahPenyelenggara').modal('show')
+   
+}
+
+function btnClose(){
+    let new_penyelenggara = $('#new_penyelenggara').val()
+    if(new_penyelenggara){
+        $('#penyelenggara').prop('disabled', true)
+        $('#tmpPenyelenggara').val(new_penyelenggara)
+        $('#divNewPeneyelenggara').css('display', 'block')
+
+       
+        let edit = `<li class="fa fa-edit"></li> Edit Penyelenggara</b>`;
+        $("#btnText").html(edit);
+    }
+}
+
+function deletePenyelenggara(){
+    $('#penyelenggara').prop('disabled', false)
+    $('#divNewPeneyelenggara').css('display', 'none')
+    $('#form-add-penyelenggara')[0].reset();
+    
+    let tambah = `<li class="fa fa-plus"></li> Tambah Penyelenggara</b>`;
+    $("#btnText").html(tambah);
+}
+
 
 function appendRow(count){
     var html = `
@@ -458,4 +530,5 @@ function appendRow(count){
 function deleteRow(id){
     $(".multi-field"+id).remove();
 }
+
 </script>

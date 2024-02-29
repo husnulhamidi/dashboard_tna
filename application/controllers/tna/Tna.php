@@ -156,6 +156,8 @@ class Tna extends CI_Controller {
 	}
 
 	public function submit(){
+		// echo json_encode($this->input->post());
+		$penyelenggara = $this->input->post('new_penyelenggara') ?? $this->input->post('penyelenggara');
 		$tgl = explode('-', $this->input->post('waktu_pelaksanaan'));
 		$data = array(
 			// 'm_organisasi_id'	=> $this->input->post('subdit'),
@@ -169,7 +171,7 @@ class Tna extends CI_Controller {
 			'justifikasi_pengajuan' =>	$this->input->post('justifikasi'),
 			'metoda_pembelajaran' => $this->input->post('metoda'),
 			'estimasi_biaya' => str_replace(".", "", $this->input->post('estimasi_biaya')),
-			'nama_penyelenggara' => $this->input->post('penyelenggara'),
+			'nama_penyelenggara' => $penyelenggara,
 			'waktu_pelaksanaan' => $tgl[2].'-'.$tgl[1].'-'.$tgl[0],
 			'tahapan_id' => $this->input->post('tahapan_id'),
 			'objective' => $this->input->post('objective'),
@@ -197,7 +199,6 @@ class Tna extends CI_Controller {
 
 			$data['created_date'] = date('Y-m-d');
 			$data['created_by'] = $this->karyawanId;
-			// $action = $this->TnaModel->insertData($data);
 			foreach ($this->input->post('karyawan') as $key => $value) {
 				if($value){
 					$data['m_karyawan_id'] = $value;
@@ -213,6 +214,32 @@ class Tna extends CI_Controller {
 		
 
 		if($action){
+			// save penyelenggara
+			if($this->input->post('new_penyelenggara')){
+				$dataPenyelenggara = array(
+					'nama_lembaga' 	=> $this->input->post('new_penyelenggara'),
+					'nama_pic'		=> $this->input->post('pic'),
+					'telp'			=> $this->input->post('telp'),
+					'website'		=> $this->input->post('website'),
+					'alamat'		=> $this->input->post('alamat'),
+	
+				);
+				$savePenyelenggara = $this->TnaModel->savePenyelenggara($dataPenyelenggara);
+
+				$dataDetail = array(
+					'r_tna_lembaga_id'		=> $savePenyelenggara,
+					'r_tna_training_id'		=> $this->input->post('tna'),
+					'nama_pelatihan'		=> $this->input->post('new_penyelenggara'),
+					'jenis_pelatihan'		=> $this->input->post('jenis_pelatihan'),
+					'metoda'				=> $this->input->post('metoda'),
+					'biaya'					=> $this->input->post('biaya'), 
+					'kapasitas'				=> $this->input->post('kapasitas')
+				);
+
+				$this->TnaModel->saveDetailPenyelenggara($dataDetail);
+			}
+			
+			
 			$return = array(
 				'success'		=> true,
 				'status_code'	=> 201,
@@ -288,6 +315,12 @@ class Tna extends CI_Controller {
 			$result[] = array("id" => $value->id,"text"=>$text);
 		}
 		echo json_encode($result);
+	}
+
+	public function getPenyelenggara(){
+		$id = $this->input->post('pelatihanId');
+		$data = $this->TnaModel->getPenyelenggara($id);
+		echo json_encode($data);
 	}
 
 

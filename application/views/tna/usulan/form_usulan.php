@@ -67,7 +67,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Pelatihan / Sertifikasi (TNA)</label>
                                             <div class="col-sm-8">
-                                                <select class="select2 form-control" name="tna" id="tna">
+                                                <select class="select2 form-control" name="tna" id="tna" onchange="getDataLembaga()">
                                                     <option value="">--- Pilih Pelatihan/Sertifikasi ---</option>
                                                     <?php 
                                                         foreach ($tna as $tna) {
@@ -108,10 +108,30 @@
                                                 <input  class="form-control input_mask" name="estimasi_biaya" id="estimasi_biaya"> 
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <label class="col-sm-3 control-label">Nama Penyelenggara</label>
                                             <div class="col-sm-8">
                                                 <input  class="form-control" name="penyelenggara" id="penyelenggara"> 
+                                            </div>
+                                        </div> -->
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Nama Penyelenggara <span style="color: red">*</span></label>
+                                            <div class="col-sm-6">
+                                                <select class="select2 form-control" name="penyelenggara" id="penyelenggara">
+                                                    <option value=""> Pilih Lembaga</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2" id="divBtnAddPenyelenggara">
+                                                <button class="btn btn-info btn-sm pull-left" id="btnText" onclick="addPenyelenggara()"><b> <li class="fa fa-plus"></li> Tambah Penyelenggara</b> </button>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="divNewPeneyelenggara" style="display:none">
+                                            <label class="col-sm-3 control-label"> &nbsp; </label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" readonly="" id="tmpPenyelenggara">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button class="btn btn-danger btn-sm pull-left " onclick="deletePenyelenggara()"><b> <li class="fa fa-close"></li></b> </button>
                                             </div>
                                         </div>
                                         <div class="form-group">                    
@@ -210,6 +230,7 @@
         </div>
     </div>
 </section>
+<?php $this->load->view('tna/tna/modal_add_penyelenggara'); ?>
 <script>
 
 $(document).ready(function () {
@@ -286,8 +307,53 @@ $(document).ready(function () {
 
         // get_verifikator();
     })
+});
+
+function getDataLembaga(){
+    let pelatihanId = $('#tna').val();
+    $('#penyelenggara').empty()
+    $('#penyelenggara').append('<option value="">Pilih Penyelenggara</option')
+    $.ajax({
+        url:base_url+'tna/tna/getPenyelenggara',
+        method: 'post',
+        dataType: 'json',
+        data: { pelatihanId:pelatihanId},
+        success: function(response){
+            console.log(response)
+            for (var i = 0; i < response.length; i++) {
+                $('#penyelenggara').append('<option>'+response[i]['nama_lembaga']+'</option>')
+            }
+        }
+    });
+}
+
+function addPenyelenggara(){
+// alert('tamabah')
+    $('#modalTambahPenyelenggara').modal({backdrop: 'static', keyboard: false}) 
+    $('#modalTambahPenyelenggara').modal('show')
+
+}
+
+function btnClose(){
+    let new_penyelenggara = $('#new_penyelenggara').val()
+    if(new_penyelenggara){
+        $('#penyelenggara').prop('disabled', true)
+        $('#tmpPenyelenggara').val(new_penyelenggara)
+        $('#divNewPeneyelenggara').css('display', 'block')
 
     
+        let edit = `<li class="fa fa-edit"></li> Edit Penyelenggara</b>`;
+        $("#btnText").html(edit);
+    }
+}
 
-});
+function deletePenyelenggara(){
+    $('#penyelenggara').prop('disabled', false)
+    $('#divNewPeneyelenggara').css('display', 'none')
+    $('#form-add-penyelenggara')[0].reset();
+    
+    let tambah = `<li class="fa fa-plus"></li> Tambah Penyelenggara</b>`;
+    $("#btnText").html(tambah);
+}
+
 </script>

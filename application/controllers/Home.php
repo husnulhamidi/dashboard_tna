@@ -21,7 +21,7 @@ class Home extends CI_Controller {
 		//print_r($user);die;
 	
 		$data['title'] 				= 'home';
-		$data['active_menu'] 		= 'dashboard';
+		$data['active_menu'] 		= 'home';
 		$data['css'] 				= array(); // css tambahan
 		$data['js']					= array(); // js tambahan
 		$this->template->load('template','home/dashboard', $data);
