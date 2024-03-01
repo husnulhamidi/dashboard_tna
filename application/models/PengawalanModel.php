@@ -600,6 +600,17 @@ class PengawalanModel extends CI_Model {
 		return $this->db->insert_id();
 	}
 
+	public function getDataDetailEvaluasi($pengawalan_id){
+		$this->db->select('rpe.id, rpe.group, rpe.pertanyaan, rpe.nilai_skor1, rpe.nilai_skor2, rpe.nilai_skor3, rpe.nilai_skor4, rpe.nilai_skor5, pep.nilai_skor, pe.label_skor, pe.komentar');
+		$this->db->from('r_tna_pertanyaan_evaluasi rpe');
+		$this->db->join('m_tna_pengawalan_evaluasi_penilaian pep', 'rpe.pertanyaan = pep.pertanyaan', 'left');
+		$this->db->join('m_tna_pengawalan_evaluasi pe', 'pep.m_tna_pengawalan_evaluasi_id = pe.id', 'left');
+		$this->db->where('pe.m_tna_pengawalan_id', $pengawalan_id);
+		$this->db->or_where('pe.id IS NULL');
+		$query = $this->db->get();
+		return $result = $query->result();
+	}
+
 	
 
 }

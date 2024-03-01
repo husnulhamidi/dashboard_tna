@@ -855,6 +855,12 @@ class Pengawalan extends CI_Controller {
 		echo json_encode($data);
 	}
 
+	public function getDataDetailEvaluasi(){
+		$pengawalan_id = $this->input->post('pengawalan_id');
+		$data = $this->PengawalanModel->getDataDetailEvaluasi($pengawalan_id);
+		echo json_encode($data);
+	}
+
     public function manager($active_tab="all"){
         $data['breadcrumb'] 	= 'Usulan > '.ucwords(str_replace("-"," ",$active_tab));
         $data['active_menu'] 	= 'usulan_tna';
