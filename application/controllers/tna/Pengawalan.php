@@ -548,6 +548,29 @@ class Pengawalan extends CI_Controller {
 	}
 
 	public function evaluasi(){
+		for ($i=0; $i < $this->input->post('jumlah_pertanyaan') ; $i++) { 
+			$name_radio = 'radio_' . ($i + 1);
+			$label_skor = 'nilai_skor' .$this->input->post($name_radio);
+			if($this->input->post($name_radio)){
+				$data_pengawalan_evaluasi = array(
+					'm_tna_pengawalan_id' => $this->input->post('id'),
+					'nilai_skor' => $this->input->post($name_radio),
+					'label_skor' => $label_skor, 
+					'komentar' => $this->input->post('komentar')
+				);
+				// echo json_encode($data_pengawalan_evaluasi);
+				$save_pengawalan_evaluasi = $this->PengawalanModel->save_pengawalan_evaluasi($data_pengawalan_evaluasi);
+		
+				// m_tna_pengawalan_evaluasi_penilaian
+				$data_pengawalan_evaluasi_penilaian = array(
+					'm_tna_pengawalan_evaluasi_id' => $save_pengawalan_evaluasi,
+					'pertanyaan' => $this->input->post('pertanyaan')[$i],
+					'nilai_skor' => $this->input->post($name_radio)
+				);
+				$save_pengawalan_evaluasi_penilaian = $this->PengawalanModel->save_pengawalan_evaluasi_penilaian($data_pengawalan_evaluasi_penilaian);
+			}
+		}
+
 		// cek dulu ke tabel internal sharing
 		$urutan = $this->input->post('urutanId') + 1;
 		$thapanId = $this->TnaModel->get_tahapan_id($urutan);
@@ -556,7 +579,6 @@ class Pengawalan extends CI_Controller {
 		}
 
 		save_history_pengawalan($this->input->post('id'), $thapanId->id, 'Ya','Evaluasi', $this->karyawanId);
-
 		$dataEvaluasi = array(
 			'is_evalausi' => 1
 		);
@@ -824,10 +846,13 @@ class Pengawalan extends CI_Controller {
 				'msg'			=> "Data gagal diubah.",
 				'data'			=> array()
 			);
-		}
-
-		
+		}		
 		echo json_encode($return);
+	}
+
+	public function getDataEvaluasi(){
+		$data = $this->PengawalanModel->getDataEvaluasi();
+		echo json_encode($data);
 	}
 
     public function manager($active_tab="all"){
@@ -863,7 +888,6 @@ class Pengawalan extends CI_Controller {
 
 		$this->template->load('template',$pageindex,$data);
 	}
-
 
 	public function create(){
         $data = array();

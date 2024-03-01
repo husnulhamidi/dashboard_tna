@@ -585,6 +585,21 @@ class PengawalanModel extends CI_Model {
 		return $update;	
 	}
 
+	public function getDataEvaluasi(){
+		$query = $this->db->get('r_tna_pertanyaan_evaluasi');
+		return $query->result();
+	}
+
+	public function save_pengawalan_evaluasi($data){
+		$this->db->insert('m_tna_pengawalan_evaluasi', $data);
+		return $this->db->insert_id();
+	}
+
+	public function save_pengawalan_evaluasi_penilaian($data){
+		$this->db->insert('m_tna_pengawalan_evaluasi_penilaian', $data);
+		return $this->db->insert_id();
+	}
+
 	
 
 }
