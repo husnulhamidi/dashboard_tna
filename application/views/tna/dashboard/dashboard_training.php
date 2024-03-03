@@ -101,7 +101,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">List Training Seluruh Karyawan </h3>
                 <div class="box-tools pull-right">
-                    <button class="btn btn-default btn-sm" >
+                    <button class="btn btn-default btn-sm export-excel" >
                         <i class="fa fa-download"></i> Export Excel
                     </button>
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>

@@ -58,4 +58,39 @@ class DashboardTraining extends CI_Controller {
 		echo json_encode($data);
 
 	}
+
+	public function export($thn){
+		$data['data'] = $this->dashboard->getExportDataKaryawan($thn);
+		$this->load->view('tna/dashboard/export', $data);
+	}
+
+	public function export2($thn){
+		// Load data from model
+        $data = $this->dashboard->getExportDataKaryawan($thn);
+        
+        // Set filename
+        $filename = 'list_training_seluruh_karyawan' . date('YmdHis') . '.xls';
+        
+        // Set headers
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
+        header('Cache-Control: max-age=0');
+
+        // Open file pointer
+        $fp = fopen('php://output', 'w');
+
+        // Set column headers
+        $header = array('No','Nama Karyawan', 'NIK', 'Unit', 'Jumlah Pelatihan');
+        fputcsv($fp, $header, "\t");
+
+        // Add data to CSV
+        foreach ($data as $key => $val) {
+            $row = array(($key+1), $val->nama, $val->nik_tg, $val->nama_organisasi, $val->jumlah_training);
+            fputcsv($fp, $row, "\t");
+        }
+
+        // Close file pointer
+        fclose($fp);
+        exit;
+	}
 }

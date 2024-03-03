@@ -71,6 +71,7 @@ $route['tna/dashboard-training']    = 'tna/DashboardTraining';
 $route['tna/dashboard-training/getDataDashboard']    = 'tna/DashboardTraining/getDataDashboard';
 $route['tna/dashboard-training/getDataKaryawanDashboard']    = 'tna/DashboardTraining/getDataKaryawanDashboard';
 $route['tna/dashboard-training/getListDataKaryawan']    = 'tna/DashboardTraining/getListDataKaryawan';
+$route['tna/dashboard-training/export/(:any)'] = 'tna/DashboardTraining/export2/$1';
 
 
 
@@ -235,6 +236,7 @@ $route['tna/pengawalan/complete_internal_sharing']    = 'tna/pengawalan/complete
 $route['tna/pengawalan/getDataEvaluasi']    = 'tna/pengawalan/getDataEvaluasi';
 $route['tna/pengawalan/getDataDetailEvaluasi']    = 'tna/pengawalan/getDataDetailEvaluasi';
 $route['tna/pengawalan/edit_evaluasi']    = 'tna/pengawalan/edit_evaluasi';
+$route['tna/pengawalan/exportExcel']    = 'tna/pengawalan/exportExcel';
 
 
 $route['tna/pengawalan/proses-verifikasi']    = 'tna/pengawalan/proses_verifikasi';
@@ -296,6 +298,7 @@ $route['tna/get_code_training']    = 'tna/tna/get_code_training';
 $route['tna/get_sum_data']    = 'tna/tna/get_sum_data';
 $route['tna/proses_tna']    = 'tna/tna/proses_tna';
 $route['tna/get_karyawan']    = 'tna/tna/get_karyawan';
+$route['tna/exportExcel']    = 'tna/tna/exportExcel';
 
 
 //=====================================================================================================================

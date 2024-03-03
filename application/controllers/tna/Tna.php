@@ -323,7 +323,60 @@ class Tna extends CI_Controller {
 		echo json_encode($data);
 	}
 
+	public function exportExcel(){
+		// $get = $tis->
+		$post = $this->input->post();
+		$data = $this->TnaModel->getDataExport($post);
+		$filename = 'daftar_tna' . date('YmdHis') . '.xls';
+        
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
+        header('Cache-Control: max-age=0');
 
+		$fp = fopen('php://output', 'w');
+		$header = array('No','ID TNA', 'Sub Unit/unit', 'Nama Karyawan', 'Status Karyawan', 'Nama Pelatihan', 'Objective', 'Jenis Development', 'Matoda Pembelajaran', 'Jenis Pelatihan/Sertifikasi', 'Kompetensi', 'Nama Penyelenggara', 'Waktu Pelaksanaan', 'Estimasi Biaya');
+        fputcsv($fp, $header, "\t");
+		foreach ($data as $key => $val) {
+			// Membersihkan nilai data dari karakter newline
+			$code_tna = str_replace("\n", "", $val->code_tna);
+			$nama_organisasi = str_replace("\n", "", $val->nama_organisasi);
+			$nama_karyawan = str_replace("\n", "", $val->nama_karyawan);
+			$status_karyawan = str_replace("\n", "", $val->status_karyawan);
+			$training = str_replace("\n", "", $val->training);
+			$objective = str_replace("\n", "", $val->objective);
+			$jenis_development = str_replace("\n", "", $val->jenis_development);
+			$metoda_pembelajaran = str_replace("\n", "", $val->metoda_pembelajaran);
+			$jenis_pelatihan = str_replace("\n", "", $val->jenis_pelatihan);
+			$kompetensi = str_replace("\n", "", $val->kompetensi);
+			$nama_penyelenggara = str_replace("\n", "", $val->nama_penyelenggara);
+			$waktu_pelaksanaan = date('d M Y', strtotime(str_replace("\n", "", $val->waktu_pelaksanaan)));
+			$estimasi_biaya = str_replace("\n", "", $val->estimasi_biaya);
+		
+			// Membuat baris data CSV
+			$row = array(
+				($key+1), 
+				$code_tna, 
+				$nama_organisasi, 
+				$nama_karyawan, 
+				$status_karyawan,
+				$training,
+				$objective,
+				$jenis_development,
+				$metoda_pembelajaran,
+				$jenis_pelatihan,
+				$kompetensi,
+				$nama_penyelenggara,
+				$waktu_pelaksanaan,
+				$estimasi_biaya
+			);
+		
+			// Menulis baris data CSV ke file
+			fputcsv($fp, $row, "\t");
+		}
+		
+		fclose($fp);
+        exit;
+	}
 	
 }
 

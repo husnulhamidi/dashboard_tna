@@ -26,7 +26,7 @@
                                 <button class="btn btn-default btn-sm" data-toggle='modal' data-target='#ModalImportExcel'>
                                     <i class="fa fa-upload"></i> Upload
                                 </button>
-                                <button class="btn btn-default btn-sm" >
+                                <button class="btn btn-default btn-sm" id="btnExport">
                                     <i class="fa fa-download"></i> Export
                                 </button>
                                 <button class="btn btn-default btn-sm" data-toggle='modal' data-target='#ModalFilter'>
@@ -62,7 +62,6 @@
                                             <th class="text-center text-nowrap">Jenis Pelatihan/Sertifikasi</th>
                                             <th class="text-center text-nowrap">Kompetensi</th>
                                             <th class="text-center text-nowrap">Nama Penyelenggara</th>
-                                            <th class="text-center text-nowrap">Lokasi</th>
                                             <th class="text-center text-nowrap">Waktu Pelaksanaan</th>
                                             <th class="text-center text-nowrap">Estimasi Biaya</th>
                                             

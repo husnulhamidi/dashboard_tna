@@ -6,16 +6,23 @@ $(document).ready(function(){
         autoclose:true
     })
 	
-	getDataDashboad(new Date().getFullYear())
-	getDataKaryawanDashboard(new Date().getFullYear())
-	getListDataKaryawan(new Date().getFullYear())
+	LoadFunct();
     $( ".filter-thn" ).on( "change", function() {
-        let thn = parseInt($('#tahun').val());
-        getDataDashboad(thn)
-        getDataKaryawanDashboard(thn)
-        getListDataKaryawan(thn)
+        LoadFunct();
+        
     })
+
+	$('.export-excel').click(function(){
+		exportExcel();
+	})
 })
+
+function LoadFunct(){
+	let thn = parseInt($('#tahun').val());
+	getDataDashboad(thn)
+	getDataKaryawanDashboard(thn)
+	getListDataKaryawan(thn)
+}
 
 function getDataDashboad(thn) {
 	$.ajax({
@@ -129,4 +136,10 @@ function getListDataKaryawan(thn){
         	},
         ]
     });
+}
+
+function exportExcel(){
+	let thn = parseInt($('#tahun').val());
+    var dynamic_url = base_url + 'tna/dashboard-training/export/'+thn;
+    window.location.href = dynamic_url;
 }

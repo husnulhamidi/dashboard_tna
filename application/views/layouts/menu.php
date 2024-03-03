@@ -71,7 +71,7 @@ $sess = $this->session->userdata();
             </a>
         </li>
 
-        <li class="treeview <?php echo ($active_menu == 'usulan_tna' || $active_menu == 'tna_tna' || $active_menu == 'tna_pengawalan') ? 'active' : ''; ?> ">
+        <li class="treeview <?php echo ($active_menu == 'Usulan TNA' || $active_menu == 'tna_tna' || $active_menu == 'tna_pengawalan') ? 'active' : ''; ?> ">
             <a href="#">
             <i class="fa fa-clone"></i>TNA</span>
                 <span class="pull-right-container">
@@ -79,7 +79,7 @@ $sess = $this->session->userdata();
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li class="<?php echo $active_menu=='usulan_tna'? 'active':'';?>">
+                <li class="<?php echo $active_menu=='Usulan TNA'? 'active':'';?>">
                     <a href="<?php echo site_url('tna/usulan'); ?>">
                         <i class="fa fa-circle-o"></i> <span>Usulan TNA</span>
                     </a>

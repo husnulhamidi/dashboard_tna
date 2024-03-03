@@ -264,6 +264,67 @@ class TnaModel extends CI_Model {
 		return $this->db->insert_id();
 	}
 
+	public function getDataExport($post){
+		$this->db->select('tp.id as id, tp.code_tna,tp.objective, rt.name as training, tp.jenis_development, tp.metoda_pembelajaran, tp.jenis_pelatihan, tk.name as kompetensi, tp.nama_penyelenggara, tp.waktu_pelaksanaan, tp.estimasi_biaya, mk.nama as nama_karyawan,mo.nama as nama_organisasi,tp.status_karyawan');
+		$this->db->from('m_tna_pengawalan tp');
+		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_traning_id');
+		$this->db->join('r_tna_kompetensi tk', 'tk.id = tp.r_tna_kompetensi_id');
+		$this->db->join('r_tahapan_usulan ru', 'ru.id = tp.tahapan_id');
+		$this->db->join('m_karyawan mk', 'mk.id = tp.m_karyawan_id');
+		$this->db->join('m_organisasi mo', 'mo.id = tp.m_organisasi_id');
+		$this->db->where('ru.r_jenis_usulan_id = 29 and ru.urutan = 1');
+
+		if($post['filter_subdit'] !== 'all'){
+			$this->db->where('tp.m_organisasi_id', $post['filter_subdit']);
+		}
+		if($post['filter_kompetensi'] !== 'all'){
+			$this->db->where('tp.r_tna_kompetensi_id', $post['filter_kompetensi']);
+		}
+		if($post['filter_jenis_development'] !== 'all'){
+			$this->db->where('tp.jenis_development', $post['filter_jenis_development']);
+		}
+		if($post['filter_nama_pelatihan'] !== 'all'){
+			$this->db->where('tp.r_tna_traning_id', $post['filter_nama_pelatihan']);
+		}
+		if($post['filter_justifikasi'] !== ''){
+			$this->db->like('tp.justifikasi_pengajuan', $post['filter_justifikasi'],'both');
+		}
+		if($post['filter_metoda_pembelajaran'] !== 'all'){
+			$this->db->where('tp.metoda_pembelajaran', $post['filter_metoda_pembelajaran']);
+		}
+		if($post['filter_biaya_min'] !== ''){
+			$this->db->where('tp.estimasi_biaya >=', $post['filter_biaya_min']);
+		}
+
+		if($post['filter_biaya_max'] !== ''){
+			$this->db->where('tp.estimasi_biaya <=', $post['filter_biaya_max']);
+		}
+
+		if($post['filter_penyelenggara'] !== ''){
+			$this->db->like('tp.nama_penyelenggara', $post['filter_penyelenggara'],'both');
+		}
+		if($post['filter_karyawan'] !== 'all'){
+			$this->db->where('tp.m_karyawan_id', $post['filter_karyawan']);
+		}
+		
+		if($post['filter_status_karyawan'] !== 'all'){
+			$this->db->where('tp.status_karyawan', $post['filter_status_karyawan']);
+		}
+
+		if($post['filter_waktu_awal']){
+            $tgl1 = $this->chageDate($post['filter_waktu_awal']);
+            $this->db->where('tp.waktu_pelaksanaan >=',$tgl1);
+        }
+
+        if($post['filter_waktu_akhir']){
+            $tgl2 = $this->chageDate($post['filter_waktu_akhir']);
+            $this->db->where('tp.waktu_pelaksanaan <=',$tgl2);
+        }
+
+		$query = $this->db->get();
+        return $query->result();
+	}
+
 
 }
 

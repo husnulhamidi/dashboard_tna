@@ -31,6 +31,12 @@ jQuery(document).ready(function() {
         }
 
     });
+
+    $('#btnExport').click(function(){
+        exportData()
+    })
+
+    
 })
 
 function showModalProses(id){
@@ -298,12 +304,6 @@ function buildTable(){
             },
             { "data": "nama_penyelenggara"},
             { 
-                "data": "nama_penyelenggara",
-                render:function(data,type,row,meta){
-                    return "lokasi"
-                }
-            },
-            { 
                 "data": "waktu_pelaksanaan",
                 render:function(data, type, row, meta){
                     let date = '-'
@@ -323,3 +323,31 @@ function buildTable(){
         ],
     });
 }
+
+function exportData(){
+    var formData = $('#form-filter-tna').serialize();
+    $.ajax({
+        url     : base_url+"tna/tna/exportExcel",
+        method: 'post',
+        data: formData, 
+        success: function(response){
+            // console.log(response)
+            var url = window.URL.createObjectURL(new Blob([response]));
+    
+            // Membuat elemen a untuk tautan unduhan
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'daftar_list_tna.xls'; // Atur nama file yang diinginkan
+            document.body.appendChild(a);
+            a.click();
+
+            // Menghapus URL objek setelah tautan unduhan diklik
+            window.URL.revokeObjectURL(url);
+        },
+        error: function(xhr, status, error) {
+            console.log(error)
+            console.error(xhr.responseText); // Tampilkan pesan kesalahan dalam konsol
+        }
+    });
+}
+

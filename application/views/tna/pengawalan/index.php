@@ -34,11 +34,14 @@
                                     <button class="btn btn-danger btn-sm btn-reset">
                                         <i class="fa fa-repeat"></i> Reset
                                     </button>
-                                    <a href ="<?php echo base_url('tna/pengawalan/create'); ?>">
+                                    <!-- <a href ="<?php echo base_url('tna/pengawalan/create'); ?>">
                                         <button class="btn btn-info btn-sm">
                                             <i class="glyphicon glyphicon-download"></i> Export
                                         </button>
-                                    </a>
+                                    </a> -->
+                                    <button class="btn btn-info btn-sm" id="btnExport">
+                                        <i class="fa fa-download"></i> Export
+                                    </button>
                                 </div>
                             </ul>  
                         </div>

@@ -73,6 +73,10 @@ $(document).ready(function(){
         $("#form-filter .select2").trigger('change')
         builTable(table,tabs)
     })
+
+    $('#btnExport').click(function(){
+        exportData()
+    })
 })
 
 function builTable(table,tabs){
@@ -1128,6 +1132,33 @@ function submitEvaluasi(){
             }
             
         }            
+    });
+}
+
+function exportData(){
+    var formData = $('#form-filter').serialize();
+    $.ajax({
+        url     : base_url+"tna/pengawalan/exportExcel",
+        method: 'post',
+        data: formData, 
+        success: function(response){
+            console.log(response)
+            var url = window.URL.createObjectURL(new Blob([response]));
+    
+            // Membuat elemen a untuk tautan unduhan
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'daftar_list_pengawalan.xls'; // Atur nama file yang diinginkan
+            document.body.appendChild(a);
+            a.click();
+
+            // Menghapus URL objek setelah tautan unduhan diklik
+            window.URL.revokeObjectURL(url);
+        },
+        error: function(xhr, status, error) {
+            console.log(error)
+            console.error(xhr.responseText); // Tampilkan pesan kesalahan dalam konsol
+        }
     });
 }
 

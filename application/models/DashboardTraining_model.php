@@ -172,4 +172,23 @@ class DashboardTraining_model extends CI_Model {
 		exit();
 	}
 
+    public function getExportDataKaryawan($thn){
+        $this->db->select('mk.id, mk.nama, mk.url, mk.nik_tg, mo.nama AS nama_organisasi, COUNT(DISTINCT mshp.m_tna_internal_sharing_id) + COUNT(DISTINCT mtp.r_tna_traning_id) AS jumlah_training, mk.r_jenis_kelamin_id as jenis_kelamin');
+        $this->db->from('m_karyawan mk');
+        $this->db->join('h_mutasi hm', 'mk.id = hm.m_karyawan_id');
+        $this->db->join('m_organisasi mo', 'hm.m_organisasi_id = mo.id');
+        $this->db->join('m_tna_internal_sharing_peserta mshp', 'mk.id = mshp.m_karyawan_id', 'left');
+        $this->db->join('m_tna_internal_sharing mts', 'mts.id = mshp.m_tna_internal_sharing_id', 'left');
+        $this->db->join('m_tna_pengawalan mtp', 'mk.id = mtp.m_karyawan_id', 'left');
+        $this->db->join('r_tahapan_usulan rtu', 'rtu.id = mtp.tahapan_id', 'left');
+        $this->db->where('hm.is_aktif', 1);
+        $this->db->where('YEAR(mts.tanggal)', $thn);
+        $this->db->or_where('YEAR(mtp.waktu_pelaksanaan)', $thn);
+        $this->db->where('rtu.urutan >', 9);
+        $this->db->group_by('mk.nama');
+        $query = $this->db->get();
+        return $query->result();
+
+    }
+
 }

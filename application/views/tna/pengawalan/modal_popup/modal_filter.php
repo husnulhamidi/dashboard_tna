@@ -14,6 +14,7 @@
             <div class="modal-body">
                 <div>
                     <form method="post" action="javascript:;" class="form-horizontal form-filter" enctype="multipart/form-data" id="form-filter">
+                        <input type="hidden" id="tabs" name="tabs" value="<?php echo $active_tab;?>">
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-lg-12">
