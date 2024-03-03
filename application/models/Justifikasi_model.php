@@ -313,7 +313,7 @@ class Justifikasi_model extends CI_Model {
 		}else{
 			$return = array(
 				'success'		=> false,
-				'status_code'	=> 200,
+				'status_code'	=> 400,
 				'msg'			=> "Hapus data gagal.",
 				'data'			=> array()
 			);

@@ -861,6 +861,37 @@ class Pengawalan extends CI_Controller {
 		echo json_encode($data);
 	}
 
+	public function edit_evaluasi(){
+		// echo json_encode($this->input->post());
+		$deleteData = $this->PengawalanModel->deleteDataEvaluasi($this->input->post('pengawalan_id'));
+		// echo json_encode($deleteData);
+		if($deleteData['success']){
+			for ($i=0; $i < $this->input->post('jumlah_pertanyaan') ; $i++) { 
+				$name_radio = 'radio_' . ($i + 1);
+				$label_skor = 'nilai_skor' .$this->input->post($name_radio);
+				if($this->input->post($name_radio)){
+					$data_pengawalan_evaluasi = array(
+						'm_tna_pengawalan_id' => $this->input->post('pengawalan_id'),
+						'nilai_skor' => $this->input->post($name_radio),
+						'label_skor' => $label_skor, 
+						'komentar' => $this->input->post('komentar')
+					);
+					// echo json_encode($data_pengawalan_evaluasi);
+					$save_pengawalan_evaluasi = $this->PengawalanModel->save_pengawalan_evaluasi($data_pengawalan_evaluasi);
+			
+					// m_tna_pengawalan_evaluasi_penilaian
+					$data_pengawalan_evaluasi_penilaian = array(
+						'm_tna_pengawalan_evaluasi_id' => $save_pengawalan_evaluasi,
+						'pertanyaan' => $this->input->post('pertanyaan')[$i],
+						'nilai_skor' => $this->input->post($name_radio)
+					);
+					$save_pengawalan_evaluasi_penilaian = $this->PengawalanModel->save_pengawalan_evaluasi_penilaian($data_pengawalan_evaluasi_penilaian);
+				}
+			}
+		}
+		echo json_encode($deleteData);
+	}
+
     public function manager($active_tab="all"){
         $data['breadcrumb'] 	= 'Usulan > '.ucwords(str_replace("-"," ",$active_tab));
         $data['active_menu'] 	= 'usulan_tna';

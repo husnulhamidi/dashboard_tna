@@ -611,6 +611,38 @@ class PengawalanModel extends CI_Model {
 		return $result = $query->result();
 	}
 
+	public function deleteDataEvaluasi($pengalamanId){
+		// delete m_tna_pengawalan_evaluasi_penilaian
+		$subquery = $this->db->select('id')
+                      ->from('m_tna_pengawalan_evaluasi')
+                      ->where('m_tna_pengawalan_id', $pengalamanId)
+                      ->get_compiled_select();
+
+		$this->db->where_in('m_tna_pengawalan_evaluasi_id', $subquery, false);
+		$delete = $this->db->delete('m_tna_pengawalan_evaluasi_penilaian');
+		if($delete){
+			// m_tna_pengawalan_evaluasi
+			$this->db->where('m_tna_pengawalan_id', $pengalamanId);
+			$this->db->delete('m_tna_pengawalan_evaluasi');
+
+			$return = array(
+				'success'		=> true,
+				'status_code'	=> 200,
+				'msg'			=> "Hapus data berhasi.",
+				'data'			=> array()
+			);
+		}else{
+			$return = array(
+				'success'		=> false,
+				'status_code'	=> 400,
+				'msg'			=> "Hapus data gagal.",
+				'data'			=> array()
+			);
+		}
+
+		return $return;
+	}
+
 	
 
 }

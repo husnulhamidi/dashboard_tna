@@ -103,7 +103,7 @@
                                                 Score :
                                                 <p style="margin-left:15px"> a. 16 - 25 : Baik </p>
                                                 <p style="margin-left:15px"> b. 10 - 15 : Cukup </p>
-                                                <p style="margin-left:15px"> c. 5 - 9 : Kurang (Perlu tindak lanjut, training ulang, breefing, dll) </p>
+                                                <p style="margin-left:15px"> c. < 10 : Kurang (Perlu tindak lanjut, training ulang, breefing, dll) </p>
                                             </th>
                                         </tr>
                                     </tfooter>

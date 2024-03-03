@@ -1098,34 +1098,34 @@ function getDataEvaluasi(){
 }
 
 function submitEvaluasi(){
-     $.ajax({
+    $.ajax({
         url: base_url+"tna/pengawalan/evaluasi",
         type: 'POST',
         dataType: "JSON",
         data: $('#form-evaluasi').serialize(),
         success: function(response) {
             console.log(response);
-            // if(response.success){
-            //     setTimeout(function() {
-            //         swal({
-            //             title: "Notifikasi!",
-            //             text: "Data berhasil diubah",
-            //             imageUrl: img_icon_success
-            //         }, function(d) {
-            //             location.reload();
-            //         });
-            //     }, 1000);
-            // }else{
-            //     setTimeout(function() {
-            //         swal({
-            //             title: "Notifikasi!",
-            //             text: "Data gagal diubah",
-            //             imageUrl: img_icon_error
-            //         }, function() {
-            //             location.reload();
-            //         });
-            //     }, 1000);
-            // }
+            if(response.success){
+                setTimeout(function() {
+                    swal({
+                        title: "Notifikasi!",
+                        text: "Data berhasil diubah",
+                        imageUrl: img_icon_success
+                    }, function(d) {
+                        location.reload();
+                    });
+                }, 1000);
+            }else{
+                setTimeout(function() {
+                    swal({
+                        title: "Notifikasi!",
+                        text: "Data gagal diubah",
+                        imageUrl: img_icon_error
+                    }, function() {
+                        location.reload();
+                    });
+                }, 1000);
+            }
             
         }            
     });

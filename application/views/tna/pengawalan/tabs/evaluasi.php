@@ -9,7 +9,7 @@
         <div class="col-md-12" style="padding-top: 10px">
             <label class="col-md-1"><h3> Evaluasi </h3></label>
             <div class="pull-left" style="margin-top:18px">
-                <button class="btn btn-success btn-xs" title="Edit"> <i class="fa fa-edit"></i></button>
+                <button class="btn btn-success btn-xs" title="Edit" id="edit-evaluasi"> <i class="fa fa-edit"></i></button>
             </div>
         </div>
         <div class="col-md-12" style="padding-top: 10px">
@@ -30,19 +30,34 @@
                 <tfooter>
                     <tr>
                         <th colspan="7"> 
-                            Score :
-                            <p style="margin-left:15px"> a. 16 - 25 : Baik </p>
-                            <p style="margin-left:15px"> b. 10 - 15 : Cukup </p>
-                            <p style="margin-left:15px"> c. 5 - 9 : Kurang (Perlu tindak lanjut, training ulang, breefing, dll) </p>
+                            <h4> Skor yang didapat adalah = <span id="skor"></span></h4>
                         </th>
                     </tr>
                 </tfooter>
             </table>
         </div>
+        <div class="col-md-12" style="margin-top:-40px">
+            <hr width="100%">
+        </div>
+        <div class="col-md-12">
+            <label class="col-md-2"><h4><b> Hasil Evaluasi </b></h4></label>
+            <div class="col-md-12">
+                <textarea class="form-control" readonly="" rows="5" id="hasil_evaluasi"></textarea>
+            </div>
+        </div>
+        
     </div>
 </div>
+<?php $this->load->view('tna/pengawalan/modal_popup/modal_edit_evaluasi'); ?>
 <script>
     $(document).ready(function(){
+        $('#edit-evaluasi').click(function(){
+            getDataEditEvaluasi()
+            console.log($('#id').val())
+            $('#evaluasi_edit_pengawalan_id').val($('#id').val())
+            $('#modalEditEvaluasi').modal('show')
+        });
+
         getDataDetailEvaluasi();
     });
 
@@ -56,12 +71,15 @@
             },
             dataType: "JSON",
             success:function(resp){
-                console.log(resp)
                 if(resp.length > 0){
-                    $('#jumlah_pertanyaan').val(resp.length)
+                    // $('#jumlah_pertanyaan').val(resp.length)
                     var tmpGroup = '';
                     var number = 0;
+                    var totalSkor = 0;
                     resp.forEach((element, index) => {
+                        if(element.nilai_skor){
+                            totalSkor = parseInt(totalSkor) +  parseInt(element.nilai_skor)
+                        }
                         var group = element.group;
                         if(tmpGroup != group){
                             number++;
@@ -103,8 +121,23 @@
                             $('#body-tbl-evaluasi').append(htmlSubGroup);
                         }
                     });
+                    console.log(resp[0].komentar)
+                    $('#hasil_evaluasi').val(resp[0].komentar)
+                    getKeterangan(totalSkor)
                 }
             },
         });
+    }
+
+    function getKeterangan(total){
+        var keterangan = '';
+        if(total < 10){
+            keterangan = 'Kurang (Perlu tindak lanjut, training ulang, breefing, dll)'
+        }else if(total < 16){
+            keterangan = 'Cukup'
+        }else{
+            keterangan = 'Baik'
+        }
+        $('#skor').html('<b> ' + total + ' : '+keterangan+' ' + '</b>')
     }
 </script>

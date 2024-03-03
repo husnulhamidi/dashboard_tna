@@ -234,6 +234,7 @@ $route['tna/pengawalan/edit_pembayaran']    = 'tna/pengawalan/edit_pembayaran';
 $route['tna/pengawalan/complete_internal_sharing']    = 'tna/pengawalan/complete_internal_sharing';
 $route['tna/pengawalan/getDataEvaluasi']    = 'tna/pengawalan/getDataEvaluasi';
 $route['tna/pengawalan/getDataDetailEvaluasi']    = 'tna/pengawalan/getDataDetailEvaluasi';
+$route['tna/pengawalan/edit_evaluasi']    = 'tna/pengawalan/edit_evaluasi';
 
 
 $route['tna/pengawalan/proses-verifikasi']    = 'tna/pengawalan/proses_verifikasi';
