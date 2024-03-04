@@ -12,20 +12,27 @@
                     <div class="box-header with-border">
                     
                         <div class="col-lg-12">
-                        <ul class="nav nav-tabs">
-                            <?php $this->load->view('tna/pengawalan/header_tab');?>
-                            <div class="pull-right">
-                                <a data-toggle='modal' data-target='#modalFilter'> 
-                                    <button class="btn btn-grey btn-sm">
-                                        <i class="fa fa-filter"></i> Filter
+                            <ul class="nav nav-tabs">
+                                <?php $this->load->view('tna/pengawalan/header_tab');?>
+                                <div class="pull-right">
+                                    <a data-toggle='modal' data-target='#modalFilter'> 
+                                        <button class="btn btn-grey btn-sm">
+                                            <i class="fa fa-filter"></i> Filter
+                                        </button>
+                                    </a>
+                                    <button class="btn btn-danger btn-sm btn-reset">
+                                        <i class="fa fa-repeat"></i> Reset
                                     </button>
-                                </a>
-                                <a href ="<?php echo base_url('tna/pengawalan/create'); ?>"><button class="btn btn-info btn-sm">
-                                        <i class="glyphicon glyphicon-plus"></i> Tambah Data
+                                    <!-- <a href ="<?php echo base_url('tna/pengawalan/create'); ?>">
+                                        <button class="btn btn-info btn-sm">
+                                            <i class="glyphicon glyphicon-download"></i> Export
+                                        </button>
+                                    </a> -->
+                                    <button class="btn btn-info btn-sm" id="btnExport">
+                                        <i class="fa fa-download"></i> Export
                                     </button>
-                                </a>
-                            </div>
-                        </ul>
+                                </div>
+                            </ul>  
                             
                         </div>
                     </div>
