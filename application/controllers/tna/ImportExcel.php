@@ -546,6 +546,12 @@ class ImportExcel extends CI_Controller {
 				$this->db->where('nik_tg',$row['C']);
 				$karyawanId = $this->db->get()->row();
 
+				// cek atasan 
+				$this->db->select('id, nik_tg');
+				$this->db->from('m_karyawan');
+				$this->db->where('nik_tg',$row['F']);
+				$verifikatorId = $this->db->get()->row();
+
 				// cek kompetensi
 				$this->db->select('id, code');
 				$this->db->from('r_tna_kompetensi');
@@ -599,6 +605,7 @@ class ImportExcel extends CI_Controller {
 						// 'objective' 			=> $this->input->post('objective'),
 						'code_tna' 				=> $code_tna,
 						'is_tna' 				=> $is_tna,
+						'verifikator_id_1'		=> $verifikatorId,
 					);
 					// echo json_encode(array($data));
 					$this->tna->insertData($data);
