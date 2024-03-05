@@ -300,6 +300,9 @@ $route['tna/proses_tna']    = 'tna/tna/proses_tna';
 $route['tna/get_karyawan']    = 'tna/tna/get_karyawan';
 $route['tna/exportExcel']    = 'tna/tna/exportExcel';
 
+// $route['tna/referensi/job-family/import'] = 'tna/importexcel/import_excel_jobfamily';
+$route['tna/import'] = 'tna/importexcel/import_excel_tna';
+
 
 //=====================================================================================================================
 // library materi

@@ -30,7 +30,7 @@
                                             <div class="form-group">
                                                 <div class="form-line">
                                                     <input type="file" name="file-import" id="file-import" required accept=".csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" >
-                                                    <input type="hidden" name="input-file-project" value="projet">
+                                                    <input type="hidden" name="input-file-excel" value="file-import">
                                                 </div>
                                             </div>
                                         </div>
@@ -46,6 +46,17 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="row clearfix">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <div class="form-line">
+                                                   <span id="template_upload"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="progress pgrs-project" style="display: none;">
                                         <div class="progress-bar progress-bar-striped active persentase-project" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">0%</div>
                                     </div>

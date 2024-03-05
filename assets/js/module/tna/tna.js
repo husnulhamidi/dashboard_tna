@@ -197,27 +197,27 @@ function submitTNA(){
                 data: combinedData,
                 success: function(response) {
                     console.log(response)
-                    // if(response.success){
-                    //     setTimeout(function() {
-                    //         swal({
-                    //             title: "Notifikasi!",
-                    //             text: "Data berhasil disimpan",
-                    //             imageUrl: img_icon_success
-                    //         }, function(d) {
-                    //             location.href = base_url+'/tna'
-                    //         });
-                    //     }, 1000);
-                    // }else{
-                    //     setTimeout(function() {
-                    //         swal({
-                    //             title: "Notifikasi!",
-                    //             text: "Data gagal disimpan",
-                    //             imageUrl: img_icon_error
-                    //         }, function() {
-                    //             location.reload();
-                    //         });
-                    //     }, 1000);
-                    // }
+                    if(response.success){
+                        setTimeout(function() {
+                            swal({
+                                title: "Notifikasi!",
+                                text: "Data berhasil disimpan",
+                                imageUrl: img_icon_success
+                            }, function(d) {
+                                location.href = base_url+'/tna'
+                            });
+                        }, 1000);
+                    }else{
+                        setTimeout(function() {
+                            swal({
+                                title: "Notifikasi!",
+                                text: "Data gagal disimpan",
+                                imageUrl: img_icon_error
+                            }, function() {
+                                location.reload();
+                            });
+                        }, 1000);
+                    }
                     
                 }            
             });

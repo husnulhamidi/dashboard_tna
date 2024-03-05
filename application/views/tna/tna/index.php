@@ -80,12 +80,16 @@
     </div>
 </section>
 <?php 
-    $this->load->view('tna/tna/modal_upload');
-
-    // $this->load->view('tna/common/form_import_excel');
+    // $this->load->view('tna/tna/modal_upload');
+    $this->load->view('tna/common/form_import_excel');
 ?>
 <?php $this->load->view('tna/tna/modal_filter');?>
 <script type="text/javascript">
+    $(document).ready(function(){
+        const link_template = base_url+'files/upload/excel/template_uplaod_tna.xlsx'
+        $('#template_upload').html('Untuk template uplaod file <a href="'+link_template+'"> Download Disini </a>')
+    })
+    const url_submit_import = base_url+"tna/import";
     const url_detail = '<?php echo base_url('tna/detail/');?>';
    var url_edit ='<?php echo base_url('tna/edit/');?>';
 </script>

@@ -235,11 +235,19 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-
                                                 <div class="col-sm-8">
                                                     <input type="hidden" class="form-control" name="status_fte[]" id="status_fte1"> 
                                                 </div>
                                             </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Nama Atasan <span style="color: red">*</span></label>
+                                                <div class="col-sm-8">
+                                                    <select class="select2 form-control" name="verifikator_id_1[]" id="verifikator_id_11" >
+                                                        <option value="">---Pilih Atasan ---</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
                                             <hr>
                                         </div>
                                     </div>
@@ -287,7 +295,8 @@ $(document).ready(function () {
         $('.remove-field').css('display','none')
         let subditId = $('#subdit').val();
         let karyawanId = '<?php echo @$detail->m_karyawan_id;?>'
-        getKaryawanBySubdit(1,karyawanId)
+        let varifikatorId = '<?php echo @$detail->verifikator_id_1;?>'
+        getKaryawanBySubdit(1,karyawanId,varifikatorId)
         getDataDetailKaryawan(1, karyawanId)
 
         let trainingId = '<?php echo @$detail->r_tna_traning_id;?>'
@@ -318,7 +327,7 @@ $(document).ready(function () {
 
 });
 
-function getKaryawanBySubdit(count, karyawanId = false){
+function getKaryawanBySubdit(count, karyawanId = false, varifikatorId = false){
     let subditId = $('#subdit'+count).val();
     $.ajax({
         url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_organisasi'); ?>',
@@ -329,13 +338,21 @@ function getKaryawanBySubdit(count, karyawanId = false){
         success: function (result) {
             $('#karyawan'+count).empty(); 
             $('#karyawan'+count).append('<option value="">-- Pilih Karyawan --</option>');
+
+            $('#verifikator_id_1'+count).empty(); 
+            $('#verifikator_id_1'+count).append('<option value="">-- Pilih Atasan --</option>');
             if(result !== null){
                 $.each(result, function(i, value) {
                     var selected = '';
+                    var selected2 = '';
                     if(value['id'] == karyawanId){
                         selected = 'selected';
                     }
+                    if(value['id'] == varifikatorId){
+                        selected2 = 'selected';
+                    }
                     $('#karyawan'+count).append('<option '+selected+' value=' + value['id'] + '>' + value['nama'] + ' | '+ value['nik_tg']+' | '+value['jabatan_nama']+'</option>');
+                    $('#verifikator_id_1'+count).append('<option '+selected2+' value=' + value['id'] + '>' + value['nama'] + ' | '+ value['nik_tg']+' | '+value['jabatan_nama']+'</option>');
                 });
             }
         }
@@ -514,9 +531,17 @@ function appendRow(count){
                 </div>
             </div>
             <div class="form-group">
-
                 <div class="col-sm-8">
                     <input type="hidden" class="form-control" name="status_fte[]" id="status_fte`+count+`"> 
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Nama Atasan <span style="color: red">*</span></label>
+                <div class="col-sm-8">
+                    <select class="select2 form-control" name="verifikator_id_1[]" id="verifikator_id_1`+count+`" >
+                        <option value="">---Pilih Atasan ---</option>
+
+                    </select>
                 </div>
             </div>
             <hr>

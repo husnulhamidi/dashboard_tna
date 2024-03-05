@@ -16,6 +16,7 @@ class ImportExcel extends CI_Controller {
 		$this->load->model('Reference/KompetensiModel','kompetensi');
 		$this->load->model('Reference/TrainingModel','training');
 		$this->load->model('Reference/LembagaModel','lembaga');
+		$this->load->model('TnaModel','tna');
 	}
 
     public function import_excel_jobfamily(){
@@ -497,6 +498,133 @@ class ImportExcel extends CI_Controller {
 
         }
     	echo json_encode(array($json));
+	}
+
+	public function import_excel_tna(){
+
+		ini_set('memory_limit',-1);
+		ini_set('MAX_EXECUTION_TIME', 0);
+	
+		$data =array();
+		$config['upload_path'] = './files/upload/excel';
+		$config['allowed_types'] = 'xls|xlsx|csv';
+		$config['max_size'] = '20000';
+		$input = $this->input->post('input-file-excel');
+		
+		$new_name = time().'_'.$_FILES[$input]['name'];
+		$config['file_name'] = $new_name;
+	
+		$this->upload->initialize($config);
+		if ( ! $this->upload->do_upload($this->input->post('input-file-excel'))){
+			$json = array(
+				'code' => '0005',
+				'message' => $this->upload->display_errors(),
+			);
+		
+		} else {
+			
+			$upload_data  = $this->upload->data();
+			$file = $upload_data['full_path'];
+			require_once APPPATH.'third_party/PHPExcel_/PHPExcel.php';
+			
+			$excelreader = new PHPExcel_Reader_Excel2007();
+			$loadexcel = $excelreader->load($file); 
+			$sheet = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
+	
+			$this->db->trans_start();
+			$no = 1;
+			foreach($sheet as $row){
+				// cek organisasi
+				$this->db->select('id, nama');
+				$this->db->from('m_organisasi');
+				$this->db->where('nama',$row['B']);
+				$orgId = $this->db->get()->row();
+
+				// cek karyawan 
+				$this->db->select('id, nik_tg');
+				$this->db->from('m_karyawan');
+				$this->db->where('nik_tg',$row['C']);
+				$karyawanId = $this->db->get()->row();
+
+				// cek kompetensi
+				$this->db->select('id, code');
+				$this->db->from('r_tna_kompetensi');
+				$this->db->where('code',$row['O']);
+				$kompId = $this->db->get()->row();
+				
+				// cek training
+				$this->db->select('id, code');
+				$this->db->from('r_tna_training');
+				$this->db->where('code',$row['I']);
+				$trainingId = $this->db->get()->row();
+
+				// tahapanId
+				$tahapanId = $this->tna->get_tahapan_id(1);
+
+				// is_tna
+				$is_tna = 0;
+				if($row['S'] == 'TNA')$is_tna = 1;
+
+				// code tna
+				$this->db->select('count(r_tna_traning_id) as count');
+				$this->db->from('m_tna_pengawalan');
+				$this->db->where('r_tna_traning_id', $trainingId->id);
+				$query = $this->db->get();
+				$countTraining = $query->row();
+				if($countTraining < 1000){
+					$countTraining = '000'.$countTraining;
+				}elseif($countTraining < 100){
+					$countTraining = '00'.$countTraining;
+				}else{
+					$countTraining = '0'.$countTraining;
+				}
+				$code_tna = $row['I'].$countTraining;
+
+				if($no >1){
+					$data= array(
+						'm_organisasi_id'		=> $orgId->id,
+						'm_karyawan_id'			=> $karyawanId->id,
+						'status_karyawan'		=> $row['E'],	
+						'r_tna_kompetensi_id' 	=> $kompId->id,
+						'r_tna_traning_id' 		=> $trainingId->id,
+						'jenis_pelatihan' 		=> $row['N'],
+						'jenis_development' 	=> $row['K'],	
+						'nama_kegiatan' 		=> $row['H'],
+						// 'justifikasi_pengajuan' =>	$this->input->post('justifikasi'),
+						'metoda_pembelajaran' 	=> $row['M'],
+						'estimasi_biaya' 		=> $row['R'],
+						'nama_penyelenggara' 	=> $row['P'],
+						'waktu_pelaksanaan' 	=> $row['Q'],
+						'tahapan_id' 			=> $tahapanId->id,
+						// 'objective' 			=> $this->input->post('objective'),
+						'code_tna' 				=> $code_tna,
+						'is_tna' 				=> $is_tna,
+					);
+					// echo json_encode(array($data));
+					$this->tna->insertData($data);
+	
+				}
+				$no++;
+			}
+		
+	
+			$this->db->trans_complete();
+			if($this->db->trans_status() === FALSE){
+				$json = array(
+					'rc' => '0001',
+					'message' => 'Terjadi kesalahan Database & File!',
+				);
+			}else{
+	
+				unlink("./files/upload/excel/".$new_name);
+				$json = array(
+					'rc' => '0000',
+					'message' => 'Data berhasil diimport',
+				);
+			}
+	
+		}
+		echo json_encode(array($json));
 	}
 
 

@@ -193,6 +193,7 @@ class Tna extends CI_Controller {
 			$data['m_karyawan_id'] = $this->input->post('karyawan')[0];
 			$data['m_organisasi_id'] = $this->input->post('subdit')[0];
 			$data['status_karyawan'] = $this->input->post('status_fte')[0];
+			$data['verifikator_id_1'] = $this->input->post('verifikator_id_1')[0];
 			
 			$action = $this->TnaModel->updateData($data, $this->input->post('id'));
 		}else{
@@ -204,6 +205,8 @@ class Tna extends CI_Controller {
 					$data['m_karyawan_id'] = $value;
 					$data['m_organisasi_id'] = $this->input->post('subdit')[$key];
 					$data['status_karyawan'] = $this->input->post('status_fte')[$key];
+					$data['verifikator_id_1'] = $this->input->post('verifikator_id_1')[$key];
+
 					$action = $this->TnaModel->insertData($data);
 				}	
 			}
@@ -213,47 +216,37 @@ class Tna extends CI_Controller {
 		}
 		
 
-		if($action){
-			// save penyelenggara
-			if($this->input->post('new_penyelenggara')){
-				$dataPenyelenggara = array(
-					'nama_lembaga' 	=> $this->input->post('new_penyelenggara'),
-					'nama_pic'		=> $this->input->post('pic'),
-					'telp'			=> $this->input->post('telp'),
-					'website'		=> $this->input->post('website'),
-					'alamat'		=> $this->input->post('alamat'),
-	
-				);
-				$savePenyelenggara = $this->TnaModel->savePenyelenggara($dataPenyelenggara);
+		if($this->input->post('new_penyelenggara')){
+			$dataPenyelenggara = array(
+				'nama_lembaga' 	=> $this->input->post('new_penyelenggara'),
+				'nama_pic'		=> $this->input->post('pic'),
+				'telp'			=> $this->input->post('telp'),
+				'website'		=> $this->input->post('website'),
+				'alamat'		=> $this->input->post('alamat'),
 
-				$dataDetail = array(
-					'r_tna_lembaga_id'		=> $savePenyelenggara,
-					'r_tna_training_id'		=> $this->input->post('tna'),
-					'nama_pelatihan'		=> $this->input->post('new_penyelenggara'),
-					'jenis_pelatihan'		=> $this->input->post('jenis_pelatihan'),
-					'metoda'				=> $this->input->post('metoda'),
-					'biaya'					=> $this->input->post('biaya'), 
-					'kapasitas'				=> $this->input->post('kapasitas')
-				);
+			);
+			$savePenyelenggara = $this->TnaModel->savePenyelenggara($dataPenyelenggara);
 
-				$this->TnaModel->saveDetailPenyelenggara($dataDetail);
-			}
-			
-			
-			$return = array(
-				'success'		=> true,
-				'status_code'	=> 201,
-				'msg'			=> "Data berhasil di simpan.",
-				'data'			=> $action
+			$dataDetail = array(
+				'r_tna_lembaga_id'		=> $savePenyelenggara,
+				'r_tna_training_id'		=> $this->input->post('tna'),
+				'nama_pelatihan'		=> $this->input->post('new_penyelenggara'),
+				'jenis_pelatihan'		=> $this->input->post('jenis_pelatihan'),
+				'metoda'				=> $this->input->post('metoda'),
+				'biaya'					=> $this->input->post('biaya'), 
+				'kapasitas'				=> $this->input->post('kapasitas')
 			);
-		}else{
-			$return = array(
-				'success'		=> false,
-				'status_code'	=> 500,
-				'msg'			=> "Data gagal di simpan.",
-				'data'			=> $action
-			);
+
+			$this->TnaModel->saveDetailPenyelenggara($dataDetail);
 		}
+		
+		
+		$return = array(
+			'success'		=> true,
+			'status_code'	=> 201,
+			'msg'			=> "Data berhasil di simpan.",
+			'data'			=> array()
+		);
 		
 		echo json_encode($return);
 	}
