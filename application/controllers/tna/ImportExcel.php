@@ -533,6 +533,8 @@ class ImportExcel extends CI_Controller {
 	
 			$this->db->trans_start();
 			$no = 1;
+			$update_count = true;
+			$tmp_count = '';
 			foreach($sheet as $row){
 				// cek organisasi
 				$this->db->select('id, nama');
@@ -577,14 +579,22 @@ class ImportExcel extends CI_Controller {
 				$this->db->where('r_tna_traning_id', $trainingId->id);
 				$query = $this->db->get();
 				$countTraining = $query->row();
-				if($countTraining < 1000){
-					$countTraining = '000'.$countTraining;
-				}elseif($countTraining < 100){
-					$countTraining = '00'.$countTraining;
+
+				// $count = $countTraining;
+				if($update_count == true){
+					$count = $countTraining + 1;
 				}else{
-					$countTraining = '0'.$countTraining;
+					$count = $tmp_count;
 				}
-				$code_tna = $row['I'].$countTraining;
+
+				if($count < 1000){
+					$count = '000'.$count;
+				}elseif($count < 100){
+					$count = '00'.$count;
+				}else{
+					$count = '0'.$count;
+				}
+				$code_tna = $row['I'].$count;
 
 				if($no >1){
 					$data= array(
@@ -598,7 +608,8 @@ class ImportExcel extends CI_Controller {
 						'nama_kegiatan' 		=> $row['H'],
 						// 'justifikasi_pengajuan' =>	$this->input->post('justifikasi'),
 						'metoda_pembelajaran' 	=> $row['M'],
-						'estimasi_biaya' 		=> $row['R'],
+						// 'estimasi_biaya' 		=> $row['R'],
+						'estimasi_biaya' 		=> str_replace(".", "", $row['R']),
 						'nama_penyelenggara' 	=> $row['P'],
 						'waktu_pelaksanaan' 	=> $row['Q'],
 						'tahapan_id' 			=> $tahapanId->id,
@@ -609,6 +620,9 @@ class ImportExcel extends CI_Controller {
 					);
 					// echo json_encode(array($data));
 					$this->tna->insertData($data);
+					$update_count = false;
+					$tmp_count = $count;
+
 	
 				}
 				$no++;
