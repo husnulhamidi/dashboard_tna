@@ -161,7 +161,8 @@ class InternalSharing_Model extends CI_Model {
         				  mti.tempat,mti.biaya,mti.kuota, mti.link_zoom,mti.r_tna_training_id,mti.m_organisasi_id,mti.m_karyawan_id,
         				   mk.nama as narasumber,
         				   mo.nama as organisasi,
-                           mti.is_complete
+                           mti.is_complete,mti.no_urut,
+                           mk.nik_tg
         	')
         ->from('m_tna_internal_sharing as mti')
         ->join('m_karyawan as mk','mti.m_karyawan_id = mk.id')
@@ -486,7 +487,7 @@ class InternalSharing_Model extends CI_Model {
     }
 
     public function getPeserta($id){
-        $data = $this->db->select('mk.nama')
+        $data = $this->db->select('mk.nama, mk.nik_tg')
                 ->from('m_tna_internal_sharing_peserta as isp')
                 ->join('m_karyawan mk','mk.id = isp.m_karyawan_id')
                 ->where('isp.m_tna_internal_sharing_id', $id)
@@ -496,7 +497,7 @@ class InternalSharing_Model extends CI_Model {
     }
 
     public function getPemateri($id){
-        $data = $this->db->select('mk.nama')
+        $data = $this->db->select('mk.nama, mk.nik_tg')
                 ->from('m_tna_internal_sharing as is')
                 ->join('m_karyawan mk','mk.id = is.m_karyawan_id')
                 ->where('is.id', $id)

@@ -265,7 +265,8 @@ class InternalSharing extends CI_Controller {
 			'tempat' => $this->input->post('tempat'),
 			'biaya' => $this->input->post('biaya'),
 			'kuota' => $this->input->post('kuota'),
-			'link_zoom' => $this->input->post('linkZoom')
+			'link_zoom' => $this->input->post('linkZoom'),
+			'no_urut' => $this->input->post('no_urut')
 		);
 		if($this->input->post('id')){
 			$data['updated_date'] = date('Y-m-d');

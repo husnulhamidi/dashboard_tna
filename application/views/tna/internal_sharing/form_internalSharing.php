@@ -79,6 +79,12 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="col-sm-2 control-label">No Urut <span class="text-red">*</span></label>
+                                        <div class="col-sm-6">
+                                            <input type="number" max=9999 class="form-control" placeholder="No Urut" value="<?php echo @$detail->no_urut;?>" name="no_urut" id="no_urut">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-sm-2 control-label">Link Zoom </label>
                                         <div class="col-sm-6">
                                             <input type="text" class="form-control" placeholder="Link Zoom" name="linkZoom" id="linkZoom" value="<?php echo @$detail->link_zoom;?>">

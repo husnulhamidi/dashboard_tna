@@ -97,7 +97,7 @@
 	                   	<div class="row">
 	                   		<div class="col-md-4" style="padding-top: 20px">
 	                   			<div class="pull-right" style="padding-right: 10%">
-								   <?php if ($detail->is_complete == 0): ?>
+								   <?php if ($detail->is_complete == 0 && $detail->tanggal <= date('Y-m-d')): ?>
 										<button class='btn btn-sm btn-primary btn-complete' title='Selesai'>
 											<i class='fa fa-check'></i>&nbsp;Complete 
 										</button>

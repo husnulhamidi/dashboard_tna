@@ -83,11 +83,14 @@
 <body>
 	<?php
 		if(@$data['pemateri'][0]->nama){
+			$nik = $data['pemateri'][0]->nik_tg;
+			$no_urut = str_pad((int)$data['detail']->no_urut, 4, '0', STR_PAD_LEFT);
+			$no_certif = $nik.'/'.$no_urut.'/D4.400/PD200/TSAT/'.date('m').'.'.date('Y');
 			echo '
 			<div class="orify" style="margin-top:120px !important;">
 				<div class="section" style="text-align: center;">
 		            <p class="orify firstStyle" style="padding-top: 30px"> Certificate Of Attendance</p>
-		            <p class="orify secondStyle" style=""> Nomor : 890042/0010/D4.400/PD200/TSAT/10.2023</p>
+		            <p class="orify secondStyle" style=""> Nomor : '.$no_certif.'</p>
 		        </div>
 		        <div class="section" style="text-align: center;">
 		            <p class="orify thirdStyle" style="margin-top: 10px"> Sertifikat ini menyatakan bahwa </p>
@@ -125,12 +128,17 @@
  	<?php
  		$no = 0;
  		foreach ($data['peserta'] as $key => $value) {
+
+			$nik = $value->nik_tg;
+			$no_urut = str_pad((int)$data['detail']->no_urut, 4, '0', STR_PAD_LEFT);
+			$no_certif = $nik.'/'.$no_urut.'/D4.400/PD200/TSAT/'.date('m').'.'.date('Y');
+
  			$no = $no+1;
  			echo '
 			<div class="orify" style="margin-top:120px !important;">
 				<div class="section" style="text-align: center;">
 		            <p class="orify firstStyle" style="padding-top: 30px"> Certificate Of Attendance</p>
-		            <p class="orify secondStyle" style=""> Nomor : 890042/0010/D4.400/PD200/TSAT/10.2023</p>
+		            <p class="orify secondStyle" style=""> Nomor : '.$no_certif.'</p>
 		        </div>
 		        <div class="section" style="text-align: center;">
 		            <p class="orify thirdStyle" style="margin-top: 10px"> Sertifikat ini menyatakan bahwa </p>
