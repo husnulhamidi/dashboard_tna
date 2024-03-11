@@ -251,6 +251,7 @@ class TnaModel extends CI_Model {
 		$this->db->from('r_tna_lembaga tl');
 		$this->db->join('r_tna_lembaga_detail tld', 'tl.id = tld.r_tna_lembaga_id');
 		$this->db->where('tld.r_tna_training_id', $id);
+		$this->db->where('tl.status_code', '1');
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -262,6 +263,12 @@ class TnaModel extends CI_Model {
 	public function saveDetailPenyelenggara($data){
 		$this->db->insert('r_tna_lembaga_detail', $data);
 		return $this->db->insert_id();
+	}
+
+	public function getDetailPenyelenggara($id){
+		$this->db->where('id', $id);
+		$data = $this->db->get('r_tna_lembaga')->row();
+		return $data;
 	}
 
 	public function getDataExport($post){
@@ -323,6 +330,13 @@ class TnaModel extends CI_Model {
 
 		$query = $this->db->get();
         return $query->result();
+	}
+
+	public function get_lembaga(){
+		$this->db->where('status_code', '1');
+		$this->db->where('nama_lembaga IS NOT NULL', null, false);
+		$data = $this->db->get('r_tna_lembaga')->result();
+		return $data;
 	}
 
 

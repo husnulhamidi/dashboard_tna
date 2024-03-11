@@ -186,15 +186,16 @@ function submitTNA(){
             $(element).parent().parent().removeClass("has-error")
         },
         submitHandler: function(form) {
-            var formData1 = $(form).serializeArray();
-            var formData2 = $('#form-add-penyelenggara').serializeArray();
+            // var formData1 = $(form).serializeArray();
+            // var formData2 = $('#form-add-penyelenggara').serializeArray();
 
-            var combinedData = formData1.concat(formData2);
+            // var combinedData = formData1.concat(formData2);
             $.ajax({
                 url: base_url+"tna/submit",
                 type: 'POST',
                 dataType: "JSON",
-                data: combinedData,
+                // data: combinedData,
+                data: $(form).serialize(),
                 success: function(response) {
                     console.log(response)
                     if(response.success){

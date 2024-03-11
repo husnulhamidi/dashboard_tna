@@ -147,7 +147,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group" id="divNewPeneyelenggara" style="display:none">
+                                <!-- <div class="form-group" id="divNewPeneyelenggara" style="display:none">
                                     <label class="col-sm-3 control-label"> &nbsp; </label>
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control" readonly="" id="tmpPenyelenggara">
@@ -155,7 +155,7 @@
                                     <div class="col-md-2">
                                         <button class="btn btn-danger btn-sm pull-left " onclick="deletePenyelenggara()"><b> <li class="fa fa-close"></li></b> </button>
                                     </div>
-                                </div>
+                                </div> -->
                                 
                                 <div class="form-group">                    
                                     <label class="col-sm-3 control-label">Rencana Waktu Pelaksanaan <span style="color: red">*</span></label>
@@ -461,27 +461,27 @@ function addPenyelenggara(){
    
 }
 
-function btnClose(){
-    let new_penyelenggara = $('#new_penyelenggara').val()
-    if(new_penyelenggara){
-        $('#penyelenggara').prop('disabled', true)
-        $('#tmpPenyelenggara').val(new_penyelenggara)
-        $('#divNewPeneyelenggara').css('display', 'block')
+// function btnClose(){
+//     let new_penyelenggara = $('#new_penyelenggara').val()
+//     if(new_penyelenggara){
+//         $('#penyelenggara').prop('disabled', true)
+//         $('#tmpPenyelenggara').val(new_penyelenggara)
+//         $('#divNewPeneyelenggara').css('display', 'block')
 
        
-        let edit = `<li class="fa fa-edit"></li> Edit Penyelenggara</b>`;
-        $("#btnText").html(edit);
-    }
-}
+//         let edit = `<li class="fa fa-edit"></li> Edit Penyelenggara</b>`;
+//         $("#btnText").html(edit);
+//     }
+// }
 
-function deletePenyelenggara(){
-    $('#penyelenggara').prop('disabled', false)
-    $('#divNewPeneyelenggara').css('display', 'none')
-    $('#form-add-penyelenggara')[0].reset();
+// function deletePenyelenggara(){
+//     $('#penyelenggara').prop('disabled', false)
+//     $('#divNewPeneyelenggara').css('display', 'none')
+//     $('#form-add-penyelenggara')[0].reset();
     
-    let tambah = `<li class="fa fa-plus"></li> Tambah Penyelenggara</b>`;
-    $("#btnText").html(tambah);
-}
+//     let tambah = `<li class="fa fa-plus"></li> Tambah Penyelenggara</b>`;
+//     $("#btnText").html(tambah);
+// }
 
 
 function appendRow(count){
