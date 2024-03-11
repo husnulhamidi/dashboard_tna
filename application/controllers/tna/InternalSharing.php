@@ -12,6 +12,7 @@ class InternalSharing extends CI_Controller {
 		}
 		$this->load->model('InternalSharing_Model', 'InternalSharing');
 		$this->load->model('Setting_ttd_model', 'settingTTD');
+		$this->load->model('PengawalanModel', 'PengawalanModel');
 		//Do your magic here
     
 	}
@@ -490,6 +491,22 @@ class InternalSharing extends CI_Controller {
 		}
 
 		echo json_encode($data);
+	}
+
+	public function complate(){
+		// echo json_encode($this->input->post());
+		$dataInternalSharing = array(
+			'is_complete' => 1
+		);
+		$action = $this->PengawalanModel->updateInternalSharing($dataInternalSharing, $this->input->post('internalSharingId') );
+		$this->insertHistory($this->input->post('internalSharingId'),'Internal Sharing complate');
+		$return = array(
+			'success'		=> true,
+			'status_code'	=> 201,
+			'msg'			=> "Data berhasil diubah.",
+			'data'			=> array()
+		);
+		echo json_encode($return);
 	}
 
 	private function insertHistory($idInternahSahring, $ket){

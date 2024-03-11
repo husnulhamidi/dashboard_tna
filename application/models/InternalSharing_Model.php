@@ -160,7 +160,8 @@ class InternalSharing_Model extends CI_Model {
 		$data = $this->db->select('mti.id,mti.judul_materi,mti.tanggal,mti.jam,
         				  mti.tempat,mti.biaya,mti.kuota, mti.link_zoom,mti.r_tna_training_id,mti.m_organisasi_id,mti.m_karyawan_id,
         				   mk.nama as narasumber,
-        				   mo.nama as organisasi
+        				   mo.nama as organisasi,
+                           mti.is_complete
         	')
         ->from('m_tna_internal_sharing as mti')
         ->join('m_karyawan as mk','mti.m_karyawan_id = mk.id')

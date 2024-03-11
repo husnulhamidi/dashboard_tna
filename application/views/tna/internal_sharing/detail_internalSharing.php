@@ -97,6 +97,12 @@
 	                   	<div class="row">
 	                   		<div class="col-md-4" style="padding-top: 20px">
 	                   			<div class="pull-right" style="padding-right: 10%">
+								   <?php if ($detail->is_complete == 0): ?>
+										<button class='btn btn-sm btn-primary btn-complete' title='Selesai'>
+											<i class='fa fa-check'></i>&nbsp;Complete 
+										</button>
+									<?php endif; ?>
+								   
 	                   				<a 
 	                   					href="<?php echo $action_url_edit.'/'.$detail->id ?>" 
 	                   					class="btn btn-sm btn-primary">
@@ -282,5 +288,53 @@
         $(".timepicker").timepicker({
           showInputs: false
         });
+
+		$('.btn-complete').click(function(){
+			let id = $('#id').val()
+			// alert('aksi complete')
+			var data = {
+                internalSharingId : id
+            }
+			swal({
+                title: "Apakah anda yakin akan menyelesaikan internal sharing ini?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Ya!",
+                closeOnConfirm: false
+            }, function () {
+                console.log("masuk")
+                $.ajax({
+                    type : "POST",
+                    url  : base_url+"tna/internalSharing/complate",
+                    dataType: "JSON",
+                    data : data,
+                    success:function(resp){
+                        console.log(resp)
+                        if(resp.success){
+                            setTimeout(function() {
+                                swal({
+                                    title: "Notifikasi!",
+                                    text: "Data berhasil diubah",
+                                    imageUrl: img_icon_success
+                                }, function() {
+                                    location.reload();
+                                });
+                            }, 1000);
+                        }else{
+                            setTimeout(function() {
+                                swal({
+                                    title: "Notifikasi!",
+                                    text: "Data gagal diubah",
+                                    imageUrl: img_icon_error
+                                }, function() {
+                                    location.reload();
+                                });
+                            }, 1000);
+                        }
+                    }
+                });
+            });
+		})
     })
 </script>

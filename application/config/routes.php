@@ -254,6 +254,7 @@ $route['tna/internalSharing/create']    = 'tna/InternalSharing/create';
 $route['tna/internalSharing/edit/(:any)']    = 'tna/InternalSharing/edit/$1';
 $route['tna/internalSharing/detail/(:any)']    = 'tna/InternalSharing/detail/$1';
 $route['tna/internalSharing/generate_sertifikat/(:any)/(:any)']    = 'tna/InternalSharing/generate_sertifikat/$1/$1';
+$route['tna/internalSharing/complate']    = 'tna/InternalSharing/complate';
 
 $route['tna/internalSharing-employee']    = 'tna/InternalSharing/index2';
 $route['tna/internalSharing-employee/detail/(:any)']    = 'tna/InternalSharing/detail2/$1';
