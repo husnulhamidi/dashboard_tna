@@ -872,22 +872,22 @@ function uploadMateri(id,tahapanId,urutanId,namaKaryawan, penyelenggara, pelatih
 
 function submitUploadMateri(){
     $(".form-upload-materi").validate({
-        rules: {
-            nama_dokumen: "required",
-        },
-        messages: {
-            nama_dokumen:{
-                required:"<i class='fa fa-times'></i> Nama dokumen wajib diisi"
-            }          
-        },
-        highlight: function (element) {
-            $(element).parent().parent().addClass("has-error")
-            $(element).parent().addClass("has-error")
-        },
-        unhighlight: function (element) {
-            $(element).parent().removeClass("has-error")
-            $(element).parent().parent().removeClass("has-error")
-        },
+        // rules: {
+        //     nama_dokumen: "required",
+        // },
+        // messages: {
+        //     nama_dokumen:{
+        //         required:"<i class='fa fa-times'></i> Nama dokumen wajib diisi"
+        //     }          
+        // },
+        // highlight: function (element) {
+        //     $(element).parent().parent().addClass("has-error")
+        //     $(element).parent().addClass("has-error")
+        // },
+        // unhighlight: function (element) {
+        //     $(element).parent().removeClass("has-error")
+        //     $(element).parent().parent().removeClass("has-error")
+        // },
         submitHandler: function(form) {
             $.ajax({
                 url: base_url+"tna/pengawalan/upload_materi",

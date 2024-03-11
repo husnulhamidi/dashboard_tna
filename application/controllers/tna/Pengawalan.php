@@ -461,7 +461,8 @@ class Pengawalan extends CI_Controller {
 			$allowed_types = '*';
 			$upload_file = upload_file($fileName, $pathName, $allowed_types, $this);
 			if($upload_file['success'] == false){
-			    die(json_encode($upload_file)); 
+			    // die(json_encode($upload_file));
+				$upload_file['data'] = ''; 
 			}	
 		}
 
