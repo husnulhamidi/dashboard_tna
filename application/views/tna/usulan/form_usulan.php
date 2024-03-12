@@ -127,6 +127,15 @@
                                                 <button class="btn btn-info btn-sm pull-left" id="btnText" onclick="addPenyelenggara()"><b> <li class="fa fa-plus"></li> Tambah Penyelenggara</b> </button>
                                             </div>
                                         </div>
+                                        <div class="form-group" style="display:none" id="divAddNew">
+                                            <label class="col-sm-3 control-label">&nbsp;</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" name="new_penyelenggara" id="new_penyelenggara">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button class="btn btn-danger btn-sm pull-left" onclick="deletePenyelenggara()"><b> <li class="fa fa-remove"></li> Batal tambah baru </b> </button>
+                                            </div>
+                                        </div>
                                         <!-- <div class="form-group" id="divNewPeneyelenggara" style="display:none">
                                             <label class="col-sm-3 control-label"> &nbsp; </label>
                                             <div class="col-sm-6">
@@ -522,9 +531,20 @@ function getDataLembaga(){
 
 function addPenyelenggara(){
 // alert('tamabah')
-    $('#modalTambahPenyelenggara').modal({backdrop: 'static', keyboard: false}) 
-    $('#modalTambahPenyelenggara').modal('show')
+    // $('#modalTambahPenyelenggara').modal({backdrop: 'static', keyboard: false}) 
+    // $('#modalTambahPenyelenggara').modal('show')
+    $('#divAddNew').css('display', 'block')
+    $('#penyelenggara').prop('disabled', true)
+    $('#divBtnAddPenyelenggara').css('display', 'none')
 
+
+}
+
+function deletePenyelenggara(){
+    $('#penyelenggara').prop('disabled', false)
+    $('#divAddNew').css('display', 'none')
+    $('#new_penyelenggara').val('');
+    $('#divBtnAddPenyelenggara').css('display', 'block')
 }
 
 // function btnClose(){
@@ -540,12 +560,5 @@ function addPenyelenggara(){
 //     }
 // }
 
-// function deletePenyelenggara(){
-//     $('#penyelenggara').prop('disabled', false)
-//     $('#divNewPeneyelenggara').css('display', 'none')
-//     $('#form-add-penyelenggara')[0].reset();
 
-//     let tambah = `<li class="fa fa-plus"></li> Tambah Penyelenggara</b>`;
-//     $("#btnText").html(tambah);
-// }
 </script>

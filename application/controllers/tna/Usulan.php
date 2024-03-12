@@ -213,7 +213,7 @@ class Usulan extends CI_Controller {
 			// 	'status_karyawan' => $this->input->post('status_fte')
 				
 			// );
-			// $penyelenggara = $this->input->post('new_penyelenggara') ?? $this->input->post('penyelenggara');
+			$penyelenggara = $this->input->post('new_penyelenggara') ?? $this->input->post('penyelenggara');
 			$data = array();
 			$i=0;
 			$no=1;
@@ -233,8 +233,8 @@ class Usulan extends CI_Controller {
 	
 					'metoda_pembelajaran' => $this->input->post('metoda'),
 					'estimasi_biaya' => preg_replace("/[,\s]/", '', $this->input->post('estimasi_biaya')),
-					'nama_penyelenggara' => $this->input->post('penyelenggara'),
-					// 'nama_penyelenggara' => $penyelenggara,
+					// 'nama_penyelenggara' => $this->input->post('penyelenggara'),
+					'nama_penyelenggara' => $penyelenggara,
 					'waktu_pelaksanaan' => $this->input->post('waktu_pelaksanaan'),
 					'status_karyawan' => $this->input->post('status_fte')[$i],
 					'tahapan_id' => 170,
