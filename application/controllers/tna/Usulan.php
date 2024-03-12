@@ -148,6 +148,7 @@ class Usulan extends CI_Controller {
 		$data['metoda'] = $this->UsulanTnaModel->get_metoda_pelatihan();
 		$data['kompetensi'] = $this->UsulanTnaModel->get_kompetensi();
 		$data['tna'] = $this->UsulanTnaModel->get_training();
+		$data['lembaga'] = $this->TnaModel->get_lembaga();
 		
 		//echo json_encode($data);die;
 		$data['css'] 			= array(
@@ -212,7 +213,7 @@ class Usulan extends CI_Controller {
 			// 	'status_karyawan' => $this->input->post('status_fte')
 				
 			// );
-			$penyelenggara = $this->input->post('new_penyelenggara') ?? $this->input->post('penyelenggara');
+			// $penyelenggara = $this->input->post('new_penyelenggara') ?? $this->input->post('penyelenggara');
 			$data = array();
 			$i=0;
 			$no=1;
