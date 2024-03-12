@@ -232,8 +232,8 @@ class Usulan extends CI_Controller {
 	
 					'metoda_pembelajaran' => $this->input->post('metoda'),
 					'estimasi_biaya' => preg_replace("/[,\s]/", '', $this->input->post('estimasi_biaya')),
-					//'nama_penyelenggara' => $this->input->post('penyelenggara'),
-					'nama_penyelenggara' => $penyelenggara,
+					'nama_penyelenggara' => $this->input->post('penyelenggara'),
+					// 'nama_penyelenggara' => $penyelenggara,
 					'waktu_pelaksanaan' => $this->input->post('waktu_pelaksanaan'),
 					'status_karyawan' => $this->input->post('status_fte')[$i],
 					'tahapan_id' => 170,
@@ -249,29 +249,6 @@ class Usulan extends CI_Controller {
 			
 	
 			if($action){
-				if($this->input->post('new_penyelenggara')){
-					$dataPenyelenggara = array(
-						'nama_lembaga' 	=> $this->input->post('new_penyelenggara'),
-						'nama_pic'		=> $this->input->post('pic'),
-						'telp'			=> $this->input->post('telp'),
-						'website'		=> $this->input->post('website'),
-						'alamat'		=> $this->input->post('alamat'),
-
-					);
-					$savePenyelenggara = $this->TnaModel->savePenyelenggara($dataPenyelenggara);
-
-					$dataDetail = array(
-						'r_tna_lembaga_id'		=> $savePenyelenggara,
-						'r_tna_training_id'		=> $this->input->post('tna'),
-						'nama_pelatihan'		=> $this->input->post('new_penyelenggara'),
-						'jenis_pelatihan'		=> $this->input->post('jenis_pelatihan'),
-						'metoda'				=> $this->input->post('metoda'),
-						'biaya'					=> $this->input->post('biaya'), 
-						'kapasitas'				=> $this->input->post('kapasitas')
-					);
-
-					$this->TnaModel->saveDetailPenyelenggara($dataDetail);
-				}
 				$return = array(
 					'success'		=> true,
 					'status_code'	=> 200,
