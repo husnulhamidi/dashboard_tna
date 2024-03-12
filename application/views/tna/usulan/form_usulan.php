@@ -163,18 +163,34 @@
                                             </div>
                                             <div class="multi-fields">
                                                 <div class="multi-field1">
-                                                    
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">Direktorat <span style="color: red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <select class="select2 form-control" name="direktorat[]" id="direktorat1" onchange="getSubdit(1)" >
+                                                                <option value="">--- Pilih Direktorat ---</option>
+                                                                <?php 
+                                                                    foreach ($direktorat as $dir) {
+                                                                        $selected = '';
+                                                                        if($dir->id == @$detail->direktorat_id){
+                                                                            $selected = 'selected';
+                                                                        }
+                                                                        echo "<option ".$selected." value='".$dir->id."'>".$dir->o5.'</option>';
+                                                                    }
+                                                                ?>
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                     <!-- <span class="remove-field1 pull-right" data-toggle="tooltip" title="Hapus Peserta" > <button type="button" class="btn btn-danger btn-sm  "><li class="fa fa-trash"></li></button></span> -->
                                                     <div class="form-group">
                                                         <label class="col-sm-3 control-label">Sub Direktorat / Unit</label>
                                                         <div class="col-sm-8">
                                                             <select class="select2 form-control" name="subdit[]" id="subdit1" onchange="getKaryawanBySubdit(1)">
                                                                 <option value="1">--- Pilih Subdit ---</option>
-                                                                <?php 
+                                                                <!-- <?php 
                                                                 foreach ($subdit as $sb) {
                                                                     echo "<option value='".$sb->m_organisasi_id."'>".$sb->nama.'</option>';
                                                                 }
-                                                                ?>
+                                                                ?> -->
                                                             </select>
                                                         </div>
                                                     </div>
@@ -281,9 +297,15 @@ $(document).ready(function () {
     if($('#id').val()){
         $('#divBtnAdd').css('display','none')
         $('.remove-field').css('display','none')
-        let subditId = $('#subdit').val();
+        // let subditId = $('#subdit').val();
+        // let karyawanId = '<?php echo @$detail->m_karyawan_id;?>'
+        // getKaryawanBySubdit(1,karyawanId)
+        // getDataDetailKaryawan(1, karyawanId)
         let karyawanId = '<?php echo @$detail->m_karyawan_id;?>'
-        getKaryawanBySubdit(1,karyawanId)
+        let varifikatorId = '<?php echo @$detail->verifikator_id_1;?>'
+        let subdit = '<?php echo @$detail->m_organisasi_id;?>'
+        getSubdit(1, subdit)
+        getKaryawanBySubdit(1,karyawanId,varifikatorId)
         getDataDetailKaryawan(1, karyawanId)
     }
 
@@ -353,7 +375,32 @@ $(document).ready(function () {
 
 });
 
-function getKaryawanBySubdit(count, karyawanId = false){
+function getSubdit(count, subdit = false){
+    let direktoratId = $('#direktorat'+count).val();
+    $.ajax({
+        url: '<?php echo site_url('karyawan/ajax_get_subdit'); ?>',
+        type: 'POST',
+        async: false, 
+        data: { id: direktoratId },
+        dataType: 'json',
+        success: function (result) {
+            $('#subdit'+count).empty(); 
+            $('#subdit'+count).append('<option value="">-- Pilih Subdit --</option>');
+
+            if(result !== null){
+                $.each(result, function(i, value) {
+                    var selected = '';
+                    if(value['id'] == subdit){
+                        selected = 'selected';
+                    }
+                    $('#subdit'+count).append('<option '+selected+' value=' + value['id'] + '>' + value['name'] +'</option>');
+                });
+            }
+        }
+    });
+}
+
+function getKaryawanBySubdit(count, karyawanId = false, varifikatorId = false){
     let subditId = $('#subdit'+count).val();
     $.ajax({
         url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_organisasi'); ?>',
@@ -364,13 +411,21 @@ function getKaryawanBySubdit(count, karyawanId = false){
         success: function (result) {
             $('#karyawan'+count).empty(); 
             $('#karyawan'+count).append('<option value="">-- Pilih Karyawan --</option>');
+
+            $('#verifikator_id_1'+count).empty(); 
+            $('#verifikator_id_1'+count).append('<option value="">-- Pilih Atasan --</option>');
             if(result !== null){
                 $.each(result, function(i, value) {
                     var selected = '';
+                    var selected2 = '';
                     if(value['id'] == karyawanId){
                         selected = 'selected';
                     }
+                    if(value['id'] == varifikatorId){
+                        selected2 = 'selected';
+                    }
                     $('#karyawan'+count).append('<option '+selected+' value=' + value['id'] + '>' + value['nama'] + ' | '+ value['nik_tg']+' | '+value['jabatan_nama']+'</option>');
+                    $('#verifikator_id_1'+count).append('<option '+selected2+' value=' + value['id'] + '>' + value['nama'] + ' | '+ value['nik_tg']+' | '+value['jabatan_nama']+'</option>');
                 });
             }
         }
@@ -460,19 +515,36 @@ function appendRow(count){
                 </button>
             </span>
             <div class="form-group">
+                <label class="col-sm-3 control-label">Direktorat <span style="color: red">*</span></label>
+                <div class="col-sm-8">
+                    <select class="select2 form-control" name="direktorat[]" id="direktorat`+count+`" onchange="getSubdit(${count})">
+                        <option value="">--- Pilih Direktorat ---</option>
+                        <?php 
+                            foreach ($direktorat as $dir) {
+                                $selected = '';
+                                if($dir->id == @$detail->direktorat_id){
+                                    $selected = 'selected';
+                                }
+                                echo "<option  value='".$dir->id."'>".$dir->o5.'</option>';
+                            }
+                        ?>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-sm-3 control-label">Sub Direktorat / Unit <span style="color: red">*</span></label>
                 <div class="col-sm-8">
                     <select class="select2 form-control" name="subdit[]" id="subdit`+count+`" onchange="getKaryawanBySubdit(`+count+`)">
                         <option value="">--- Pilih Subdit ---</option>
-                        <?php 
-                        foreach ($subdit as $sb) {
-                            $selected = '';
-                            if($sb->m_organisasi_id == @$detail->m_organisasi_id){
-                                $selected = 'selected';
-                            }
-                            echo "<option ".$selected." value='".$sb->m_organisasi_id."'>".$sb->nama.'</option>';
-                        }
-                        ?>
+                        // <?php 
+                        // foreach ($subdit as $sb) {
+                        //     $selected = '';
+                        //     if($sb->m_organisasi_id == @$detail->m_organisasi_id){
+                        //         $selected = 'selected';
+                        //     }
+                        //     echo "<option ".$selected." value='".$sb->m_organisasi_id."'>".$sb->nama.'</option>';
+                        // }
+                        // ?>
                     </select>
                 </div>
             </div>

@@ -149,6 +149,7 @@ class Usulan extends CI_Controller {
 		$data['kompetensi'] = $this->UsulanTnaModel->get_kompetensi();
 		$data['tna'] = $this->UsulanTnaModel->get_training();
 		$data['lembaga'] = $this->TnaModel->get_lembaga();
+		$data['direktorat'] = $this->TnaModel->get_direktorat();
 		
 		//echo json_encode($data);die;
 		$data['css'] 			= array(

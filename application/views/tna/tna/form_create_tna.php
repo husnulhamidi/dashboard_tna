@@ -201,11 +201,28 @@
                                                 </button>
                                             </span> -->
                                             <div class="form-group">
+                                                <label class="col-sm-3 control-label">Direktorat <span style="color: red">*</span></label>
+                                                <div class="col-sm-8">
+                                                    <select class="select2 form-control" name="direktorat[]" id="direktorat1" onchange="getSubdit(1)" >
+                                                        <option value="">--- Pilih Direktorat ---</option>
+                                                        <?php 
+                                                            foreach ($direktorat as $dir) {
+                                                                $selected = '';
+                                                                if($dir->id == @$detail->direktorat_id){
+                                                                    $selected = 'selected';
+                                                                }
+                                                                echo "<option ".$selected." value='".$dir->id."'>".$dir->o5.'</option>';
+                                                            }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
                                                 <label class="col-sm-3 control-label">Sub Direktorat / Unit <span style="color: red">*</span></label>
                                                 <div class="col-sm-8">
                                                     <select class="select2 form-control" name="subdit[]" id="subdit1" onchange="getKaryawanBySubdit(1)">
                                                         <option value="">--- Pilih Subdit ---</option>
-                                                        <?php 
+                                                        <!-- <?php 
                                                         foreach ($subdit as $sb) {
                                                             $selected = '';
                                                             if($sb->m_organisasi_id == @$detail->m_organisasi_id){
@@ -213,7 +230,7 @@
                                                             }
                                                             echo "<option ".$selected." value='".$sb->m_organisasi_id."'>".$sb->nama.'</option>';
                                                         }
-                                                        ?>
+                                                        ?> -->
                                                     </select>
                                                 </div>
                                             </div>
@@ -298,8 +315,12 @@ $(document).ready(function () {
         let subditId = $('#subdit').val();
         let karyawanId = '<?php echo @$detail->m_karyawan_id;?>'
         let varifikatorId = '<?php echo @$detail->verifikator_id_1;?>'
+        let subdit = '<?php echo @$detail->m_organisasi_id;?>'
+        getSubdit(1, subdit)
         getKaryawanBySubdit(1,karyawanId,varifikatorId)
         getDataDetailKaryawan(1, karyawanId)
+
+        
 
         let trainingId = '<?php echo @$detail->r_tna_traning_id;?>'
         let plembaga = '<?php echo @$detail->nama_penyelenggara;?>'
@@ -314,7 +335,6 @@ $(document).ready(function () {
         }
 
         let is_tna = '<?php echo @$detail->is_tna;?>';
-        console.log(is_tna)
         if(is_tna == 0){
             $("#is_non_tna").prop("checked", true);
         }else{
@@ -353,42 +373,41 @@ $(document).ready(function () {
 
 });
 
+
 var isHeader = true;
-var $container = '';
 function formatRepo(repo) {
-    // Mengecek apakah header belum ditampilkan dan kondisi terpenuhi
-    if (isHeader) {
-        $container = $(`
-            <table class="table">
+    var $container = $(`
+        <table class="table">
+            ${isHeader ? `
                 <thead>   
-                    <tr> <!-- Baris kedua untuk judul kolom -->
-                        <th> Nama Lembaga </th>    
-                        <th> PIC </th>       
-                        <th> Telp </th>       
-                        <th> Website </th>       
-                        <th> Alamat </th>       
+                    <tr>
+                        <th class="text-nowrap"> Nama Lembaga </th>    
+                        <th class="text-nowrap"> PIC </th>       
+                        <th class="text-nowrap"> Telp </th>       
+                        <th class="text-nowrap"> Website </th>       
+                        <th class="text-nowrap"> Alamat </th>       
                     </tr>    
                 </thead>
-            </table> 
-        `);
-        
-        // Mengubah isHeader menjadi false agar header tidak ditampilkan lagi
-        // isHeader = false;
-    }
-    console.log($container)
-    // Menambahkan elemen tbody ke dalam $container
-    $container = $(`
-        <tbody>
-            <tr>
-                <td class="select2-result-repository__nama_lembaga"></td>
-                <td class="select2-result-repository__nama_pic"></td>
-                <td class="select2-result-repository__telp"></td>
-                <td class="select2-result-repository__website"></td>
-                <td class="select2-result-repository__alamat"></td>
-            </tr>
-        </tbody>
+            ` : ''}
+            <tbody>
+                <tr>
+                    <td class="text-nowrap select2-result-repository__nama_lembaga"></td>
+                    <td class="text-nowrap select2-result-repository__nama_pic"></td>
+                    <td class="text-nowrap select2-result-repository__telp"></td>
+                    <td class="text-nowrap select2-result-repository__website"></td>
+                    <td class="text-nowrap select2-result-repository__alamat"></td>
+                </tr>
+            </tbody>
+        </table>
     `);
+
+    if(repo.nama_lembaga){
+        isHeader = false;
+    }else{
+        isHeader = true;
+    }
     
+
     // Mengisi data ke dalam kolom sesuai dengan repo
     $container.find(".select2-result-repository__nama_lembaga").text(repo.nama_lembaga);
     $container.find(".select2-result-repository__nama_pic").text(repo.nama_pic);
@@ -399,9 +418,33 @@ function formatRepo(repo) {
     return $container;
 }
 
-
 function formatRepoSelection (repo) {
   return repo.nama_lembaga || repo.text;
+}
+
+function getSubdit(count, subdit = false){
+    let direktoratId = $('#direktorat'+count).val();
+    $.ajax({
+        url: '<?php echo site_url('karyawan/ajax_get_subdit'); ?>',
+        type: 'POST',
+        async: false, 
+        data: { id: direktoratId },
+        dataType: 'json',
+        success: function (result) {
+            $('#subdit'+count).empty(); 
+            $('#subdit'+count).append('<option value="">-- Pilih Subdit --</option>');
+
+            if(result !== null){
+                $.each(result, function(i, value) {
+                    var selected = '';
+                    if(value['id'] == subdit){
+                        selected = 'selected';
+                    }
+                    $('#subdit'+count).append('<option '+selected+' value=' + value['id'] + '>' + value['name'] +'</option>');
+                });
+            }
+        }
+    });
 }
 
 function getKaryawanBySubdit(count, karyawanId = false, varifikatorId = false){
@@ -510,7 +553,6 @@ function getSum(pelatihanId) {
 }
 
 function getDataLembaga(pelatihanId, dataPenyelenggara = false){
-    console.log(dataPenyelenggara)
     $('#penyelenggara').empty()
     $('#penyelenggara').append('<option value="">Pilih Penyelenggara</option')
     $.ajax({
@@ -519,7 +561,6 @@ function getDataLembaga(pelatihanId, dataPenyelenggara = false){
         dataType: 'json',
         data: { pelatihanId:pelatihanId},
         success: function(response){
-            console.log(response)
             for (var i = 0; i < response.length; i++) {
                 var selected = "";
                 if(dataPenyelenggara && dataPenyelenggara == response[i]['nama_lembaga']){
@@ -570,19 +611,36 @@ function appendRow(count){
                 </button>
             </span>
             <div class="form-group">
+                <label class="col-sm-3 control-label">Direktorat <span style="color: red">*</span></label>
+                <div class="col-sm-8">
+                    <select class="select2 form-control" name="direktorat[]" id="direktorat`+count+`" onchange="getSubdit(${count})">
+                        <option value="">--- Pilih Direktorat ---</option>
+                        <?php 
+                            foreach ($direktorat as $dir) {
+                                $selected = '';
+                                if($dir->id == @$detail->direktorat_id){
+                                    $selected = 'selected';
+                                }
+                                echo "<option  value='".$dir->id."'>".$dir->o5.'</option>';
+                            }
+                        ?>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-sm-3 control-label">Sub Direktorat / Unit <span style="color: red">*</span></label>
                 <div class="col-sm-8">
                     <select class="select2 form-control" name="subdit[]" id="subdit`+count+`" onchange="getKaryawanBySubdit(`+count+`)">
                         <option value="">--- Pilih Subdit ---</option>
-                        <?php 
-                        foreach ($subdit as $sb) {
-                            $selected = '';
-                            if($sb->m_organisasi_id == @$detail->m_organisasi_id){
-                                $selected = 'selected';
-                            }
-                            echo "<option ".$selected." value='".$sb->m_organisasi_id."'>".$sb->nama.'</option>';
-                        }
-                        ?>
+                        // <?php 
+                        // foreach ($subdit as $sb) {
+                        //     $selected = '';
+                        //     if($sb->m_organisasi_id == @$detail->m_organisasi_id){
+                        //         $selected = 'selected';
+                        //     }
+                        //     echo "<option ".$selected." value='".$sb->m_organisasi_id."'>".$sb->nama.'</option>';
+                        // }
+                        // ?>
                     </select>
                 </div>
             </div>

@@ -347,20 +347,23 @@ class TnaModel extends CI_Model {
 
 	    $query = $this->db->get();
 	    return $query->result();
-	    // $karyawan = $this->db->select('mk.id, mk.nama, mk.nik_tg, j.nama as jabatan_nama')
-        //     ->from('h_mutasi m')
-        //     ->join('m_karyawan mk', 'm.m_karyawan_id = mk.id')
-        //     ->join('r_jabatan j', 'm.r_jabatan_id = j.id')
-        //     ->join('users', 'users.m_karyawan_id = mk.id', 'left')
-        //     ->like('mk.nama', $search,'both')
-        //     ->where('m.is_aktif', 1)
-        //     ->where('mk.is_aktif', 1)
-        //     ->group_by('mk.id')
-        //     ->order_by('mk.nama', 'asc')
-        //     ->get()
-        //     ->result();
-        // return $karyawan;
+	    // $this->db->select('tl.id, tl.nama_lembaga, tl.nama_pic, tld.biaya, tld.kapasitas');
+		// $this->db->from('r_tna_lembaga tl');
+		// $this->db->join('r_tna_lembaga_detail tld', 'tl.id = tld.r_tna_lembaga_id');
+		// $this->db->where('tld.r_tna_training_id', $id);
+		// $this->db->where('tl.status_code', '1');
+		// $this->db->like('tl.nama_lembaga', $search, 'both');
+		// $query = $this->db->get();
+		// return $query->result();
     }
+
+	public function get_direktorat(){
+		$this->db->select('id, o5');
+		$this->db->from('v_organisasi');
+		$this->db->where('l5', 2);
+		$query = $this->db->get();
+		return $query->result();
+	}
 
 
 }

@@ -1367,4 +1367,17 @@ WHERE a.is_aktif=1) x GROUP BY r_jenjang_pendidikan_id,nama')->result_array();
 
         return $result;
     }
+
+    public function ajax_get_subdit($direktoratId){
+        $this->db->select('id, o5 as name');
+        $this->db->from('v_organisasi');
+        $this->db->where('l5', 3);
+        $this->db->where('i4', $direktoratId);
+
+        $query = $this->db->get();
+        $result = $query->result();
+
+        return $result;
+
+    }
 }

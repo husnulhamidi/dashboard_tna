@@ -73,7 +73,8 @@ class Tna extends CI_Controller {
 		$data['tna'] = $this->UsulanTnaModel->get_training();
 		$data['tahapan_id'] = $this->TnaModel->get_tahapan_id(1);
 		$data['lembaga'] = $this->TnaModel->get_lembaga();
-		// echo $data['lembaga'];
+		$data['direktorat'] = $this->TnaModel->get_direktorat();
+		// echo json_encode($data['direktorat']);
 		$data['css'] 			= array(
             'plugins/select2/select2.min.css',
             'plugins/sweet-alert/sweetalert.css',
@@ -109,6 +110,7 @@ class Tna extends CI_Controller {
 		$data['kompetensi'] = $this->UsulanTnaModel->get_kompetensi();
 		$data['tna'] = $this->UsulanTnaModel->get_training();
 		$data['tahapan_id'] = $this->TnaModel->get_tahapan_id(1);
+		$data['direktorat'] = $this->TnaModel->get_direktorat();
 		// $data['tahapan_id'] = $this->UsulanTnaModel->get_tahapan_id(2,"Usulan TNA");
 		$data['id']				= $id;
 		$data['css'] 			= array(
@@ -158,7 +160,7 @@ class Tna extends CI_Controller {
 
 	public function submit(){
 		// echo json_encode($this->input->post());
-		// $penyelenggara = $this->input->post('new_penyelenggara') ?? $this->input->post('penyelenggara');
+		$penyelenggara = $this->input->post('new_penyelenggara') ?? $this->input->post('penyelenggara');
 		$tgl = explode('-', $this->input->post('waktu_pelaksanaan'));
 		$data = array(
 			// 'm_organisasi_id'	=> $this->input->post('subdit'),
@@ -196,6 +198,7 @@ class Tna extends CI_Controller {
 			$data['m_organisasi_id'] = $this->input->post('subdit')[0];
 			$data['status_karyawan'] = $this->input->post('status_fte')[0];
 			$data['verifikator_id_1'] = $this->input->post('verifikator_id_1')[0];
+			$data['direktorat_id'] = $this->input->post('verifikator_id_1')[0];
 			
 			$action = $this->TnaModel->updateData($data, $this->input->post('id'));
 		}else{
@@ -208,6 +211,7 @@ class Tna extends CI_Controller {
 					$data['m_organisasi_id'] = $this->input->post('subdit')[$key];
 					$data['status_karyawan'] = $this->input->post('status_fte')[$key];
 					$data['verifikator_id_1'] = $this->input->post('verifikator_id_1')[$key];
+					$data['direktorat_id'] = $this->input->post('direktorat')[$key];
 
 					$action = $this->TnaModel->insertData($data);
 				}	

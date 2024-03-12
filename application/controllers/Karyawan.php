@@ -881,4 +881,10 @@ class Karyawan extends CI_Controller
             }
         }
     }
+
+    public function ajax_get_subdit(){
+        $direktoratId = $this->input->post('id');
+        $data = $this->karyawan_model->ajax_get_subdit($direktoratId);
+        echo json_encode($data);
+    }
 }
