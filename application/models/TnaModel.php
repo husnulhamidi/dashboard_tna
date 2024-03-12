@@ -339,6 +339,29 @@ class TnaModel extends CI_Model {
 		return $data;
 	}
 
+	public function search_lembaga($search){
+    	$this->db->select('id, nama_lembaga, nama_pic, telp, website, alamat')
+             ->from('r_tna_lembaga')
+             ->like('nama_lembaga', $search, 'both');
+			//  ->where('status_code', '1');
+
+	    $query = $this->db->get();
+	    return $query->result();
+	    // $karyawan = $this->db->select('mk.id, mk.nama, mk.nik_tg, j.nama as jabatan_nama')
+        //     ->from('h_mutasi m')
+        //     ->join('m_karyawan mk', 'm.m_karyawan_id = mk.id')
+        //     ->join('r_jabatan j', 'm.r_jabatan_id = j.id')
+        //     ->join('users', 'users.m_karyawan_id = mk.id', 'left')
+        //     ->like('mk.nama', $search,'both')
+        //     ->where('m.is_aktif', 1)
+        //     ->where('mk.is_aktif', 1)
+        //     ->group_by('mk.id')
+        //     ->order_by('mk.nama', 'asc')
+        //     ->get()
+        //     ->result();
+        // return $karyawan;
+    }
+
 
 }
 

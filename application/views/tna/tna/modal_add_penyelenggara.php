@@ -19,12 +19,12 @@
                                     <label class="col-sm-2 control-label"> Pilih Lembaga </label>
                                     <div class="col-sm-8">
                                         <select class="form-control select2 selectLembaga" name="select_lembaga" id="select_lembaga">
-                                                <option value="">--- Pilih Lembaga ---</option>
-                                                <?php 
-                                                    foreach ($lembaga as $val) {
-                                                        echo "<option value=".$val->id.">".$val->nama_lembaga.'</option>';
-                                                    }
-                                                ?>
+                                            <option value="">--- Pilih Lembaga ---</option>
+                                            <?php 
+                                                foreach ($lembaga as $val) {
+                                                    echo "<option value=".$val->id.">".$val->nama_lembaga.'</option>';
+                                                }
+                                            ?>
                                         </select>
                                     </div>
                                     <div class="col-md-2 tambah-baru" >
@@ -147,7 +147,6 @@
     $(document).ready(function(){
         getDirektorat()
         $('#keterangan').val('dropDown')
-        // getDataPemateri()
     })
 
     function getDirektorat(unit = false){
@@ -159,7 +158,6 @@
             method: 'get',
             dataType: 'json',
             success: function(response){
-                // console.log(response)
                 for (var i = 0; i < response.length; i++) {
                     var selected = "";
                     if(unit == response[i]['id']){
@@ -195,10 +193,6 @@
             }
         });
     }
-
-    $('.select2').select2({
-        placeholder: "Silahkan pilih"
-    });
 
     $('.input-baru').click(function(){
         $('.divInputBaru').css('display', 'block');

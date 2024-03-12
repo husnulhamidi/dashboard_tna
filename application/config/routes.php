@@ -301,6 +301,7 @@ $route['tna/get_sum_data']    = 'tna/tna/get_sum_data';
 $route['tna/proses_tna']    = 'tna/tna/proses_tna';
 $route['tna/get_karyawan']    = 'tna/tna/get_karyawan';
 $route['tna/exportExcel']    = 'tna/tna/exportExcel';
+$route['tna/get_lembaga']    = 'tna/tna/get_lembaga';
 
 // $route['tna/referensi/job-family/import'] = 'tna/importexcel/import_excel_jobfamily';
 $route['tna/import'] = 'tna/importexcel/import_excel_tna';

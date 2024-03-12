@@ -164,7 +164,7 @@
                                             <div class="multi-fields">
                                                 <div class="multi-field1">
                                                     
-                                                    <span class="remove-field1 pull-right" data-toggle="tooltip" title="Hapus Peserta" > <button type="button" class="btn btn-danger btn-sm  "><li class="fa fa-trash"></li></button></span>
+                                                    <!-- <span class="remove-field1 pull-right" data-toggle="tooltip" title="Hapus Peserta" > <button type="button" class="btn btn-danger btn-sm  "><li class="fa fa-trash"></li></button></span> -->
                                                     <div class="form-group">
                                                         <label class="col-sm-3 control-label">Sub Direktorat / Unit</label>
                                                         <div class="col-sm-8">
@@ -290,7 +290,7 @@ $(document).ready(function () {
      $(".add-field", $(this)).click(function(e) {
         count = count + 1;
         appendRow(count)
-        alert("test");
+        // alert("test");
     })
 
     $('#tna').on('change',function(){
@@ -455,7 +455,7 @@ function appendRow(count){
     var html = `
         <div class="multi-field`+count+`">
             <span class="remove-field`+count+` pull-right" data-toggle="tooltip" title="Hapus Peserta" > 
-                <button type="button" class="btn btn-danger btn-sm  ">
+                <button type="button" class="btn btn-danger btn-sm" onclick="deleteRow(${count})">
                     <li class="fa fa-trash"></li>
                 </button>
             </span>
@@ -511,6 +511,10 @@ function appendRow(count){
     $('.select2').select2()
 }
 
+function deleteRow(id){
+    $(".multi-field"+id).remove();
+}
+
 function getDataLembaga(){
     let pelatihanId = $('#tna').val();
     $('#penyelenggara').empty()
@@ -530,9 +534,6 @@ function getDataLembaga(){
 }
 
 function addPenyelenggara(){
-// alert('tamabah')
-    // $('#modalTambahPenyelenggara').modal({backdrop: 'static', keyboard: false}) 
-    // $('#modalTambahPenyelenggara').modal('show')
     $('#divAddNew').css('display', 'block')
     $('#penyelenggara').prop('disabled', true)
     $('#divBtnAddPenyelenggara').css('display', 'none')

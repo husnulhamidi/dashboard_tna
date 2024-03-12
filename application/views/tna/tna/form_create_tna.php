@@ -2,6 +2,10 @@
     .error{
         color: #a94442;
     }
+    .select2-container--default .select2-results__option.select2-results__option--highlighted {
+        background-color: #f0f0f0;
+        color: #333;
+    }
 </style>
 <section class="content">
     <div class="row">
@@ -277,9 +281,7 @@
 
 var count = 1;
 $(document).ready(function () {
-    
     $('.select2').select2();
-
     $('#date .input-group.date').datepicker({
         format: "dd-mm-yyyy",
         viewMode: "date", 
@@ -320,12 +322,87 @@ $(document).ready(function () {
         }
     }
 
-     $(".add-field", $(this)).click(function(e) {
+    $(".add-field", $(this)).click(function(e) {
         count = count + 1;
         appendRow(count)
     })
 
+    // $('#select_lembaga').select2({
+    //     minimumInputLength: 2,
+    //     ajax: {
+    //         url: base_url+'tna/get_lembaga',
+    //         dataType: 'json',
+    //         delay: 250, 
+    //         data:function(params){
+    //             return{
+    //                 searchTerm:params.term
+    //             }
+    //         },
+    //         processResults:function(response){
+    //             console.log(response)
+    //             return {
+    //                 results:response
+    //             }
+    //         },
+    //         cache:true
+    //     },
+    //     placeholder: 'Pilih Lembaga',
+    //     templateResult: formatRepo,
+    //     templateSelection: formatRepoSelection
+    // })
+
 });
+
+var isHeader = true;
+var $container = '';
+function formatRepo(repo) {
+    // Mengecek apakah header belum ditampilkan dan kondisi terpenuhi
+    if (isHeader) {
+        $container = $(`
+            <table class="table">
+                <thead>   
+                    <tr> <!-- Baris kedua untuk judul kolom -->
+                        <th> Nama Lembaga </th>    
+                        <th> PIC </th>       
+                        <th> Telp </th>       
+                        <th> Website </th>       
+                        <th> Alamat </th>       
+                    </tr>    
+                </thead>
+            </table> 
+        `);
+        
+        // Mengubah isHeader menjadi false agar header tidak ditampilkan lagi
+        // isHeader = false;
+    }
+    console.log($container)
+    // Menambahkan elemen tbody ke dalam $container
+    $container = $(`
+        <tbody>
+            <tr>
+                <td class="select2-result-repository__nama_lembaga"></td>
+                <td class="select2-result-repository__nama_pic"></td>
+                <td class="select2-result-repository__telp"></td>
+                <td class="select2-result-repository__website"></td>
+                <td class="select2-result-repository__alamat"></td>
+            </tr>
+        </tbody>
+    `);
+    
+    // Mengisi data ke dalam kolom sesuai dengan repo
+    $container.find(".select2-result-repository__nama_lembaga").text(repo.nama_lembaga);
+    $container.find(".select2-result-repository__nama_pic").text(repo.nama_pic);
+    $container.find(".select2-result-repository__telp").text(repo.telp);
+    $container.find(".select2-result-repository__website").text(repo.website);
+    $container.find(".select2-result-repository__alamat").text(repo.alamat);
+    
+    return $container;
+}
+
+
+function formatRepoSelection (repo) {
+  return repo.nama_lembaga || repo.text;
+}
 
 function getKaryawanBySubdit(count, karyawanId = false, varifikatorId = false){
     let subditId = $('#subdit'+count).val();

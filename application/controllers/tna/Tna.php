@@ -398,6 +398,26 @@ class Tna extends CI_Controller {
 		fclose($fp);
         exit;
 	}
+
+	public function get_lembaga(){
+		$search = $this->input->get('searchTerm');
+		$data = $this->TnaModel->search_lembaga($search);
+
+		$result = array();
+		foreach ($data as $key => $value) {
+			// $text = $value->nik_tg . ' | ' . $value->nama . ' | ' . $value->jabatan_nama;
+			// $result[] = array("id" => $value->id,"text"=>$value->nama_lembaga);
+			$result[] = array(
+				"id" 			=> $value->id,
+				"nama_lembaga" 	=> $value->nama_lembaga,
+				"nama_pic" 		=> $value->nama_pic,
+				"telp"	 		=> $value->telp,
+				"website" 		=> $value->website,
+				"alamat" 		=> $value->alamat,
+			);
+		}
+		echo json_encode($result);
+	}
 	
 }
 
