@@ -21,10 +21,17 @@
                                         <i class="fa fa-filter"></i> Filter
                                     </button>
                                 </a>
+                                <?php 
+                                if($role=='admin unit'){
+                                ?>
                                 <a href ="<?php echo base_url('tna/usulan/create'); ?>"><button class="btn btn-info btn-sm">
                                         <i class="glyphicon glyphicon-plus"></i> Tambah Data
                                     </button>
                                 </a>
+                                <?php 
+                                }
+                                ?>
+                             
                             </div>
                         </ul>
                             
@@ -67,120 +74,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>       
-                                    <!-- <tr>
-                                            <td>S0001001</td>
-                                            <td>8673444-Indah</td>
-                                            <td>Corporate Secretary</td>
-                                            <td>FTE</td>
-                                            <td>Busines Enabler</td>
-                                            <td>Sertifikasi</td>
-                                            <td>CTNA</td>
-                                            <td>-</td>
-                                            <td>Offline</td>
-                                            <td>Rp.2.000.000</td>
-                                            <td>Gajayana</td>
-                                            <td>Februari 2023</td>
-                                            <td>
-                                                Belum diusulkan <br>
-                                                <i class="fa fa-circle-o">
-                                                <i class="fa fa-circle-o">
-                                                <i class="fa fa-circle-o">
-                                                <i class="fa fa-circle-o">
-                                            
-
-                                            </td>
-                                            <td>
-                                                <div class="btn-group">
-                                                <button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle" data-toggle="dropdown" style="width: 80px;">
-                                                    Action  <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" role="menu">
-                                                    <li><a class="usulkantna">Usulkan</a></li>
-                                                   
-                                                    <li><a href="">Riwayat</a></li>
-                                                    <li><a href="">Edit</a></li>
-                                                    <li><a href="#" class="delete-tna">Hapus</a></li>
-                                                </ul>
-                                                </div>
-                                            </td>
-                                        </tr>  
-                                        <tr>
-                                            <td>P0002001</td>
-                                            <td>86744666-Firman</td>
-                                            <td>IT & Development</td>
-                                            <td>FTE</td>
-                                            <td>Busines Enabler</td>
-                                            <td>Pelatihan</td>
-                                            <td>Scrum Master</td>
-                                            <td>-</td>
-                                            <td>Online</td>
-                                            <td>Rp.1.000.000</td>
-                                            <td>Guruku</td>
-                                            <td>Mei 2023</td>
-                                            <td>
-                                                Menunggu verifikasi Mgr.Lini <br>
-                                                <i class="fa fa-check-circle text-success"></i>
-                                                <i class="fa fa-circle-o"></i>
-                                                <i class="fa fa-circle-o"></i>
-                                                <i class="fa fa-circle-o"></i>
-
-                                            </td>
-                                            <td>
-                                                <div class="btn-group">
-                                                <button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle" data-toggle="dropdown" style="width: 80px;">
-                                                    Action  <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" role="menu">
-                                                   
-                                                    <li><a href="">Detail</a></li>
-                                                    <li><a href="">Riwayat</a></li>
-                                                    <li><a href="">Edit</a></li>
-                                                    <li><a href="">Hapus</a></li>
-                                                </ul>
-                                                </div>
-                                            </td>
-                                        </tr>                           
-                                        <tr>
-                                            <td>P0001001</td>
-                                            <td>8674474-Citra Dewi</td>
-                                            <td>Corporate Secretary</td>
-                                            <td>FTE</td>
-                                            <td>Busines Enabler</td>
-                                            <td>Pelatihan</td>
-                                            <td>Legal Compliance</td>
-                                            <td>-</td>
-                                            <td>Offline</td>
-                                            <td>Rp.1.000.000</td>
-                                            <td>Gajayana</td>
-                                            <td>Maret 2023</td>
-                                            <td>
-                                                Menunggu verifikasi admin HCPD <br>
-                                                <i class="fa fa-check-circle text-success"></i>
-                                                <i class="fa fa-check-circle text-success"></i>
-                                                <i class="fa fa-circle-o">
-                                                <i class="fa fa-circle-o">
-                                                <i class="fa fa-circle-o">
-
-                                            </td>
-                                            <td>
-                                                <div class="btn-group">
-                                                <button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle" data-toggle="dropdown" style="width: 80px;">
-                                                    Action  <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" role="menu">
-                                                    <li><a href="javascript;">Usulkan</a></li>
-                                                    <li><a href="javascript;">Detail</a></li>
-                                                    <li><a href="javascript;" data-toggle='modal' data-target='#ModalRiwayatUsulan'>Riwayat</a></li>
-                                                    <li><a href="javascript;">Edit</a></li>
-                                                    <li><a href="javascript;">Hapus</a></li>
-                                                </ul>
-                                                </div>
-                                            </td>
-                                        </tr> -->
-
-                                        
-
-                                       
+                                    
                                     </tbody>
                                 </table>
                                 </div>
@@ -196,17 +90,31 @@
         </div>
 
     </div>
-    
+     <!-- Modal -->
+     <div class="modal fade" id="riwayat-modal" tabindex="-1" role="dialog" aria-hidden="true" enctype="multipart/form-data">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            </div> <!-- /.modal-content -->
+        </div> <!-- /.modal-dialog -->
+    </div> <!-- /.modal -->
 </section>
 <?php $this->load->view('tna/usulan/modal_filter');?>
-<?php $this->load->view('tna/usulan/modal_riwayat');?>
+<?php //$this->load->view('tna/usulan/modal_riwayat');?>
 <?php $this->load->view('tna/usulan/modal_form_usulkan');?>
 <?php $this->load->view('tna/usulan/modal_form_verifikasi');?>
+<!-- <style type="text/css">
+    .select2 {
+        width:100%!important;
+    }
+</style> -->
 <script type="text/javascript">
     
     $(document).ready(function(){
         
         var data_project = "1";
+        $('.select2').select2({
+            placeholder: "Please Select"
+        });
 
         $(document).on("click",".usulkantna",function(){
             //var encrypt = this.value;

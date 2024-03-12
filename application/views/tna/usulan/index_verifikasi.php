@@ -16,15 +16,29 @@
                         <ul class="nav nav-tabs">
                             <?php $this->load->view('tna/usulan/header_tab');?>
                             <div class="pull-right">
+                               
+                                <span class="btn_grouping_usulan" style="display:none">
+                                    <input type="hidden" id="is_checked_usulan" value="" class="form-control form-control-sm"   >
+                                    <input type="hidden" id="is_checked_usulan_total" value="" class="form-control form-control-sm"   >
+                                    <a class="btn_show_modal_usulan" data-toggle="modal" data-target="#ModalGroupingUsulan"><button class="btn btn-primary btn-sm mr-2 " type="button">Submit Usulan TNA (<span id="is_checked_usulan_total_show"></span>)</button></a>
+                                
+                                </span>
+
                                 <a data-toggle='modal' data-target='#upload_excel_node'> 
                                     <button class="btn btn-grey btn-sm">
                                         <i class="fa fa-filter"></i> Filter
                                     </button>
                                 </a>
+                                <?php 
+                                if($role=='admin unit'){
+                                ?>
                                 <a href ="<?php echo base_url('tna/usulan/create'); ?>"><button class="btn btn-info btn-sm">
                                         <i class="glyphicon glyphicon-plus"></i> Tambah Data
                                     </button>
                                 </a>
+                                <?php 
+                                }
+                                ?>
                             </div>
                         </ul>
                             
@@ -117,6 +131,12 @@
         </div>
 
     </div>
-    
+    <!-- Modal -->
+    <div class="modal fade" id="riwayat-modal" tabindex="-1" role="dialog" aria-hidden="true" enctype="multipart/form-data">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            </div> <!-- /.modal-content -->
+        </div> <!-- /.modal-dialog -->
+    </div> <!-- /.modal -->
 </section>
 <?php $this->load->view('tna/usulan/modal_form_verifikasi');?>

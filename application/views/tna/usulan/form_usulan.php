@@ -71,7 +71,7 @@
                                                     <option value="">--- Pilih Pelatihan/Sertifikasi ---</option>
                                                     <?php 
                                                         foreach ($tna as $tna) {
-                                                            echo "<option value='".$tna->id."'>".$tna->code.' | '.$tna->name.'</option>';
+                                                            echo "<option value='".$tna->id."&".$tna->code."&".$tna->name."'>".$tna->code.' | '.$tna->name.'</option>';
                                                         }
                                                     ?>
                                                 </select>
@@ -80,6 +80,8 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Nama Kegiatan</label>
                                             <div class="col-sm-8">
+                                                <input type="hidden"  name="tna_id" id="tna_id"  class="form-control input-sm" >
+                                                <input type="hidden"  name="tna_code" id="tna_code"  class="form-control input-sm" >
                                                 <input type="text"  name="nama_kegiatan" id="nama_kegiatan"  class="form-control input-sm" >
                                             </div>
                                         </div>
@@ -103,7 +105,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Estimasi Biaya</label>
+                                            <label class="col-sm-3 control-label">Estimasi Biaya Per Orang</label>
                                             <div class="col-sm-8">
                                                 <input  class="form-control input_mask" name="estimasi_biaya" id="estimasi_biaya"> 
                                             </div>
@@ -144,20 +146,20 @@
                                         </div>
                                         <hr>
                                         <div class="multi-field-wrapper">
-                                            <div class="form-group">
+                                            <div class="form-group" id="divBtnAdd">
                                                 <label class="col-sm-3 control-label"></label>
                                                 <div class="col-sm-8">
                                                     <span class="btn btn-info btn-sm add-field pull-right"><b> <li class="fa fa-plus"></li> Tambah Peserta</b> </span>
                                                 </div>
                                             </div>
                                             <div class="multi-fields">
-                                                <div class="multi-field">
+                                                <div class="multi-field1">
                                                     
-                                                    <span class="remove-field pull-right" data-toggle="tooltip" title="Hapus Peserta" > <button type="button" class="btn btn-danger btn-sm  "><li class="fa fa-trash"></li></button></span>
+                                                    <span class="remove-field1 pull-right" data-toggle="tooltip" title="Hapus Peserta" > <button type="button" class="btn btn-danger btn-sm  "><li class="fa fa-trash"></li></button></span>
                                                     <div class="form-group">
                                                         <label class="col-sm-3 control-label">Sub Direktorat / Unit</label>
                                                         <div class="col-sm-8">
-                                                            <select class="select2 form-control" name="subdit" id="subdit">
+                                                            <select class="select2 form-control" name="subdit[]" id="subdit1" onchange="getKaryawanBySubdit(1)">
                                                                 <option value="1">--- Pilih Subdit ---</option>
                                                                 <?php 
                                                                 foreach ($subdit as $sb) {
@@ -170,7 +172,7 @@
                                                     <div class="form-group">
                                                         <label class="col-sm-3 control-label">Nama Karyawan</label>
                                                         <div class="col-sm-8">
-                                                            <select class="select2 form-control" name="karyawan" id="karyawan">
+                                                            <select class="select2 form-control" name="karyawan[]" id="karyawan1" onchange="getDataDetailKaryawan(1)">
                                                                 <option value="">---Pilih Karyawan ---</option>
                                                             
                                                             </select>
@@ -179,19 +181,27 @@
                                                     <div class="form-group">
                                                         <label class="col-sm-3 control-label">Jabatan / Posisi</label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" readonly class="form-control" name="jabatan" id="jabatan"> 
+                                                            <input type="text" readonly class="form-control" name="jabatan[]" id="jabatan1"> 
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="col-sm-3 control-label">Status Karyawan</label>
                                                         <div class="col-sm-8">
-                                                            <input type="text" readonly class="form-control" name="status_karyawan" id="status_karyawan"> 
+                                                            <input type="text" readonly class="form-control" name="status_karyawan[]" id="status_karyawan1"> 
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         
                                                         <div class="col-sm-8">
-                                                            <input type="hidden" class="form-control" name="status_fte" id="status_fte"> 
+                                                            <input type="hidden" class="form-control" name="status_fte[]" id="status_fte1"> 
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-3 control-label">Nama Atasan <span style="color: red">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <select class="select2 form-control" name="verifikator_id_1[]" id="verifikator_id_11" >
+                                                                <option value="">---Pilih Atasan ---</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <hr>
@@ -232,7 +242,7 @@
 </section>
 <?php $this->load->view('tna/tna/modal_add_penyelenggara'); ?>
 <script>
-
+var count = 1;
 $(document).ready(function () {
 
     $('.select2').select2();
@@ -246,68 +256,251 @@ $(document).ready(function () {
 
     $('.input_mask').mask('000.000.000.000', {reverse: true});
 
-    $('.multi-field-wrapper').each(function() {
-        var $wrapper = $('.multi-fields', this);
+    // $('.multi-field-wrapper').each(function() {
+    //     var $wrapper = $('.multi-fields', this);
     
-        $(".add-field", $(this)).click(function(e) {
-            $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus();           
+    //     $(".add-field", $(this)).click(function(e) {
+    //         $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus();           
+    //     });
+    //     $('.multi-field .remove-field', $wrapper).click(function() {
+    //         if ($('.multi-field', $wrapper).length > 1)
+    //             $(this).parent('.multi-field').remove();
+    //             //alert(x-1);
+    //     });
+    // });
+
+    if($('#id').val()){
+        $('#divBtnAdd').css('display','none')
+        $('.remove-field').css('display','none')
+        let subditId = $('#subdit').val();
+        let karyawanId = '<?php echo @$detail->m_karyawan_id;?>'
+        getKaryawanBySubdit(1,karyawanId)
+        getDataDetailKaryawan(1, karyawanId)
+    }
+
+     $(".add-field", $(this)).click(function(e) {
+        count = count + 1;
+        appendRow(count)
+        alert("test");
+    })
+
+    $('#tna').on('change',function(){
+        var tna = $(this).val();
+        var arr = tna.split("&");
+        $("#tna_id").val(arr[0]);
+        $("#tna_code").val(arr[1]);
+        $("#nama_kegiatan").val(arr[2]);
+
+    })
+
+
+    // $('#subdit').on('change',function(){
+    //     var subdit_id = $(this).val();
+
+    //     $.ajax({
+    //         url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_organisasi'); ?>',
+    //         type: 'POST',
+    //         async: false, 
+    //         data: { id: subdit_id },
+    //         dataType: 'json',
+    //         success: function (result) {
+    //             $("#karyawan").empty(); 
+    //             $('#karyawan').append('<option value="">-- Pilih Karyawan --</option>');
+    //             if(result !== null){
+    //                 $.each(result, function(i, value) {
+    //                     $('#karyawan').append('<option value=' + value['id'] + '>' + value['nama'] + ' | '+ value['nik_tg']+' | '+value['jabatan_nama']+'</option>');
+    //                 });
+    //             }
+    //         }
+    //     });
+
+    // })
+
+    // $('#karyawan').on('change',function(){
+    //     var subdit_id = $('#subdit').val();
+    //     var karyawan_id = $(this).val();
+    //      var sk ="";
+    //     $.ajax({
+    //         url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_karyawanid'); ?>',
+    //         type: 'POST',
+    //         async: false, 
+    //         data: { karyawan_id:karyawan_id,subdit_id: subdit_id},
+    //         dataType: 'json',
+    //         success: function (result) {
+    //             $("#jabatan").empty(); 
+    //             if(result !== null){
+    //                 $.each(result, function(i, value) {
+    //                         sk = value['status_karyawan']+" ( "+value['status_fte']+" )";
+    //                         $('#jabatan').val(value['jabatan_nama']);
+    //                         $('#status_karyawan').val(sk);
+    //                         $('#status_fte').val(value['status_fte']);
+    //                 });
+    //             }
+    //         }
+    //     });
+    // })
+
+    
+
+});
+
+function getKaryawanBySubdit(count, karyawanId = false){
+    let subditId = $('#subdit'+count).val();
+    $.ajax({
+        url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_organisasi'); ?>',
+        type: 'POST',
+        async: false, 
+        data: { id: subditId },
+        dataType: 'json',
+        success: function (result) {
+            $('#karyawan'+count).empty(); 
+            $('#karyawan'+count).append('<option value="">-- Pilih Karyawan --</option>');
+            if(result !== null){
+                $.each(result, function(i, value) {
+                    var selected = '';
+                    if(value['id'] == karyawanId){
+                        selected = 'selected';
+                    }
+                    $('#karyawan'+count).append('<option '+selected+' value=' + value['id'] + '>' + value['nama'] + ' | '+ value['nik_tg']+' | '+value['jabatan_nama']+'</option>');
+                });
+            }
+        }
+    });
+}
+
+function getDataDetailKaryawan(count, karyawanId = false){
+    var subdit_id = $('#subdit'+count).val();
+    var karyawan_id = $('#karyawan'+count).val();
+    $.ajax({
+        url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_karyawanid'); ?>',
+        type: 'POST',
+        async: false, 
+        data: { karyawan_id:karyawan_id,subdit_id: subdit_id},
+        dataType: 'json',
+        success: function (result) {
+            $("#jabatan"+count).empty(); 
+            if(result !== null){
+                $.each(result, function(i, value) {
+                    sk = value['status_karyawan']+" ( "+value['status_fte']+" )";
+                    $('#jabatan'+count).val(value['jabatan_nama']);
+                    $('#status_karyawan'+count).val(sk);
+                    $('#status_fte'+count).val(value['status_fte']);
+                });
+            }
+        }
+    });
+}
+
+function getCode() {
+    var countData;
+
+    let pelatihanId = $('#tna').val();
+    getSum(pelatihanId)
+    .then(function(result) {
+        // console.log('getSum result:', result);
+        countData = parseInt(result)+1
+        if(countData < 1000){
+            countData = '000'+countData
+        }else if(countData < 100){
+            countData = '00'+countData
+        }else if(countData < 10){
+            countData = '0'+countData
+        }
+        
+        $.ajax({
+            url: '<?php echo site_url('tna/get_code_training'); ?>',
+            type: 'POST',
+            data: { id: pelatihanId },
+            dataType: 'json',
+            success: function(result) {
+                code = result.code;
+                let code_tna = code+countData
+                $('#code_tna').val(code_tna)
+            }
         });
-        $('.multi-field .remove-field', $wrapper).click(function() {
-            if ($('.multi-field', $wrapper).length > 1)
-                $(this).parent('.multi-field').remove();
-                //alert(x-1);
-        });
+    })
+    .catch(function(error) {
+        console.error('Error in getCode:', error);
     });
 
+}
 
-    $('#subdit').on('change',function(){
-        var subdit_id = $(this).val();
-
+function getSum(pelatihanId) {
+    return new Promise(function(resolve, reject) {
         $.ajax({
-            url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_organisasi'); ?>',
+            url: '<?php echo site_url('tna/get_sum_data'); ?>',
             type: 'POST',
-            async: false, 
-            data: { id: subdit_id },
+            data: { r_tna_traning_id: pelatihanId },
             dataType: 'json',
-            success: function (result) {
-                $("#karyawan").empty(); 
-                $('#karyawan').append('<option value="">-- Pilih Karyawan --</option>');
-                if(result !== null){
-                    $.each(result, function(i, value) {
-                        $('#karyawan').append('<option value=' + value['id'] + '>' + value['nama'] + ' | '+ value['nik_tg']+' | '+value['jabatan_nama']+'</option>');
-                    });
-                }
-            }
-        });
+            success: function(result) {
+            resolve(result); // Kirim hasil getSum ke resolve
+        },
+        error: function(xhr, status, error) {
+            reject(error); // Kirim error ke reject
+        }
+    });
+    });
+}
 
-    })
+function appendRow(count){
+    var html = `
+        <div class="multi-field`+count+`">
+            <span class="remove-field`+count+` pull-right" data-toggle="tooltip" title="Hapus Peserta" > 
+                <button type="button" class="btn btn-danger btn-sm  ">
+                    <li class="fa fa-trash"></li>
+                </button>
+            </span>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Sub Direktorat / Unit <span style="color: red">*</span></label>
+                <div class="col-sm-8">
+                    <select class="select2 form-control" name="subdit[]" id="subdit`+count+`" onchange="getKaryawanBySubdit(`+count+`)">
+                        <option value="">--- Pilih Subdit ---</option>
+                        <?php 
+                        foreach ($subdit as $sb) {
+                            $selected = '';
+                            if($sb->m_organisasi_id == @$detail->m_organisasi_id){
+                                $selected = 'selected';
+                            }
+                            echo "<option ".$selected." value='".$sb->m_organisasi_id."'>".$sb->nama.'</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Nama Karyawan <span style="color: red">*</span></label>
+                <div class="col-sm-8">
+                    <select class="select2 form-control" name="karyawan[]" id="karyawan`+count+`" onchange=getDataDetailKaryawan(`+count+`)>
+                        <option value="">---Pilih Karyawan ---</option>
 
-    $('#karyawan').on('change',function(){
-        var subdit_id = $('#subdit').val();
-        var karyawan_id = $(this).val();
-         var sk ="";
-        $.ajax({
-            url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_karyawanid'); ?>',
-            type: 'POST',
-            async: false, 
-            data: { karyawan_id:karyawan_id,subdit_id: subdit_id},
-            dataType: 'json',
-            success: function (result) {
-                $("#jabatan").empty(); 
-                if(result !== null){
-                    $.each(result, function(i, value) {
-                            sk = value['status_karyawan']+" ( "+value['status_fte']+" )";
-                            $('#jabatan').val(value['jabatan_nama']);
-                            $('#status_karyawan').val(sk);
-                            $('#status_fte').val(value['status_fte']);
-                    });
-                }
-            }
-        });
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Jabatan / Posisi <span style="color: red">*</span></label>
+                <div class="col-sm-8">
+                    <input type="text" readonly class="form-control" name="jabatan[]" id="jabatan`+count+`"> 
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Status Karyawan <span style="color: red">*</span></label>
+                <div class="col-sm-8">
+                    <input type="text" readonly class="form-control" name="status_karyawan[]" id="status_karyawan`+count+`"> 
+                </div>
+            </div>
+            <div class="form-group">
 
-        // get_verifikator();
-    })
-});
+                <div class="col-sm-8">
+                    <input type="hidden" class="form-control" name="status_fte[]" id="status_fte`+count+`"> 
+                </div>
+            </div>
+            <hr>
+        </div>
+    `
+
+    $('.multi-fields').append(html)
+    $('.select2').select2()
+}
 
 function getDataLembaga(){
     let pelatihanId = $('#tna').val();
@@ -341,7 +534,7 @@ function btnClose(){
         $('#tmpPenyelenggara').val(new_penyelenggara)
         $('#divNewPeneyelenggara').css('display', 'block')
 
-    
+
         let edit = `<li class="fa fa-edit"></li> Edit Penyelenggara</b>`;
         $("#btnText").html(edit);
     }
@@ -351,9 +544,8 @@ function deletePenyelenggara(){
     $('#penyelenggara').prop('disabled', false)
     $('#divNewPeneyelenggara').css('display', 'none')
     $('#form-add-penyelenggara')[0].reset();
-    
+
     let tambah = `<li class="fa fa-plus"></li> Tambah Penyelenggara</b>`;
     $("#btnText").html(tambah);
 }
-
 </script>

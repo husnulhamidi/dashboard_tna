@@ -69,47 +69,88 @@ function submitForm($btn){
             var formData2 = $('#form-add-penyelenggara').serializeArray();
 
             var combinedData = formData1.concat(formData2);
-            $.ajax({
-                url: base_url+"tna/usulan/submit",
-                type: 'POST',
-                dataType: "JSON",
-                data: combinedData,
-                success: function(response) {
-                    if(response.success){
-                        //$('#table-training').DataTable().ajax.reload( null, false );
-                        //$('#AddTraining').modal('hide');
+            
+                $.ajax({
+                    url: base_url+"tna/usulan/submit",
+                    type: 'POST',
+                    dataType: "JSON",
+                    data: combinedData,
+                    success: function(response) {
+                        if(response.success){
+                            //$('#table-training').DataTable().ajax.reload( null, false );
+                            //$('#AddTraining').modal('hide');
 
-                        setTimeout(function() {
-                            swal({
-                                title: "Notifikasi!",
-                                text: response.msg,
-                                imageUrl: img_icon_success
-                            }, function() {
-                            //location.reload();
-                                //$('#AddTraining').modal('hide');
-                            });
-                        }, 1000);
-                    }else{
-                        setTimeout(function() {
-                            swal({
-                                title: "Notifikasi!",
-                                text: response.msg,
-                                imageUrl: img_icon_error
-                            }, function() {
+                            setTimeout(function() {
+                                swal({
+                                    title: "Notifikasi!",
+                                    text: response.msg,
+                                    imageUrl: img_icon_success
+                                }, function() {
                                 //location.reload();
-                            });
-                        }, 1000);
-                    }
-                    
-                }            
-            });
+                                    //$('#AddTraining').modal('hide');
+                                });
+                            }, 1000);
+                        }else{
+                            setTimeout(function() {
+                                swal({
+                                    title: "Notifikasi!",
+                                    text: response.msg,
+                                    imageUrl: img_icon_error
+                                }, function() {
+                                    //location.reload();
+                                });
+                            }, 1000);
+                        }
+                        
+                    }            
+                });
+            }
+    });
+}
+
+function getDashlet(urutan){
+    $.ajax({
+        type: "GET",
+        dataType: "JSON",
+        url: base_url + "tna/usulan/get_dashlet",
+        data: "urutan="+urutan,
+        success: function(resp) {
+            if(urutan==1){
+                $('#dashlet_1').text(resp);
+            }
+            else if(urutan==2){
+                $('#dashlet_2').text(resp);
+            }
+            else if(urutan==3){
+                $('#dashlet_3').text(resp);
+            }
+            else if(urutan==4){
+                $('#dashlet_4').text(resp);
+            }
+            else if(urutan==5){
+                $('#dashlet_5').text(resp);
+            }
+            else if(urutan==6){
+                $('#dashlet_6').text(resp);
+            }
         }
     });
+    
+}
+
+function refresh_dashlet(){
+    getDashlet(1);
+    getDashlet(2);
+    getDashlet(3);
+    getDashlet(4);
+    getDashlet(5);
+    getDashlet(6);
 }
 
 
 jQuery(document).ready(function() {
     
+    refresh_dashlet();
     
     $(".btn-add-training").click(function() {
         ResetForm();

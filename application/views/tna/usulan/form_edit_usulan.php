@@ -106,7 +106,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Estimasi Biaya</label>
+                                            <label class="col-sm-3 control-label">Estimasi Biaya Per Orang</label>
                                             <div class="col-sm-7">
                                                 <input  class="form-control" name="pilih_produk" id="edit-pilih_produk" value="1.000.000"> 
                                             </div>

@@ -14,21 +14,22 @@
                         <label class="col-sm-12"> <h5>Apakah anda menyetujui usulan TNA ini ?</h5></label>
                         <div class="col-sm-2">
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="radio1">
+                            <input class="form-check-input" type="radio" name="is_verifikasi" value="2" style="cursor:pointer">
                             <label class="form-check-label">Tidak</label>
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="form-check">
-                            <input class="form-check-input" type="radio" name="radio1">
+                            <input class="form-check-input" type="radio" name="is_verifikasi" value="1" style="cursor:pointer">
                             <label class="form-check-label">Ya, Setuju</label>
                             </div>
                         </div>
                     </div>
+                    
                     <div class="form-group">
                         <label class="col-sm-12">Keterangan</label>
                         <div class="col-sm-12">
-                            <textarea rows="5" cols="" class="form-control" name="keterangan"></textarea>
+                            <textarea rows="5" cols="" class="form-control" name="keterangan" id="keterangan"></textarea>
                         </div>
                     </div>
                      <input type="hidden"  name="verifikasi_usulan_id" id="verifikasi_usulan_id" class="form-control input-sm" value="<?php //echo$r->id;?>">
@@ -54,15 +55,3 @@
         </div> <!-- /.modal-content -->
     </div> <!-- /.modal-dialog -->
 </div> <!-- /.modal -->
-
-<script type="text/javascript">
-    $('.select2').select2({
-        placeholder: "Please Select"
-    });
-
-
-<style type="text/css">
-    .select2 {
-width:100%!important;
-}
-</style>
