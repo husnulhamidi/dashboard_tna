@@ -249,7 +249,7 @@
         </div>
     </div>
 </section>
-<?php $this->load->view('tna/tna/modal_add_penyelenggara'); ?>
+<!-- <?php $this->load->view('tna/tna/modal_add_penyelenggara'); ?> -->
 <script>
 var count = 1;
 $(document).ready(function () {
