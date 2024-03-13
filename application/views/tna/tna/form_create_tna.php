@@ -6,6 +6,20 @@
         background-color: #f0f0f0;
         color: #333;
     }
+    .table-border {
+        width: 100%;
+    }
+
+    .table-border th,
+    .table-border td {
+        width: 33.33%; 
+        text-align: center; 
+        border: 1px solid #ddd; 
+    }
+    .text-right {
+        text-align: right; 
+    }   
+
 </style>
 <section class="content">
     <div class="row">
@@ -323,8 +337,8 @@ $(document).ready(function () {
         
 
         let trainingId = '<?php echo @$detail->r_tna_traning_id;?>'
-        let plembaga = '<?php echo @$detail->nama_penyelenggara;?>'
-        getDataLembaga(trainingId, plembaga)
+        let lembaga = '<?php echo @$detail->nama_penyelenggara;?>'
+        getDataLembaga(trainingId, lembaga)
 
         let jenis_development = '<?php echo @$detail->jenis_development;?>';
         if(jenis_development == 'Sertifikasi'){
@@ -552,6 +566,28 @@ function getSum(pelatihanId) {
     });
 }
 
+// function getDataLembaga(pelatihanId, dataPenyelenggara = false){
+//     $('#penyelenggara').empty()
+//     $('#penyelenggara').append('<option value="">Pilih Penyelenggara</option')
+//     $.ajax({
+//         url:base_url+'tna/tna/getPenyelenggara',
+//         method: 'post',
+//         dataType: 'json',
+//         data: { pelatihanId:pelatihanId},
+//         success: function(response){
+//             console.log(response)
+//             for (var i = 0; i < response.length; i++) {
+//                 var selected = "";
+//                 if(dataPenyelenggara && dataPenyelenggara == response[i]['nama_lembaga']){
+//                     selected = "selected";
+//                 }
+//                 $('#penyelenggara').append('<option '+selected+' >'+response[i]['nama_lembaga']+'</option>')
+//             }
+//         }
+//     });
+// }
+
+var isHeader2 = true;
 function getDataLembaga(pelatihanId, dataPenyelenggara = false){
     $('#penyelenggara').empty()
     $('#penyelenggara').append('<option value="">Pilih Penyelenggara</option')
@@ -561,15 +597,60 @@ function getDataLembaga(pelatihanId, dataPenyelenggara = false){
         dataType: 'json',
         data: { pelatihanId:pelatihanId},
         success: function(response){
-            for (var i = 0; i < response.length; i++) {
-                var selected = "";
-                if(dataPenyelenggara && dataPenyelenggara == response[i]['nama_lembaga']){
+            // console.log(response)
+            var selected = "";
+            $.each(response, function(index, item) {
+                if(dataPenyelenggara && dataPenyelenggara == item.nama_lembaga){
                     selected = "selected";
                 }
-                $('#penyelenggara').append('<option '+selected+' >'+response[i]['nama_lembaga']+'</option>')
-            }
-        }
+                $('#penyelenggara').append('<option '+selected+' value="' + item.id + '">' + item.nama_lembaga + '</option>');
+            });
+            $('#penyelenggara').select2({
+                data: response,
+                placeholder: 'Pilih Penyelenggara',
+                templateResult: formatRepo2,
+                templateSelection: formatRepoSelection2,
+            });
+            isHeader2 = true;
+        },
     });
+}
+
+function formatRepo2(repo){
+    console.log(repo)
+    if (repo.loading) {
+        return repo.text;
+    }
+    var $container = $(`
+        <table class="table table-border">
+            ${isHeader2 ? `
+                <thead>   
+                    <tr>
+                        <th class="text-nowrap"> Nama Lembaga </th>    
+                        <th class="text-nowrap"> Biaya </th>       
+                        <th class="text-nowrap"> Kapasitas </th>    
+                    </tr>    
+                </thead>
+            ` : ''}
+            <tbody>
+                <tr>
+                    <td class="text-nowrap select2-result-repository__nama_lembaga"></td>
+                    <td class="text-nowrap text-right select2-result-repository__biaya"></td>
+                    <td class="text-nowrap text-right select2-result-repository__kapasitas"></td>
+                </tr>
+            </tbody>
+        </table>
+    `);    
+    $container.find(".select2-result-repository__nama_lembaga").text(repo.nama_lembaga);
+    $container.find(".select2-result-repository__biaya").text(formatRupiah(repo.biaya, 'Rp.'));
+    $container.find(".select2-result-repository__kapasitas").text(repo.kapasitas);
+    isHeader2 = false;
+    return $container;    
+}
+
+function formatRepoSelection2(repo){
+    isHeader2 = true;
+    return repo.nama_lembaga || repo.text;
 }
 
 function addPenyelenggara(){
