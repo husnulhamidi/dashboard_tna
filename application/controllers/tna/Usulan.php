@@ -22,6 +22,7 @@ class Usulan extends CI_Controller {
 			'TnaModel'
             
         ));
+		$this->load->model('Reference/LembagaModel','lembagaModel');
     
 	}
 
@@ -214,7 +215,13 @@ class Usulan extends CI_Controller {
 			// 	'status_karyawan' => $this->input->post('status_fte')
 				
 			// );
-			$penyelenggara = $this->input->post('new_penyelenggara') ?? $this->input->post('penyelenggara');
+			if($this->input->post('new_penyelenggara')){
+				$penyelenggara = $this->input->post('new_penyelenggara');
+			}else{
+				$getNamaPenyelenggara = $this->lembagaModel->get_lembaga_byid($this->input->post('penyelenggara'));
+				$penyelenggara = $getNamaPenyelenggara['data']->nama_lembaga;
+			}
+			// $penyelenggara = $this->input->post('new_penyelenggara') ?? $this->input->post('penyelenggara');
 			$data = array();
 			$i=0;
 			$no=1;

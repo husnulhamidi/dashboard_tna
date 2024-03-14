@@ -534,6 +534,7 @@ function getCode() {
     var countData;
     let pelatihanId = $('#tna').val();
     getDataLembaga(pelatihanId)
+    getDataLembagawithotPelatihan(pelatihanId)
     getSum(pelatihanId)
     .then(function(result) {
         countData = parseInt(result)+1
@@ -580,6 +581,28 @@ function getSum(pelatihanId) {
     });
 }
 
+// function getDataLembaga(pelatihanId, dataPenyelenggara = false){
+    // $('#penyelenggara').empty()
+    // $('#penyelenggara').append('<option value="">Pilih Penyelenggara</option')
+    // $.ajax({
+    //     url:base_url+'tna/tna/getPenyelenggara',
+    //     method: 'post',
+    //     dataType: 'json',
+    //     data: { pelatihanId:pelatihanId},
+    //     success: function(response){
+    //         console.log(response)
+    //         for (var i = 0; i < response.length; i++) {
+    //             var selected = "";
+    //             if(dataPenyelenggara && dataPenyelenggara == response[i]['nama_lembaga']){
+    //                 selected = "selected";
+    //             }
+    //             $('#penyelenggara').append('<option '+selected+' >'+response[i]['nama_lembaga']+'</option>')
+    //         }
+    //     }
+    // });
+// }
+
+var isHeader2 = true;
 function getDataLembaga(pelatihanId, dataPenyelenggara = false){
     $('#penyelenggara').empty()
     $('#penyelenggara').append('<option value="">Pilih Penyelenggara</option')
@@ -589,49 +612,27 @@ function getDataLembaga(pelatihanId, dataPenyelenggara = false){
         dataType: 'json',
         data: { pelatihanId:pelatihanId},
         success: function(response){
-            console.log(response)
-            for (var i = 0; i < response.length; i++) {
-                var selected = "";
-                if(dataPenyelenggara && dataPenyelenggara == response[i]['nama_lembaga']){
+            // console.log(response)
+            var selected = "";
+            $.each(response, function(index, item) {
+                if(dataPenyelenggara && dataPenyelenggara == item.nama_lembaga){
                     selected = "selected";
                 }
-                $('#penyelenggara').append('<option '+selected+' >'+response[i]['nama_lembaga']+'</option>')
-            }
-        }
+                $('#penyelenggara').append('<option '+selected+' value="'+item.id+'" >' + item.nama_lembaga + '</option>');
+            });
+            $('#penyelenggara').select2({
+                data: response,
+                placeholder: 'Pilih Penyelenggara',
+                templateResult: formatRepo2,
+                templateSelection: formatRepoSelection2,
+            });
+            isHeader2 = true;
+        },
     });
 }
 
-var isHeader2 = true;
-// function getDataLembaga(pelatihanId, dataPenyelenggara = false){
-//     $('#penyelenggara').empty()
-//     $('#penyelenggara').append('<option value="">Pilih Penyelenggara</option')
-//     $.ajax({
-//         url:base_url+'tna/tna/getPenyelenggara',
-//         method: 'post',
-//         dataType: 'json',
-//         data: { pelatihanId:pelatihanId},
-//         success: function(response){
-//             // console.log(response)
-//             var selected = "";
-//             $.each(response, function(index, item) {
-//                 if(dataPenyelenggara && dataPenyelenggara == item.nama_lembaga){
-//                     selected = "selected";
-//                 }
-//                 $('#penyelenggara').append('<option '+selected+' value="'+item.id+'" >' + item.nama_lembaga + '</option>');
-//             });
-//             $('#penyelenggara').select2({
-//                 data: response,
-//                 placeholder: 'Pilih Penyelenggara',
-//                 templateResult: formatRepo2,
-//                 templateSelection: formatRepoSelection2,
-//             });
-//             isHeader2 = true;
-//         },
-//     });
-// }
-
 function formatRepo2(repo){
-    console.log(repo)
+    // console.log(repo)
     if (repo.loading) {
         return repo.text;
     }
@@ -654,9 +655,10 @@ function formatRepo2(repo){
                 </tr>
             </tbody>
         </table>
-    `);    
+    `);  
+    console.log(repo.biaya)
     $container.find(".select2-result-repository__nama_lembaga").text(repo.nama_lembaga);
-    $container.find(".select2-result-repository__biaya").text(formatRupiah(repo.biaya, 'Rp.'));
+    $container.find(".select2-result-repository__biaya").text(repo.biaya === null ? 0 : formatRupiah(repo.biaya, 'Rp.'));
     $container.find(".select2-result-repository__kapasitas").text(repo.kapasitas);
     isHeader2 = false;
     return $container;    

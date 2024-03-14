@@ -2,6 +2,23 @@
     .error{
         color: #a94442;
     }
+    .select2-container--default .select2-results__option.select2-results__option--highlighted {
+        background-color: #f0f0f0;
+        color: #333;
+    }
+    .table-border {
+        width: 100%;
+    }
+
+    .table-border th,
+    .table-border td {
+        width: 33.33%; 
+        text-align: center; 
+        border: 1px solid #ddd; 
+    }
+    .text-right {
+        text-align: right; 
+    } 
 </style>
 <!-- Main content -->
 <section class="content">
@@ -576,6 +593,25 @@ function deleteRow(id){
     $(".multi-field"+id).remove();
 }
 
+// function getDataLembaga(){
+//     let pelatihanId = $('#tna').val();
+//     $('#penyelenggara').empty()
+//     $('#penyelenggara').append('<option value="">Pilih Penyelenggara</option')
+//     $.ajax({
+//         url:base_url+'tna/tna/getPenyelenggara',
+//         method: 'post',
+//         dataType: 'json',
+//         data: { pelatihanId:pelatihanId},
+//         success: function(response){
+//             console.log(response)
+//             for (var i = 0; i < response.length; i++) {
+//                 $('#penyelenggara').append('<option>'+response[i]['nama_lembaga']+'</option>')
+//             }
+//         }
+//     });
+// }
+
+var isHeader2 = true;
 function getDataLembaga(){
     let pelatihanId = $('#tna').val();
     $('#penyelenggara').empty()
@@ -586,12 +622,56 @@ function getDataLembaga(){
         dataType: 'json',
         data: { pelatihanId:pelatihanId},
         success: function(response){
-            console.log(response)
             for (var i = 0; i < response.length; i++) {
-                $('#penyelenggara').append('<option>'+response[i]['nama_lembaga']+'</option>')
+                $('#penyelenggara').append('<option value="'+response[i]['id']+'">'+response[i]['nama_lembaga']+'</option>')
             }
+            $('#penyelenggara').select2({
+                data: response,
+                placeholder: 'Pilih Penyelenggara',
+                templateResult: formatRepo2,
+                templateSelection: formatRepoSelection2,
+            });
+            isHeader2 = true;
         }
     });
+}
+
+function formatRepo2(repo){
+    // console.log(repo)
+    if (repo.loading) {
+        return repo.text;
+    }
+    var $container = $(`
+        <table class="table table-border">
+            ${isHeader2 ? `
+                <thead>   
+                    <tr>
+                        <th class="text-nowrap"> Nama Lembaga </th>    
+                        <th class="text-nowrap"> Biaya </th>       
+                        <th class="text-nowrap"> Kapasitas </th>    
+                    </tr>    
+                </thead>
+            ` : ''}
+            <tbody>
+                <tr>
+                    <td class="text-nowrap select2-result-repository__nama_lembaga"></td>
+                    <td class="text-nowrap text-right select2-result-repository__biaya"></td>
+                    <td class="text-nowrap text-right select2-result-repository__kapasitas"></td>
+                </tr>
+            </tbody>
+        </table>
+    `);  
+    console.log(repo.biaya)
+    $container.find(".select2-result-repository__nama_lembaga").text(repo.nama_lembaga);
+    $container.find(".select2-result-repository__biaya").text(repo.biaya === null ? 0 : formatRupiah(repo.biaya, 'Rp.'));
+    $container.find(".select2-result-repository__kapasitas").text(repo.kapasitas);
+    isHeader2 = false;
+    return $container;    
+}
+
+function formatRepoSelection2(repo){
+    isHeader2 = true;
+    return repo.nama_lembaga || repo.text;
 }
 
 function addPenyelenggara(){

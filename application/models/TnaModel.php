@@ -256,6 +256,27 @@ class TnaModel extends CI_Model {
 		return $query->result();
 	}
 
+	public function get_lembaga_id($pelatihanId){
+		$this->db->select('tld.r_tna_lembaga_id');
+		$this->db->from('r_tna_lembaga_detail tld');
+		$this->db->where('tld.r_tna_training_id', $pelatihanId);
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	public function getDataLembagawithotPelatihan($id, $lembagaId){
+		$this->db->select('tl.id, tl.nama_lembaga, tl.nama_pic, tld.biaya, tld.kapasitas');
+		$this->db->from('r_tna_lembaga tl');
+		$this->db->join('r_tna_lembaga_detail tld', 'tl.id = tld.r_tna_lembaga_id');
+		$this->db->where('tld.r_tna_training_id !=', $id);
+		// $this->db->where('tld.r_tna_lembaga_id !=', $lembagaId);
+		$this->db->where_not_in('tld.r_tna_lembaga_id', $lembagaId);
+		$this->db->where('tl.status_code', '1');
+		$this->db->group_by('tl.id');
+		$query = $this->db->get();
+		return $query->result();
+	}
+
 	public function savePenyelenggara($data){
 		$this->db->insert('r_tna_lembaga', $data);
 		return $this->db->insert_id();

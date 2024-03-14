@@ -13,6 +13,7 @@ class Tna extends CI_Controller {
 		}
 		$this->load->helper('custom_helper');
 		$this->load->model(array('lokasi_akun_model','UsulanTnaModel','TnaModel'));
+		$this->load->model('Reference/LembagaModel','lembagaModel');
 		
 		$userData = $this->session->userdata('user');
 		$this->karyawanId = $userData['m_karyawan_id'];
@@ -160,7 +161,18 @@ class Tna extends CI_Controller {
 
 	public function submit(){
 		// echo json_encode($this->input->post());
-		$penyelenggara = $this->input->post('new_penyelenggara') ?? $this->input->post('penyelenggara');
+		// $getNamaPenyelenggara = $this->lembagaModel->get_lembaga_byid($this->input->post('penyelenggara'));
+		// echo json_encode($getNamaPenyelenggara['data']->nama_lembaga);
+		// if($this->input->post('new_penyelenggara')){
+		// 	$penyelenggara = $this->input->post('new_penyelenggara');
+		// }else{
+		// 	$penyelenggara = $getNamaPenyelenggara['data']->nama_lembaga;
+		// }
+		
+		$getNamaPenyelenggara = $this->lembagaModel->get_lembaga_byid($this->input->post('penyelenggara'));
+		$penyelenggara = $getNamaPenyelenggara['data']->nama_lembaga;
+		
+		// $penyelenggara = $this->input->post('new_penyelenggara') ?? $this->input->post('penyelenggara');
 		$tgl = explode('-', $this->input->post('waktu_pelaksanaan'));
 		$data = array(
 			// 'm_organisasi_id'	=> $this->input->post('subdit'),
@@ -174,8 +186,8 @@ class Tna extends CI_Controller {
 			'justifikasi_pengajuan' =>	$this->input->post('justifikasi'),
 			'metoda_pembelajaran' => $this->input->post('metoda'),
 			'estimasi_biaya' => str_replace(".", "", $this->input->post('estimasi_biaya')),
-			// 'nama_penyelenggara' => $penyelenggara,
-			'nama_penyelenggara' => $this->input->post('penyelenggara'),
+			'nama_penyelenggara' => $penyelenggara,
+			// 'nama_penyelenggara' => $this->input->post('penyelenggara'),
 			'waktu_pelaksanaan' => $tgl[2].'-'.$tgl[1].'-'.$tgl[0],
 			'tahapan_id' => $this->input->post('tahapan_id'),
 			'objective' => $this->input->post('objective'),
@@ -252,6 +264,11 @@ class Tna extends CI_Controller {
 			$this->TnaModel->saveDetailPenyelenggara($dataDetail);
 			$getDetail = $this->TnaModel->getDetailPenyelenggara($this->input->post('select_lembaga'));
 			$return = $getDetail->nama_lembaga;
+
+			$return = array(
+				'id' => $this->input->post('select_lembaga'),
+				'nama_lembaga' => $getDetail->nama_lembaga
+			);
 		}else{
 			$dataPenyelenggara = array(
 				'nama_lembaga' 	=> $this->input->post('new_penyelenggara'),
@@ -277,7 +294,11 @@ class Tna extends CI_Controller {
 			);
 
 			$this->TnaModel->saveDetailPenyelenggara($dataDetail);
-			$return = $this->input->post('new_penyelenggara');
+			// $return = $this->input->post('new_penyelenggara');
+			$return = array(
+				'id' => $savePenyelenggara,
+				'nama_lembaga' => $this->input->post('new_penyelenggara')
+			);
 		}
 
 		echo json_encode($return);
@@ -345,6 +366,19 @@ class Tna extends CI_Controller {
 	public function getPenyelenggara(){
 		$id = $this->input->post('pelatihanId');
 		$data = $this->TnaModel->getPenyelenggara($id);
+		echo json_encode($data);
+	}
+
+	public function getDataLembagawithotPelatihan(){
+		$pelatihanId = $this->input->post('pelatihanId');
+		
+		$detail = $this->TnaModel->get_lembaga_id($pelatihanId);
+		$lembagaId = [];
+		foreach ($detail as $key => $value) {
+			$lembagaId[] = $value->r_tna_lembaga_id;
+		}
+
+		$data = $this->TnaModel->getDataLembagawithotPelatihan($pelatihanId, $lembagaId);
 		echo json_encode($data);
 	}
 

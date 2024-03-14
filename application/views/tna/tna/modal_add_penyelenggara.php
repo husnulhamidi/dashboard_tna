@@ -20,11 +20,11 @@
                                     <div class="col-sm-8">
                                         <select class="form-control select2 selectLembaga" name="select_lembaga" id="select_lembaga">
                                             <option value="">--- Pilih Lembaga ---</option>
-                                            <?php 
+                                            <!-- <?php 
                                                 foreach ($lembaga as $val) {
                                                     echo "<option value=".$val->id.">".$val->nama_lembaga.'</option>';
                                                 }
-                                            ?>
+                                            ?> -->
                                         </select>
                                     </div>
                                     <div class="col-md-2 tambah-baru" >
@@ -129,7 +129,7 @@
                         <div class="">
                             <div class="pull-right"> 
                                 <button type="submit" id="btn-submit-add-penyelenggara" class="btn btn-primary" >Simpan</button>
-                                <button type="button" class="btn btn-default" onclick="btnClose()" data-dismiss="modal" aria-hidden="false">Close</button>
+                                <button type="button" class="btn btn-default"  data-dismiss="modal" aria-hidden="false">Close</button>
                                 
                             </div>
                         </div>
@@ -252,13 +252,34 @@
                 dataType: "JSON",
                 data: $('#form-add-penyelenggara').serializeArray(),
                 success: function(response) {
-                    // console.log(response)  
-                    $('#penyelenggara').append('<option selected>'+response+'</option>') 
-                    $('#modalTambahPenyelenggara').modal('hide')                     
+                    $('#modalTambahPenyelenggara').modal('hide')
+                    console.log(response)  
+                    getDataLembaga($('#tna').val(),response.nama_lembaga );
+                    // $('#penyelenggara').append('<option value='+response.id+' selected>'+response.nama_lembaga+'</option>') 
+                                        
                 }            
             });
         }
        
+    }
+
+    function getDataLembagawithotPelatihan(pelatihanId) {
+        console.log(pelatihanId)
+        $('#select_lembaga').empty()
+        $('#select_lembaga').append('<option value="">Pilih Lembaga</option')
+        $.ajax({
+            url:base_url+'tna/tna/getDataLembagawithotPelatihan',
+            method: 'post',
+            dataType: 'json',
+            data: { pelatihanId:pelatihanId},
+            success: function(response){
+                // console.log(response)
+                response.forEach(element => {
+                    // console.log(element)
+                    $('#select_lembaga').append('<option value='+element.id+'>'+element.nama_lembaga+'</option>')
+                });
+            }
+        });
     }
 
 
