@@ -297,16 +297,29 @@ $(document).ready(function () {
     if($('#id').val()){
         $('#divBtnAdd').css('display','none')
         $('.remove-field').css('display','none')
-        // let subditId = $('#subdit').val();
+
         // let karyawanId = '<?php echo @$detail->m_karyawan_id;?>'
-        // getKaryawanBySubdit(1,karyawanId)
+        // let varifikatorId = '<?php echo @$detail->verifikator_id_1;?>'
+        // let subdit = '<?php echo @$detail->m_organisasi_id;?>'
+        // getSubdit(1, subdit)
+        // getKaryawanBySubdit(1,karyawanId,varifikatorId)
         // getDataDetailKaryawan(1, karyawanId)
-        let karyawanId = '<?php echo @$detail->m_karyawan_id;?>'
+        let direktoratId = '<?php echo @$detail->direktorat_id;?>'
         let varifikatorId = '<?php echo @$detail->verifikator_id_1;?>'
+        getAtasan(1, direktoratId, varifikatorId)
+
         let subdit = '<?php echo @$detail->m_organisasi_id;?>'
-        getSubdit(1, subdit)
-        getKaryawanBySubdit(1,karyawanId,varifikatorId)
-        getDataDetailKaryawan(1, karyawanId)
+        getSubdit(1, subdit, varifikatorId)
+
+        // get karyawan
+        let karyawanId = '<?php echo @$detail->m_karyawan_id;?>'
+        getKaryawanBySubdit(1,direktoratId, karyawanId)
+
+        
+
+        let trainingId = '<?php echo @$detail->r_tna_traning_id;?>'
+        let lembaga = '<?php echo @$detail->nama_penyelenggara;?>'
+        getDataLembaga(trainingId, lembaga)
     }
 
      $(".add-field", $(this)).click(function(e) {
@@ -324,59 +337,11 @@ $(document).ready(function () {
 
     })
 
-
-    // $('#subdit').on('change',function(){
-    //     var subdit_id = $(this).val();
-
-    //     $.ajax({
-    //         url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_organisasi'); ?>',
-    //         type: 'POST',
-    //         async: false, 
-    //         data: { id: subdit_id },
-    //         dataType: 'json',
-    //         success: function (result) {
-    //             $("#karyawan").empty(); 
-    //             $('#karyawan').append('<option value="">-- Pilih Karyawan --</option>');
-    //             if(result !== null){
-    //                 $.each(result, function(i, value) {
-    //                     $('#karyawan').append('<option value=' + value['id'] + '>' + value['nama'] + ' | '+ value['nik_tg']+' | '+value['jabatan_nama']+'</option>');
-    //                 });
-    //             }
-    //         }
-    //     });
-
-    // })
-
-    // $('#karyawan').on('change',function(){
-    //     var subdit_id = $('#subdit').val();
-    //     var karyawan_id = $(this).val();
-    //      var sk ="";
-    //     $.ajax({
-    //         url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_karyawanid'); ?>',
-    //         type: 'POST',
-    //         async: false, 
-    //         data: { karyawan_id:karyawan_id,subdit_id: subdit_id},
-    //         dataType: 'json',
-    //         success: function (result) {
-    //             $("#jabatan").empty(); 
-    //             if(result !== null){
-    //                 $.each(result, function(i, value) {
-    //                         sk = value['status_karyawan']+" ( "+value['status_fte']+" )";
-    //                         $('#jabatan').val(value['jabatan_nama']);
-    //                         $('#status_karyawan').val(sk);
-    //                         $('#status_fte').val(value['status_fte']);
-    //                 });
-    //             }
-    //         }
-    //     });
-    // })
-
-    
-
 });
 
-function getSubdit(count, subdit = false){
+function getSubdit(count, subdit = false, varifikatorId = false){
     let direktoratId = $('#direktorat'+count).val();
+    // console.log(varifikatorId)
     $.ajax({
         url: '<?php echo site_url('karyawan/ajax_get_subdit'); ?>',
         type: 'POST',
@@ -396,12 +361,20 @@ function getSubdit(count, subdit = false){
                     $('#subdit'+count).append('<option '+selected+' value=' + value['id'] + '>' + value['name'] +'</option>');
                 });
             }
+        },
+        complete: function (data) {
+            getAtasan(count, direktoratId, varifikatorId)
+            getKaryawanBySubdit(count, direktoratId)
         }
     });
 }
 
-function getKaryawanBySubdit(count, karyawanId = false, varifikatorId = false){
+function getKaryawanBySubdit(count, direktoratId = false, karyawanId = false){
     let subditId = $('#subdit'+count).val();
+    if( direktoratId ){
+        subditId = direktoratId
+    }
+    
     $.ajax({
         url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_organisasi'); ?>',
         type: 'POST',
@@ -412,19 +385,35 @@ function getKaryawanBySubdit(count, karyawanId = false, varifikatorId = false){
             $('#karyawan'+count).empty(); 
             $('#karyawan'+count).append('<option value="">-- Pilih Karyawan --</option>');
 
+            if(result !== null){
+                $.each(result, function(i, value) {
+                    var selected = '';
+                    if(value['id'] == karyawanId){
+                        selected = 'selected';
+                    }
+                    $('#karyawan'+count).append('<option '+selected+' value=' + value['id'] + '>' + value['nama'] + ' | '+ value['nik_tg']+' | '+value['jabatan_nama']+'</option>');
+                });
+            }
+        }
+    });
+}
+
+function getAtasan(count, direktoratId, varifikatorId = false){
+    $.ajax({
+        url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_organisasi'); ?>',
+        type: 'POST',
+        async: false, 
+        data: { id: direktoratId },
+        dataType: 'json',
+        success: function (result) {
             $('#verifikator_id_1'+count).empty(); 
             $('#verifikator_id_1'+count).append('<option value="">-- Pilih Atasan --</option>');
             if(result !== null){
                 $.each(result, function(i, value) {
-                    var selected = '';
                     var selected2 = '';
-                    if(value['id'] == karyawanId){
-                        selected = 'selected';
-                    }
                     if(value['id'] == varifikatorId){
                         selected2 = 'selected';
                     }
-                    $('#karyawan'+count).append('<option '+selected+' value=' + value['id'] + '>' + value['nama'] + ' | '+ value['nik_tg']+' | '+value['jabatan_nama']+'</option>');
                     $('#verifikator_id_1'+count).append('<option '+selected2+' value=' + value['id'] + '>' + value['nama'] + ' | '+ value['nik_tg']+' | '+value['jabatan_nama']+'</option>');
                 });
             }

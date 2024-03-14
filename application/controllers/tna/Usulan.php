@@ -238,6 +238,7 @@ class Usulan extends CI_Controller {
 					'nama_penyelenggara' => $penyelenggara,
 					'waktu_pelaksanaan' => $this->input->post('waktu_pelaksanaan'),
 					'status_karyawan' => $this->input->post('status_fte')[$i],
+					'direktorat_id' => $this->input->post('direktorat')[$i],
 					'tahapan_id' => 170,
 					'created_by' => $this->ion_auth->user()->row()->id,
 					'created_date' =>  date('Y-m-d'),

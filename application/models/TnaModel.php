@@ -25,8 +25,8 @@ class TnaModel extends CI_Model {
 	}
 
 	public function getDataTNA($post){
-		$column_order = array('id,training,code_tna,jenis_development,metoda_pembelajaran,jenis_pelatihan,kompetensi,nama_penyelenggara,waktu_pelaksanaan,estimasi_biaya');
-		$column_search = array('id,training,code_tna,jenis_development,metoda_pembelajaran,jenis_pelatihan,kompetensi,nama_penyelenggara,waktu_pelaksanaan,estimasi_biaya');
+		$column_order = array('tp.id','rt.name','tp.code_tna','tp.jenis_development','tp.metoda_pembelajaran','tp.jenis_pelatihan','tk.name','tp.nama_penyelenggara','tp.waktu_pelaksanaan','tp.estimasi_biaya');
+		$column_search = array('tp.id','rt.name','tp.code_tna','tp.jenis_development','tp.metoda_pembelajaran','tp.jenis_pelatihan','tk.name','tp.nama_penyelenggara','tp.waktu_pelaksanaan','tp.estimasi_biaya');
 
         $draw = $post['draw'];
         $start = $post['start'];
@@ -51,7 +51,7 @@ class TnaModel extends CI_Model {
 		$this->db->join('r_tna_kompetensi tk', 'tk.id = tp.r_tna_kompetensi_id');
 		$this->db->join('r_tahapan_usulan ru', 'ru.id = tp.tahapan_id');
 		$this->db->join('m_karyawan mk', 'mk.id = tp.m_karyawan_id');
-		$this->db->join('m_organisasi mo', 'mo.id = tp.m_organisasi_id');
+		$this->db->join('m_organisasi mo', 'mo.id = tp.m_organisasi_id','left');
 		$this->db->where('ru.r_jenis_usulan_id = 29 and ru.urutan = 1');
 
 		if($post['filter_subdit'] !== 'all'){
@@ -173,7 +173,7 @@ class TnaModel extends CI_Model {
 		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_traning_id');
 		$this->db->join('r_tna_kompetensi tk', 'tk.id = tp.r_tna_kompetensi_id');
 		$this->db->join('m_karyawan mk', 'mk.id = tp.m_karyawan_id');
-		$this->db->join('m_organisasi mo', 'mo.id = tp.m_organisasi_id');
+		$this->db->join('m_organisasi mo', 'mo.id = tp.m_organisasi_id', 'left');
 		$this->db->where('tp.id', $id);
 		$query = $this->db->get();
 		return $query->row();

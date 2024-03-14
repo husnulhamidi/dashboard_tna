@@ -36,6 +36,7 @@ function submitForm($btn){
             jenis_development: "required",
             nama_kegiatan: "required",
             tna:"required",
+            direktorat:"required",
         },
         messages: {
           
@@ -53,6 +54,9 @@ function submitForm($btn){
             },
             tna:{
                 required:"<i class='fa fa-times'></i> TNA harus diisi"
+            },
+            direktorat:{
+                required:"<i class='fa fa-times'></i> Direktorat harus diisi"
             }
             
         },

@@ -138,7 +138,7 @@ function submitTNA(){
             estimasi_biaya: "required",
             penyelenggara: "required",
             waktu_pelaksanaan: "required",
-            subdit: "required",
+            direktorat: "required",
             karyawan: "required"
         },
         messages: {
@@ -169,8 +169,8 @@ function submitTNA(){
             waktu_pelaksanaan:{
                 required:"<i class='fa fa-times'></i> Waktu Pelaksanaan"
             },
-            subdit:{
-                required:"<i class='fa fa-times'></i> Sub Direktori/Unit"
+            direktorat:{
+                required:"<i class='fa fa-times'></i> Direktorat"
             },
             karyawan:{
                 required:"<i class='fa fa-times'></i> Nama Karyawan"

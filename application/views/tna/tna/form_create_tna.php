@@ -232,7 +232,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-sm-3 control-label">Sub Direktorat / Unit <span style="color: red">*</span></label>
+                                                <label class="col-sm-3 control-label">Sub Direktorat / Unit </label>
                                                 <div class="col-sm-8">
                                                     <select class="select2 form-control" name="subdit[]" id="subdit1" onchange="getKaryawanBySubdit(1)">
                                                         <option value="">--- Pilih Subdit ---</option>
@@ -326,13 +326,26 @@ $(document).ready(function () {
     if($('#id').val()){
         $('#divBtnAdd').css('display','none')
         $('.remove-field').css('display','none')
-        let subditId = $('#subdit').val();
-        let karyawanId = '<?php echo @$detail->m_karyawan_id;?>'
+        // let subditId = $('#subdit').val();
+        
+        // 
+
+        // let subdit = '<?php echo @$detail->m_organisasi_id;?>'
+        // getSubdit(1, subdit)
+        // getKaryawanBySubdit(1,karyawanId,varifikatorId)
+        // getDataDetailKaryawan(1, karyawanId)
+
+        // get atasan dan subdit
+        let direktoratId = '<?php echo @$detail->direktorat_id;?>'
         let varifikatorId = '<?php echo @$detail->verifikator_id_1;?>'
+        getAtasan(1, direktoratId, varifikatorId)
+
         let subdit = '<?php echo @$detail->m_organisasi_id;?>'
-        getSubdit(1, subdit)
-        getKaryawanBySubdit(1,karyawanId,varifikatorId)
-        getDataDetailKaryawan(1, karyawanId)
+        getSubdit(1, subdit, varifikatorId)
+
+        // get karyawan
+        let karyawanId = '<?php echo @$detail->m_karyawan_id;?>'
+        getKaryawanBySubdit(1,direktoratId, karyawanId)
 
         
 
@@ -360,30 +373,6 @@ $(document).ready(function () {
         count = count + 1;
         appendRow(count)
     })
-
-    // $('#select_lembaga').select2({
-    //     minimumInputLength: 2,
-    //     ajax: {
-    //         url: base_url+'tna/get_lembaga',
-    //         dataType: 'json',
-    //         delay: 250, 
-    //         data:function(params){
-    //             return{
-    //                 searchTerm:params.term
-    //             }
-    //         },
-    //         processResults:function(response){
-    //             console.log(response)
-    //             return {
-    //                 results:response
-    //             }
-    //         },
-    //         cache:true
-    //     },
-    //     placeholder: 'Pilih Lembaga',
-    //     templateResult: formatRepo,
-    //     templateSelection: formatRepoSelection
-    // })
 
 });
 
@@ -436,8 +425,9 @@ function formatRepoSelection (repo) {
   return repo.nama_lembaga || repo.text;
 }
 
-function getSubdit(count, subdit = false){
+function getSubdit(count, subdit = false, varifikatorId = false){
     let direktoratId = $('#direktorat'+count).val();
+    // console.log(varifikatorId)
     $.ajax({
         url: '<?php echo site_url('karyawan/ajax_get_subdit'); ?>',
         type: 'POST',
@@ -457,12 +447,20 @@ function getSubdit(count, subdit = false){
                     $('#subdit'+count).append('<option '+selected+' value=' + value['id'] + '>' + value['name'] +'</option>');
                 });
             }
+        },
+        complete: function (data) {
+            getAtasan(count, direktoratId, varifikatorId)
+            getKaryawanBySubdit(count, direktoratId)
         }
     });
 }
 
-function getKaryawanBySubdit(count, karyawanId = false, varifikatorId = false){
+function getKaryawanBySubdit(count, direktoratId = false, karyawanId = false){
     let subditId = $('#subdit'+count).val();
+    if( direktoratId ){
+        subditId = direktoratId
+    }
+    
     $.ajax({
         url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_organisasi'); ?>',
         type: 'POST',
@@ -473,19 +471,35 @@ function getKaryawanBySubdit(count, karyawanId = false, varifikatorId = false){
             $('#karyawan'+count).empty(); 
             $('#karyawan'+count).append('<option value="">-- Pilih Karyawan --</option>');
 
+            if(result !== null){
+                $.each(result, function(i, value) {
+                    var selected = '';
+                    if(value['id'] == karyawanId){
+                        selected = 'selected';
+                    }
+                    $('#karyawan'+count).append('<option '+selected+' value=' + value['id'] + '>' + value['nama'] + ' | '+ value['nik_tg']+' | '+value['jabatan_nama']+'</option>');
+                });
+            }
+        }
+    });
+}
+
+function getAtasan(count, direktoratId, varifikatorId = false){
+    $.ajax({
+        url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_organisasi'); ?>',
+        type: 'POST',
+        async: false, 
+        data: { id: direktoratId },
+        dataType: 'json',
+        success: function (result) {
             $('#verifikator_id_1'+count).empty(); 
             $('#verifikator_id_1'+count).append('<option value="">-- Pilih Atasan --</option>');
             if(result !== null){
                 $.each(result, function(i, value) {
-                    var selected = '';
                     var selected2 = '';
-                    if(value['id'] == karyawanId){
-                        selected = 'selected';
-                    }
                     if(value['id'] == varifikatorId){
                         selected2 = 'selected';
                     }
-                    $('#karyawan'+count).append('<option '+selected+' value=' + value['id'] + '>' + value['nama'] + ' | '+ value['nik_tg']+' | '+value['jabatan_nama']+'</option>');
                     $('#verifikator_id_1'+count).append('<option '+selected2+' value=' + value['id'] + '>' + value['nama'] + ' | '+ value['nik_tg']+' | '+value['jabatan_nama']+'</option>');
                 });
             }
@@ -566,28 +580,6 @@ function getSum(pelatihanId) {
     });
 }
 
-// function getDataLembaga(pelatihanId, dataPenyelenggara = false){
-//     $('#penyelenggara').empty()
-//     $('#penyelenggara').append('<option value="">Pilih Penyelenggara</option')
-//     $.ajax({
-//         url:base_url+'tna/tna/getPenyelenggara',
-//         method: 'post',
-//         dataType: 'json',
-//         data: { pelatihanId:pelatihanId},
-//         success: function(response){
-//             console.log(response)
-//             for (var i = 0; i < response.length; i++) {
-//                 var selected = "";
-//                 if(dataPenyelenggara && dataPenyelenggara == response[i]['nama_lembaga']){
-//                     selected = "selected";
-//                 }
-//                 $('#penyelenggara').append('<option '+selected+' >'+response[i]['nama_lembaga']+'</option>')
-//             }
-//         }
-//     });
-// }
-
-var isHeader2 = true;
 function getDataLembaga(pelatihanId, dataPenyelenggara = false){
     $('#penyelenggara').empty()
     $('#penyelenggara').append('<option value="">Pilih Penyelenggara</option')
@@ -597,24 +589,46 @@ function getDataLembaga(pelatihanId, dataPenyelenggara = false){
         dataType: 'json',
         data: { pelatihanId:pelatihanId},
         success: function(response){
-            // console.log(response)
-            var selected = "";
-            $.each(response, function(index, item) {
-                if(dataPenyelenggara && dataPenyelenggara == item.nama_lembaga){
+            console.log(response)
+            for (var i = 0; i < response.length; i++) {
+                var selected = "";
+                if(dataPenyelenggara && dataPenyelenggara == response[i]['nama_lembaga']){
                     selected = "selected";
                 }
-                $('#penyelenggara').append('<option '+selected+' value="' + item.id + '">' + item.nama_lembaga + '</option>');
-            });
-            $('#penyelenggara').select2({
-                data: response,
-                placeholder: 'Pilih Penyelenggara',
-                templateResult: formatRepo2,
-                templateSelection: formatRepoSelection2,
-            });
-            isHeader2 = true;
-        },
+                $('#penyelenggara').append('<option '+selected+' >'+response[i]['nama_lembaga']+'</option>')
+            }
+        }
     });
 }
+
+var isHeader2 = true;
+// function getDataLembaga(pelatihanId, dataPenyelenggara = false){
+//     $('#penyelenggara').empty()
+//     $('#penyelenggara').append('<option value="">Pilih Penyelenggara</option')
+//     $.ajax({
+//         url:base_url+'tna/tna/getPenyelenggara',
+//         method: 'post',
+//         dataType: 'json',
+//         data: { pelatihanId:pelatihanId},
+//         success: function(response){
+//             // console.log(response)
+//             var selected = "";
+//             $.each(response, function(index, item) {
+//                 if(dataPenyelenggara && dataPenyelenggara == item.nama_lembaga){
+//                     selected = "selected";
+//                 }
+//                 $('#penyelenggara').append('<option '+selected+' value="'+item.id+'" >' + item.nama_lembaga + '</option>');
+//             });
+//             $('#penyelenggara').select2({
+//                 data: response,
+//                 placeholder: 'Pilih Penyelenggara',
+//                 templateResult: formatRepo2,
+//                 templateSelection: formatRepoSelection2,
+//             });
+//             isHeader2 = true;
+//         },
+//     });
+// }
 
 function formatRepo2(repo){
     console.log(repo)
@@ -660,28 +674,6 @@ function addPenyelenggara(){
    
 }
 
-// function btnClose(){
-//     let new_penyelenggara = $('#new_penyelenggara').val()
-//     if(new_penyelenggara){
-//         $('#penyelenggara').prop('disabled', true)
-//         $('#tmpPenyelenggara').val(new_penyelenggara)
-//         $('#divNewPeneyelenggara').css('display', 'block')
-
-       
-//         let edit = `<li class="fa fa-edit"></li> Edit Penyelenggara</b>`;
-//         $("#btnText").html(edit);
-//     }
-// }
-
-// function deletePenyelenggara(){
-//     $('#penyelenggara').prop('disabled', false)
-//     $('#divNewPeneyelenggara').css('display', 'none')
-//     $('#form-add-penyelenggara')[0].reset();
-    
-//     let tambah = `<li class="fa fa-plus"></li> Tambah Penyelenggara</b>`;
-//     $("#btnText").html(tambah);
-// }
-
 
 function appendRow(count){
     var html = `
@@ -709,7 +701,7 @@ function appendRow(count){
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">Sub Direktorat / Unit <span style="color: red">*</span></label>
+                <label class="col-sm-3 control-label">Sub Direktorat / Unit </label>
                 <div class="col-sm-8">
                     <select class="select2 form-control" name="subdit[]" id="subdit`+count+`" onchange="getKaryawanBySubdit(`+count+`)">
                         <option value="">--- Pilih Subdit ---</option>
