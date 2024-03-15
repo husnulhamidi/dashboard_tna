@@ -60,11 +60,11 @@
                                             <div class="col-sm-8">
                                                 <select class="select2 form-control" name="kompetensi" id="kompetensi">
                                                     <option value="">--- Pilih Kompetensi ---</option>
-                                                    <?php 
+                                                    <!-- <?php 
                                                         foreach ($kompetensi as $kom) {
                                                             echo "<option value='".$kom->id."'>".$kom->code.' | '.$kom->name.'</option>';
                                                         }
-                                                    ?>
+                                                    ?> -->
                                                 </select>
                                             </div>
                                         </div>
@@ -286,7 +286,7 @@
 <script>
 var count = 1;
 $(document).ready(function () {
-
+    getDataKompetensi()
     $('.select2').select2();
 
     $('#date .input-group.date').datepicker({
@@ -337,6 +337,9 @@ $(document).ready(function () {
         let trainingId = '<?php echo @$detail->r_tna_traning_id;?>'
         let lembaga = '<?php echo @$detail->nama_penyelenggara;?>'
         getDataLembaga(trainingId, lembaga)
+
+        let kompetensi = '<?php echo @$detail->r_tna_kompetensi_id;?>'
+        getDataKompetensi(kompetensi)
     }
 
      $(".add-field", $(this)).click(function(e) {
@@ -386,6 +389,7 @@ function getSubdit(count, subdit = false, varifikatorId = false){
     });
 }
 
+var isHeaderKaryawan = true;
 function getKaryawanBySubdit(count, direktoratId = false, karyawanId = false){
     let subditId = $('#subdit'+count).val();
     if( direktoratId ){
@@ -410,11 +414,74 @@ function getKaryawanBySubdit(count, direktoratId = false, karyawanId = false){
                     }
                     $('#karyawan'+count).append('<option '+selected+' value=' + value['id'] + '>' + value['nama'] + ' | '+ value['nik_tg']+' | '+value['jabatan_nama']+'</option>');
                 });
+                $('#karyawan'+count).select2({
+                    data: result,
+                    placeholder: 'Pilih Karyawan',
+                    templateResult: formatRepoKarywan,
+                    templateSelection: formatRepoSelectionKaryawan,
+                    matcher: function(params, data) {
+                        isHeaderKaryawan = true;
+                        if ($.trim(params.term) === '') {
+                            return data;
+                        }
+                        var term = params.term.toLowerCase();
+                        for (var key in data) {
+                            if (Object.prototype.hasOwnProperty.call(data, key) && data[key] != null && typeof data[key] === 'string') {
+                                var value = data[key].toString().toLowerCase();
+                                if (value.indexOf(term) !== -1) {
+                                    return data;
+                                }
+                            }
+                        }
+                        
+                        return null;
+                    },
+                });
+                isHeaderKaryawan = true;
             }
         }
     });
 }
 
+function formatRepoKarywan(repo){
+    if (repo.loading) {
+        return repo.text;
+    }
+    var $container = $(`
+        <table class="table table-border">
+            ${isHeaderKaryawan ? `
+                <thead>   
+                    <tr>
+                        <th class="text-nowrap"> NIK </th>    
+                        <th class="text-nowrap"> Nama </th>       
+                        <th class="text-nowrap"> Jabatan </th>       
+                    </tr>    
+                </thead>
+            ` : ''}
+            <tbody>
+                <tr>
+                    <td class="text-nowrap select2-result-repository__nik"></td>
+                    <td class="text-nowrap text-right select2-result-repository__nama"></td>
+                    <td class="text-nowrap text-right select2-result-repository__jabatan"></td>
+                </tr>
+            </tbody>
+        </table>
+    `);  
+    console.log(repo.biaya)
+    $container.find(".select2-result-repository__nik").text(repo.nik_tg);
+    $container.find(".select2-result-repository__nama").text(repo.nama);
+    $container.find(".select2-result-repository__jabatan").text(repo.jabatan_nama);
+    $container.find(".select2-result-repository__status_fte").text(repo.status_fte);
+    isHeaderKaryawan = false;
+    return $container; 
+}
+
+function formatRepoSelectionKaryawan(repo){
+    isHeaderKaryawan = true;
+    return repo.nama || repo.text;
+}
+
+var isHeaderAtasan = true;
 function getAtasan(count, direktoratId, varifikatorId = false){
     $.ajax({
         url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_organisasi'); ?>',
@@ -433,9 +500,70 @@ function getAtasan(count, direktoratId, varifikatorId = false){
                     }
                     $('#verifikator_id_1'+count).append('<option '+selected2+' value=' + value['id'] + '>' + value['nama'] + ' | '+ value['nik_tg']+' | '+value['jabatan_nama']+'</option>');
                 });
+                $('#verifikator_id_1'+count).select2({
+                    data: result,
+                    placeholder: 'Pilih Atasan',
+                    templateResult: formatRepoAtasan,
+                    templateSelection: formatRepoSelectionAtasan,
+                    matcher: function(params, data) {
+                        isHeaderAtasan = true;
+                        if ($.trim(params.term) === '') {
+                            return data;
+                        }
+                        var term = params.term.toLowerCase();
+                        for (var key in data) {
+                            if (Object.prototype.hasOwnProperty.call(data, key) && data[key] != null && typeof data[key] === 'string') {
+                                var value = data[key].toString().toLowerCase();
+                                if (value.indexOf(term) !== -1) {
+                                    return data;
+                                }
+                            }
+                        }
+                        
+                        return null;
+                    },
+                });
+                isHeaderAtasan = true;
             }
         }
     });
+}
+
+function formatRepoAtasan(repo){
+    if (repo.loading) {
+        return repo.text;
+    }
+    var $container = $(`
+        <table class="table table-border">
+            ${isHeaderAtasan ? `
+                <thead>   
+                    <tr>
+                        <th class="text-nowrap"> NIK </th>    
+                        <th class="text-nowrap"> Nama </th>       
+                        <th class="text-nowrap"> Jabatan </th>    
+                        <th class="text-nowrap"> Status FTE </th>    
+                    </tr>    
+                </thead>
+            ` : ''}
+            <tbody>
+                <tr>
+                    <td class="text-nowrap select2-result-repository__nik"></td>
+                    <td class="text-nowrap text-right select2-result-repository__nama"></td>
+                    <td class="text-nowrap text-right select2-result-repository__jabatan"></td>
+                </tr>
+            </tbody>
+        </table>
+    `);  
+    $container.find(".select2-result-repository__nik").text(repo.nik_tg);
+    $container.find(".select2-result-repository__nama").text(repo.nama);
+    $container.find(".select2-result-repository__jabatan").text(repo.jabatan_nama);
+    isHeaderAtasan = false;
+    return $container; 
+}
+
+function formatRepoSelectionAtasan(repo){
+    isHeaderAtasan = true;
+    return repo.nama || repo.text;
 }
 
 function getDataDetailKaryawan(count, karyawanId = false){
@@ -630,6 +758,23 @@ function getDataLembaga(){
                 placeholder: 'Pilih Penyelenggara',
                 templateResult: formatRepo2,
                 templateSelection: formatRepoSelection2,
+                matcher: function(params, data) {
+                    isHeader2 = true;
+                    if ($.trim(params.term) === '') {
+                        return data;
+                    }
+                    var term = params.term.toLowerCase();
+                    for (var key in data) {
+                        if (Object.prototype.hasOwnProperty.call(data, key) && data[key] != null && typeof data[key] === 'string') {
+                            var value = data[key].toString().toLowerCase();
+                            if (value.indexOf(term) !== -1) {
+                                return data;
+                            }
+                        }
+                    }
+                    
+                    return null;
+                },
             });
             isHeader2 = true;
         }
@@ -687,6 +832,92 @@ function deletePenyelenggara(){
     $('#divAddNew').css('display', 'none')
     $('#new_penyelenggara').val('');
     $('#divBtnAddPenyelenggara').css('display', 'block')
+}
+
+var isHeaderKom = true;
+function getDataKompetensi(datakompetensi = false){
+    console.log(datakompetensi)
+    $('#kompetensi').empty()
+    $('#kompetensi').append('<option value="">Pilih kompetensi</option')
+    $.ajax({
+        url:base_url+'tna/tna/getkompetensi',
+        method: 'get',
+        dataType: 'json',
+        success: function(response){
+            // console.log(response)
+            $.each(response, function(index, item) {
+                var selected = "";
+                if(datakompetensi && datakompetensi == item.id){
+                    console.log(item.id)
+                    console.log(item.kompetensi)
+                    selected = "selected";
+                }
+                $('#kompetensi').append('<option '+selected+' value="'+item.id+'" >' + item.kompetensi + '</option>');
+            });
+            isHeaderKom = true;
+            $('#kompetensi').select2({
+                data: response,
+                placeholder: 'Pilih Kompetensi',
+                templateResult: formatRepoKom,
+                templateSelection: formatRepoSelectionKom,
+                matcher: function(params, data) {
+                    isHeaderKom = true;
+                    if ($.trim(params.term) === '') {
+                        return data;
+                    }
+                    var term = params.term.toLowerCase();
+                    for (var key in data) {
+                        if (Object.prototype.hasOwnProperty.call(data, key) && data[key] != null && typeof data[key] === 'string') {
+                            var value = data[key].toString().toLowerCase();
+                            if (value.indexOf(term) !== -1) {
+                                return data;
+                            }
+                        }
+                    }
+                    
+                    return null;
+                },
+            });
+            
+        },
+    });
+}
+
+function formatRepoKom(repo){
+    console.log(repo)
+    if (repo.loading) {
+        return repo.text;
+    }
+    var $container = $(`
+        <table class="table table-border">
+            ${isHeaderKom ? `
+                <thead>   
+                    <tr>
+                        <th class="text-nowrap"> Kode </th>    
+                        <th class="text-nowrap"> Kode Job Role </th>       
+                        <th class="text-nowrap"> Kompetensi </th>    
+                    </tr>    
+                </thead>
+            ` : ''}
+            <tbody>
+                <tr>
+                    <td class="text-nowrap select2-result-repository__code"></td>
+                    <td class="text-nowrap text-right select2-result-repository__job_role"></td>
+                    <td class="text-nowrap text-right select2-result-repository__kompetensi"></td>
+                </tr>
+            </tbody>
+        </table>
+    `);  
+    $container.find(".select2-result-repository__code").text(repo.code);
+    $container.find(".select2-result-repository__job_role").text(repo.job_role);
+    $container.find(".select2-result-repository__kompetensi").text(repo.kompetensi);
+    isHeaderKom = false;
+    return $container;    
+}
+
+function formatRepoSelectionKom(repo){
+    isHeaderKom = true;
+    return repo.kompetensi  || repo.text;
 }
 
 // function btnClose(){
