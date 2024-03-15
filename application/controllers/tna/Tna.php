@@ -456,6 +456,23 @@ class Tna extends CI_Controller {
 		}
 		echo json_encode($result);
 	}
+
+	public function getkompetensi(){
+		// $search = $this->input->get('searchTerm');
+		// $data = $this->TnaModel->search_lembaga($search);
+		$data = $this->UsulanTnaModel->get_kompetensi();
+
+		$result = array();
+		foreach ($data as $key => $value) {
+			$result[] = array(
+				"id" 			=> $value->id,
+				"code" 			=> $value->code,
+				"job_role" 		=> $value->r_tna_job_role_code,
+				"kompetensi"	=> $value->name,
+			);
+		}
+		echo json_encode($result);
+	}
 	
 }
 
