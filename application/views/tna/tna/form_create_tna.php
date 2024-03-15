@@ -333,14 +333,7 @@ $(document).ready(function () {
     if($('#id').val()){
         $('#divBtnAdd').css('display','none')
         $('.remove-field').css('display','none')
-        // let subditId = $('#subdit').val();
         
-        // 
-
-        // let subdit = '<?php echo @$detail->m_organisasi_id;?>'
-        // getSubdit(1, subdit)
-        // getKaryawanBySubdit(1,karyawanId,varifikatorId)
-        // getDataDetailKaryawan(1, karyawanId)
 
         // get atasan dan subdit
         let direktoratId = '<?php echo @$detail->direktorat_id;?>'
@@ -359,6 +352,9 @@ $(document).ready(function () {
         let trainingId = '<?php echo @$detail->r_tna_traning_id;?>'
         let lembaga = '<?php echo @$detail->nama_penyelenggara;?>'
         getDataLembaga(trainingId, lembaga)
+
+        let kompetensi = '<?php echo @$detail->r_tna_kompetensi_id;?>'
+        getDataKompetensi(kompetensi)
 
         let jenis_development = '<?php echo @$detail->jenis_development;?>';
         if(jenis_development == 'Sertifikasi'){
@@ -431,7 +427,6 @@ function getKaryawanBySubdit(count, direktoratId = false, karyawanId = false){
         data: { id: subditId },
         dataType: 'json',
         success: function (result) {
-            console.log(result)
             $('#karyawan'+count).empty(); 
             $('#karyawan'+count).append('<option value="">-- Pilih Karyawan --</option>');
 
@@ -702,8 +697,9 @@ function getDataLembaga(pelatihanId, dataPenyelenggara = false){
         data: { pelatihanId:pelatihanId},
         success: function(response){
             // console.log(response)
-            var selected = "";
+           
             $.each(response, function(index, item) {
+                var selected = "";
                 if(dataPenyelenggara && dataPenyelenggara == item.nama_lembaga){
                     selected = "selected";
                 }
@@ -872,7 +868,8 @@ function deleteRow(id){
 }
 
 var isHeaderKom = true;
-function getDataKompetensi(){
+function getDataKompetensi(datakompetensi = false){
+    console.log(datakompetensi)
     $('#kompetensi').empty()
     $('#kompetensi').append('<option value="">Pilih kompetensi</option')
     $.ajax({
@@ -880,11 +877,14 @@ function getDataKompetensi(){
         method: 'get',
         dataType: 'json',
         success: function(response){
-            var selected = "";
+            // console.log(response)
             $.each(response, function(index, item) {
-                // if(datakompetensi && datakompetensi == item.nama_lembaga){
-                //     selected = "selected";
-                // }
+                var selected = "";
+                if(datakompetensi && datakompetensi == item.id){
+                    console.log(item.id)
+                    console.log(item.kompetensi)
+                    selected = "selected";
+                }
                 $('#kompetensi').append('<option '+selected+' value="'+item.id+'" >' + item.kompetensi + '</option>');
             });
             isHeaderKom = true;
@@ -914,10 +914,6 @@ function getDataKompetensi(){
             
         },
     });
-}
-
-function funcCallback(){
-
 }
 
 function formatRepoKom(repo){
@@ -954,7 +950,7 @@ function formatRepoKom(repo){
 
 function formatRepoSelectionKom(repo){
     isHeaderKom = true;
-    return repo.name  || repo.text;
+    return repo.kompetensi  || repo.text;
 }
 
 
