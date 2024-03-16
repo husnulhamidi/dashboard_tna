@@ -255,6 +255,29 @@
             </div>
 
             <div class="row">
+                <div class="col-lg-12">
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <h4> Daftar List TNA Urgent</h4>
+                            <hr>
+                            <table class="table table-urgent">
+                                <thead>
+                                    <th class="text-center"> No </th>
+                                    <th class="text-center"> ID TNA </th>
+                                    <th class="text-center"> Nama </th>
+                                    <th class="text-center"> Subdit </th>
+                                    <th class="text-center"> Pelatihan </th>
+                                    <th class="text-center"> Jenis Sertifikasi </th>
+                                    <th class="text-center"> Kompetensi </th>
+                                    <th class="text-center"> Waktu Pelaksanaan </th>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-lg-3 col-xs-6">
                     <!-- small box -->
                     <div class="small-box bg-aqua">

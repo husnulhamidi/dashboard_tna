@@ -156,6 +156,11 @@ class Home extends CI_Controller {
 		// echo json_encode($get);
 		echo $this->dashboard->getDataDetail($get);
 	}
+
+	public function getListTNAUrgent(){
+		$get = $this->input->get();
+		echo $this->dashboard->getListTNAUrgent($get);
+	}
 	
 
 }

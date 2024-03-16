@@ -365,6 +365,111 @@ class DashboardModel extends CI_Model {
 		exit();
 	}
 
+    public function getListTNAUrgent($post){
+        // $dateQuartal = $this->quartal($quartal, $thn);
+        $thn = $post['thn'];
+        $quartal = $post['quartal'];
+        if($quartal != "All"){
+            $dateQuartal = $this->quartal($quartal, $thn);
+        }
+        
+        $column_order = array('tp.id', 'tp.code_tna', 'mk.nama','mo.nama', 'rt.name','tp.jenis_development','tk.name', 'tp.waktu_pelaksanaan');
+		$column_search = array('tp.id', 'tp.code_tna', 'mk.nama','mo.nama', 'rt.name','tp.jenis_development','tk.name', 'tp.waktu_pelaksanaan');
+
+        $draw = $post['draw'];
+        $start = $post['start'];
+        $length = $post['length'];
+
+        if ($length != null) {
+            $pageSize = $length;
+        } else {
+            $pageSize = 0;
+        }
+        if ($start != null) {
+            $skip = $start;
+        } else {
+            $skip = 0;
+        }
+		$recordsTotal = 0;
+        $this->db->start_cache();
+
+		$this->db->select('tp.id AS id, 
+                    tp.code_tna AS id_tna, 
+                    mk.nama AS nama_karyawan,
+                    mo.nama AS nama_organisasi, 
+                    rt.name AS pelatihan,
+                    tp.jenis_development,
+                    tk.name AS kompetensi, 
+                    tp.waktu_pelaksanaan');
+		$this->db->from('m_tna_pengawalan tp');
+		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_traning_id');
+		$this->db->join('r_tna_kompetensi tk', 'tk.id = tp.r_tna_kompetensi_id');
+		$this->db->join('r_tahapan_usulan tu', 'tu.id = tp.tahapan_id');
+		$this->db->join('m_karyawan mk', 'mk.id = tp.m_karyawan_id');
+		$this->db->join('m_organisasi mo', 'mo.id = tp.m_organisasi_id');
+		$this->db->where('tu.r_jenis_usulan_id', 29);
+		$this->db->where('tp.is_urgent', 1);
+
+        if($quartal != "All"){
+            $this->db->where('tp.waktu_pelaksanaan >=', $dateQuartal['date1']);
+            $this->db->where('tp.waktu_pelaksanaan <=', $dateQuartal['date2']);
+        }else{
+            $this->db->where('YEAR(tp.waktu_pelaksanaan)', $thn);
+        }
+        
+		
+		IF($post['search']['value']!=""){
+			$i = 0;
+			foreach ($column_search as $item) // looping awal
+			{
+				if($post['search']['value']) // jika datatable mengirimkan pencarian dengan metode POST
+				{
+					if($i===0){
+						$this->db->group_start(); 
+						$this->db->like($item, $post['search']['value']);
+					}else{
+						$this->db->or_like($item, $post['search']['value']);
+					}
+
+					if(count($column_search) - 1 == $i)$this->db->group_end(); 
+					
+				}
+				$i++;
+			}
+		}
+		
+		$this->db->stop_cache();
+		$x = $this->db->count_all_results();
+
+		if (!empty($post['order'])) {
+			$this->db->order_by($column_order[$post['order']['0']['column']], $post['order']['0']['dir']);
+		} else {
+			$this->db->order_by('id', 'desc');
+		}
+
+		$this->db->limit($pageSize, $skip);
+		$query = $this->db->get();
+		//echo $this->db->last_query();
+		$data = $query->result_array();
+		$this->db->flush_cache();
+		
+
+		foreach ($data as $i => $rec) {
+			$data[$i]['encrypt_id'] = encrypt_url($rec['id']);
+			# code...
+		}
+		$output = array(
+            "draw" => $draw,
+            "recordsTotal" => $x,
+            "recordsFiltered" => $x,
+            "data" => $data,
+        );
+        //print_r($output);exit;
+        //output to json format
+        echo json_encode($output);
+		exit();
+    }
+
     private function quartal($quartal, $thn){
         if($quartal == 1){
             $date1 = $thn.'-01-01';

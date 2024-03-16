@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    
+    // $('.table-urgent').DataTable()
     if($('#type').val()){
         let type = $('#type').val()
         let quartal = $('#quartal').val()
@@ -58,8 +58,7 @@ $(document).ready(function(){
             }
         });
     }
-   
-   
+ 
 })
 
 function redirectDetail(paramsType, paramsQuartal) {
@@ -75,7 +74,8 @@ function loadData(thn){
     $('#thn_anggaran_tna').html(thn)
     $('#thn_summary').html(thn)
     $('#thn_summary_non_tna').html(thn)
-    
+
+    getDataUrget()
     getDataDashboad()
     getChartPelatihanQ1();
     getChartPelatihanQ2();
@@ -91,6 +91,56 @@ function loadData(thn){
     anggaranTNA()
     summary()
 
+}
+
+function getDataUrget(){
+    var thn = $('#filter_year').val();
+    var quartal = $('#filter_quartal').val()
+    if ($.fn.DataTable.isDataTable('.table-urgent')) {
+        $('.table-urgent').DataTable().destroy();
+    }
+    $('.table-urgent').DataTable({
+        processing: true, 
+        serverSide: true, 
+        scrollX: true,
+        order: [], 
+        ajax: {
+            url     : base_url+"tna/home/getListTNAUrgent",
+            type    : "get",
+            datatype: "json",
+            data    : function(d){
+                d.thn = thn
+                d.quartal = quartal
+
+                console.log(d)
+            }
+        },
+        columns: [
+            {
+                "data": "id",
+                "width": "50px",
+                render: function (data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                }
+            },
+            {"data": "id_tna"},
+            {"data": "nama_karyawan"},
+            {"data": "nama_organisasi"},
+            { "data": "pelatihan"},
+            { "data": "jenis_development"},
+            { "data": "kompetensi" },
+            { 
+                "data": "waktu_pelaksanaan",
+                render:function(data, type, row, meta){
+                    let date = '-'
+                    if(data !== '0000-00-00'){
+                        date = formatDate(data)
+                    }
+                    return date
+                }
+            },       
+        ],
+    })
 }
 
 function getDataDashboad() {

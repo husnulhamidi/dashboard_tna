@@ -56,6 +56,7 @@ $route['translate_uri_dashes'] = FALSE;
 //TNA
 $route['tna/home'] = 'tna/home';
 $route['tna/home/getCountDashboard'] = 'tna/home/getCountDashboard';
+$route['tna/home/getListTNAUrgent'] = 'tna/home/getListTNAUrgent';
 $route['tna/home/chartPelatihan'] = 'tna/home/chartPelatihan';
 $route['tna/home/chartSertifikasi'] = 'tna/home/chartSertifikasi';
 $route['tna/home/realisasiInternalSharing'] = 'tna/home/realisasiInternalSharing';
