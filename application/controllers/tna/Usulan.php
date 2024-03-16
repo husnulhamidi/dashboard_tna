@@ -157,8 +157,11 @@ class Usulan extends CI_Controller {
 			'plugins/sweet-alert/sweetalert.css',
 			'plugins/select2/select2.min.css',
 			'plugins/datepicker/datepicker3.css',
+			'plugins/daterangepicker/daterangepicker-bs3.css'
         );
 		$data['js']				= array(	// js tambahan
+			'plugins/daterangepicker/moment.js',
+			'plugins/daterangepicker/daterangepicker.js',
 			'plugins/sweet-alert/sweetalert.min.js',
 			'plugins/select2/select2.full.min.js',
 			'plugins/datepicker/bootstrap-datepicker.js',
@@ -221,6 +224,12 @@ class Usulan extends CI_Controller {
 				$getNamaPenyelenggara = $this->lembagaModel->get_lembaga_byid($this->input->post('penyelenggara'));
 				$penyelenggara = $getNamaPenyelenggara['data']->nama_lembaga;
 			}
+
+			$pecahTgl = explode('-', $this->input->post('waktu_pelaksanaan'));
+			$tmptgl1 = trim($pecahTgl[0]);
+			$tmptgl2 = trim($pecahTgl[1]);
+			$tgl = explode('/', $tmptgl1);
+			$tgl2 = explode('/', $tmptgl2);
 			// $penyelenggara = $this->input->post('new_penyelenggara') ?? $this->input->post('penyelenggara');
 			$data = array();
 			$i=0;
@@ -243,7 +252,9 @@ class Usulan extends CI_Controller {
 					'estimasi_biaya' => preg_replace("/[,\s]/", '', $this->input->post('estimasi_biaya')),
 					// 'nama_penyelenggara' => $this->input->post('penyelenggara'),
 					'nama_penyelenggara' => $penyelenggara,
-					'waktu_pelaksanaan' => $this->input->post('waktu_pelaksanaan'),
+					// 'waktu_pelaksanaan' => $this->input->post('waktu_pelaksanaan'),
+					'waktu_pelaksanaan_mulai' => $tgl[2].'-'.$tgl[0].'-'.$tgl[1],
+					'waktu_pelaksanaan_selesai' => $tgl2[2].'-'.$tgl2[0].'-'.$tgl2[1],
 					'status_karyawan' => $this->input->post('status_fte')[$i],
 					'direktorat_id' => $this->input->post('direktorat')[$i],
 					'tahapan_id' => 170,

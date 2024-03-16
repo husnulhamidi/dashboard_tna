@@ -189,13 +189,14 @@
                                         <div class="input-group date">
                                             <?php
                                                 $waktu = '';
-                                                if(@$detail->waktu_pelaksanaan){
-                                                    $tgl = explode('-',@$detail->waktu_pelaksanaan);
-                                                    $waktu = $tgl[2].'-'.$tgl[1].'-'.$tgl[0];
+                                                if(@$detail->waktu_pelaksanaan_mulai && @$detail->waktu_pelaksanaan_selesai){
+                                                    $tgl = explode('-',@$detail->waktu_pelaksanaan_mulai);
+                                                    $tgl2 = explode('-',@$detail->waktu_pelaksanaan_selesai);
+                                                    $waktu = $tgl[1].'/'.$tgl[2].'/'.$tgl[0] . ' - ' . $tgl2[1].'/'.$tgl2[2].'/'.$tgl2[0];
                                                 }
                                                 
                                             ?>
-                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input autocomplete="off" type="text" class="form-control input-sm" name="waktu_pelaksanaan" id="waktu_pelaksanaan" value="<?php echo @$waktu;?>">
+                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input autocomplete="off" type="text" class="form-control input-sm" name="waktu_pelaksanaan" id="waktu_pelaksanaan" value="<?php echo $waktu ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -321,12 +322,13 @@
 var count = 1;
 $(document).ready(function () {
     $('.select2').select2();
-    $('#date .input-group.date').datepicker({
-        format: "dd-mm-yyyy",
-        viewMode: "date", 
-        minViewMode: "date",
-        autoclose: true
-    });
+    // $('#date .input-group.date').daterangepicker({
+    //     // format: "dd-mm-yyyy",
+    //     // viewMode: "date", 
+    //     // minViewMode: "date",
+    //     // autoclose: true
+    // });
+    $('#waktu_pelaksanaan').daterangepicker();
 
     $('.input_mask').mask('000.000.000.000', {reverse: true});
 
@@ -360,7 +362,7 @@ $(document).ready(function () {
         if(jenis_development == 'Sertifikasi'){
             $('#typeSertifikasi').css('display','block')
             let jenis_sertifikasi = '<?php echo @$detail->jenis_sertifikasi;?>';
-            console.log(jenis_sertifikasi)
+            // console.log(jenis_sertifikasi)
             $("#"+jenis_sertifikasi).prop("checked", true);
         }
 
@@ -869,7 +871,7 @@ function deleteRow(id){
 
 var isHeaderKom = true;
 function getDataKompetensi(datakompetensi = false){
-    console.log(datakompetensi)
+    // console.log(datakompetensi)
     $('#kompetensi').empty()
     $('#kompetensi').append('<option value="">Pilih kompetensi</option')
     $.ajax({
@@ -881,8 +883,8 @@ function getDataKompetensi(datakompetensi = false){
             $.each(response, function(index, item) {
                 var selected = "";
                 if(datakompetensi && datakompetensi == item.id){
-                    console.log(item.id)
-                    console.log(item.kompetensi)
+                    // console.log(item.id)
+                    // console.log(item.kompetensi)
                     selected = "selected";
                 }
                 $('#kompetensi').append('<option '+selected+' value="'+item.id+'" >' + item.kompetensi + '</option>');

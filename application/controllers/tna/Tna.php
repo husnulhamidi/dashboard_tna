@@ -79,8 +79,11 @@ class Tna extends CI_Controller {
 		$data['css'] 			= array(
             'plugins/select2/select2.min.css',
             'plugins/sweet-alert/sweetalert.css',
+			'plugins/daterangepicker/daterangepicker-bs3.css'
         );
 		$data['js']				= array(	// js tambahan
+			'plugins/daterangepicker/moment.js',
+			'plugins/daterangepicker/daterangepicker.js',
 			'js/jquery.validate.js',
             'plugins/select2/select2.full.min.js',
 			'plugins/datepicker/bootstrap-datepicker.js',
@@ -117,8 +120,11 @@ class Tna extends CI_Controller {
 		$data['css'] 			= array(
             'plugins/select2/select2.min.css',
             'plugins/sweet-alert/sweetalert.css',
+			'plugins/daterangepicker/daterangepicker-bs3.css'
         );
 		$data['js']				= array(	// js tambahan
+			'plugins/daterangepicker/moment.js',
+			'plugins/daterangepicker/daterangepicker.js',
 			'js/jquery.validate.js',
             'plugins/select2/select2.full.min.js',
 			'plugins/datepicker/bootstrap-datepicker.js',
@@ -168,12 +174,18 @@ class Tna extends CI_Controller {
 		// }else{
 		// 	$penyelenggara = $getNamaPenyelenggara['data']->nama_lembaga;
 		// }
-		
+
+		$pecahTgl = explode('-', $this->input->post('waktu_pelaksanaan'));
+		$tmptgl1 = trim($pecahTgl[0]);
+		$tmptgl2 = trim($pecahTgl[1]);
+		$tgl = explode('/', $tmptgl1);
+		$tgl2 = explode('/', $tmptgl2);
+
 		$getNamaPenyelenggara = $this->lembagaModel->get_lembaga_byid($this->input->post('penyelenggara'));
 		$penyelenggara = $getNamaPenyelenggara['data']->nama_lembaga;
 		
 		// $penyelenggara = $this->input->post('new_penyelenggara') ?? $this->input->post('penyelenggara');
-		$tgl = explode('-', $this->input->post('waktu_pelaksanaan'));
+		
 		$data = array(
 			// 'm_organisasi_id'	=> $this->input->post('subdit'),
 			// 'm_karyawan_id'	=> $this->input->post('karyawan'),
@@ -188,7 +200,9 @@ class Tna extends CI_Controller {
 			'estimasi_biaya' => str_replace(".", "", $this->input->post('estimasi_biaya')),
 			'nama_penyelenggara' => $penyelenggara,
 			// 'nama_penyelenggara' => $this->input->post('penyelenggara'),
-			'waktu_pelaksanaan' => $tgl[2].'-'.$tgl[1].'-'.$tgl[0],
+			// 'waktu_pelaksanaan' => $tgl[2].'-'.$tgl[1].'-'.$tgl[0],
+			'waktu_pelaksanaan_mulai' => $tgl[2].'-'.$tgl[0].'-'.$tgl[1],
+			'waktu_pelaksanaan_selesai' => $tgl2[2].'-'.$tgl2[0].'-'.$tgl2[1],
 			'tahapan_id' => $this->input->post('tahapan_id'),
 			'objective' => $this->input->post('objective'),
 			'code_tna' => $this->input->post('code_tna'),
@@ -202,7 +216,7 @@ class Tna extends CI_Controller {
 			}
 		}
 
-		
+		// echo json_encode($data);
 		if($this->input->post('id')){
 			$data['updated_date'] = date('Y-m-d');
 			$data['updated_by'] = $this->karyawanId;

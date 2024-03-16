@@ -139,7 +139,8 @@ function submitTNA(){
             penyelenggara: "required",
             waktu_pelaksanaan: "required",
             direktorat: "required",
-            karyawan: "required"
+            karyawan: "required",
+            is_tna: "required"
         },
         messages: {
             jenis_pelatihan:{
@@ -173,6 +174,9 @@ function submitTNA(){
                 required:"<i class='fa fa-times'></i> Direktorat"
             },
             karyawan:{
+                required:"<i class='fa fa-times'></i> Nama Karyawan"
+            },
+            is_tna:{
                 required:"<i class='fa fa-times'></i> Nama Karyawan"
             }
             

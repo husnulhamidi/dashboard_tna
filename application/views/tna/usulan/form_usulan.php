@@ -289,13 +289,14 @@ $(document).ready(function () {
     getDataKompetensi()
     $('.select2').select2();
 
-    $('#date .input-group.date').datepicker({
-        format: "dd-mm-yyyy",
-        viewMode: "date", 
-        minViewMode: "date",
-        autoclose: true
-    });
+    // $('#date .input-group.date').daterangepicker({
+    //     // format: "dd-mm-yyyy",
+    //     // viewMode: "date", 
+    //     // minViewMode: "date",
+    //     autoclose: true
+    // });
 
+    $('#waktu_pelaksanaan').daterangepicker();
     $('.input_mask').mask('000.000.000.000', {reverse: true});
 
     // $('.multi-field-wrapper').each(function() {
