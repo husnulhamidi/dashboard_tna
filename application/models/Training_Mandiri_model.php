@@ -34,6 +34,7 @@ class Training_Mandiri_model extends CI_Model{
 		$this->db->select('	mk.nama as karyawan,
 	   						komp.name as kompetensi,
        						training.name as pelatihan,
+							m_tna_training_mandiri.is_approval_admin,
        						m_tna_training_mandiri.kategori_pelatihan, 
        						m_tna_training_mandiri.metoda_pembelajaran,
        						m_tna_training_mandiri.alasan_rejected, m_tna_training_mandiri.nama_penyelenggara, m_tna_training_mandiri.biaya, m_tna_training_mandiri.tanggal_mulai, m_tna_training_mandiri.tanggal_selesai, m_tna_training_mandiri.justifikasi_pelatihan,m_tna_training_mandiri.id,m_tna_training_mandiri.status_approval,
@@ -102,6 +103,11 @@ class Training_Mandiri_model extends CI_Model{
 
 	public function insertData($data){
 		$this->db->insert($this->table, $data);
+		return $this->db->insert_id();
+	}
+	
+	public function insertHistory($data){
+		$this->db->insert('m_tna_training_mandiri_riwayat', $data);
 		return $this->db->insert_id();
 	}
 

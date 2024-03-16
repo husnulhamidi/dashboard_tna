@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header bg-info">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="false">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Verifikasi</h4>
+                <h4 class="modal-title" id="myModalLabel">Verifikasi <span id="actionBy"></span> </h4>
             </div>
             <div class="modal-body">
            
@@ -12,6 +12,7 @@
                     
                     <form method="post" action="#" class="form-horizontal form-verifikasi" id="form-verifikasi" enctype="multipart/form-data">
                     <input type="hidden" name="id" id="id">
+                    <input type="hidden" name="is_approval" id="is_approval">
                     <div class="form-group">
                         <label class="col-sm-12"> <h5>Apakah anda menyetujui Training Mandiri ini?</h5></label>
                         <div class="col-sm-2">
@@ -24,6 +25,20 @@
                             <div class="form-check">
                             <input class="form-check-input" type="radio" name="verifikasi" value="Approved">
                             <label class="form-check-label">Approve</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="divApproval" style="display:none">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label class="col-md-3">No HT</label>
+                                <input type="text" class="form-control" placeholder="No HT" name="no_ht">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label class="col-md-3">No SPB</label>
+                                <input type="text" class="form-control" placeholder="No SPB" name="no_spb">
                             </div>
                         </div>
                     </div>
@@ -55,3 +70,17 @@
         </div> <!-- /.modal-content -->
     </div> <!-- /.modal-dialog -->
 </div> <!-- /.modal -->
+<script>
+
+$('input[type="radio"][name="verifikasi"]').change(function() {
+    if($('#is_approval').val() == 0){
+        var selectedValue = $(this).val();
+        $('#divApproval').css('display', 'none')
+        if (selectedValue === 'Approved') {
+            $('#divApproval').css('display', 'block')
+        }
+    }
+   
+});
+
+</script>

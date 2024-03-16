@@ -59,8 +59,13 @@ jQuery(document).ready(function() {
     });
 
     $(document).on("click",".btn-show-keterangan",function(){
-        const id = this.value;
-        $('#id').val(id)
+        const keterangan = $(this).data('keterangan');
+        const tmp = this.value;
+        const split = tmp.split('-')
+        // console.log(id)
+        $('#id').val(split[0])
+        $('#is_approval').val(split[1])
+        $('#actionBy').text(keterangan)
        $('#ModalVerifikasiTrainingMandiri').modal('show')
     });
 
@@ -220,7 +225,7 @@ function generateTableTrainingMandiri(){
             type    : "get",
             datatype: "json",
             data    : function(d){
-                console.log(d)
+                
             }
                       
         },
@@ -360,7 +365,7 @@ function generateTableTrainingMandiriAdmin(){
             type    : "get",
             datatype: "json",
             data    : function(d){
-                console.log(d)
+                // console.log(d)
             }
                       
         },
@@ -429,30 +434,37 @@ function generateTableTrainingMandiriAdmin(){
             { 
                 "data": "status_approval",
                 render: function (data, type, row, meta) {
+                    // console.log(row)
 
+                    // return data
                     if(data == 'Pending'){
-                        // return `<span class="label label-warning"><i class="fa fa-lock"></i> ` + data + ` </span>`;
-                        return `<button
-                                        value='`+row.id+`'
-                                        class="btn btn-warning btn-xs btn-show-keterangan" 
-                                            data-toggle="modal" 
-                                            >
-                                            <i class="fa fa-lock"></i>`+data+`
-                                    </button>`
+                        var button = '';
+                        if(row.is_approval_admin == 1){
+                            button = button + `<button
+                                                    value='`+row.id+'-'+row.is_approval_admin+`'
+                                                    data-keterangan="By AVP"
+                                                    class="btn btn-success btn-xs btn-show-keterangan" 
+                                                        data-toggle="modal" 
+                                                        >
+                                                        <i class="fa fa-check"></i>Approved By Admin
+                                                </button>`
+                        }else{
+                            button = button + `<button
+                                            value='`+row.id+'-'+row.is_approval_admin+`'
+                                            data-keterangan="By Admin"
+                                            class="btn btn-warning btn-xs btn-show-keterangan" 
+                                                data-toggle="modal" 
+                                                >
+                                                <i class="fa fa-lock"></i>`+data+`
+                                        </button>`
+                        }
+
+                        return button;
+                        
                     }
                     if(data == 'Approved'){
-                        var notes="";
-                        if(row.alasan_rejected != null){
-                            notes = `<button 
-                                        
-                                        value='`+row.alasan_rejected+`' 
-                                        class="btn btn-default btn-xs btn-show-alesan" 
-                                        data-toggle="modal">
-                                        <i class="fa fa-eye" id="btn-show-alesan"></i> Lihat Ket. 
-                                    </button>`
-                        }
-                        return `<span class="label label-success"><i class="fa fa-check"></i> ` + data + ` </span><br>`+notes
-                        // return `<span class="label label-success"><i class="fa fa-check"></i> ` + data + ` </span>`;
+                        const ket = data + ' By AVP '
+                        return `<span class="label label-success"><i class="fa fa-check"></i> ` + ket + ` </span>`;
                     }
                     if(data == 'Rejected'){
                         return `<span class="label label-danger"><i class="fa fa-close"></i> ` + data + ` </span>

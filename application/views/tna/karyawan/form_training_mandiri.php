@@ -66,6 +66,14 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group" id="typeSertifikasi" style="display:none">
+                                        <label class="col-sm-3 control-label">&nbsp;</label>
+                                        <div class="col-sm-8">
+                                            <input type="radio" id="Nasional" name="jenis_sertifikasi" value="Nasional" /> Nasional
+                                            <input type="radio" id="Internasional" name="jenis_sertifikasi" value="Internasional" style="margin-left:20px"/> Internasional
+                                        </div>
+                                    </div>
+
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Nama Penyelenggara<span class="text-red">*</span></label>
                                         <div class="col-sm-7">
@@ -99,6 +107,22 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label class="col-sm-3 control-label">Upload Sertifikat</label>
+                                        <div class="col-sm-7">
+                                            <input type="file" class="fileName" name="fileNameSertifikat" id="fileNameSertifikat">
+                                            <input type="hidden" name="input-file-sertifikat" value="fileNameSertifikat">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Upload Pembayaran</label>
+                                        <div class="col-sm-7">
+                                            <input type="file" class="fileName" name="fileNamepembayaran" id="fileNamepembayaran">
+                                            <input type="hidden" name="input-file-pembayaran" value="fileNamepembayaran">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label class="col-sm-3 control-label">Upload Justifikasi</label>
                                         <div class="col-sm-7">
                                             <input type="file" class="fileName" name="fileName" id="fileName">
@@ -106,7 +130,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label class="col-sm-3 control-label">&nbsp;</label>
                                         <div class="col-sm-7">
                                             <?php
@@ -115,7 +139,7 @@
                                                 }
                                             ?>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div> 
                             </div>
                         </div>
@@ -140,7 +164,7 @@
 </script>
 <script>
     $(document).ready(function () {
-        $('#fileName').filestyle({
+        $('.fileName').filestyle({
             btnClass : 'btn-success',
             text : 'Select File',
             htmlIcon : '<span class="fa fa-folder"></span> ',
@@ -171,7 +195,12 @@
             $('#waktu_pelaksanaan').val(format_tgl_mulai+ ' - ' +format_tgl_selesai)
         }
         
-
+        $('#ketegoriPelatihan').change(function(){
+            $('#typeSertifikasi').css('display', 'none')
+            if($('#ketegoriPelatihan').val() == 'Sertifikasi'){
+                $('#typeSertifikasi').css('display', 'block')
+            }
+        })
 
     });
 

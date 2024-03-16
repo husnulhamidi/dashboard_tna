@@ -10,6 +10,9 @@ class TrainingMandiri extends CI_Controller {
 			redirect('auth/login');
 		}
 		$this->load->model('Training_Mandiri_model', 'trainingMandiri');
+		$this->load->helper('custom_helper');
+		$userData = $this->session->userdata('user');
+		$this->karyawanId = $userData['m_karyawan_id'];
     
 	}
 
@@ -232,19 +235,45 @@ class TrainingMandiri extends CI_Controller {
 	public function createOrUpdate(){
 		// echo json_encode($this->input->post()); 
 
-		ini_set('MAX_EXECUTION_TIME', 0);
-		// $data =array();
-		$config['upload_path'] = './files/upload/training-mandiri';
-		$config['allowed_types'] = 'gif|jpg|png';
+		// ini_set('MAX_EXECUTION_TIME', 0);
+		// $config['upload_path'] = './files/upload/training-mandiri';
+		// $config['allowed_types'] = 'gif|jpg|png';
 		
-		$config['file_name'] = $this->input->post('input-file').'-'.date('ymdHis');
-		$this->upload->initialize($config);
+		// $config['file_name'] = $this->input->post('input-file').'-'.date('ymdHis');
+		// $this->upload->initialize($config);
 
-		$fileDoc = '';
-		if ($this->upload->do_upload($this->input->post('input-file'))){
-			$upload_data  = $this->upload->data();
-			$file_extension = $upload_data['file_ext'];
-			$fileDoc = $this->input->post('input-file').'-'.date('ymdHis').$file_extension;
+		// $fileDoc = '';
+		// if ($this->upload->do_upload($this->input->post('input-file'))){
+		// 	$upload_data  = $this->upload->data();
+		// 	$file_extension = $upload_data['file_ext'];
+		// 	$fileDoc = $this->input->post('input-file').'-'.date('ymdHis').$file_extension;
+		// }
+		if($this->input->post('input-file')){
+			$fileName = $this->input->post('input-file');
+			$pathName = './files/upload/training-mandiri';
+			$allowed_types = '*';
+			$upload_file = upload_file($fileName, $pathName, $allowed_types, $this);
+			if($upload_file['success'] == false){
+				$upload_file['data'] = '';
+			}
+		}
+		if($this->input->post('input-file-sertifikat')){
+			$fileName = $this->input->post('input-file-sertifikat');
+			$pathName = './files/upload/training-mandiri';
+			$allowed_types = '*';
+			$upload_file_sertifikat = upload_file($fileName, $pathName, $allowed_types, $this);
+			if($upload_file_sertifikat['success'] == false){
+				$upload_file_sertifikat['data'] = '';
+			}
+		}
+		if($this->input->post('input-file-pembayaran')){
+			$fileName = $this->input->post('input-file-pembayaran');
+			$pathName = './files/upload/training-mandiri';
+			$allowed_types = '*';
+			$upload_file_pembayaran = upload_file($fileName, $pathName, $allowed_types, $this);
+			if($upload_file_pembayaran['success'] == false){
+				$upload_file_pembayaran['data'] = '';
+			}
 		}
 
 		$waktu = explode("-", $this->input->post('waktu_pelaksanaan'));
@@ -263,21 +292,25 @@ class TrainingMandiri extends CI_Controller {
 			'biaya' => $this->input->post('biaya'),
 			'tanggal_mulai' => str_replace(" ", "", $tglMulai),
 			'tanggal_selesai' => str_replace(" ", "", $tglSelesai),
-			'justifikasi_pelatihan'=> $this->input->post('justifikasi')
+			'justifikasi_pelatihan'=> $this->input->post('justifikasi'),
+			'jenis_sertifikasi' => $this->input->post('jenis_sertifikasi'),
 		);
 		if($this->input->post('id')){
 			$data['updated_date'] = date('Y-m-d');
-			if($fileDoc){
-				$data['document'] = $fileDoc;
-			}
+			if($upload_file['data'])$data['document'] = $upload_file['data'];
+			if($upload_file_sertifikat['data'])$data['file_sertifikat'] = $upload_file_sertifikat['data'];
+			if($upload_file_pembayaran['data'])$data['file_bukti_pembayaran'] = $upload_file_pembayaran['data'];
 			$action = $this->trainingMandiri->updateData($data, $this->input->post('id'));
 		}else{
 			$data['created_date'] = date('Y-m-d');
-			$data['document'] = $fileDoc;
+			$data['document'] = $upload_file['data'];
+			$data['file_sertifikat'] = $upload_file_sertifikat['data'];
+			$data['file_bukti_pembayaran'] = $upload_file_pembayaran['data'];
 			$action = $this->trainingMandiri->insertData($data);
 		}
 		// echo json_encode($action);
 		if($action){
+			$this->saveHistory($action, 1, 'pembuatan internal sharing', 'Pending');
 			$return = array(
 				'success'		=> true,
 				'status_code'	=> 201,
@@ -295,6 +328,7 @@ class TrainingMandiri extends CI_Controller {
 		
 		echo json_encode($return);
 	}
+
 
 	public function delete_training_mandiri(){
 		$data = $this->trainingMandiri->delete_training_mandiri($this->input->post('id'));
@@ -302,12 +336,32 @@ class TrainingMandiri extends CI_Controller {
 	}
 
 	public function verifikasi(){
+		// echo json_encode($this->input->post());
+		$is_approval_admin = 0;
+		if($this->input->post('verifikasi') == 'Approved')$is_approval_admin = 1;
 		$data = array(
-			'alasan_rejected' => $this->input->post('verifikasi'),
-			'status_approval' => $this->input->post('verifikasi')
+			'tanggal_approval'	=> date('Y-m-d'),
+			'approval_by'		=> $this->karyawanId,
+			'is_approval_admin'	=> $is_approval_admin
 		);
+		if($this->input->post('verifikasi') == 'Rejected'){
+			$data['status_approval'] = strtolower($this->input->post('verifikasi'));
+			$data['alasan_rejected'] = $this->input->post('keterangan');
+		}
+
+		if($this->input->post('is_approval') == 0){
+			$data['no_ht'] 			= $this->input->post('no_ht');
+			$data['no_spb']			= $this->input->post('no_spb');
+			$keterangan = $this->input->post('verifikasi') . ' by Admin';
+			$tahapan = '2';
+		}else{
+			$data['status_approval'] = strtolower($this->input->post('verifikasi'));
+			$keterangan = $this->input->post('verifikasi') . ' by AVP';
+			$tahapan = '3';
+		}
 		$action = $this->trainingMandiri->verifikasi($data, $this->input->post('id'));
 		if($action){
+			$this->saveHistory($this->input->post('id'), $tahapan, $keterangan, $this->input->post('verifikasi'));
 			$return = array(
 				'success'		=> true,
 				'status_code'	=> 201,
@@ -324,6 +378,18 @@ class TrainingMandiri extends CI_Controller {
 		}
 		
 		echo json_encode($return);
+	}
+
+	private function saveHistory($m_training_mandiri_id, $tahapan, $keterangan, $status){
+		$data = array(
+			'm_training_mandiri_id' => $m_training_mandiri_id,
+			'status' => $status,
+			'keterangan' => $keterangan,
+			'tahapan' => $tahapan,
+			'created_by' => $this->karyawanId,
+			'created_date' => date('Y-m-d'),
+		);
+		$action = $this->trainingMandiri->insertHistory($data);
 	}
 
 
