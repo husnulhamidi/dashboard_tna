@@ -88,6 +88,22 @@
                         </div>
                         <div class="row" style="padding-top: 10px">
                             <div class="col-md-12">
+                                <label class="col-md-4">Nomor HT  </label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control pull-right" name="no_ht"  id="edit_no_ht">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top: 10px">
+                            <div class="col-md-12">
+                                <label class="col-md-4">Nomor SPB  </label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control pull-right" name="no_spb"  id="edit_no_spb">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top: 10px">
+                            <div class="col-md-12">
                                 <label class="col-md-4">Unit <span style="color:red">*</span> </label>
                                 <div class="col-md-8" id="divDropdown">
                                     <input type="hidden" name="unit_tmp" id="unit_tmp">
@@ -104,7 +120,7 @@
                         </div>
                         <div class="row" style="padding-top: 10px">
                             <div class="col-md-12">
-                                <label class="col-md-4">Bukti Pembayaran <span style="color:red">*</span> </label>
+                                <label class="col-md-4">Bukti Pembayaran  </label>
                                 <div class="col-md-8">
                                     <input type="file" name="uplaod_bukti_pembayaran" id="uplaod_bukti_pembayaran" class="form-control">
                                     <input type="hidden" name="file-bukti-pembayaran" value="uplaod_bukti_pembayaran">

@@ -340,7 +340,7 @@ class Pengawalan extends CI_Controller {
 			$allowed_types = '*';
 			$upload_file = upload_file($fileName, $pathName, $allowed_types, $this);
 			if($upload_file['success'] == false){
-			    die(json_encode($upload_file)); 
+			    $upload_file['data'] = ''; 
 			}
 		}
 
@@ -355,6 +355,8 @@ class Pengawalan extends CI_Controller {
 			'tanggal'				=> $tgl_rilis[2].'-'.$tgl_rilis[0].'-'.$tgl_rilis[1],
 			'mata_anggaran'			=> $this->input->post('mata_anggaran'),
 			'no_mata_anggaran'		=> $this->input->post('nomor_mata_anggaran'),
+			'no_ht'					=> $this->input->post('no_ht'),
+			'no_spb'				=> $this->input->post('no_spb'),
 			'm_organisasi_id'		=> $unit,
 			'bukti_pembayaran'		=> $upload_file['data'],
 			'is_sppd'				=> $this->input->post('biayasppdp') == 'ya' ? 1 : 0,
