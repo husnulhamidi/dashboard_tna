@@ -5,6 +5,9 @@
         margin-left: -10px;
         right: auto;
     }
+    .changeColor {
+        background-color: #ff000024;
+    }
 </style>
 <section class="content">
     <!-- Main row -->
@@ -47,7 +50,7 @@
                     <div class="tab-pane active">                       
                         <div class="row">
                             <div class="col-md-12">
-                                <table  class="table table-striped table-bordered table-hover" id="table-tna" cellspacing="0">
+                                <table  class="table  table-bordered table-hover" id="table-tna" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th class="text-center text-nowrap">Aksi</th>

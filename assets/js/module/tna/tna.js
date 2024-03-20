@@ -326,6 +326,12 @@ function buildTable(){
                 }
             }
         ],
+        "createdRow": function( row, data, dataIndex){
+            console.log(data.is_urgent)
+            if (data.is_urgent == '1') {
+                $(row).addClass('changeColor');
+            }
+        },
     });
 }
 

@@ -260,7 +260,8 @@ class Usulan extends CI_Controller {
 					'tahapan_id' => 170,
 					'created_by' => $this->ion_auth->user()->row()->id,
 					'created_date' =>  date('Y-m-d'),
-					'kode'			  => $code
+					'kode'			  => $code,
+					'is_urgent' => $this->input->post('is_urgent'),
 					
 				);
 				$i++;$no++;

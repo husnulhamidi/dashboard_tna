@@ -45,7 +45,7 @@ class TnaModel extends CI_Model {
 		$recordsTotal = 0;
         $this->db->start_cache();
 
-		$this->db->select('tp.id as id, tp.code_tna,tp.objective, rt.name as training, tp.jenis_development, tp.metoda_pembelajaran, tp.jenis_pelatihan, tk.name as kompetensi, tp.nama_penyelenggara, tp.waktu_pelaksanaan, tp.estimasi_biaya, mk.nama as nama_karyawan,mo.nama as nama_organisasi,tp.status_karyawan');
+		$this->db->select('tp.id as id, tp.code_tna,tp.objective, rt.name as training, tp.jenis_development, tp.metoda_pembelajaran, tp.jenis_pelatihan, tk.name as kompetensi, tp.nama_penyelenggara, tp.waktu_pelaksanaan, tp.estimasi_biaya, mk.nama as nama_karyawan,mo.nama as nama_organisasi,tp.status_karyawan, tp.is_urgent');
 		$this->db->from('m_tna_pengawalan tp');
 		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_traning_id');
 		$this->db->join('r_tna_kompetensi tk', 'tk.id = tp.r_tna_kompetensi_id');

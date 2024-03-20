@@ -170,6 +170,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group" >
+                                            <label class="col-sm-3 control-label">Urgent ?</label>
+                                            <div class="col-sm-8">
+                                                <input type="radio" id="ya" name="is_urgent" value="1" /> Ya
+                                                <input type="radio" id="tidak" name="is_urgent" value="0" style="margin-left:20px"/> Tidak
+                                            </div>
+                                        </div>
                                         <hr>
                                         <div class="multi-field-wrapper">
                                             <div class="form-group" id="divBtnAdd">

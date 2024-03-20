@@ -207,6 +207,7 @@ class Tna extends CI_Controller {
 			'objective' => $this->input->post('objective'),
 			'code_tna' => $this->input->post('code_tna'),
 			'is_tna' => $this->input->post('is_tna'),
+			'is_urgent' => $this->input->post('is_urgent'),
 		);
 
 		if($this->input->post('jenis_development') == 'Sertifikasi'){
