@@ -315,6 +315,11 @@ $route['tna/import'] = 'tna/importexcel/import_excel_tna';
 $route['tna/library_materi']    = 'tna/LibraryMateri/index';
 $route['tna/library_materi/getData']    = 'tna/LibraryMateri/getData';
 
+//=====================================================================================================================
+// Reporting
+$route['tna/reporting']    = 'tna/Reporting/index';
+$route['tna/reporting/getData']    = 'tna/Reporting/getData';
+
 
 
 
