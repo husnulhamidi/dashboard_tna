@@ -34,19 +34,21 @@ class ReportingModel extends CI_Model {
 
 		$this->db->select('*');
 		$this->db->from('m_tna_report_imported tri');
-        $this->db->where('YEAR(tanggal_mulai)', $post['filter_tahun']);
-        $this->db->where('YEAR(tanggal_selesai)', $post['filter_tahun']);
+        
+        if($post['filter_bulan'] !== ''){
+            $bulan = $this->mapMonthName($post['filter_bulan']);
+            $this->db->where('bulan', $bulan);
+        }
 
+        if($post['filter_tahun'] !== ''){
+            $this->db->where('tahun', $post['filter_tahun']);
+        }
 		if($post['filter_karyawan'] !== ''){
 			$this->db->like('nama_karyawan', $post['filter_karyawan'],'both');
 			$this->db->or_like('nik', $post['filter_karyawan'],'both');
 		}
 		if($post['filter_kuartal'] !== 'all'){
-            $thn = $post['filter_tahun'];
-            $quartal = $post['filter_kuartal'];
-            $dateQuartal = $this->quartal($quartal, $thn);
-			$this->db->where('tanggal_mulai >=', $dateQuartal['date1']);
-            $this->db->where('tanggal_selesai <=', $dateQuartal['date2']);
+            $this->db->where('kuartal', $post['filter_kuartal']);
 		}
 		if($post['filter_kategori_pelatihan'] !== ''){
 			$this->db->like('kategori_pelatihan', $post['filter_kategori_pelatihan'], 'both');
@@ -81,7 +83,7 @@ class ReportingModel extends CI_Model {
 		if (!empty($post['order'])) {
 			$this->db->order_by($column_order[$post['order']['0']['column']], $post['order']['0']['dir']);
 		} else {
-			$this->db->order_by('id', 'desc');
+			$this->db->order_by('id', 'asc');
 		}
 
 		$this->db->limit($pageSize, $skip);
@@ -106,29 +108,61 @@ class ReportingModel extends CI_Model {
 		exit();
 	}
 
-    private function quartal($quartal, $thn){
-        if($quartal == 1){
-            $date1 = $thn.'-01-01';
-            $date2 = $thn.'-03-31';
+    private function mapMonthName($monthName){
+        $lowercaseMonthName = strtolower($monthName);
+        switch($lowercaseMonthName) {
+            case 'january':
+                return 'Januari';
+            case 'february':
+                return 'Februari';
+            case 'march':
+                return 'Maret';
+            case 'april':
+                return 'April';
+            case 'may':
+                return 'Mei';
+            case 'june':
+                return 'Juni';
+            case 'july':
+                return 'Juli';
+            case 'august':
+                return 'Agustus';
+            case 'september':
+                return 'September';
+            case 'october':
+                return 'Oktober';
+            case 'november':
+                return 'November';
+            case 'december':
+                return 'Desember';
+            default:
+                return $monthName;
         }
-        if($quartal == 2){
-            $date1 = $thn.'-04-01';
-            $date2 = $thn.'-06-30';
-        }
-        if($quartal == 3){
-            $date1 = $thn.'-07-01';
-            $date2 = $thn.'-09-30';
-        }
-        if($quartal == 4){
-            $date1 = $thn.'-10-01';
-            $date2 = $thn.'-12-31';
-        }
-
-        return array(
-            'date1' => $date1,
-            'date2' => $date2,
-        );
     }
+
+    // private function quartal($quartal, $thn){
+    //     if($quartal == 1){
+    //         $date1 = $thn.'-01-01';
+    //         $date2 = $thn.'-03-31';
+    //     }
+    //     if($quartal == 2){
+    //         $date1 = $thn.'-04-01';
+    //         $date2 = $thn.'-06-30';
+    //     }
+    //     if($quartal == 3){
+    //         $date1 = $thn.'-07-01';
+    //         $date2 = $thn.'-09-30';
+    //     }
+    //     if($quartal == 4){
+    //         $date1 = $thn.'-10-01';
+    //         $date2 = $thn.'-12-31';
+    //     }
+
+    //     return array(
+    //         'date1' => $date1,
+    //         'date2' => $date2,
+    //     );
+    // }
 
 }
 

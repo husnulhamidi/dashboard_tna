@@ -7,12 +7,7 @@ jQuery(document).ready(function() {
         autoclose: true
     });
 
-    $('#filter_bulan').datepicker({
-        format: "mm",
-        viewMode: "months",
-        minViewMode: "months",
-        autoclose: true
-    });
+    
 
     $('.btn-reset').click(function(){
         // location.reload();
@@ -58,7 +53,7 @@ function builTable(){
                 "data": "id",
                 "width": "50px",
                 render: function (data, type, row, meta) {
-                    console.log(data)
+                    // console.log(data)
                     return meta.row + meta.settings._iDisplayStart + 1;
                 }
             },
@@ -69,8 +64,26 @@ function builTable(){
             {"data": "metoda"},
             { "data": "kategori_pelatihan" },
             { "data": "kompetensi"},
-            { "data": "tanggal_mulai"},
-            { "data": "tanggal_selesai"},
+            { 
+                "data": "tanggal_mulai",
+                render:function(data, type, row, meta){
+                    let date = '-'
+                    if(data !== ''){
+                        date = formatDate(data)
+                    }
+                    return date
+                }
+            },
+            { 
+                "data": "tanggal_selesai",
+                render:function(data, type, row, meta){
+                    let date = '-'
+                    if(data !== ''){
+                        date = formatDate(data)
+                    }
+                    return date
+                }
+            },
             { "data": "lama_kegiatan"},
             { "data": "bulan"},
             { "data": "kuartal"},
@@ -83,13 +96,41 @@ function builTable(){
             { "data": "bp"},
             { "data": "status_fte"},
             { "data": "jenis_pelatihan"},
-            { "data": "nomo_sertifikat"},
+            { "data": "nomor_sertifikat"},
             { "data": "jenis_sertifikat"},
-            { "data": "tanggal_awal_berlaku_sertifikat"},
-            { "data": "tanggal_akhir_berlaku_sertifikat"},
+            { 
+                "data": "tanggal_awal_berlaku_sertifikat",
+                render:function(data, type, row, meta){
+                    let date = '-'
+                    if(data !== ''){
+                        date = formatDate(data)
+                    }
+                    return date
+                }
+            },
+            { 
+                "data": "tanggal_akhir_berlaku_sertifikat",
+                render:function(data, type, row, meta){
+                    let date = '-'
+                    if(data !== ''){
+                        date = formatDate(data)
+                    }
+                    return date
+                }
+            },
             { "data": "no_ht"},
             { "data": "no_spb"},
-            { "data": "biaya_kegiatan"},
+            { 
+                "data": "biaya_kegiatan",
+                "class":"text-right",
+                render:function(data,type,row, meta){
+                    let biaya = 0;
+                    if (data !== null && data !== '') {
+                        biaya = formatRupiah(data);
+                    }
+                    return biaya;
+                }
+            },
             { "data": "currency_key"},
             { "data": "scanan_sertifikat"},
             { "data": "materi_pelatihan"},

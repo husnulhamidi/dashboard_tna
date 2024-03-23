@@ -28,23 +28,24 @@
                                         <div class="col-sm-8">
                                             <select class="select2 form-control" name="filter_kuartal" id="filter_kuartal">
                                                 <option value="all">Semua</option>
-                                                <option value="1"> Quartal 1 </option>
-                                                <option value="2"> Quartal 3 </option>
-                                                <option value="3"> Quartal 2 </option>
+                                                <option value="Q1"> Quartal 1 </option>
+                                                <option value="Q2"> Quartal 2 </option>
+                                                <option value="Q3"> Quartal 3 </option>
+                                                <option value="Q4"> Quartal 4 </option>
                                                 
                                             </select>
                                         </div>
                                     </div>
-                                    <!-- <div class="form-group">
+                                    <div class="form-group">
                                         <label class="col-sm-4 control-label"> Bulan </label>
                                         <div class="col-sm-8">
-                                            <input type="text" name="filter_bulan" id="filter_bulan" class="form-control" value="<?php echo date('m') ?>">
+                                            <input type="text" name="filter_bulan" id="filter_bulan" class="form-control" >
                                         </div>
-                                    </div> -->
+                                    </div>
                                     <div class="form-group">
                                         <label class="col-sm-4 control-label"> Tahun </label>
                                         <div class="col-sm-8">
-                                            <input type="text" name="filter_tahun" id="filter_tahun" class="form-control" value="<?php echo date('Y') ?>">
+                                            <input type="text" name="filter_tahun" id="filter_tahun" class="form-control" >
                                         </div>
                                     </div>
 
@@ -108,6 +109,50 @@
         $('.tgl').datepicker({
             fomat:'yyyy-mm-dd'
         })
+
+        var year = new Date().getFullYear()
+        var startDate = new Date(year, 0);
+        var endDate = new Date(year, 11);
+        $('#filter_bulan').datepicker({
+            format: "MM",
+            viewMode: "months",
+            minViewMode: "months",
+            autoclose: true,
+            startDate: startDate,
+            endDate: endDate,
+
+        });
+
+        $('#filter_kuartal').change(function(){
+            let quartal = $(this).val();
+            
+            // Perbarui tanggal start dan end sesuai dengan kuartal yang dipilih
+            switch(quartal) {
+                case 'Q1':
+                    startDate = new Date(year, 0);
+                    endDate = new Date(year, 2);
+                    break;
+                case 'Q2':
+                    startDate = new Date(year, 3);
+                    endDate = new Date(year, 5);
+                    break;
+                case 'Q3':
+                    startDate = new Date(year, 6);
+                    endDate = new Date(year, 8);
+                    break;
+                case 'Q4':
+                    startDate = new Date(year, 9);
+                    endDate = new Date(year, 11);
+                    break;
+                default:
+                    startDate = new Date(year, 0);
+                    endDate = new Date(year, 11);
+            }
+
+            // Perbarui Datepicker dengan tanggal yang baru
+            $('#filter_bulan').datepicker('setStartDate', startDate);
+            $('#filter_bulan').datepicker('setEndDate', endDate);
+        });
 
         // $('#filter_karyawan').select2({
         //     minimumInputLength: 2,
