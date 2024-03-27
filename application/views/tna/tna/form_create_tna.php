@@ -342,21 +342,21 @@ $(document).ready(function () {
     if($('#id').val()){
         $('#divBtnAdd').css('display','none')
         $('.remove-field').css('display','none')
-        
 
-        // get atasan dan subdit
+        let karyawanId = '<?php echo @$detail->m_karyawan_id;?>'
         let direktoratId = '<?php echo @$detail->direktorat_id;?>'
         let varifikatorId = '<?php echo @$detail->verifikator_id_1;?>'
-        getAtasan(1, direktoratId, varifikatorId)
-
         let subdit = '<?php echo @$detail->m_organisasi_id;?>'
         getSubdit(1, subdit, varifikatorId)
+        if(direktoratId){
+            getAtasan(1, direktoratId, varifikatorId)
+            getKaryawanBySubdit(1,direktoratId, karyawanId)
+        }else{
+            getAtasan(1, subdit, varifikatorId)
+            getKaryawanBySubdit(1,subdit, karyawanId)
+        }
 
-        // get karyawan
-        let karyawanId = '<?php echo @$detail->m_karyawan_id;?>'
-        getKaryawanBySubdit(1,direktoratId, karyawanId)
-
-        
+        getDataDetailKaryawan(1,karyawanId)
 
         let trainingId = '<?php echo @$detail->r_tna_traning_id;?>'
         let lembaga = '<?php echo @$detail->nama_penyelenggara;?>'
@@ -379,6 +379,13 @@ $(document).ready(function () {
         }else{
             $("#is_tna").prop("checked", true);
         }
+
+        let is_urgent = '<?php echo @$detail->is_urgent;?>';
+        if(is_urgent == 0){
+            $("#tidak").prop("checked", true);
+        }else{
+            $("#ya").prop("checked", true);
+        }
     }
 
     $(".add-field", $(this)).click(function(e) {
@@ -393,7 +400,11 @@ $(document).ready(function () {
 
 
 function getSubdit(count, subdit = false, varifikatorId = false){
+    console.log(subdit)
     let direktoratId = $('#direktorat'+count).val();
+    if(subdit){
+        direktoratId = subdit
+    }
     // console.log(varifikatorId)
     $.ajax({
         url: '<?php echo site_url('karyawan/ajax_get_subdit'); ?>',
