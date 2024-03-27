@@ -1096,11 +1096,31 @@ function getDataEvaluasi(){
                     </b>
                 `
                 $('#catatan').append(footer)
+                $('input[type=radio]').change(function () {
+                    hitungHasilSementara();
+                });
             }
         },
     });
 }
 
+function hitungHasilSementara() {
+    var totalNilai = 0;
+    $('input[type=radio]:checked').each(function () {
+        totalNilai += parseInt($(this).val());
+    });
+    let grade = getGrade(totalNilai)
+    console.log(grade)
+    $('#hasilSementara').text(totalNilai + ' Point (' + grade + ')');
+}
+
+function getGrade(nilai){
+    var grade = 'Kurang';
+    if(nilai >= 16 && nilai <= 25) grade = 'Baik';
+    if(nilai >= 10 && nilai <= 15) grade = 'Cukup';
+
+    return grade;
+}
 function submitEvaluasi(){
     $.ajax({
         url: base_url+"tna/pengawalan/evaluasi",

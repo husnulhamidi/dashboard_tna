@@ -106,6 +106,11 @@
                                                 <p style="margin-left:15px"> c. < 10 : Kurang (Perlu tindak lanjut, training ulang, breefing, dll) </p>
                                             </th>
                                         </tr>
+                                        <tr>
+                                            <th colspan="7"> 
+                                                Score yang anda berikan adalah : <span id="hasilSementara"></span>
+                                            </th>   
+                                        </tr>
                                     </tfooter>
                                 </table>
                             </div>
