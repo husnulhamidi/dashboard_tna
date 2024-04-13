@@ -14,5 +14,10 @@
         <i class="fa fa-close"></i> Selesai
     </a>
 </li>
+<li class="<?php echo $active_tab=='evaluasi'? 'active':'';?> ">
+    <a href="<?php echo site_url('tna/pengawalan/list/evaluasi'); ?>">
+        <i class="fa fa-file"></i> Evaluasi
+    </a>
+</li>
 
 

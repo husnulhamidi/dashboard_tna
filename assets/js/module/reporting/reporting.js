@@ -133,8 +133,8 @@ function builTable(){
             },
             { "data": "currency_key"},
             { "data": "scanan_sertifikat"},
-            { "data": "materi_pelatihan"},
-            { "data": "evaluasi_pelatihan"},
+            // { "data": "materi_pelatihan"},
+            // { "data": "evaluasi_pelatihan"},
             { "data": "keterangan"},
     
         ],

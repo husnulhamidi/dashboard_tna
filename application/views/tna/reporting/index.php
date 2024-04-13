@@ -76,8 +76,8 @@
                                             <!-- <th class="text-center text-nowrap"> Biaya Penjalanan Dinas </th>
                                             <th class="text-center text-nowrap"> Currency Key </th> -->
                                             <th class="text-center text-nowrap"> Scan Sertifikasi </th>
-                                            <th class="text-center text-nowrap"> Materi Training </th>
-                                            <th class="text-center text-nowrap"> Evaluasi Training </th>
+                                            <!-- <th class="text-center text-nowrap"> Materi Training </th>
+                                            <th class="text-center text-nowrap"> Evaluasi Training </th> -->
                                             <th class="text-center text-nowrap"> Keterangan </th>
                                             
                                         </tr>

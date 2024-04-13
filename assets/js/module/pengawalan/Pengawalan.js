@@ -18,6 +18,10 @@ $(document).ready(function(){
         tabs = 'finish';
 		table = '#table-finish'
 	}
+    if(active_tab == 'evaluasi'){
+        tabs = 'evaluasi';
+		table = '#table-evaluasi'
+	}
 
 	builTable(table,tabs);
 	getDataDashboard();
@@ -76,13 +80,197 @@ $(document).ready(function(){
 
     $('#btnExport').click(function(){
         exportData()
+    }) 
+    
+    $('#btnEvaluasi').click(function(){
+        evaluasiData()
     })
 })
 
-function builTable(table,tabs){
-	if ($.fn.DataTable.isDataTable(table)) {
+function builTable(table, tabs) {
+    if ($.fn.DataTable.isDataTable(table)) {
         $(table).DataTable().destroy();
     }
+    
+    var columns = [
+        {
+            "data": "id",
+            "width": "80px",
+            "orderable" : false,
+            render: function (data, type, row, meta) {
+                var params = `${data},${row.tahapan_id},${row.urutan},'${row.nama_karyawan}','${row.nama_penyelenggara}','${row.pelatihan}','${row.nik_tg}','${row.nama_organisasi}','${row.estimasi_biaya}'`;
+                var action = `
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Aksi
+                            <span class="fa fa-caret-down"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="`+url_detail+data+'/riwayat_verifikasi'+`">Detail</a>
+                            </li>
+                            `;
+                            if(row.urutan > 1 && row.urutan < 5){
+                                action += `
+                                <li>
+                                    <a 
+                                        onclick="verifikasi('`+row.status+`',`+row.urutan+`,`+data+`,`+row.tahapan_id+`)"> Verifikasi
+                                    </a>
+                                </li>
+                                `;
+                            }
+                            if(row.urutan == 5){
+                                action += `
+                                 <li>
+                                    <a 
+                                        onclick="paktaIntegritas(`+params+`)"> Pakta Integritas
+                                    </a>
+                                </li>
+                                `;
+                            }
+                            if(row.urutan == 6){
+                                action += `
+                                <li>
+                                    <a 
+                                        onclick="konfirmasiJadwal(`+params+`)"> Konfirmasi Jadwal
+                                    </a>
+                                </li>
+                                `;
+                            }
+                            if(row.urutan == 7){
+                                action += `
+                                <li>
+                                    <a 
+                                        onclick="kelengkapanDokumen(`+params+`)"> Kelengkapan Dokumen
+                                    </a>
+                                </li>
+                                `;
+                            }
+                            if(row.urutan == 8){
+                                action += `
+                                <li>
+                                    <a 
+                                        onclick="notaDinasPenugasan(`+params+`)"> Nota Dinas Penugasan
+                                    </a>
+                                </li>
+                                `;
+                            }
+                            if(row.urutan == 9){
+                                action += `
+                                <li>
+                                    <a 
+                                        onclick="uploadPembayaran(`+params+`)"> Pembayaran
+                                    </a>
+                                </li>
+                                `;
+                            }
+                            if(row.urutan == 10){
+                                action += `
+                                <li>
+                                    <a 
+                                        onclick="uploadSertifikat(`+params+`)"> Upload Sertifikat
+                                    </a>
+                                </li>
+                                `;
+                            }
+                            if(row.urutan == 11){
+                                action += `
+                                <li>
+                                    <a 
+                                       onclick="uploadMateri(`+params+`)"> Upload Materi
+                                    </a>
+                                </li>
+                                `;
+                            }
+                            if(row.urutan == 12 || row.urutan == 13 || row.urutan == 14){
+                                if(row.internal_sharing == null){
+                                    action += `
+                                        <li>
+                                            <a 
+                                                onclick="internalSharing(`+params+`,`+row.id_karyawan+`,`+row.id_organisasi+`)"> Jadwal Internal Sharing
+                                            </a>
+                                        </li>`;
+                                }
+                                
+                                if(row.is_evaluasi == 0){
+                                   action += `<li>
+                                                <a 
+                                                   onclick="evaluasi(`+params+`,`+row.is_complete+`,'`+row.waktu_pelaksanaan+`')"> Evaluasi
+                                                </a>
+                                            </li>` ;
+                                }
+                            }
+                            
+                            action += `
+                        </ul>
+                    </div>
+               `;
+               return action;
+            }
+        },
+
+        {
+            "data": "status",
+            render:function(data, type, row, meta){
+                var statusMapping = {
+                    'Verifikasi Mgr.Lini': 'Menunggu Verifikasi Mgr.Lini',
+                    'Verifikasi Manager HCPD': 'Menunggu Verifikasi Manager HCPD',
+                    'Verifikasi AVP HCM': 'Menunggu Verifikasi AVP HCM',
+                    'Form Pernyataan Peserta': 'Menunggu Form Pernyataan Peserta',
+                    'Pembayaran' : 'Manunggu Pembayaran',
+                    'Jadwal Pelaksanaan (Konfirmasi Kuota)' : 'Konfirmasi Kuota',
+                    'Kelengkapan Dokumen' : 'Proses Kelengkapan Dokumen',
+                    'Internal Sharing' : 'Menunggu Internal Sharing',
+                    'Evaluasi' : 'Menunggu Penilaian Evaluasi Training'
+                };
+
+                var respon = statusMapping[data] || data;
+                return row.tahapan_proses+'<br>'+respon;
+            }
+        },
+        {"data": "id_tna"},
+        {"data": "nama_karyawan"},
+        {"data": "nama_organisasi"},
+        {"data": "status_karyawan"},
+        { "data": "kompetensi" },
+        { "data": "jenis_development"},
+        { "data": "pelatihan"},
+        { "data": "justifikasi_pengajuan"},
+        { "data": "metoda_pembelajaran"},
+        { 
+            "data": "estimasi_biaya",
+            "class":"text-right",
+            render:function(data,type,row, meta){
+                return formatRupiah(data,'Rp.');
+            }
+        },
+        { "data": "nama_penyelenggara"},
+        { 
+            "data": "waktu_pelaksanaan_mulai",
+            render:function(data, type, row, meta){
+                let date = '-';
+                if(data !== '0000-00-00'){
+                    date = formatDate(data);
+                }
+                return date + ' s/d ' + formatDate(row.waktu_pelaksanaan_selesai);
+            }
+        },            
+    ];
+    
+    if (tabs == 'evaluasi') {
+        columns.splice(1, 0, {
+            "data": "id",
+            "class":'text-center',
+            "orderable" : false,
+            render:function(data, type, row, meta){
+                let checkbox = `<input type="checkbox" value=`+data+` name="checkbox-evalusi[]" id="checkbox">`
+                if(row.is_submit_evaluasi == 1){
+                    checkbox = `-`
+                }
+                return checkbox
+            }
+        });
+    }
+    
     oTable = $(table).DataTable({
         processing: true, 
         serverSide: true, 
@@ -93,195 +281,26 @@ function builTable(table,tabs){
             type    : "get",
             datatype: "json",
             data    : function(d){
-                d.tabs = tabs
-                d.filter_peserta = $('#filter_peserta').val()
-                d.filter_unit = $('#filter_unit').val()
-                d.filter_pelatihan = $('#filter_pelatihan').val()
-                d.filter_penyelenggara = $('#filter_penyelenggara').val()
-                d.filter_kompetensi = $('#filter_kompetensi').val()
-                d.filter_development = $('#filter_development').val()
-                d.filter_pembelajaran = $('#filter_pembelajaran').val()
-                d.filter_biaya_min = $('#filter_biaya_min').val()
-                d.filter_biaya_max = $('#filter_biaya_max').val()
-                d.filter_tgl_mulai = $('#filter_tgl_mulai').val()
-                d.filter_tgl_selesai = $('#filter_tgl_selesai').val()
-                d.filter_tahapan = $('#filter_tahapan').val()
-               
-                // d.filter_karyawan = $('#filter_karyawan').val()
-                // d.filter_status_karyawan = $('#filter_status_karyawan').val()
-
-               
-
-                console.log(d)
+                d.tabs = tabs;
+                d.filter_peserta = $('#filter_peserta').val();
+                d.filter_unit = $('#filter_unit').val();
+                d.filter_pelatihan = $('#filter_pelatihan').val();
+                d.filter_penyelenggara = $('#filter_penyelenggara').val();
+                d.filter_kompetensi = $('#filter_kompetensi').val();
+                d.filter_development = $('#filter_development').val();
+                d.filter_pembelajaran = $('#filter_pembelajaran').val();
+                d.filter_biaya_min = $('#filter_biaya_min').val();
+                d.filter_biaya_max = $('#filter_biaya_max').val();
+                d.filter_tgl_mulai = $('#filter_tgl_mulai').val();
+                d.filter_tgl_selesai = $('#filter_tgl_selesai').val();
+                d.filter_tahapan = $('#filter_tahapan').val();
+                console.log(d);
             }
-                      
         },
-        columns: [
-            {
-                "data": "id",
-                "width": "80px",
-                "orderable" : false,
-                render: function (data, type, row, meta) {
-                    var params = `${data},${row.tahapan_id},${row.urutan},'${row.nama_karyawan}','${row.nama_penyelenggara}','${row.pelatihan}','${row.nik_tg}','${row.nama_organisasi}','${row.estimasi_biaya}'`;
-                    // console.log(row)
-                    var action = `
-                        <div class="input-group-btn">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Aksi
-                                <span class="fa fa-caret-down"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="`+url_detail+data+'/riwayat_verifikasi'+`">Detail</a>
-                                </li>
-                                `;
-                                if(row.urutan>1 && row.urutan<5){
-                                	action += `
-									<li>
-                                    	<a 
-                                            onclick="verifikasi('`+row.status+`',`+row.urutan+`,`+data+`,`+row.tahapan_id+`)"> Verifikasi
-                                        </a>
-                                	</li>
-                                	`
-                                }
-                                if(row.urutan == 5){
-                                	action += `
-									 <li>
-                                        <a 
-                                            onclick="paktaIntegritas(`+params+`)"> Pakta Integritas
-                                        </a>
-                                    </li>
-                                	`
-                                }
-                                if(row.urutan == 6){
-                                	action += `
-									<li>
-                                        <a 
-                                            onclick="konfirmasiJadwal(`+params+`)"> Konfirmasi Jadwal
-                                        </a>
-                                    </li>
-                                	`
-                                }
-                                if(row.urutan == 7){
-                                	action += `
-									<li>
-                                        <a 
-                                            onclick="kelengkapanDokumen(`+params+`)"> Kelengkapan Dokumen
-                                        </a>
-                                    </li>
-                                	`
-                                }
-                                if(row.urutan == 8){
-                                	action += `
-									<li>
-                                        <a 
-                                            onclick="notaDinasPenugasan(`+params+`)"> Nota Dinas Penugasan
-                                        </a>
-                                    </li>
-                                	`
-                                }
-                                if(row.urutan == 9){
-                                	action += `
-									<li>
-                                        <a 
-                                            onclick="uploadPembayaran(`+params+`)"> Pembayaran
-                                        </a>
-                                    </li>
-                                	`
-                                }
-                                if(row.urutan == 10){
-                                	action += `
-									<li>
-                                        <a 
-                                            onclick="uploadSertifikat(`+params+`)"> Upload Sertifikat
-                                        </a>
-                                    </li>
-                                	`
-                                }
-                                if(row.urutan == 11){
-                                	action += `
-									<li>
-                                        <a 
-                                           onclick="uploadMateri(`+params+`)"> Upload Materi
-                                        </a>
-                                    </li>
-                                	`
-                                }
-                                if(row.urutan == 12 || row.urutan == 13 || row.urutan == 14){
-                                    if(row.internal_sharing == null){
-                                        action += `
-                                            <li>
-                                                <a 
-                                                    onclick="internalSharing(`+params+`,`+row.id_karyawan+`,`+row.id_organisasi+`)"> Jadwal Internal Sharing
-                                                </a>
-                                            </li>`;
-                                    }
-                                	
-                                    if(row.is_evaluasi == 0){
-                                       action += `<li>
-                                                    <a 
-                                                       onclick="evaluasi(`+params+`,`+row.is_complete+`,'`+row.waktu_pelaksanaan+`')"> Evaluasi
-                                                    </a>
-                                                </li>` 
-                                    }
-                                }
-                                
-                            `</ul>
-                        </div>
-                   `
-                   return action
-                }
-            },
-
-            {
-            	"data": "status",
-            	render:function(data, type, row, meta){
-            		
-            		var statusMapping = {
-					    'Verifikasi Mgr.Lini': 'Menunggu Verifikasi Mgr.Lini',
-					    'Verifikasi Manager HCPD': 'Menunggu Verifikasi Manager HCPD',
-					    'Verifikasi AVP HCM': 'Menunggu Verifikasi AVP HCM',
-					    'Form Pernyataan Peserta': 'Menunggu Form Pernyataan Peserta',
-					    'Pembayaran' : 'Manunggu Pembayaran',
-					    'Jadwal Pelaksanaan (Konfirmasi Kuota)' : 'Konfirmasi Kuota',
-					    'Kelengkapan Dokumen' : 'Proses Kelengkapan Dokumen',
-					    'Internal Sharing' : 'Menunggu Internal Sharing',
-					    'Evaluasi' : 'Menunggu Penilaian Evaluasi Training'
-					};
-
-					var respon = statusMapping[data] || data;
-					return row.tahapan_proses+'<br>'+respon
-            	}
-            },
-            {"data": "id_tna"},
-            {"data": "nama_karyawan"},
-            {"data": "nama_organisasi"},
-            {"data": "status_karyawan"},
-            { "data": "kompetensi" },
-            { "data": "jenis_development"},
-            { "data": "pelatihan"},
-            { "data": "justifikasi_pengajuan"},
-            { "data": "metoda_pembelajaran"},
-            { 
-                "data": "estimasi_biaya",
-                "class":"text-right",
-                render:function(data,type,row, meta){
-                    return formatRupiah(data,'Rp.')
-                }
-            },
-            { "data": "nama_penyelenggara"},
-            { 
-                "data": "waktu_pelaksanaan",
-                render:function(data, type, row, meta){
-                    let date = '-'
-                    if(data !== '0000-00-00'){
-                        date = formatDate(data)
-                    }
-                    return date
-                }
-            },            
-        ],
+        columns: columns
     });
 }
+
 
 function getDataDashboard(){
 	$.ajax({
@@ -1118,6 +1137,7 @@ function getGrade(nilai){
 
     return grade;
 }
+
 function submitEvaluasi(){
     $.ajax({
         url: base_url+"tna/pengawalan/evaluasi",
@@ -1176,6 +1196,47 @@ function exportData(){
             console.log(error)
             console.error(xhr.responseText); // Tampilkan pesan kesalahan dalam konsol
         }
+    });
+}
+
+function evaluasiData(){
+    var checkboxes = $('input[name="checkbox-evalusi[]"]:checked');
+    var selectedIds = checkboxes.map(function(){
+        return this.value;
+    }).get();
+
+   
+    if(selectedIds.length === 0){
+        swal("Peringatan", "Pilih setidaknya satu data untuk dievaluasi.", "warning");
+        return;
+    }
+
+    swal({
+        title: "Yakin mau kirim pengawalan ini ke atasan yang bersangkutan?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya, kirim!",
+        closeOnConfirm: false
+    }, function () {
+        $.ajax({
+            type : "POST",
+            url  : base_url + "tna/pengawalan/submit_evaluasi",
+            dataType: "JSON",
+            data : {selectedIds: selectedIds}, // Mengirim data sebagai array
+            success:function(resp){
+                console.log(resp)
+                setTimeout(function() {
+                    swal({
+                        title: "Notifikasi!",
+                        text: resp.msg,
+                        imageUrl: img_icon_success
+                    }, function() {
+                        location.reload();
+                    });
+                }, 1000);
+            }
+        });
     });
 }
 

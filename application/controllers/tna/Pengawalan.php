@@ -58,9 +58,12 @@ class Pengawalan extends CI_Controller {
         }
         else if($active_tab=='selesai'){
             $pageindex = 'tna/pengawalan/index_selesai';
+        }else if($active_tab=='evaluasi'){
+            $pageindex = 'tna/pengawalan/index_evaluasi';
         }else{
             $pageindex = 'tna/pengawalan/index';
-        }
+
+		}
 
         $data['active_tab'] = $active_tab;
 		$this->template->load('template',$pageindex,$data);
@@ -950,6 +953,24 @@ class Pengawalan extends CI_Controller {
 		
 		fclose($fp);
         exit;
+	}
+
+	public function submit_evaluasi(){
+		$dataPengawalan = array(
+			'is_submit_evaluasi' => 1
+		);
+
+		$post = $this->input->post();
+		foreach ($post['selectedIds'] as $key => $value) {
+			$this->PengawalanModel->submitEvalusi($dataPengawalan, $value );
+		}
+		$return = array(
+			'success'		=> true,
+			'status_code'	=> 201,
+			'msg'			=> "Data berhasil diubah.",
+			'data'			=> array()
+		);
+		echo json_encode($return);
 	}
 
     public function manager($active_tab="all"){

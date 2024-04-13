@@ -240,6 +240,7 @@ $route['tna/pengawalan/getDataEvaluasi']    = 'tna/pengawalan/getDataEvaluasi';
 $route['tna/pengawalan/getDataDetailEvaluasi']    = 'tna/pengawalan/getDataDetailEvaluasi';
 $route['tna/pengawalan/edit_evaluasi']    = 'tna/pengawalan/edit_evaluasi';
 $route['tna/pengawalan/exportExcel']    = 'tna/pengawalan/exportExcel';
+$route['tna/pengawalan/submit_evaluasi']    = 'tna/pengawalan/submit_evaluasi';
 
 
 $route['tna/pengawalan/proses-verifikasi']    = 'tna/pengawalan/proses_verifikasi';

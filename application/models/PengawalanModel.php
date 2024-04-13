@@ -56,6 +56,9 @@ class PengawalanModel extends CI_Model {
                     tp.is_evaluasi,
                     mis.is_complete,
                     tp.jenis_development,
+                    tp.waktu_pelaksanaan_mulai,
+                    tp.waktu_pelaksanaan_selesai,
+					tp.is_submit_evaluasi,
                     mis.id as internal_sharing');
 		$this->db->from('m_tna_pengawalan tp');
 		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_traning_id');
@@ -74,6 +77,10 @@ class PengawalanModel extends CI_Model {
 		}
 		if($post['tabs'] == 'finish'){
 			$this->db->where('tu.urutan', 14);
+		}
+		
+		if($post['tabs'] == 'evaluasi'){
+			$this->db->where('NOW() >= DATE_ADD(tp.waktu_pelaksanaan_selesai, INTERVAL 180 DAY)', NULL, FALSE);
 		}
 		
 
@@ -736,6 +743,12 @@ class PengawalanModel extends CI_Model {
 		}
 		$query = $this->db->get();
 		return $query->result();
+	}
+
+	public function submitEvalusi($data, $id){
+		$this->db->where('id',$id);
+		$update = $this->db->update('m_tna_pengawalan',$data);
+		return $update;	
 	}
 
 	
