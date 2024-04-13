@@ -55,7 +55,7 @@
                                             <th class="text-center text-nowrap"> Tanggal Selesai </th>
                                             <th class="text-center text-nowrap"> Lama Kegiatan </th>
                                             <th class="text-center text-nowrap"> Bulan </th>
-                                            <th class="text-center text-nowrap"> Quartal </th>
+                                            <th class="text-center text-nowrap"> Kuartal </th>
                                             <th class="text-center text-nowrap"> NIK </th>
                                             <th class="text-center text-nowrap"> Nama Peserta </th>
                                             <th class="text-center text-nowrap"> Posisi </th>
@@ -75,7 +75,7 @@
                                             <th class="text-center text-nowrap"> Currency Key </th>
                                             <!-- <th class="text-center text-nowrap"> Biaya Penjalanan Dinas </th>
                                             <th class="text-center text-nowrap"> Currency Key </th> -->
-                                            <th class="text-center text-nowrap"> Scan Sertifikasi </th>
+                                            <!-- <th class="text-center text-nowrap"> Scan Sertifikasi </th> -->
                                             <!-- <th class="text-center text-nowrap"> Materi Training </th>
                                             <th class="text-center text-nowrap"> Evaluasi Training </th> -->
                                             <th class="text-center text-nowrap"> Keterangan </th>

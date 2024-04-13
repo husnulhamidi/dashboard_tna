@@ -52,13 +52,17 @@ function builTable(){
             {
                 "data": "id",
                 "width": "50px",
+                "class":"text-center",
                 render: function (data, type, row, meta) {
                     // console.log(data)
                     return meta.row + meta.settings._iDisplayStart + 1;
                 }
             },
 
-            {"data": "tahun"},
+            {
+                "data": "tahun",
+                "class":"text-center",
+            },
             {"data": "nama_kegiatan"},
             {"data": "nama_penyelenggara"},
             {"data": "metoda"},
@@ -84,15 +88,30 @@ function builTable(){
                     return date
                 }
             },
-            { "data": "lama_kegiatan"},
+            { 
+                "data": "lama_kegiatan",
+                "class":"text-center",
+            },
             { "data": "bulan"},
-            { "data": "kuartal"},
+            { 
+                "data": "kuartal",
+                render:function(data, type, row, meta){
+                    let kuartal = 'Kuartal 1'
+                    if(data == 'Q2') kuartal = 'Kuartal 2'
+                    if(data == 'Q3') kuartal = 'Kuartal 3'
+                    if(data == 'Q4') kuartal = 'Kuartal 4'
+                    return kuartal
+                }
+            },
             { "data": "nik"},
             { "data": "nama_karyawan"},
             { "data": "posisi"},
             { "data": "direktorat"},
             { "data": "subdit"},
-            { "data": "jumlah_nik"},
+            { 
+                "data": "jumlah_nik",
+                "class":"text-center",
+            },
             { "data": "bp"},
             { "data": "status_fte"},
             { "data": "jenis_pelatihan"},
@@ -132,7 +151,7 @@ function builTable(){
                 }
             },
             { "data": "currency_key"},
-            { "data": "scanan_sertifikat"},
+            // { "data": "scanan_sertifikat"},
             // { "data": "materi_pelatihan"},
             // { "data": "evaluasi_pelatihan"},
             { "data": "keterangan"},
