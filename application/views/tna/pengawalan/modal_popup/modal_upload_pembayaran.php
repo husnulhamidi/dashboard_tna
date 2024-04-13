@@ -71,7 +71,7 @@
                                 <label class="col-md-4">Mata Anggaran <span style="color:red">*</span> </label>
                                 <div class="col-md-8">
                                     <select class="form-control" name="mata_anggaran" id="mata_anggaran">
-                                        <option> Pilih Mata Anggaran</option>
+                                        <option value=""> Pilih Mata Anggaran</option>
                                         <option> HCM </option>
                                         <option> Non HCM </option>
                                     </select>
@@ -80,7 +80,7 @@
                         </div>
                         <div class="row" style="padding-top: 10px">
                             <div class="col-md-12">
-                                <label class="col-md-4">Nomor Mata Anggaran <span style="color:red">*</span> </label>
+                                <label class="col-md-4">Nomor Mata Anggaran  </label>
                                 <div class="col-md-8">
                                     <input type="text" class="form-control pull-right" name="nomor_mata_anggaran"  >
                                 </div>

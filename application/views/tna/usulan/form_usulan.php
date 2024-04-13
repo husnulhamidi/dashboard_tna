@@ -103,7 +103,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">Justifikasi Pengajuan</label>
+                                            <label class="col-sm-3 control-label">Justifikasi Pengajuan <span style="color: red">*</span></label>
                                             <div class="col-sm-8">
                                                 <textarea type="text"  name="justifikasi" id="justifikasi"  class="form-control input-sm" ></textarea>
                                             </div>

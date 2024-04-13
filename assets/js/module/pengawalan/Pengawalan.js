@@ -709,7 +709,6 @@ function submitPembayaran(){
             nilai: "required",
             tgl: "required",
             mata_anggaran: "required",
-            nomor_mata_anggaran: "required",
             unit: "required",
             biayasppdp: "required",
         },
@@ -723,9 +722,7 @@ function submitPembayaran(){
             mata_anggaran:{
                 required:"<i class='fa fa-times'></i> Mata anggaran rilis wajib diisi"
             }, 
-            nomor_mata_anggaran:{
-                required:"<i class='fa fa-times'></i> Nomor mata anggaran oleh wajib diisi"
-            }, 
+            
             unit:{
                 required:"<i class='fa fa-times'></i> Unit wajib diisi"
             },

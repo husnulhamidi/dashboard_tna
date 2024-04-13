@@ -37,6 +37,7 @@ function submitForm($btn){
             nama_kegiatan: "required",
             tna:"required",
             direktorat:"required",
+            justifikasi:"required",
         },
         messages: {
           
@@ -57,6 +58,9 @@ function submitForm($btn){
             },
             direktorat:{
                 required:"<i class='fa fa-times'></i> Direktorat harus diisi"
+            },
+            justifikasi:{
+                required:"<i class='fa fa-times'></i> Justifikasi pengajuan harus diisi"
             }
             
         },

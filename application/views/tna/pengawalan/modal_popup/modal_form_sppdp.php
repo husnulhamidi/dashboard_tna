@@ -45,7 +45,7 @@
                                 <label class="col-md-4">Mata Anggaran</label>
                                 <div class="col-md-8">
                                     <select class="form-control" name="sppdp_mata_anggaran" id="sppdp_mata_anggaran">
-                                        <option> Pilih Mata Anggaran</option>
+                                        <option value=""> Pilih Mata Anggaran</option>
                                         <option> HCM </option>
                                         <option> Non HCM </option>
                                     </select>

@@ -140,44 +140,56 @@ function submitTNA(){
             waktu_pelaksanaan: "required",
             direktorat: "required",
             karyawan: "required",
-            is_tna: "required"
+            is_tna: "required",
+            justifikasi: "required",
+            metoda: "required",
+            estimasi_biaya: "required",
         },
         messages: {
             jenis_pelatihan:{
-                required:"<i class='fa fa-times'></i> Jenis Pelatihan"
+                required:"<i class='fa fa-times'></i> Jenis Pelatihan harus diisi"
             },
             kompetensi:{
-                required:"<i class='fa fa-times'></i> kompetensi"
+                required:"<i class='fa fa-times'></i>  Kompetensi harus diisi"
             },
             jenis_development:{
-                required:"<i class='fa fa-times'></i> Jenis Development"
+                required:"<i class='fa fa-times'></i> Jenis Development harus diisi"
             },
             tna:{
-                required:"<i class='fa fa-times'></i> Pelatihan/Sertifikasi"
+                required:"<i class='fa fa-times'></i> Pelatihan/Sertifikasi harus diisi"
             },
             nama_kegiatan:{
-                required:"<i class='fa fa-times'></i> Nama Kegiatan"
+                required:"<i class='fa fa-times'></i> Nama Kegiatan harus diisi"
             },
             metoda:{
-                required:"<i class='fa fa-times'></i> Metoda Pembelajaran"
+                required:"<i class='fa fa-times'></i> Metoda Pembelajaran harus diisi"
             },
             estimasi_biaya:{
-                required:"<i class='fa fa-times'></i> Estimasi Biaya"
+                required:"<i class='fa fa-times'></i> Estimasi Biaya harus diisi"
             },
             penyelenggara:{
-                required:"<i class='fa fa-times'></i> Nama Penyelenggara"
+                required:"<i class='fa fa-times'></i> Nama Penyelenggara harus diisi"
             },
             waktu_pelaksanaan:{
-                required:"<i class='fa fa-times'></i> Waktu Pelaksanaan"
+                required:"<i class='fa fa-times'></i> Waktu Pelaksanaan harus diisi"
             },
             direktorat:{
-                required:"<i class='fa fa-times'></i> Direktorat"
+                required:"<i class='fa fa-times'></i> Direktorat harus diisi"
             },
             karyawan:{
-                required:"<i class='fa fa-times'></i> Nama Karyawan"
+                required:"<i class='fa fa-times'></i> Nama Karyawan harus diisi"
             },
             is_tna:{
-                required:"<i class='fa fa-times'></i> Nama Karyawan"
+                required:"<i class='fa fa-times'></i> TNA atau Non TNA harus diisi"
+            },
+            justifikasi:{
+                required:"<i class='fa fa-times'></i> Justifikasi Pengajuan harus diisi"
+            },
+            metoda:{
+                required:"<i class='fa fa-times'></i> Metoda Pembelajaran harus diisi"
+            },
+            estimasi_biaya:{
+                required:"<i class='fa fa-times'></i> Estimasi biaya harus diisi"
             }
             
         },

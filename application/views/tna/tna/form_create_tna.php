@@ -133,7 +133,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-3 control-label">Justifikasi Pengajuan</label>
+                                    <label class="col-sm-3 control-label">Justifikasi Pengajuan <span style="color: red">*</span></label>
                                     <div class="col-sm-8">
                                         <textarea type="text"  name="justifikasi" id="justifikasi"  class="form-control input-sm" ><?php echo @$detail->justifikasi_pengajuan;?></textarea>
                                     </div>
@@ -142,7 +142,7 @@
                                     <label class="col-sm-3 control-label">Metode Pembelajaran <span style="color: red">*</span></label>
                                     <div class="col-sm-8">
                                         <select class="select2 form-control" name="metoda" id="metoda">
-                                            <option value="1">--- Pilih ---</option>
+                                            <option value="">--- Pilih ---</option>
                                             <?php 
                                             foreach ($metoda as $mt) {
                                                 $selected = '';
@@ -348,13 +348,21 @@ $(document).ready(function () {
         let varifikatorId = '<?php echo @$detail->verifikator_id_1;?>'
         let subdit = '<?php echo @$detail->m_organisasi_id;?>'
         getSubdit(1, subdit, varifikatorId)
-        if(direktoratId){
-            getAtasan(1, direktoratId, varifikatorId)
-            getKaryawanBySubdit(1,direktoratId, karyawanId)
-        }else{
-            getAtasan(1, subdit, varifikatorId)
+        getAtasan(1, direktoratId, varifikatorId)
+        // getKaryawanBySubdit(1,direktoratId, karyawanId)
+        if(subdit){
             getKaryawanBySubdit(1,subdit, karyawanId)
+        }else{
+            getKaryawanBySubdit(1,direktoratId, karyawanId)
         }
+        
+        // if(direktoratId){
+            // getAtasan(1, direktoratId, varifikatorId)
+            // getKaryawanBySubdit(1,direktoratId, karyawanId)
+        // }else{
+        //     getAtasan(1, subdit, varifikatorId)
+        //     getKaryawanBySubdit(1,subdit, karyawanId)
+        // }
 
         getDataDetailKaryawan(1,karyawanId)
 
@@ -400,11 +408,11 @@ $(document).ready(function () {
 
 
 function getSubdit(count, subdit = false, varifikatorId = false){
-    console.log(subdit)
+    // console.log(subdit)
     let direktoratId = $('#direktorat'+count).val();
-    if(subdit){
-        direktoratId = subdit
-    }
+    // if(subdit){
+    //     direktoratId = subdit
+    // }
     // console.log(varifikatorId)
     $.ajax({
         url: '<?php echo site_url('karyawan/ajax_get_subdit'); ?>',
