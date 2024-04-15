@@ -843,7 +843,7 @@ class Usulan extends CI_Controller {
 				//$this->email->to('nul.hamidi@gmail.com');// change it to yours
 				$this->email->bcc($bcc); // change it to yours
 				$this->email->subject('[3EASy Notifikasi] Request Instalasi No : ' . $data[0]['order_number']);
-				$body = $this->load->view('request_instalasi/viewmail', $data[0], TRUE);
+				$body = $this->load->view('pengawalan/viewmail', $data[0], TRUE);
 				$this->email->message($body);
 
 				$this->load->library('encrypt');
