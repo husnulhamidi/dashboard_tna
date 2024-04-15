@@ -102,6 +102,11 @@ $sess = $this->session->userdata();
                 <i class="fa fa-file-text"></i> <span>Reporting TNA</span>
             </a>
         </li>
+        <li class="<?php echo $active_menu=='report'? 'active':'';?>">
+            <a href="<?php echo site_url('tna/report'); ?>">
+                <i class="fa fa-file-text"></i> <span>Report</span>
+            </a>
+        </li>
 
         <li class="treeview <?php echo $active_menu=='reference'? 'active':'';?> ">
             <a href="#">
