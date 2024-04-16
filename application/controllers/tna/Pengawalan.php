@@ -961,11 +961,9 @@ class Pengawalan extends CI_Controller {
 		);
 
 		$post = $this->input->post();
-		// foreach ($post['selectedIds'] as $key => $value) {
-		// 	$this->PengawalanModel->submitEvalusi($dataPengawalan, $value );
-		// }
 		$update = $this->PengawalanModel->submitEvalusi($dataPengawalan, $post['selectedIds']);
 		if($update){
+			// $send_email = $this->send_notification_email($post['selectedIds']);
 			$return = array(
 				'success'		=> true,
 				'status_code'	=> 201,
@@ -982,6 +980,94 @@ class Pengawalan extends CI_Controller {
 		}
 		
 		echo json_encode($return);
+	}
+
+	public function send_email(){
+		$post = $this->input->post();
+		$send_email = $this->send_notification_email($post['selectedIds']);
+		echo json_encode($send_email);
+	}
+
+	private function send_notification_email($idPengawalan)
+	{
+		$data = $this->PengawalanModel->get_data_pengawalan($idPengawalan);
+		foreach ($data as $key => $value) {
+			$to = array();
+			$to_real = array();
+			$bcc = array();
+			$bcc[] = 'wendy.maxalmina@telkomsat.co.id';
+			$to[] = 'aang.ardam@gmail.com';
+
+			if (!empty($to)) {
+				$to = array_unique($to);
+				// log to
+				// $implodeTo = implode(', ', $to);
+				// log_message('error', 'Kirim email verifikasi [3EASy Notifikasi] Request Instalasi' );
+
+				$this->load->library('email');
+				// $config = array(
+				// 	'protocol' => 'smtp',
+				// 	'smtp_host' => 'ssl://mail.telkomsat.co.id',
+				// 	'smtp_port' => 465,
+				// 	'smtp_user' => '3easy', // change it to yours
+				// 	'smtp_pass' => '3Easytelkom$at', // change it to yours
+				// 	'mailtype' => 'html',
+				// 	'charset' => 'iso-8859-1',
+				// 	'wordwrap' => TRUE
+				// );
+				$config = array(
+					'protocol' => 'smtp',
+					'smtp_host' => 'smtp.gmail.com',
+					'smtp_port' => 587, // Port SMTP Gmail untuk TLS
+					'smtp_crypto' => 'tls', // Jenis enkripsi yang digunakan, bisa juga 'ssl'
+					'smtp_user' => 'aang.ardam@gmail.com', // Ganti dengan alamat email Gmail Anda
+					'smtp_pass' => 'Majalengka02!', // Ganti dengan kata sandi Gmail Anda
+					'mailtype' => 'html',
+					'charset' => 'utf-8',
+					'wordwrap' => TRUE
+				);
+				
+
+				$this->email->initialize($config);
+				$this->email->set_newline("\r\n");
+				$this->email->set_mailtype("html");
+				$this->email->from('3easy@telkomsat.co.id'); // change it to yours
+				// $this->email->to($to); // change it to yours
+				$this->email->to('aang.ardam@gmail.com');// change it to yours
+				$this->email->bcc('a.ardam552@gmail.com');// change it to yours
+				// $this->email->bcc($bcc); // change it to yours
+				$this->email->subject('Evaluasi Pengawalan : ');
+				// tna/pengawalan/detail
+				$body = $this->load->view('tna/pengawalan/viewmail', $data[$key], TRUE);
+				$this->email->message($body);
+
+				$this->load->library('encrypt');
+
+				if ($this->email->send()) {
+					$return = array(
+						'success'		=> true,
+						'status_code'	=> 200,
+						'msg'			=> "Email berhasil di kirim",
+						'data'			=> array()
+					);
+					// log_message('error', 'Kirim email perubahan berhasil [3EASy Notifikasi] Request Instalasi ');
+				} else {
+					$return = array(
+						'success'		=> false,
+						'status_code'	=> 500,
+						'msg'			=> "Email gagal di kirim",
+						'data'			=> $this->email->print_debugger()
+					);
+					// log_message('error', 'Kirim email perubahan gagal [3EASy Notifikasi] Request Instalasi ');
+					// log_message('error', $this->email->print_debugger());
+				}
+			} else {
+				log_message('error', 'Kirim email perubahan tidak ada list email [3EASy Notifikasi] Request Instalasi ');
+			}
+
+			return $return;
+		}
+		
 	}
 
     public function manager($active_tab="all"){

@@ -1232,7 +1232,8 @@ function evaluasiData(){
                             text: "Data berhasil diubah",
                             imageUrl: img_icon_success
                         }, function(d) {
-                            location.reload();
+                            sendEmail(selectedIds)
+                            // location.reload();
                         });
                     }, 1000);
                 }else{
@@ -1246,18 +1247,20 @@ function evaluasiData(){
                         });
                     }, 1000);
                 }
-                // console.log(resp)
-                // setTimeout(function() {
-                //     swal({
-                //         title: "Notifikasi!",
-                //         text: resp.msg,
-                //         imageUrl: img_icon_success
-                //     }, function() {
-                //         location.reload();
-                //     });
-                // }, 1000);
             }
         });
+    });
+}
+
+function sendEmail(selectedIds){
+    $.ajax({
+        type : "POST",
+        url  : base_url + "tna/pengawalan/send_email",
+        dataType: "JSON",
+        data : {selectedIds: selectedIds},
+        success:function(resp){
+            console.log(resp)
+        }
     });
 }
 

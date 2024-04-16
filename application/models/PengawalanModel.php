@@ -751,6 +751,28 @@ class PengawalanModel extends CI_Model {
 		return $update;	
 	}
 
+	public function get_data_pengawalan($id){
+		$this->db->select('tp.*, 
+							rt.name as training,  
+							tk.name as kompetensi,
+							mk.nama as nama_karyawan,
+							mk.nik_tg as nik,
+							mo.nama as nama_organisasi,
+							mis.is_complete,
+                    		mis.id as internal_sharing,
+                    		tu.urutan');
+		$this->db->from('m_tna_pengawalan tp');
+		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_traning_id');
+		$this->db->join('r_tna_kompetensi tk', 'tk.id = tp.r_tna_kompetensi_id');
+		$this->db->join('m_karyawan mk', 'mk.id = tp.m_karyawan_id');
+		$this->db->join('m_organisasi mo', 'mo.id = tp.m_organisasi_id');
+		$this->db->join('m_tna_internal_sharing mis', 'mis.m_tna_pengawalan_id = tp.id', 'left');
+		$this->db->join('r_tahapan_usulan tu', 'tu.id = tp.tahapan_id');
+		$this->db->where_in('tp.id', $id);
+		$query = $this->db->get();
+		return $query->result();
+	}
+
 	
 
 }
