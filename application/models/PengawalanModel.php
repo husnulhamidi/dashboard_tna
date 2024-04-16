@@ -746,7 +746,7 @@ class PengawalanModel extends CI_Model {
 	}
 
 	public function submitEvalusi($data, $id){
-		$this->db->where('id',$id);
+		$this->db->where_in('id',$id);
 		$update = $this->db->update('m_tna_pengawalan',$data);
 		return $update;	
 	}

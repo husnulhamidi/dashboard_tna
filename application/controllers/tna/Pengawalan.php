@@ -961,15 +961,26 @@ class Pengawalan extends CI_Controller {
 		);
 
 		$post = $this->input->post();
-		foreach ($post['selectedIds'] as $key => $value) {
-			$this->PengawalanModel->submitEvalusi($dataPengawalan, $value );
+		// foreach ($post['selectedIds'] as $key => $value) {
+		// 	$this->PengawalanModel->submitEvalusi($dataPengawalan, $value );
+		// }
+		$update = $this->PengawalanModel->submitEvalusi($dataPengawalan, $post['selectedIds']);
+		if($update){
+			$return = array(
+				'success'		=> true,
+				'status_code'	=> 201,
+				'msg'			=> "Data berhasil diubah.",
+				'data'			=> array()
+			);
+		}else{
+			$return = array(
+				'success'		=> false,
+				'status_code'	=> 500,
+				'msg'			=> "Data gagal diubah.",
+				'data'			=> array()
+			);
 		}
-		$return = array(
-			'success'		=> true,
-			'status_code'	=> 201,
-			'msg'			=> "Data berhasil diubah.",
-			'data'			=> array()
-		);
+		
 		echo json_encode($return);
 	}
 

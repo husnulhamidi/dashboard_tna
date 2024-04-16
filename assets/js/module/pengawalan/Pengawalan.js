@@ -1225,16 +1225,37 @@ function evaluasiData(){
             dataType: "JSON",
             data : {selectedIds: selectedIds}, // Mengirim data sebagai array
             success:function(resp){
-                console.log(resp)
-                setTimeout(function() {
-                    swal({
-                        title: "Notifikasi!",
-                        text: resp.msg,
-                        imageUrl: img_icon_success
-                    }, function() {
-                        location.reload();
-                    });
-                }, 1000);
+                if(resp.success){
+                    setTimeout(function() {
+                        swal({
+                            title: "Notifikasi!",
+                            text: "Data berhasil diubah",
+                            imageUrl: img_icon_success
+                        }, function(d) {
+                            location.reload();
+                        });
+                    }, 1000);
+                }else{
+                    setTimeout(function() {
+                        swal({
+                            title: "Notifikasi!",
+                            text: "Data gagal diubah",
+                            imageUrl: img_icon_error
+                        }, function() {
+                            location.reload();
+                        });
+                    }, 1000);
+                }
+                // console.log(resp)
+                // setTimeout(function() {
+                //     swal({
+                //         title: "Notifikasi!",
+                //         text: resp.msg,
+                //         imageUrl: img_icon_success
+                //     }, function() {
+                //         location.reload();
+                //     });
+                // }, 1000);
             }
         });
     });
