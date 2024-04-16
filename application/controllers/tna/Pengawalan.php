@@ -1005,29 +1005,17 @@ class Pengawalan extends CI_Controller {
 				// log_message('error', 'Kirim email verifikasi [3EASy Notifikasi] Request Instalasi' );
 
 				$this->load->library('email');
-				// $config = array(
-				// 	'protocol' => 'smtp',
-				// 	'smtp_host' => 'ssl://mail.telkomsat.co.id',
-				// 	'smtp_port' => 465,
-				// 	'smtp_user' => '3easy', // change it to yours
-				// 	'smtp_pass' => '3Easytelkom$at', // change it to yours
-				// 	'mailtype' => 'html',
-				// 	'charset' => 'iso-8859-1',
-				// 	'wordwrap' => TRUE
-				// );
 				$config = array(
 					'protocol' => 'smtp',
-					'smtp_host' => 'smtp.gmail.com',
-					'smtp_port' => 587, // Port SMTP Gmail untuk TLS
-					'smtp_crypto' => 'tls', // Jenis enkripsi yang digunakan, bisa juga 'ssl'
-					'smtp_user' => 'aang.ardam@gmail.com', // Ganti dengan alamat email Gmail Anda
-					'smtp_pass' => 'Majalengka02!', // Ganti dengan kata sandi Gmail Anda
+					'smtp_host' => 'ssl://mail.telkomsat.co.id',
+					'smtp_port' => 465,
+					'smtp_user' => '3easy', // change it to yours
+					'smtp_pass' => '3Easytelkom$at', // change it to yours
 					'mailtype' => 'html',
-					'charset' => 'utf-8',
+					'charset' => 'iso-8859-1',
 					'wordwrap' => TRUE
 				);
 				
-
 				$this->email->initialize($config);
 				$this->email->set_newline("\r\n");
 				$this->email->set_mailtype("html");
