@@ -68,6 +68,8 @@ $route['tna/home/detail/(:any)/(:any)/(:any)'] = 'tna/home/detail/$1/$2/$3';
 
 $route['tna/home1'] = 'tna/home/index1';
 $route['tna/report'] = 'tna/Report';
+$route['tna/report/getData'] = 'tna/Report/getData';
+
 $route['tna/dashboard-training']    = 'tna/DashboardTraining';
 $route['tna/dashboard-training/getDataDashboard']    = 'tna/DashboardTraining/getDataDashboard';
 $route['tna/dashboard-training/getDataKaryawanDashboard']    = 'tna/DashboardTraining/getDataKaryawanDashboard';

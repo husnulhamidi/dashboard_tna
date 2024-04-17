@@ -11,6 +11,7 @@ class Report extends CI_Controller {
 		// }
 		//Do your magic here
 
+		$this->load->model('ReportModel');
 	}
 
 	public function index($date="")
@@ -33,10 +34,17 @@ class Report extends CI_Controller {
 		$data['js']				= array(
 			'plugins/select2/select2.full.min.js',
 			'plugins/datepicker/bootstrap-datepicker.js',
-			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js'
+			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js',
+			'js/module/report/report.js?random='.date("ymdHis"),
+			'js/custom.js='.date("ymdHis"),
 		);
 
 		$this->template->load('template','tna/report/index',$data);
+	}
+
+	public function getData(){
+		$get = $this->input->get();
+		echo $this->ReportModel->getData($get);
 	}
 	
 }

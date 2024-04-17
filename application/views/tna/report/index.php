@@ -21,87 +21,80 @@
                             </div>
                         </div>
                     </div>
-                   
-
                 </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                        <table  class="table table-striped table-bordered table-hover" id="report" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th width="7%" rowspan="3">No.</th>
+                                    <th width="20%" rowspan="3"  class="text-center">JENIS PELATIHAN / SERTIFIKISI</th>
+                                    <th rowspan="3">KOMPETENSI</th>
+                                    <th colspan="15" class="text-center">PERENCANAAN - <span id="thn_perencanaan"></span></th>
+                                    <th colspan="15" class="text-center">REALISASI - <span id="thn_realisasi"></span></th>
+                                </tr>
+                                <tr>
+                                    <th colspan="4" class="text-center">Pelatihan</th>
+                                    <th rowspan="2" class="text-center">Total Pelatihan</th>
+                                    <th colspan="4" class="text-center">Sertifikasi</th>
+                                    <th rowspan="2" class="text-center">Total Sertifikasi</th>
+                                    <th colspan="2" class="text-center">Peserta Pelatihan</th>
+                                    <th colspan="2" class="text-center">Peserta Sertifikasi</th>
+                                    <th rowspan="2" class="text-center">Total Peserta</th>
 
-         
-                       
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="table-responsive">
-                                <table  class="table table-striped table-bordered table-hover" id="report" cellspacing="0" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th width="7%" rowspan="3">No.</th>
-                                            <th width="20%" rowspan="3">JENIS PELATIHAN / SERTIFIKISI</th>
-                                            <th rowspan="3">KOMPETENSI</th>
-                                            <th colspan="15">PERENCANAAN - <?php echo $filter_year;?></th>
-                                            <th colspan="15">REALISASI - <?php echo $filter_year;?></th>
-                                        </tr>
-                                        <tr>
-                                            <th colspan="4">Pelatihan</th>
-                                            <th rowspan="2">Total Pelatihan</th>
-                                            <th colspan="4">Sertifikasi</th>
-                                            <th rowspan="2">Total Sertifikasi</th>
-                                            <th colspan="2">Peserta Pelatihan</th>
-                                            <th colspan="2">Peserta Sertifikasi</th>
-                                            <th rowspan="2">Total Peserta</th>
+                                    <th colspan="4" class="text-center">Pelatihan</th>
+                                    <th rowspan="2" class="text-center">Total Pelatihan</th>
+                                    <th colspan="4" class="text-center">Sertifikasi</th>
+                                    <th rowspan="2" class="text-center">Total Sertifikasi</th>
+                                    <th colspan="2" class="text-center">Peserta Pelatihan</th>
+                                    <th colspan="2" class="text-center">Peserta Sertifikasi</th>
+                                    <th rowspan="2" class="text-center">Total Peserta</th>
+                                    
+                                </tr>
+                                <tr>
+                                    <th>Q1</th>
+                                    <th>Q2</th>
+                                    <th>Q3</th>
+                                    <th>Q4</th>
 
-                                            <th colspan="4">Pelatihan</th>
-                                            <th rowspan="2">Total Pelatihan</th>
-                                            <th colspan="4">Sertifikasi</th>
-                                            <th rowspan="2">Total Sertifikasi</th>
-                                            <th colspan="2">Peserta Pelatihan</th>
-                                            <th colspan="2">Peserta Sertifikasi</th>
-                                            <th rowspan="2">Total Peserta</th>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <th>Q1</th>
-                                            <th>Q2</th>
-                                            <th>Q3</th>
-                                            <th>Q4</th>
+                                    <th>Q1</th>
+                                    <th>Q2</th>
+                                    <th>Q3</th>
+                                    <th>Q4</th>
 
-                                            <th>Q1</th>
-                                            <th>Q2</th>
-                                            <th>Q3</th>
-                                            <th>Q4</th>
+                                    <th>FTE</th>
+                                    <th>NON FTE</th>
 
-                                            <th>FTE</th>
-                                            <th>NON FTE</th>
+                                    <th>FTE</th>
+                                    <th>NON FTE</th>
 
-                                            <th>FTE</th>
-                                            <th>NON FTE</th>
+                                    <th>Q1</th>
+                                    <th>Q2</th>
+                                    <th>Q3</th>
+                                    <th>Q4</th>
 
-                                            <th>Q1</th>
-                                            <th>Q2</th>
-                                            <th>Q3</th>
-                                            <th>Q4</th>
+                                    <th>Q1</th>
+                                    <th>Q2</th>
+                                    <th>Q3</th>
+                                    <th>Q4</th>
 
-                                            <th>Q1</th>
-                                            <th>Q2</th>
-                                            <th>Q3</th>
-                                            <th>Q4</th>
+                                    <th>FTE</th>
+                                    <th>NON FTE</th>
 
-                                            <th>FTE</th>
-                                            <th>NON FTE</th>
-
-                                            <th>FTE</th>
-                                            <th>NON FTE</th>
-                                            
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                   
-                                   
-                                    </tbody>
-                                </table>
-                                </div>
-                            </div>
+                                    <th>FTE</th>
+                                    <th>NON FTE</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                            
+                            
+                            </tbody>
+                        </table>
                         </div>
-                       
-                   
+                    </div>
+                </div>
             </div>
         </div>
     </div>
