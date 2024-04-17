@@ -54,11 +54,11 @@ function builTable(thn){
             { "data": "perencanaan_sertifikasi_Q4"},
             { "data": "perencanaan_total_sertifikasi"},
 
-            { "data": "id"},
-            { "data": "id"},
-            { "data": "id"},
-            { "data": "id"},
-            { "data": "id"},
+            { "data": "id"}, //peserta pelatihan fte (perencanaan)
+            { "data": "id"}, //peserta pelatihan non fte (perencanaan)
+            { "data": "id"}, //peserta sertifikasi fte (perencanaan)
+            { "data": "id"}, //peserta sertifikasi non fte (perencanaan)
+            { "data": "id"}, //total peserta (perencanaan)
 
             { "data": "realisasi_pelatihan_Q1"},
             { "data": "realisasi_pelatihan_Q2"},
@@ -72,11 +72,10 @@ function builTable(thn){
             { "data": "realisasi_sertifikasi_Q4"},
             { "data": "realisasi_total_sertifikasi"},
 
-            { "data": "id"},//29
-            { "data": "id"},//30
-            { "data": "id"},//31
-            { "data": "id"},//32
-            { "data": "id"},//33           
+            { "data": "id"}, //peserta pelatihan fte (realisasi)
+            { "data": "id"}, //peserta pelatihan non fte (realisasi)
+            { "data": "id"}, //peserta sertifikasi fte (realisasi)
+            { "data": "id"}, //peserta sertifikasi non fte (per          
         ],
     });
 }
