@@ -150,10 +150,12 @@ class Pengawalan extends CI_Controller {
 		// $tgl = explode('-', trim($this->input->post('waktu_pelaksanaan')));
 		$tgl1 = explode('/', trim($this->input->post('waktu_pelaksanaan_awal')));
 		$tgl2 = explode('/', trim($this->input->post('waktu_pelaksanaan_akhir')));
+		$tanggal_mulai = $tgl1[2].'-'.$tgl1[0].'-'.$tgl1[1];
+		$tanggal_selesai = $tgl2[2].'-'.$tgl2[0].'-'.$tgl2[1];
 		$data_waktu = array(
 			'm_tna_pengawalan_id' 	=> $this->input->post('id'),
-			'tanggal_mulai'			=> $tgl1[2].'-'.$tgl1[0].'-'.$tgl1[1],
-			'tanggal_selesai'		=> $tgl2[2].'-'.$tgl2[0].'-'.$tgl2[1],
+			'tanggal_mulai'			=> $tanggal_mulai,
+			'tanggal_selesai'		=> $tanggal_selesai,
 			'created_by'			=> $this->karyawanId,
 			'created_date'			=> date('Y-m-d')
 		);
@@ -162,7 +164,7 @@ class Pengawalan extends CI_Controller {
 			// update data
 			$urutan = $this->input->post('urutanId') + 1;
 			$thapanId = $this->TnaModel->get_tahapan_id($urutan);
-			update_pengawalan($this->input->post('id'), $thapanId->id, $this->karyawanId );
+			update_pengawalan($this->input->post('id'), $thapanId->id, $this->karyawanId, $tanggal_mulai, $tanggal_selesai );
 
 			// save history
 			save_history_pengawalan($this->input->post('id'), $thapanId->id, 'Ya','Konfirmasi Jadwal', $this->karyawanId);

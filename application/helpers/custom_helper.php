@@ -34,7 +34,7 @@ function upload_file($fileName, $pathName, $allowed_types, $ci_instance){
     return $data;
 }
 
-function update_pengawalan($id, $tahapan_id, $karyawanId){
+function update_pengawalan($id, $tahapan_id, $karyawanId, $tanggal_mulai = false, $tanggal_selesai = false){
     $CI =& get_instance();
     $CI->load->database();
 
@@ -43,6 +43,11 @@ function update_pengawalan($id, $tahapan_id, $karyawanId){
         'updated_date' => date('Y-m-d'),
         'updated_by' => $karyawanId
     );
+
+    if($tanggal_mulai && $tanggal_selesai){
+        $data['waktu_pelaksanaan_mulai'] = $tanggal_mulai;
+        $data['waktu_pelaksanaan_selesai'] = $tanggal_selesai;
+    }
 
     $CI->db->where('id',$id);
     $CI->db->update('m_tna_pengawalan',$data);
