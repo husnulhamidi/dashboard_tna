@@ -34,6 +34,7 @@
                                 <table  class="table table-striped table-bordered table-hover" id="table-evaluasi" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
+                                            <th class="text-center text-nowrap">Aksi</th>
                                             <th class="text-center text-nowrap">Info</th>
                                             <th class="text-center text-nowrap">ID TNA</th>
                                             <th class="text-center text-nowrap">Nama Karyawan</th>
@@ -63,3 +64,7 @@
     </div>
 </section>
 <?php $this->load->view('tna/pengawalan/modal_popup/modal_filter');?>
+<?php $this->load->view('tna/pengawalan/modal_popup/modal_evaluasi');?>
+<script type="text/javascript">
+    var url_detail = '<?php echo base_url('tna/pengawalan/detail/');?>';
+</script>
