@@ -192,18 +192,40 @@ function builTable(table, tabs) {
                                 }
                                 
                                 if(row.is_evaluasi == 0){
-                                   action += `<li>
-                                                <a 
-                                                   onclick="evaluasi(`+params+`,`+row.is_complete+`,'`+row.waktu_pelaksanaan+`')"> Evaluasi
-                                                </a>
-                                            </li>` ;
+                                    if(tabs != 'evaluasi'){
+                                        action += `<li>
+                                            <a 
+                                            onclick="evaluasi(`+params+`,`+row.is_complete+`,'`+row.waktu_pelaksanaan+`')"> Evaluasi
+                                            </a>
+                                        </li>` ;
+                                    }
+                                   
                                 }
                             }
+
+                            // if (tabs == 'evaluasi') {
+                            //     if(row.is_submit_evaluasi == 1){
+                            //         action += `-`;
+                            //     }else{
+                            //         action += `<input type="checkbox" value=`+data+` name="checkbox-evalusi[]" id="checkbox">`;
+                            //     }
+
+                            // }
+
                             
                             action += `
                         </ul>
                     </div>
                `;
+                if (tabs == 'evaluasi') {
+                    if(row.is_submit_evaluasi == 1){
+                        action += `-`;
+                    }else{
+                        action += `<input style="margin-top:20px;margin-left:20px" type="checkbox" value=`+data+` name="checkbox-evalusi[]" id="checkbox">`;
+                    }
+
+                }
+
                return action;
             }
         },
@@ -256,20 +278,20 @@ function builTable(table, tabs) {
         },            
     ];
     
-    if (tabs == 'evaluasi') {
-        columns.splice(1, 0, {
-            "data": "id",
-            "class":'text-center',
-            "orderable" : false,
-            render:function(data, type, row, meta){
-                let checkbox = `<input type="checkbox" value=`+data+` name="checkbox-evalusi[]" id="checkbox">`
-                if(row.is_submit_evaluasi == 1){
-                    checkbox = `-`
-                }
-                return checkbox
-            }
-        });
-    }
+    // if (tabs == 'evaluasi') {
+    //     columns.splice(1, 0, {
+    //         "data": "id",
+    //         "class":'text-center',
+    //         "orderable" : false,
+    //         render:function(data, type, row, meta){
+    //             let checkbox = `<input type="checkbox" value=`+data+` name="checkbox-evalusi[]" id="checkbox">`
+    //             if(row.is_submit_evaluasi == 1){
+    //                 checkbox = `-`
+    //             }
+    //             return checkbox
+    //         }
+    //     });
+    // }
     
     oTable = $(table).DataTable({
         processing: true, 

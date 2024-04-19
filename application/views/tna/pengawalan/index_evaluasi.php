@@ -54,8 +54,8 @@
                                 <table  class="table table-striped table-bordered table-hover" id="table-evaluasi" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
-                                            <th class="text-center text-nowrap">Action</th>
-                                            <th class="text-center text-nowrap">Evaluasi ( <input type="checkbox" id="checkboxAll" name="checkboxAll"> )</th>
+                                            <th class="text-center text-nowrap">Action ( <input type="checkbox" id="checkboxAll" name="checkboxAll"> )</th>
+                                            <!-- <th class="text-center text-nowrap">Evaluasi ( <input type="checkbox" id="checkboxAll" name="checkboxAll"> )</th> -->
                                             <th class="text-center text-nowrap" width="70px">Status</th>
                                             <th class="text-center text-nowrap">ID TNA</th>
                                             <th class="text-center text-nowrap">Nama Karyawan</th>
