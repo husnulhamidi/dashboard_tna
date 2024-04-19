@@ -71,9 +71,9 @@ $sess = $this->session->userdata();
             </a>
         </li>
 
-        <li class="treeview <?php echo ($active_menu == 'Usulan TNA' || $active_menu == 'tna_tna' || $active_menu == 'tna_pengawalan') ? 'active' : ''; ?> ">
+        <li class="treeview <?php echo ($active_menu == 'Usulan TNA' || $active_menu == 'tna_tna' || $active_menu == 'tna_pengawalan' ) ? 'active' : ''; ?> ">
             <a href="#">
-            <i class="fa fa-clone"></i>TNA</span>
+                <i class="fa fa-clone"></i>TNA</span>
                 <span class="pull-right-container">
                     <i class="fa fa-angle-left pull-right"></i>
                 </span>
@@ -94,8 +94,19 @@ $sess = $this->session->userdata();
                         <i class="fa fa-circle-o"></i> <span>Pengawalan TNA & Non TNA</span>
                     </a>
                 </li>
+                <!-- <li class="<?php echo $active_menu=='evaluasi'? 'active':'';?> ">
+                    <a href="<?php echo site_url('tna/evaluasi'); ?>">
+                        <i class="fa fa-circle-o"></i> <span> Evaluasi </span>
+                    </a>
+                </li> -->
             </ul>
         </li> 
+
+        <li class="<?php echo $active_menu=='evaluasi'? 'active':'';?>">
+            <a href="<?php echo site_url('tna/evaluasi'); ?>">
+                <i class="fa fa-file-text"></i> <span>Evaluasi TNA</span>
+            </a>
+        </li>
 
         <li class="<?php echo $active_menu=='reporting'? 'active':'';?>">
             <a href="<?php echo site_url('tna/reporting'); ?>">

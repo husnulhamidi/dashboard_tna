@@ -14,18 +14,18 @@
                         </div>
                         <div class="col-lg-6 ">
                             <div class="pull-right">
-                                    <a data-toggle='modal' data-target='#modalFilter'> 
-                                        <button class="btn btn-grey btn-sm">
-                                            <i class="fa fa-filter"></i> Filter
-                                        </button>
-                                    </a>
-                                    <button class="btn btn-danger btn-sm btn-reset">
-                                        <i class="fa fa-repeat"></i> Reset
+                                <a data-toggle='modal' data-target='#modalFilter'> 
+                                    <button class="btn btn-grey btn-sm">
+                                        <i class="fa fa-filter"></i> Filter
                                     </button>
-                                </div>
+                                </a>
+                                <button class="btn btn-danger btn-sm btn-reset">
+                                    <i class="fa fa-repeat"></i> Reset
+                                </button>
                             </div>
                         </div>
                     </div>
+                </div>
 
                 <div class="tab-content"  >
                     <div class="tab-pane active">
@@ -33,9 +33,8 @@
                             <div class="col-md-12">
                                 <table  class="table table-striped table-bordered table-hover" id="table-evaluasi" cellspacing="0" width="100%">
                                     <thead>
-                                    <tr>
+                                        <tr>
                                             <th class="text-center text-nowrap">Info</th>
-                                            <th class="text-center text-nowrap" width="70px">Status</th>
                                             <th class="text-center text-nowrap">ID TNA</th>
                                             <th class="text-center text-nowrap">Nama Karyawan</th>
                                             <th class="text-center text-nowrap">Subdit/Unit</th>
@@ -55,7 +54,7 @@
                                 </table>
                             </div>
                         </div>
-                       
+                        
                     </div>
                 </div>
                 <!-- /.tab-content -->
@@ -63,3 +62,4 @@
         </div>
     </div>
 </section>
+<?php $this->load->view('tna/pengawalan/modal_popup/modal_filter');?>
