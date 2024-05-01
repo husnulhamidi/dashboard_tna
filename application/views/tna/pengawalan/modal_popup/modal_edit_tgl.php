@@ -12,11 +12,20 @@
                     <input type="hidden" name="id_pengawalan" id="id_edit_waktu">
                     <div class="box-body">
                         <div class="row">
-                           <label class="col-md-6"> Jadwal Pelaksanaan</label>
+                           <label class="col-md-6"> Waktu Awal Pelaksanaan </label>
                            <div class="col-md-12">
                                 <div class="input-group">
                                     <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                    <input type="text" class="form-control pull-right tgl" id="waktu_awal" name="waktu_pelaksanaan">
+                                    <input type="text" class="form-control pull-right tgl" id="waktu_awal" name="waktu_awal_pelaksanaan">
+                                </div>
+                           </div>
+                        </div>
+                        <div class="row" style="padding-top: 10px">
+                           <label class="col-md-6"> Waktu Akhir Pelaksanaan</label>
+                           <div class="col-md-12">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                    <input type="text" class="form-control pull-right tgl" id="waktu_akhir" name="waktu_akhir_pelaksanaan">
                                 </div>
                            </div>
                         </div>

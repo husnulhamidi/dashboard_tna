@@ -152,37 +152,50 @@ class Pengawalan extends CI_Controller {
 		$tgl2 = explode('/', trim($this->input->post('waktu_pelaksanaan_akhir')));
 		$tanggal_mulai = $tgl1[2].'-'.$tgl1[0].'-'.$tgl1[1];
 		$tanggal_selesai = $tgl2[2].'-'.$tgl2[0].'-'.$tgl2[1];
-		$data_waktu = array(
-			'm_tna_pengawalan_id' 	=> $this->input->post('id'),
-			'tanggal_mulai'			=> $tanggal_mulai,
-			'tanggal_selesai'		=> $tanggal_selesai,
-			'created_by'			=> $this->karyawanId,
-			'created_date'			=> date('Y-m-d')
+		$urutan = $this->input->post('urutanId') + 1;
+		$thapanId = $this->TnaModel->get_tahapan_id($urutan);
+		update_pengawalan($this->input->post('id'), $thapanId->id, $this->karyawanId, $tanggal_mulai, $tanggal_selesai );
+
+		// save history
+		save_history_pengawalan($this->input->post('id'), $thapanId->id, 'Ya','Konfirmasi Jadwal', $this->karyawanId);
+
+		$return = array(
+			'success'		=> true,
+			'status_code'	=> 201,
+			'msg'			=> "Data berhasil diubah.",
+			'data'			=> array()
 		);
-		$action = $this->PengawalanModel->save_waktu($data_waktu);
-		if($action){
-			// update data
-			$urutan = $this->input->post('urutanId') + 1;
-			$thapanId = $this->TnaModel->get_tahapan_id($urutan);
-			update_pengawalan($this->input->post('id'), $thapanId->id, $this->karyawanId, $tanggal_mulai, $tanggal_selesai );
+		// $data_waktu = array(
+		// 	'm_tna_pengawalan_id' 	=> $this->input->post('id'),
+		// 	'tanggal_mulai'			=> $tanggal_mulai,
+		// 	'tanggal_selesai'		=> $tanggal_selesai,
+		// 	'created_by'			=> $this->karyawanId,
+		// 	'created_date'			=> date('Y-m-d')
+		// );
+		// $action = $this->PengawalanModel->save_waktu($data_waktu);
+		// if($action){
+		// 	// update data
+		// 	$urutan = $this->input->post('urutanId') + 1;
+		// 	$thapanId = $this->TnaModel->get_tahapan_id($urutan);
+		// 	update_pengawalan($this->input->post('id'), $thapanId->id, $this->karyawanId, $tanggal_mulai, $tanggal_selesai );
 
-			// save history
-			save_history_pengawalan($this->input->post('id'), $thapanId->id, 'Ya','Konfirmasi Jadwal', $this->karyawanId);
+		// 	// save history
+		// 	save_history_pengawalan($this->input->post('id'), $thapanId->id, 'Ya','Konfirmasi Jadwal', $this->karyawanId);
 
-			$return = array(
-				'success'		=> true,
-				'status_code'	=> 201,
-				'msg'			=> "Data berhasil diubah.",
-				'data'			=> array()
-			);
-		}else{
-			$return = array(
-				'success'		=> false,
-				'status_code'	=> 500,
-				'msg'			=> "Data gagal diubah.",
-				'data'			=> array()
-			);
-		}
+		// 	$return = array(
+		// 		'success'		=> true,
+		// 		'status_code'	=> 201,
+		// 		'msg'			=> "Data berhasil diubah.",
+		// 		'data'			=> array()
+		// 	);
+		// }else{
+		// 	$return = array(
+		// 		'success'		=> false,
+		// 		'status_code'	=> 500,
+		// 		'msg'			=> "Data gagal diubah.",
+		// 		'data'			=> array()
+		// 	);
+		// }
 		
 		echo json_encode($return);
 	}
@@ -678,9 +691,11 @@ class Pengawalan extends CI_Controller {
 
 	public function edit_waktu(){
 		// echo json_encode($this->input->post());
-		$tgl = explode('/', $this->input->post('waktu_pelaksanaan'));
+		$tgl = explode('/', $this->input->post('waktu_awal_pelaksanaan'));
+		$tgl2 = explode('/', $this->input->post('waktu_akhir_pelaksanaan'));
 		$data = array(
-			'waktu_pelaksanaan' => $tgl[2].'-'.$tgl[0].'-'.$tgl[1]
+			'waktu_pelaksanaan_mulai' => $tgl[2].'-'.$tgl[0].'-'.$tgl[1],
+			'waktu_pelaksanaan_selesai' => $tgl2[2].'-'.$tgl2[0].'-'.$tgl2[1]
 		);
 		$action = $this->TnaModel->updateData($data, $this->input->post('id_pengawalan'));
 		if($action){

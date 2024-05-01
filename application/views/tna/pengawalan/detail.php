@@ -62,9 +62,9 @@
                         <div class="row" style="padding-top:10px">
                             <div class="col-md-12">
                                 <label class="col-md-3"> Waktu Pelaksanaan </label>
-                                <div class="col-md-2"><b>: <?php echo date('d M Y', strtotime($detail->waktu_pelaksanaan)) ;?> </b> </div>
+                                <div class="col-md-2"><b>: <?php echo date('d M Y', strtotime($detail->waktu_pelaksanaan_mulai)) ;?> s/d <?php echo date('d M Y', strtotime($detail->waktu_pelaksanaan_selesai)) ;?> </b> </div>
                                 <div>
-                                    <button onclick="showModalEditTgl(`<?php echo $detail->id ?>`,`<?php echo $detail->waktu_pelaksanaan ?>`)" class="btn btn-xs btn-primary" title="Edit">
+                                    <button onclick="showModalEditTgl(`<?php echo $detail->id ?>`,`<?php echo $detail->waktu_pelaksanaan_mulai ?>`,`<?php echo $detail->waktu_pelaksanaan_selesai ?>`)" class="btn btn-xs btn-primary" title="Edit">
                                         <i class="fa fa-edit"></i>
                                     </button>
                                 </div>
@@ -114,9 +114,10 @@
 <?php $this->load->view('tna/pengawalan/modal_popup/modal_edit_tgl');?>
 
 <script type="text/javascript">
-    function showModalEditTgl(id, waktu){
+    function showModalEditTgl(id, waktu_mulai, waktu_selesai){
         $('#id_edit_waktu').val(id)
-        $('#waktu_awal').val(formatDate2(waktu))
+        $('#waktu_awal').val(formatDate2(waktu_mulai))
+        $('#waktu_akhir').val(formatDate2(waktu_selesai))
         $('#modalEditTgl').modal('show')
     }
 
