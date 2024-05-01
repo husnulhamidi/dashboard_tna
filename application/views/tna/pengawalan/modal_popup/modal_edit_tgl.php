@@ -32,7 +32,7 @@
                         <div class="row" style="padding-top: 10px">
                            <label class="col-md-6"> Alasan </label>
                            <div class="col-md-12">
-                               <textarea class="form-control" placeholder="Alasan" name="alasan"></textarea>
+                               <textarea class="form-control" placeholder="Alasan" name="alasan" id="alasan"></textarea>
                            </div>
                         </div>
                     </div>
