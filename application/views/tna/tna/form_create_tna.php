@@ -114,7 +114,7 @@
                                                  if($tna->id == @$detail->r_tna_traning_id){
                                                     $selected = 'selected';
                                                 }
-                                                echo "<option ".$selected." value='".$tna->id."'>".$tna->code.' | '.$tna->name.'</option>';
+                                                echo "<option ".$selected." value='".$tna->id.'|'.$tna->name."'>".$tna->code.' | '.$tna->name.'</option>';
                                             }
                                             ?>
                                         </select>
@@ -644,7 +644,12 @@ function getDataDetailKaryawan(count, karyawanId = false){
 
 function getCode() {
     var countData;
-    let pelatihanId = $('#tna').val();
+    let exp = $('#tna').val().split('|');
+    console.log(exp[0])
+    // let pelatihanId = $('#tna').val();
+    let pelatihanId = exp[0];
+    $('#nama_kegiatan').val(exp[1])
+    // cosole.log(pelatihanId)
     getDataLembaga(pelatihanId)
     getDataLembagawithotPelatihan(pelatihanId)
     getSum(pelatihanId)

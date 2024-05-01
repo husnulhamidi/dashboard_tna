@@ -167,13 +167,13 @@ class Tna extends CI_Controller {
 
 	public function submit(){
 		// echo json_encode($this->input->post());
-		// $getNamaPenyelenggara = $this->lembagaModel->get_lembaga_byid($this->input->post('penyelenggara'));
-		// echo json_encode($getNamaPenyelenggara['data']->nama_lembaga);
-		// if($this->input->post('new_penyelenggara')){
-		// 	$penyelenggara = $this->input->post('new_penyelenggara');
-		// }else{
-		// 	$penyelenggara = $getNamaPenyelenggara['data']->nama_lembaga;
-		// }
+		$getNamaPenyelenggara = $this->lembagaModel->get_lembaga_byid($this->input->post('penyelenggara'));
+		echo json_encode($getNamaPenyelenggara['data']->nama_lembaga);
+		if($this->input->post('new_penyelenggara')){
+			$penyelenggara = $this->input->post('new_penyelenggara');
+		}else{
+			$penyelenggara = $getNamaPenyelenggara['data']->nama_lembaga;
+		}
 
 		$pecahTgl = explode('-', $this->input->post('waktu_pelaksanaan'));
 		$tmptgl1 = trim($pecahTgl[0]);
@@ -185,13 +185,13 @@ class Tna extends CI_Controller {
 		$penyelenggara = $getNamaPenyelenggara['data']->nama_lembaga;
 		
 		// $penyelenggara = $this->input->post('new_penyelenggara') ?? $this->input->post('penyelenggara');
-		
+		$exp = explode('|', $this->input->post('tna'));
 		$data = array(
 			// 'm_organisasi_id'	=> $this->input->post('subdit'),
 			// 'm_karyawan_id'	=> $this->input->post('karyawan'),
 			// 'status_karyawan'	=> $this->input->post('status_fte'),	
 			'r_tna_kompetensi_id' => $this->input->post('kompetensi'),
-			'r_tna_traning_id' => $this->input->post('tna'),
+			'r_tna_traning_id' => $exp[0],
 			'jenis_pelatihan' => $this->input->post('jenis_pelatihan'),
 			'jenis_development' =>	$this->input->post('jenis_development'),	
 			'nama_kegiatan' => $this->input->post('nama_kegiatan'),
