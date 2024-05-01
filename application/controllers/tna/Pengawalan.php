@@ -695,7 +695,8 @@ class Pengawalan extends CI_Controller {
 		$tgl2 = explode('/', $this->input->post('waktu_akhir_pelaksanaan'));
 		$data = array(
 			'waktu_pelaksanaan_mulai' => $tgl[2].'-'.$tgl[0].'-'.$tgl[1],
-			'waktu_pelaksanaan_selesai' => $tgl2[2].'-'.$tgl2[0].'-'.$tgl2[1]
+			'waktu_pelaksanaan_selesai' => $tgl2[2].'-'.$tgl2[0].'-'.$tgl2[1],
+			'alasan_update_waktu_pelaksanaan' => $this->input->post('alasan')
 		);
 		$action = $this->TnaModel->updateData($data, $this->input->post('id_pengawalan'));
 		if($action){
