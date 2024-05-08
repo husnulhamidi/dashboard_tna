@@ -33,7 +33,7 @@ class DashboardTraining extends CI_Controller {
 			'js/jquery.validate.js',
 			'plugins/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js',
 			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js',
-			'js/module/Dashboard/DashboardTraining.js?random='.date("ymdHis"),
+			'js/module/dashboard/DashboardTraining.js?random='.date("ymdHis"),
 			'plugins/daterangepicker/daterangepicker.js',
 			'js/custom.js?random='.date("ymdHis"),
 		);

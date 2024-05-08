@@ -36,7 +36,7 @@ class Home extends CI_Controller {
 		); // css tambahan
 		$data['js']				= array(
 			'plugins/datepicker/bootstrap-datepicker.js',
-			'js/module/Dashboard/Dashboard.js?random='.date("ymdHis"),
+			'js/module/dashboard/Dashboard.js?random='.date("ymdHis"),
 			'js/custom.js?random='.date("ymdHis"),
 		);
 		$this->template->load('template','tna/dashboard/dashboard', $data);

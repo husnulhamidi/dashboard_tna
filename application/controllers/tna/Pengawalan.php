@@ -916,7 +916,7 @@ class Pengawalan extends CI_Controller {
 		echo json_encode($deleteData);
 	}
 
-	public function exportExcel(){
+	public function exportExcel_old(){
 		// $get = $tis->
 		$post = $this->input->post();
 		$data = $this->PengawalanModel->getDataExport($post);
@@ -963,6 +963,94 @@ class Pengawalan extends CI_Controller {
 				$waktu_pelaksanaan,
 				$estimasi_biaya,
 				$status
+			);
+		
+			// Menulis baris data CSV ke file
+			fputcsv($fp, $row, "\t");
+		}
+		
+		fclose($fp);
+        exit;
+	}
+
+	public function exportExcel(){
+		// $get = $tis->
+		$post = $this->input->post();
+		$data = $this->PengawalanModel->getDataExport2($post);
+		// echo json_encode($data);
+		$filename = 'daftar_tna' . date('YmdHis') . '.xls';
+        
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
+        header('Cache-Control: max-age=0');
+
+		$fp = fopen('php://output', 'w');
+		$header = array('No','Tahun', 'Nama Kegiatan', 'Institusi Penyelenggara', 'Metode', 'Jenis Pelatihan/Sertifiaksi', 'Kompetensi', 'Tanggal Mulai', 'Tanggal Selesai', 'Lama Kegiatan', 'Bulan', 'Kuartal', 'NIK', 'Nama Peserta', 'Posisi','Direktorat','Subdit/Subunit','Junlah NIK','BP','FTE/Non FTE','Pelatihan/Sertifikasi','Nomor Sertifikasi','Kategori','Tanggal Awal Sertifikasi','Tanggal Akhir Sertifikasi','No HT','NO SPB','Biaya Kegiatan','Currency Key','Keterangan');
+        fputcsv($fp, $header, "\t");
+		foreach ($data as $key => $val) {
+			// Membersihkan nilai data dari karakter newline
+			$tahun_mulai = str_replace("\n", "", $val->tahun_mulai);
+			$nama_kegiatan = str_replace("\n", "", $val->nama_kegiatan);
+			$nama_penyelenggara = str_replace("\n", "", $val->nama_penyelenggara);
+			$metoda_pembelajaran = str_replace("\n", "", $val->metoda_pembelajaran);
+			$jenis_pelatihan = str_replace("\n", "", $val->jenis_pelatihan);
+			$kompetensi = str_replace("\n", "", $val->kompetensi);
+			$waktu_pelaksanaan_mulai = str_replace("\n", "", $val->waktu_pelaksanaan_mulai);
+			$waktu_pelaksanaan_selesai = str_replace("\n", "", $val->waktu_pelaksanaan_selesai);
+			$lama_kegiatan = str_replace("\n", "", $val->lama_kegiatan);
+			$bulan = str_replace("\n", "", $val->bulan);
+			$kuartal = str_replace("\n", "", $val->kuartal);
+			$nik = str_replace("\n", "", $val->nik);
+			$nama_karyawan = str_replace("\n", "", $val->nama_karyawan);
+			$subdit = str_replace("\n", "", $val->subdit);
+			$direktorat = str_replace("\n", "", $val->direktorat);
+			$posisi = str_replace("\n", "", $val->posisi);
+			$status_karyawan = str_replace("\n", "", $val->status_karyawan);
+			$jenis_development = str_replace("\n", "", $val->jenis_development);
+			$no_sertifikat = str_replace("\n", "", $val->no_sertifikat);
+			$tanggal_awal_sertifikat = str_replace("\n", "", $val->tanggal_awal_sertifikat);
+			$tanggal_akhir_sertifikat = str_replace("\n", "", $val->tanggal_akhir_sertifikat);
+			$no_ht = str_replace("\n", "", $val->no_ht);
+			$no_spb = str_replace("\n", "", $val->no_spb);
+			$jumlah_nik = str_replace("\n", "", $val->jumlah_nik);
+			$biaya_kegiatan = str_replace("\n", "", number_format($val->biaya_kegiatan));
+			$bp = str_replace("\n", "", $val->bp);
+			$kategori = str_replace("\n", "", $val->kategori);
+			$keterangan = str_replace("\n", "", $val->keterangan);
+		
+			// Membuat baris data CSV
+			$row = array(
+				($key+1), 
+				$tahun_mulai, 
+				$nama_kegiatan, 
+				$nama_penyelenggara, 
+				$metoda_pembelajaran,
+				$jenis_pelatihan,
+				$kompetensi,
+				$waktu_pelaksanaan_mulai,
+				$waktu_pelaksanaan_selesai,
+				$lama_kegiatan,
+				$bulan,
+				'Kuartal ' . $kuartal,
+				$nik,
+				$nama_karyawan,
+				$posisi,
+				$direktorat, 
+				$subdit,
+				$jumlah_nik,
+				$bp, 
+				$status_karyawan,
+				$jenis_development,
+				'No Sertifikat : ' . $no_sertifikat,
+				$kategori, 
+				$tanggal_awal_sertifikat,
+				$tanggal_akhir_sertifikat,
+				$no_ht,
+				$no_spb,
+				'Rp. ' . $biaya_kegiatan,
+				'IDR',
+				$keterangan
+
 			);
 		
 			// Menulis baris data CSV ke file

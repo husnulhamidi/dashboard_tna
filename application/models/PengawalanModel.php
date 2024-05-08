@@ -650,7 +650,7 @@ class PengawalanModel extends CI_Model {
 		return $return;
 	}
 
-	public function getDataExport($post){
+	public function getDataExport_old($post){
 		$this->db->select('tp.id AS id, 
 				tp.code_tna AS id_tna, 
 				mk.nama AS nama_karyawan,
@@ -691,7 +691,7 @@ class PengawalanModel extends CI_Model {
 		if($post['tabs'] == 'verifikasi'){
 			$this->db->where('tu.urutan <>', 1);
 		}
-		if($post['tabs'] == 'finish'){
+		if($post['tabs'] == 'selesai'){
 			$this->db->where('tu.urutan', 14);
 		}
 
@@ -740,6 +740,124 @@ class PengawalanModel extends CI_Model {
 
 		if($post['filter_tahapan'] !== 'all'){
 			$this->db->where('tp.tahapan_id', $post['filter_tahapan']);
+		}
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	public function getDataExport2($post){
+		$this->db->select("
+			YEAR(waktu_pelaksanaan_mulai) AS tahun_mulai,
+			nama_kegiatan,
+			nama_penyelenggara,
+			metoda_pembelajaran,
+			jenis_pelatihan,
+			rt.name AS pelatihan,
+			rtk.name AS kompetensi,
+			waktu_pelaksanaan_mulai,
+			waktu_pelaksanaan_selesai,
+			DATEDIFF(waktu_pelaksanaan_selesai, waktu_pelaksanaan_mulai) + 1 AS lama_kegiatan,
+			CASE 
+				WHEN MONTH(waktu_pelaksanaan_mulai) = 1 THEN 'Januari'
+				WHEN MONTH(waktu_pelaksanaan_mulai) = 2 THEN 'Februari'
+				WHEN MONTH(waktu_pelaksanaan_mulai) = 3 THEN 'Maret'
+				WHEN MONTH(waktu_pelaksanaan_mulai) = 4 THEN 'April'
+				WHEN MONTH(waktu_pelaksanaan_mulai) = 5 THEN 'Mei'
+				WHEN MONTH(waktu_pelaksanaan_mulai) = 6 THEN 'Juni'
+				WHEN MONTH(waktu_pelaksanaan_mulai) = 7 THEN 'Juli'
+				WHEN MONTH(waktu_pelaksanaan_mulai) = 8 THEN 'Agustus'
+				WHEN MONTH(waktu_pelaksanaan_mulai) = 9 THEN 'September'
+				WHEN MONTH(waktu_pelaksanaan_mulai) = 10 THEN 'Oktober'
+				WHEN MONTH(waktu_pelaksanaan_mulai) = 11 THEN 'November'
+				WHEN MONTH(waktu_pelaksanaan_mulai) = 12 THEN 'Desember'
+			END AS bulan,
+			QUARTER(waktu_pelaksanaan_mulai) AS kuartal,
+			mk.nik_tg AS nik,
+			mk.nama AS nama_karyawan,
+			rj.nama AS posisi,
+			IF(l5 = 2, o5, IF(l4 = 2, o4, IF(l3 = 2, o3, o2))) AS direktorat,
+			IF(l5 = 3, o5, IF(l4 = 3, o4, o3)) AS subdit,
+			LENGTH(mk.nik_tg) AS jumlah_nik,
+			status_karyawan,
+			jenis_development,
+			mtpd.no_dokumen AS no_sertifikat,
+			mtpd.tanggal_berlaku_awal AS tanggal_awal_sertifikat,
+			mtpd.tanggal_berlaku_akhir AS tanggal_akhir_sertifikat,
+			mtpb.no_ht AS no_ht,
+			mtpb.no_spb AS no_spb,
+			estimasi_biaya AS biaya_kegiatan,
+			QUARTER(waktu_pelaksanaan_mulai) AS bp,
+			jenis_development AS kategori,
+			jenis_development AS keterangan,
+		");
+		$this->db->from('m_tna_pengawalan mtp');
+		$this->db->join('m_karyawan mk', 'mtp.m_karyawan_id = mk.id');
+		$this->db->join('v_organisasi org', 'mtp.m_organisasi_id = org.id');
+		$this->db->join('h_mutasi hm', 'mk.id = hm.m_karyawan_id AND hm.is_aktif = 1');
+		$this->db->join('r_tna_kompetensi rtk', 'rtk.id = mtp.r_tna_kompetensi_id');
+		$this->db->join('r_jabatan rj', 'rj.id = hm.r_jabatan_id');
+		$this->db->join('r_tna_training rt', 'rt.id = mtp.r_tna_traning_id');
+		$this->db->join('r_tahapan_usulan tu', 'tu.id = mtp.tahapan_id');
+		$this->db->join('m_organisasi mo', 'mo.id = mtp.m_organisasi_id');
+		$this->db->join('m_tna_pengawalan_dokumen mtpd', 'mtp.id = mtpd.m_tna_pengawalan_id AND mtpd.tipe = "sertifikat"', 'left');
+		$this->db->join('m_tna_pengawalan_pembayaran mtpb', 'mtp.id = mtpb.m_tna_pengawalan_id', 'left');
+		$this->db->where('tu.r_jenis_usulan_id', 29);
+
+		if($post['tabs'] == 'all'){
+			$this->db->where('tu.urutan <>', 1);
+		}
+		if($post['tabs'] == 'verifikasi'){
+			$this->db->where('tu.urutan <>', 1);
+		}
+		if($post['tabs'] == 'selesai'){
+			$this->db->where('tu.urutan', 14);
+		}
+
+
+		if($post['filter_peserta'] !== 'all'){
+			$this->db->like('mk.nama', $post['filter_peserta'],'both');
+		}
+		if($post['filter_unit'] !== 'all'){
+			$this->db->where('mo.id', $post['filter_unit']);
+		}
+		if($post['filter_pelatihan'] !== 'all'){
+			$this->db->like('rt.name', $post['filter_pelatihan'],'both');
+		}
+		if($post['filter_penyelenggara'] !== ''){
+			$this->db->like('mtp.nama_penyelenggara', $post['filter_penyelenggara'],'both');
+		}
+
+		if($post['filter_kompetensi'] !== 'all'){
+			$this->db->where('mtp.r_tna_kompetensi_id', $post['filter_kompetensi']);
+		}
+		if($post['filter_development'] !== 'all'){
+			$this->db->where('mtp.jenis_development', $post['filter_development']);
+		}
+
+		if($post['filter_pembelajaran'] !== 'all'){
+			$this->db->where('mtp.metoda_pembelajaran', $post['filter_pembelajaran']);
+		}
+
+		if($post['filter_biaya_min'] !== ''){
+			$this->db->where('mtp.estimasi_biaya >=', $post['filter_biaya_min']);
+		}
+
+		if($post['filter_biaya_max'] !== ''){
+			$this->db->where('mtp.estimasi_biaya <=', $post['filter_biaya_max']);
+		}
+
+		if($post['filter_tgl_mulai']){
+			$tgl1 = $this->chageDate($post['filter_tgl_mulai']);
+			$this->db->where('mtp.waktu_pelaksanaan >=',$tgl1);
+		}
+
+		if($post['filter_tgl_selesai']){
+			$tgl2 = $this->chageDate($post['filter_tgl_selesai']);
+			$this->db->where('mtp.waktu_pelaksanaan <=',$tgl2);
+		}
+
+		if($post['filter_tahapan'] !== 'all'){
+			$this->db->where('mtp.tahapan_id', $post['filter_tahapan']);
 		}
 		$query = $this->db->get();
 		return $query->result();
