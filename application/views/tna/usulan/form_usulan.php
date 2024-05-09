@@ -58,7 +58,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Kompetensi</label>
                                             <div class="col-sm-8">
-                                                <select class="select2 form-control" name="kompetensi" id="kompetensi">
+                                                <select class="select2 form-control" name="kompetensi" id="kompetensi" onChange="getDataTraining()">
                                                     <option value="">--- Pilih Kompetensi ---</option>
                                                     <!-- <?php 
                                                         foreach ($kompetensi as $kom) {
@@ -86,11 +86,11 @@
                                             <div class="col-sm-8">
                                                 <select class="select2 form-control" name="tna" id="tna" onchange="getDataLembaga()">
                                                     <option value="">--- Pilih Pelatihan/Sertifikasi ---</option>
-                                                    <?php 
+                                                    <!-- <?php 
                                                         foreach ($tna as $tna) {
                                                             echo "<option value='".$tna->id."&".$tna->code."&".$tna->name."'>".$tna->code.' | '.$tna->name.'</option>';
                                                         }
-                                                    ?>
+                                                    ?> -->
                                                 </select>
                                             </div>
                                         </div>
@@ -296,39 +296,14 @@ $(document).ready(function () {
     getDataKompetensi()
     $('.select2').select2();
 
-    // $('#date .input-group.date').daterangepicker({
-    //     // format: "dd-mm-yyyy",
-    //     // viewMode: "date", 
-    //     // minViewMode: "date",
-    //     autoclose: true
-    // });
-
     $('#waktu_pelaksanaan').daterangepicker();
     $('.input_mask').mask('000.000.000.000', {reverse: true});
 
-    // $('.multi-field-wrapper').each(function() {
-    //     var $wrapper = $('.multi-fields', this);
-    
-    //     $(".add-field", $(this)).click(function(e) {
-    //         $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus();           
-    //     });
-    //     $('.multi-field .remove-field', $wrapper).click(function() {
-    //         if ($('.multi-field', $wrapper).length > 1)
-    //             $(this).parent('.multi-field').remove();
-    //             //alert(x-1);
-    //     });
-    // });
 
     if($('#id').val()){
         $('#divBtnAdd').css('display','none')
         $('.remove-field').css('display','none')
 
-        // let karyawanId = '<?php echo @$detail->m_karyawan_id;?>'
-        // let varifikatorId = '<?php echo @$detail->verifikator_id_1;?>'
-        // let subdit = '<?php echo @$detail->m_organisasi_id;?>'
-        // getSubdit(1, subdit)
-        // getKaryawanBySubdit(1,karyawanId,varifikatorId)
-        // getDataDetailKaryawan(1, karyawanId)
         let direktoratId = '<?php echo @$detail->direktorat_id;?>'
         let varifikatorId = '<?php echo @$detail->verifikator_id_1;?>'
         getAtasan(1, direktoratId, varifikatorId)
@@ -619,8 +594,12 @@ function getCode() {
             data: { id: pelatihanId },
             dataType: 'json',
             success: function(result) {
-                code = result.code;
-                let code_tna = code+countData
+                let count = 0
+                if(result){
+                    count = result.code;
+                }
+                
+                let code_tna = count+countData
                 $('#code_tna').val(code_tna)
             }
         });
@@ -733,18 +712,18 @@ function deleteRow(id){
 //     let pelatihanId = $('#tna').val();
 //     $('#penyelenggara').empty()
 //     $('#penyelenggara').append('<option value="">Pilih Penyelenggara</option')
-//     $.ajax({
-//         url:base_url+'tna/tna/getPenyelenggara',
-//         method: 'post',
-//         dataType: 'json',
-//         data: { pelatihanId:pelatihanId},
-//         success: function(response){
-//             console.log(response)
-//             for (var i = 0; i < response.length; i++) {
-//                 $('#penyelenggara').append('<option>'+response[i]['nama_lembaga']+'</option>')
-//             }
-//         }
-//     });
+    // $.ajax({
+    //     url:base_url+'tna/tna/getPenyelenggara',
+    //     method: 'post',
+    //     dataType: 'json',
+    //     data: { pelatihanId:pelatihanId},
+    //     success: function(response){
+    //         console.log(response)
+    //         for (var i = 0; i < response.length; i++) {
+    //             $('#penyelenggara').append('<option>'+response[i]['nama_lembaga']+'</option>')
+    //         }
+    //     }
+    // });
 // }
 
 var isHeader2 = true;
@@ -844,7 +823,7 @@ function deletePenyelenggara(){
 
 var isHeaderKom = true;
 function getDataKompetensi(datakompetensi = false){
-    console.log(datakompetensi)
+    // console.log(datakompetensi)
     $('#kompetensi').empty()
     $('#kompetensi').append('<option value="">Pilih kompetensi</option')
     $.ajax({
@@ -856,8 +835,6 @@ function getDataKompetensi(datakompetensi = false){
             $.each(response, function(index, item) {
                 var selected = "";
                 if(datakompetensi && datakompetensi == item.id){
-                    console.log(item.id)
-                    console.log(item.kompetensi)
                     selected = "selected";
                 }
                 $('#kompetensi').append('<option '+selected+' value="'+item.id+'" >' + item.kompetensi + '</option>');
@@ -892,7 +869,7 @@ function getDataKompetensi(datakompetensi = false){
 }
 
 function formatRepoKom(repo){
-    console.log(repo)
+    // console.log(repo)
     if (repo.loading) {
         return repo.text;
     }
@@ -926,6 +903,25 @@ function formatRepoKom(repo){
 function formatRepoSelectionKom(repo){
     isHeaderKom = true;
     return repo.kompetensi  || repo.text;
+}
+
+function getDataTraining(){
+    // echo "<option value='".$tna->id."&".$tna->code."&".$tna->name."'>".$tna->code.' | '.$tna->name.'</option>';
+    let kompetensiId = $('#kompetensi').val()
+    $('#tna').empty()
+    $('#tna').append('<option value="">Pilih Pelatihan/Sertifikasi</option')
+    $.ajax({
+        url:base_url+'tna/tna/getDataTraining',
+        method: 'post',
+        dataType: 'json',
+        data: { kompetensiId:kompetensiId},
+        success: function(response){
+            // console.log('response', response)
+            for (var i = 0; i < response.length; i++) {
+                $('#tna').append('<option value="'+response[i]['id']+'&'+response[i]['code']+'&'+response[i]['name']+'"> ' + response[i]['code']+' | '+response[i]['name']+'</option>')
+            }
+        }
+    });
 }
 
 // function btnClose(){

@@ -127,6 +127,7 @@ function deleteData(id){
 }
 
 function submitTNA(){
+    console.log('sini')
     $(".form-tna").validate({
         rules: {
             jenis_pelatihan: "required",
@@ -213,7 +214,7 @@ function submitTNA(){
                 // data: combinedData,
                 data: $(form).serialize(),
                 success: function(response) {
-                    console.log(response)
+                    console.log('response')
                     if(response.success){
                         setTimeout(function() {
                             swal({

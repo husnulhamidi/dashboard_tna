@@ -103,6 +103,7 @@ $route['tna/list']    = 'tna/Tna/index';
 $route['tna/create']    = 'tna/Tna/create';
 $route['tna/getPenyelenggara']    = 'tna/Tna/getPenyelenggara';
 $route['tna/getkompetensi']    = 'tna/Tna/getkompetensi';
+$route['tna/getDataTraining']    = 'tna/Tna/getDataTraining';
 $route['tna/getDataLembagawithotPelatihan']    = 'tna/Tna/getDataLembagawithotPelatihan';
 
 $route['tna/non']    = 'tna/NonTna/index';

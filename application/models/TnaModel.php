@@ -386,6 +386,23 @@ class TnaModel extends CI_Model {
 		return $query->result();
 	}
 
+	public function getCodeKompetensi($id){
+		$this->db->select('id, code');
+		$this->db->from('r_tna_kompetensi');
+		$this->db->where('id', $id);
+		$this->db->limit(1);
+		$query = $this->db->get();
+		return $query->row();
+	}
+
+	public function getDataTraining($code){
+		$this->db->select('id, name, code');
+		$this->db->from('r_tna_training');
+		$this->db->where('r_tna_kompetensi_code', $code);
+		$query = $this->db->get();
+		return $query->result();
+	}
+
 
 }
 

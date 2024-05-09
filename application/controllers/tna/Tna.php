@@ -488,6 +488,13 @@ class Tna extends CI_Controller {
 		}
 		echo json_encode($result);
 	}
+
+	public function getDataTraining(){
+		$kompetensiId = $this->input->post('kompetensiId');
+		$code = $this->TnaModel->getCodeKompetensi($kompetensiId);
+		$trainig = $this->TnaModel->getDataTraining($code->code);
+		echo json_encode($trainig);
+	}
 	
 }
 

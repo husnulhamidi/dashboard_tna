@@ -65,7 +65,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Kompetensi <span style="color: red">*</span></label>
                                         <div class="col-sm-8">
-                                            <select class="select2 form-control" name="kompetensi" id="kompetensi">
+                                            <select class="select2 form-control" name="kompetensi" id="kompetensi" onChange="getDataTraining()">
                                                 <option value="">--- Pilih Kompetensi ---</option>
                                                 <!-- <?php 
                                                 foreach ($kompetensi as $kom) {
@@ -108,15 +108,15 @@
                                         <div class="col-sm-8">
                                             <select class="select2 form-control" name="tna" id="tna" onchange="getCode()">
                                                 <option value="">--- Pilih Pelatihan/Sertifikasi ---</option>
-                                                <?php 
-                                                foreach ($tna as $tna) {
-                                                 $selected = '';
-                                                 if($tna->id == @$detail->r_tna_traning_id){
-                                                    $selected = 'selected';
-                                                }
-                                                echo "<option ".$selected." value='".$tna->id.'|'.$tna->name."'>".$tna->code.' | '.$tna->name.'</option>';
-                                            }
-                                            ?>
+                                                <!-- <?php 
+                                                    foreach ($tna as $tna) {
+                                                        $selected = '';
+                                                        if($tna->id == @$detail->r_tna_traning_id){
+                                                            $selected = 'selected';
+                                                        }
+                                                        echo "<option ".$selected." value='".$tna->id.'|'.$tna->name."'>".$tna->code.' | '.$tna->name.'</option>';
+                                                    }
+                                                ?> -->
                                         </select>
                                     </div>
                                 </div>
@@ -394,6 +394,9 @@ $(document).ready(function () {
         }else{
             $("#ya").prop("checked", true);
         }
+
+        let kompetensiId = '<?php echo @$detail->r_tna_kompetensi_id;?>';
+        getDataTraining(kompetensiId)
     }
 
     $(".add-field", $(this)).click(function(e) {
@@ -645,7 +648,7 @@ function getDataDetailKaryawan(count, karyawanId = false){
 function getCode() {
     var countData;
     let exp = $('#tna').val().split('|');
-    console.log(exp[0])
+    console.log($('#tna').val())
     // let pelatihanId = $('#tna').val();
     let pelatihanId = exp[0];
     $('#nama_kegiatan').val(exp[1])
@@ -950,7 +953,7 @@ function getDataKompetensi(datakompetensi = false){
 }
 
 function formatRepoKom(repo){
-    console.log(repo)
+    // console.log(repo)
     if (repo.loading) {
         return repo.text;
     }
@@ -984,6 +987,31 @@ function formatRepoKom(repo){
 function formatRepoSelectionKom(repo){
     isHeaderKom = true;
     return repo.kompetensi  || repo.text;
+}
+
+function getDataTraining(detailKompetensiId = false){
+    // value='".$tna->id.'|'.$tna->name."'
+    let kompetensiId = $('#kompetensi').val()
+    if(detailKompetensiId){
+        kompetensiId = detailKompetensiId
+    }
+    $('#tna').empty()
+    $('#tna').append('<option value="">Pilih Pelatihan/Sertifikasi</option')
+    $.ajax({
+        url:base_url+'tna/tna/getDataTraining',
+        method: 'post',
+        dataType: 'json',
+        data: { kompetensiId:kompetensiId},
+        success: function(response){
+            // console.log('response', response)
+            let selected = '';
+            for (var i = 0; i < response.length; i++) {
+                // console.log('response', response[i]['id'])
+                if(response[i]['id'] == kompetensiId) selected = 'selected';
+                $('#tna').append('<option '+selected+' value="'+response[i]['id']+'|'+response[i]['name']+'"> '+ response[i]['code']+' | '+response[i]['name']+'</option>');
+            }
+        }
+    });
 }
 
 
