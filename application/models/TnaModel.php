@@ -403,6 +403,24 @@ class TnaModel extends CI_Model {
 		return $query->result();
 	}
 
+	public function getDataJob($idKompetensi){
+		$this->db->select('
+				k.name as kompetensi, k.id as kompetensi_id, 
+				jr.name as job_role, jr.id as job_role_id, 
+				jf.name as job_function, jf.id as job_function_id, 
+				jfa.name as job_family, jfa.id as job_family_id
+			');
+		$this->db->from('r_tna_kompetensi k');
+		$this->db->join('r_tna_job_role jr', 'jr.code = k.r_tna_job_role_code');
+		$this->db->join('r_tna_job_function jf', 'jf.code = jr.r_tna_job_function_code');
+		$this->db->join('r_tna_job_family jfa', 'jfa.code = jf.r_tna_job_family_code');
+		$this->db->where('k.id', $idKompetensi);
+
+		$query = $this->db->get();
+		return $query->row();;
+
+	}
+
 
 }
 

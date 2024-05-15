@@ -63,6 +63,35 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="col-sm-3 control-label">Job Family</label>
+                                        <div class="col-sm-8">
+                                            <select class="select2 form-control" name="jobFamily" id="jobFamily" onChange="getJobFunc()">
+                                                <option value="">--- Pilih Job Family ---</option>
+                                                
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Job Function</label>
+                                        <div class="col-sm-8">
+                                            <select class="select2 form-control" name="jobFunc" id="jobFunc" onChange="getJobRole()">
+                                                <option value="">--- Pilih Job Function ---</option>
+                                                
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Job Role</label>
+                                        <div class="col-sm-8">
+                                            <select class="select2 form-control" name="jobRole" id="jobRole" onChange="getDataKompetensi()">
+                                                <option value="">--- Pilih Job Role ---</option>
+                                                
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-sm-3 control-label">Kompetensi <span style="color: red">*</span></label>
                                         <div class="col-sm-8">
                                             <select class="select2 form-control" name="kompetensi" id="kompetensi" onChange="getDataTraining()">
@@ -356,13 +385,6 @@ $(document).ready(function () {
             getKaryawanBySubdit(1,direktoratId, karyawanId)
         }
         
-        // if(direktoratId){
-            // getAtasan(1, direktoratId, varifikatorId)
-            // getKaryawanBySubdit(1,direktoratId, karyawanId)
-        // }else{
-        //     getAtasan(1, subdit, varifikatorId)
-        //     getKaryawanBySubdit(1,subdit, karyawanId)
-        // }
 
         getDataDetailKaryawan(1,karyawanId)
 
@@ -371,7 +393,7 @@ $(document).ready(function () {
         getDataLembaga(trainingId, lembaga)
 
         let kompetensi = '<?php echo @$detail->r_tna_kompetensi_id;?>'
-        getDataKompetensi(kompetensi)
+        getDataJob(kompetensi)
 
         let jenis_development = '<?php echo @$detail->jenis_development;?>';
         if(jenis_development == 'Sertifikasi'){
@@ -397,6 +419,8 @@ $(document).ready(function () {
 
         let kompetensiId = '<?php echo @$detail->r_tna_kompetensi_id;?>';
         getDataTraining(kompetensiId)
+    }else{
+        getJobFamily()
     }
 
     $(".add-field", $(this)).click(function(e) {
@@ -404,7 +428,7 @@ $(document).ready(function () {
         appendRow(count)
     })
 
-    getDataKompetensi();
+    // getDataKompetensi();
 
 });
 
@@ -701,27 +725,6 @@ function getSum(pelatihanId) {
     });
 }
 
-// function getDataLembaga(pelatihanId, dataPenyelenggara = false){
-    // $('#penyelenggara').empty()
-    // $('#penyelenggara').append('<option value="">Pilih Penyelenggara</option')
-    // $.ajax({
-    //     url:base_url+'tna/tna/getPenyelenggara',
-    //     method: 'post',
-    //     dataType: 'json',
-    //     data: { pelatihanId:pelatihanId},
-    //     success: function(response){
-    //         console.log(response)
-    //         for (var i = 0; i < response.length; i++) {
-    //             var selected = "";
-    //             if(dataPenyelenggara && dataPenyelenggara == response[i]['nama_lembaga']){
-    //                 selected = "selected";
-    //             }
-    //             $('#penyelenggara').append('<option '+selected+' >'+response[i]['nama_lembaga']+'</option>')
-    //         }
-    //     }
-    // });
-// }
-
 var isHeader2 = true;
 function getDataLembaga(pelatihanId, dataPenyelenggara = false){
     $('#penyelenggara').empty()
@@ -908,8 +911,9 @@ function getDataKompetensi(datakompetensi = false){
     // console.log(datakompetensi)
     $('#kompetensi').empty()
     $('#kompetensi').append('<option value="">Pilih kompetensi</option')
+    let jobRole = $('#jobRole').val()
     $.ajax({
-        url:base_url+'tna/tna/getkompetensi',
+        url:base_url+'tna/tna/getkompetensi/'+jobRole,
         method: 'get',
         dataType: 'json',
         success: function(response){
@@ -1012,6 +1016,86 @@ function getDataTraining(detailKompetensiId = false){
             }
         }
     });
+}
+
+function getJobFamily(jobFamily = false,jobFunc=false,jobRole=false,kompetensi=false){
+    // console.log('jobFamily', jobFamily)
+    $('#jobFamily').empty()
+    $('#jobFamily').append('<option>Pilih Job Family</option>');
+    $.ajax({
+        url:base_url+'tna/justifikasi/getDataDropdown/jobFamily',
+        method: 'get',
+        dataType: 'json',
+        success: function(response){
+            for (var i = 0; i < response.length; i++) {
+                var selected = "";
+                if(jobFamily == response[i]['id']){
+                    selected = "selected";
+                }
+                $('#jobFamily').append('<option '+selected+' value='+response[i]['id']+'>'+response[i]['name']+'</option>')
+            }
+            if(jobFamily)getJobFunc(jobFunc,jobRole,kompetensi);
+            
+        }
+    });
+    
+}
+
+function getJobFunc(jobFunc=false,jobRole=false,kompetensi=false){
+    $('#jobFunc').empty()
+    $('#jobFunc').append('<option>Pilih Job Function</option>');
+    // console.log('jobFamily', $('#jobFamily').val())
+    let jobFamily = $('#jobFamily').val()
+    $.ajax({
+        url:base_url+'tna/justifikasi/getDataDropdown/jobFunc/'+jobFamily,
+        method: 'get',
+        dataType: 'json',
+        success: function(response){
+            for (var i = 0; i < response.length; i++) {
+                var selected = "";
+                if(jobFunc == response[i]['id']){
+                    selected = "selected";
+                }
+                $('#jobFunc').append('<option '+selected+' value='+response[i]['id']+'>'+response[i]['name']+'</option>')
+            }
+            if(jobFunc)getJobRole(jobRole,kompetensi);
+            
+        }
+    }); 
+}
+
+function getJobRole(jobRole = false,kompetensi=false){
+    $('#jobRole').empty()
+    $('#jobRole').append('<option>Pilih Job Role</option>');
+    let jobFunc = $('#jobFunc').val()
+    $.ajax({
+        url:base_url+'tna/justifikasi/getDataDropdown/jobRole/'+jobFunc,
+        method: 'get',
+        dataType: 'json',
+        success: function(response){
+            for (var i = 0; i < response.length; i++) {
+                var selected = "";
+                if(jobRole == response[i]['id']){
+                    selected = "selected";
+                }
+                $('#jobRole').append('<option '+selected+' value='+response[i]['id']+'>'+response[i]['name']+'</option>')
+            }
+            if(jobRole)getDataKompetensi(kompetensi);
+            
+        }
+    });
+}
+
+function getDataJob(kompetensi){
+    $.ajax({
+        url:base_url+'tna/tna/getDataJob/'+kompetensi,
+        method: 'get',
+        dataType: 'json',
+        success: function(response){
+        //    console.log('response', response)
+           getJobFamily(response.job_family_id, response.job_function_id, response.job_role_id, response.kompetensi_id)
+        }
+    }); 
 }
 
 

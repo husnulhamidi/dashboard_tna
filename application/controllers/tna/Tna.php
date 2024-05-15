@@ -497,6 +497,11 @@ class Tna extends CI_Controller {
 		$trainig = $this->TnaModel->getDataTraining($code->code);
 		echo json_encode($trainig);
 	}
+
+	public function getDataJob($idKompetensi){
+		$data = $this->TnaModel->getDataJob($idKompetensi);
+		echo json_encode($data);
+	}
 	
 }
 

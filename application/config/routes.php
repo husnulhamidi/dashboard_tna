@@ -93,7 +93,7 @@ $route['tna/training-mandiri/verifikasi']    = 'tna/TrainingMandiri/verifikasi';
 $route['tna/profil-training-personal/(:any)']    = 'tna/TrainingMandiri/profile/$1';
 $route['tna/getKompetensi']    = 'tna/TrainingMandiri/getKompetensi';
 $route['tna/getTraining']    = 'tna/TrainingMandiri/getTraining';
-$route['tna/getTraining']    = 'tna/TrainingMandiri/getTraining';
+// $route['tna/getTraining']    = 'tna/TrainingMandiri/getTraining';
 $route['tna/getRekomendasiTraining']    = 'tna/TrainingMandiri/getRekomendasiTraining';
 $route['tna/getNextTraining']    = 'tna/TrainingMandiri/getNextTraining';
 
@@ -108,6 +108,8 @@ $route['tna/getDataLembagawithotPelatihan']    = 'tna/Tna/getDataLembagawithotPe
 
 $route['tna/non']    = 'tna/NonTna/index';
 $route['tna/non/create']    = 'tna/NonTna/create';
+
+$route['tna/getDataJob/(:any)']    = 'tna/Tna/getDataJob/$1';
 
 
 // ========================== JUSTIFIKASI
