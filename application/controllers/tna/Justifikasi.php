@@ -89,18 +89,21 @@ class Justifikasi extends CI_Controller {
 		echo json_encode($data);
 	}
 
-	public function getDataDropdown($string){
+	public function getDataDropdown($string, $id = false){
 		if($string == 'jobFamily'){
 			$data = $this->justifikasi->get_jobfamily();
 		}
 		if($string == 'jobFunc'){
-			$data = $this->justifikasi->get_jobfunc();
+			$codeJobFamily = $this->justifikasi->get_code_jobFamily($id);
+			$data = $this->justifikasi->get_jobfunc($codeJobFamily->code);
 		}
 		if($string == 'jobRole'){
-			$data = $this->justifikasi->get_jobrole();
+			$codeJobFunc = $this->justifikasi->get_code_jobFunc($id);
+			$data = $this->justifikasi->get_jobrole($codeJobFunc->code);
 		}
 		if($string == 'kompetensi'){
-			$data = $this->justifikasi->get_kompetensi();
+			$codeRole = $this->justifikasi->get_code_jobRole($id);
+			$data = $this->justifikasi->get_kompetensi($codeRole->code);
 		}
 		if($string == 'pelatihan'){
 			$data = $this->justifikasi->get_pelatihan();

@@ -18,7 +18,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Job Family</label>
                                     <div class="col-sm-9">
-                                        <select class="select2 form-control" name="jobFamily" id="jobFamily">
+                                        <select class="select2 form-control" name="jobFamily" id="jobFamily" onChange="getJobFunc()">
                                             <option value=""></option>
                                         </select>
                                     </div>
@@ -26,7 +26,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Job Function</label>
                                     <div class="col-sm-9">
-                                        <select class="select2 form-control" name="jobFunc" id="jobFunc">
+                                        <select class="select2 form-control" name="jobFunc" id="jobFunc" onChange="getJobRole()">
                                             <option value=""></option>
                                         </select>
                                     </div>
@@ -34,7 +34,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Job Role</label>
                                     <div class="col-sm-9">
-                                        <select class="select2 form-control" name="jobRole" id="jobRole">
+                                        <select class="select2 form-control" name="jobRole" id="jobRole" onChange="getJobKompetensi()">
                                             <option value=""></option>
                                         </select>
                                     </div>
@@ -42,7 +42,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">Kompetensi <span id="spanKompetensi" class="text-red">*</i></label>
                                     <div class="col-sm-7">
-                                        <select class=" form-control" name="kompetensi" id="kompetensi">
+                                        <select class="select2 form-control" name="kompetensi" id="kompetensi">
                                             <option value="">Pilih Kompetensi</option>
                                         </select>
                                     </div>

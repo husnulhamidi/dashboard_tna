@@ -64,76 +64,6 @@
                             </table>
                         </div>
                     </div>
-
-                   <!--  <div class="row" style="padding-top: 30px">
-                        <div class="col-md-12">
-                            <table class="table table-striped" id="table-bank">
-                                <tr>
-                                    <th width="20px">No.</th>
-                                    <th>Job Family</th>
-                                    <th>Job Function</th>
-                                    <th>Job Role</th>
-                                    <th>Kompetensi</th>
-                                    <th>Action</th>
-                                </tr>
-                                <tr >
-                                    <td width="20px">1</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>Mengelola Rantai Pasok Sabut Kelapa</td>
-                                    <td> 
-                                        <button data-toggle="collapse" data-target="#demo1" class="accordion-toggle" class="btn btn-default btn-xs viewtraining" id="Kom01" value="Kom01"><i class="fa fa-eye"></i></button>
-                                        <button data-toggle="tooltip" data-placement="bottom" title="edit" class="btn btn-success btn-xs"><i class="fa fa-edit"></i></button>&nbsp;
-                                        <button data-toggle="tooltip" data-placement="bottom" title="Hapus" class="btn btn-danger btn-xs hapus-bank" value='.$id_bank.'><i class="fa fa-trash"></i></button>&nbsp;
-                                    </td>
-                                </tr>
-                                <tr >
-                                    <td></td>
-                                    <td colspan="5" class="hiddenRow">
-                                        <div class="accordian-body collapse" id="demo1" stale="padding-left:10px;"> 
-                                        <div class="pull-right">
-                                            <a data-toggle="modal" data-target="#ModalAddTraining" class="btn btn-sm btn-info"><i class="fa fa-plus"></i> Training</a>
-                                        </div>
-                                        <br>
-                                        <br>
-                                        <table class="table table-striped">
-                                            <tr class="info">
-                                                <th>No</th>
-                                                <th>Training</th>
-                                                <th><i class="fa fa-cog"></i>
-                                            </tr>
-                                            <tr><td width="20px">1</td><td>Pelatihan rantai pasok sabut kelapa</td>
-                                            <td>
-                                            <button data-toggle="tooltip" data-placement="bottom" title="edit" class="btn btn-success btn-xs"><i class="fa fa-edit"></i></button>&nbsp;
-                                        <button data-toggle="tooltip" data-placement="bottom" title="Hapus" class="btn btn-danger btn-xs hapus-bank" value='.$id_bank.'><i class="fa fa-trash"></i></button>&nbsp;
-                                            </td></tr>
-                                            <tr><td>2</td><td>Sertifikasi rantai pasok sabut kelapa</td>
-                                            <td>
-                                            <button data-toggle="tooltip" data-placement="bottom" title="edit" class="btn btn-success btn-xs"><i class="fa fa-edit"></i></button>&nbsp;
-                                        <button data-toggle="tooltip" data-placement="bottom" title="Hapus" class="btn btn-danger btn-xs hapus-bank" value='.$id_bank.'><i class="fa fa-trash"></i></button>&nbsp;
-                                            </td></tr>
-                                            
-                                        </table>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>Memahami Proses Pengeringan Sabut Kelapa</td>
-                                    <td> 
-                                    </td>
-                                </tr>
-                               
-                               
-                            </table>
-
-                        </div>
-                    </div> -->
-
                 </div>
             </div>
         </div>
@@ -316,17 +246,20 @@
                     }
                     $('#jobFamily').append('<option '+selected+' value='+response[i]['id']+'>'+response[i]['name']+'</option>')
                 }
-                getJobFunc(jobFunc,jobRole,kompetensi);
+                if(jobFamily)getJobFunc(jobFunc,jobRole,kompetensi);
+                // getJobFunc(jobFunc,jobRole,kompetensi);
             }
         });
         
     }
 
-    function getJobFunc(jobFunc,jobRole,kompetensi){
+    function getJobFunc(jobFunc = false ,jobRole = false ,kompetensi= false){
         $('#jobFunc').empty()
         $('#jobFunc').append('<option></option>');
+        // console.log('jobFamily', $('#jobFamily').val())
+        let jobFamily = $('#jobFamily').val()
         $.ajax({
-            url:base_url+'tna/justifikasi/getDataDropdown/jobFunc',
+            url:base_url+'tna/justifikasi/getDataDropdown/jobFunc/'+jobFamily,
             method: 'get',
             dataType: 'json',
             success: function(response){
@@ -337,16 +270,18 @@
                     }
                     $('#jobFunc').append('<option '+selected+' value='+response[i]['id']+'>'+response[i]['name']+'</option>')
                 }
-                getJobRole(jobRole,kompetensi);
+                if(jobFunc)getJobRole(jobRole,kompetensi);
+                
             }
         }); 
     }
 
-    function getJobRole(jobRole,kompetensi){
+    function getJobRole(jobRole = false ,kompetensi = false){
         $('#jobRole').empty()
         $('#jobRole').append('<option></option>');
+        let jobFunc = $('#jobFunc').val()
         $.ajax({
-            url:base_url+'tna/justifikasi/getDataDropdown/jobRole',
+            url:base_url+'tna/justifikasi/getDataDropdown/jobRole/'+jobFunc,
             method: 'get',
             dataType: 'json',
             success: function(response){
@@ -357,16 +292,18 @@
                     }
                     $('#jobRole').append('<option '+selected+' value='+response[i]['id']+'>'+response[i]['name']+'</option>')
                 }
-                getJobKompetensi(kompetensi);
+                if(jobRole)getJobKompetensi(kompetensi);
+                
             }
         });
     }
 
-    function getJobKompetensi(kompetensi){
+    function getJobKompetensi(kompetensi = false){
         $('#kompetensi').empty()
         $('#kompetensi').append('<option></option')
+        let jobRole = $('#jobRole').val()
         $.ajax({
-            url:base_url+'tna/justifikasi/getDataDropdown/kompetensi',
+            url:base_url+'tna/justifikasi/getDataDropdown/kompetensi/'+jobRole,
             method: 'get',
             dataType: 'json',
             success: function(response){

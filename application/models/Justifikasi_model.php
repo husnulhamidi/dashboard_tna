@@ -112,16 +112,28 @@ class Justifikasi_model extends CI_Model {
 		return $this->db->from('r_tna_job_family')->where('status_code','1')->select('id,code,name,code_numeric')->get()->result();
 	}
 
-	function get_jobfunc(){
-		return $this->db->from('r_tna_job_function')->where('status_code','1')->select('id,code,name,code_numeric')->get()->result();
+	function get_code_jobFamily($id){
+		return $this->db->from('r_tna_job_family')->where('id',$id)->select('code')->get()->row();
 	}
 
-	function get_jobrole(){
-		return $this->db->from('r_tna_job_role')->where('status_code','1')->select('id,code,name,code_numeric')->get()->result();
+	function get_jobfunc($code){
+		return $this->db->from('r_tna_job_function')->where('status_code','1')->where('r_tna_job_family_code', $code)->select('id,code,name,code_numeric')->get()->result();
 	}
 
-	function get_kompetensi(){
-		return $this->db->from('r_tna_kompetensi')->where('status_code','1')->select('id,code,name')->get()->result();
+	function get_code_jobFunc($id){
+		return $this->db->from('r_tna_job_function')->where('id',$id)->select('code')->get()->row();
+	}
+
+	function get_jobrole($code){
+		return $this->db->from('r_tna_job_role')->where('status_code','1')->where('r_tna_job_function_code', $code)->select('id,code,name,code_numeric')->get()->result();
+	}
+
+	function get_code_jobRole($id){
+		return $this->db->from('r_tna_job_role')->where('id',$id)->select('code')->get()->row();
+	}
+
+	function get_kompetensi($code){
+		return $this->db->from('r_tna_kompetensi')->where('status_code','1')->where('r_tna_job_role_code', $code)->select('id,code,name')->get()->result();
 	}
 
 	function get_pelatihan(){
