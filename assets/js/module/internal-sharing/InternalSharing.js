@@ -96,7 +96,11 @@ function submitFormInternalSharingHCM(){
             time: "required",
             tempat: "required",
             biaya: "required",
-            kuota: "required"
+            kuota: "required",
+            jobFamily: "required",
+            jobFunc: "required",
+            jobRole: "required",
+            kompetensi: "required"
         },
         messages: {
             judul:{
@@ -122,6 +126,18 @@ function submitFormInternalSharingHCM(){
             },
             kuota:{
                 required:"<i class='fa fa-times'></i> kuota harus diisi"
+            },
+            jobFamily:{
+                required:"<i class='fa fa-times'></i> Job Family harus diisi"
+            },
+            jobFunc:{
+                required:"<i class='fa fa-times'></i> Job Function harus diisi"
+            },
+            jobRole:{
+                required:"<i class='fa fa-times'></i> Job Role harus diisi"
+            },
+            kompetensi:{
+                required:"<i class='fa fa-times'></i> Kompetensi harus diisi"
             }
             
         },
@@ -137,18 +153,22 @@ function submitFormInternalSharingHCM(){
             $.ajax({
                 url: base_url+"tna/internalSharing/createOrUpdate",
                 type: 'POST',
-                dataType: "JSON",
-                data: $(form).serialize(),
+                // dataType: "JSON",
+                // data: $(form).serialize(),
+                data: new FormData($(".form-InternalSharing")[0]),
+                contentType: false,
+                cache: false,
+                processData:false,
                 success: function(response) {
-                    console.log(response)
-                    if(response.success){
+                    var newResponse = JSON.parse(response);
+                    if(newResponse.success){
                         setTimeout(function() {
                             swal({
                                 title: "Notifikasi!",
                                 text: "Data berhasil disimpan",
                                 imageUrl: img_icon_success
                             }, function(d) {
-                                location.href = base_url+'tna/internalSharing'
+                                // location.href = base_url+'tna/internalSharing'
                             });
                         }, 1000);
                     }else{
@@ -158,7 +178,7 @@ function submitFormInternalSharingHCM(){
                                 text: "Data gagal disimpan",
                                 imageUrl: img_icon_error
                             }, function() {
-                                location.reload();
+                                // location.reload();
                             });
                         }, 1000);
                     }
@@ -198,6 +218,17 @@ function buildTableInternalSharingAdmin(){
                 }
             },
             { "data": "judul_materi" },
+            { 
+                "data": "materi",
+                render:function(data, type, row, meta){
+                    let result = '-'
+                    if(data){
+                        result = `<a href="${base_url}${data}" target="_blank" class="btn btn-success btn-xs"> <i class="fa fa-download"></i> File Materi</a>`
+                    }
+                    return result
+                } 
+            },
+            { "data": "kompetensi" },
             { "data": "narasumber" },
             { "data": "organisasi" },
             { 

@@ -11,8 +11,8 @@ class InternalSharing_Model extends CI_Model {
     }
 
     public function getDataInternalSharing($post, $karyawanId){
-    	$column_order = array('mti.id','mti.judul_materi','mk.nama','mo.nama','mti.jam','mti.tanggal','mti.tempat','mti.biaya','mti.kuota');
-		$column_search = array('mti.id','mti.judul_materi','mk.nama','mo.nama','mti.jam','mti.tanggal','mti.tempat','mti.biaya','mti.kuota');
+    	$column_order = array('mti.id','mti.judul_materi','mk.nama','mo.nama','mti.jam','mti.tanggal','mti.tempat','mti.biaya','mti.kuota','jr.name as job_role', 'jr.id as job_role_id','jf.name as job_function', 'jf.id as job_function_id', 'jfa.name as job_family', 'jfa.id as job_family_id');
+		$column_search = array('mti.id','mti.judul_materi','mk.nama','mo.nama','mti.jam','mti.tanggal','mti.tempat','mti.biaya','mti.kuota','jr.name as job_role', 'jr.id as job_role_id','jf.name as job_function', 'jf.id as job_function_id', 'jfa.name as job_family', 'jfa.id as job_family_id');
 
         $draw = $post['draw'];
         $start = $post['start'];
@@ -32,16 +32,24 @@ class InternalSharing_Model extends CI_Model {
         $this->db->start_cache();
 
 
-        $this->db->select('mti.id, mti.judul_materi, mti.tanggal, mti.jam,
+        $this->db->select('mti.id, mti.judul_materi, mti.tanggal, mti.jam,mti.materi,
                    mti.tempat, mti.biaya, mti.kuota, mti.link_zoom, mti.r_tna_training_id,
                    mk.nama AS narasumber,mk.id AS idNarasumber,
                    mo.nama AS organisasi,
+                   k.name as kompetensi, k.id as kompetensi_id, 
+                   jr.name as job_role, jr.id as job_role_id, 
+                   jf.name as job_function, jf.id as job_function_id, 
+                   jfa.name as job_family, jfa.id as job_family_id,
                    COUNT(isp.m_tna_internal_sharing_id) AS jumlah_peserta,
                    SUM(CASE WHEN isp.m_karyawan_id = '.$karyawanId.' THEN 1 ELSE 0 END) AS jumlah_ikut');
         $this->db->from('m_tna_internal_sharing as mti');
         $this->db->join('m_karyawan as mk', 'mti.m_karyawan_id = mk.id');
         $this->db->join('m_organisasi as mo', 'mti.m_organisasi_id = mo.id');
         $this->db->join('m_tna_internal_sharing_peserta isp', 'isp.m_tna_internal_sharing_id = mti.id', 'left');
+        $this->db->join('r_tna_job_family jfa', 'jfa.id = mti.r_tna_job_family_id', 'left');
+        $this->db->join('r_tna_job_function jf', 'jf.id = mti.r_tna_job_function_id', 'left');
+        $this->db->join('r_tna_job_role jr', 'jr.id = mti.r_tna_job_role_id', 'left');
+        $this->db->join('r_tna_kompetensi k', 'k.id = mti.r_tna_kompetensi_id', 'left');
         if($post['filter_materi']){
             $this->db->like('mti.judul_materi',$post['filter_materi'],'both');
         }

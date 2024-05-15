@@ -10,6 +10,7 @@ class InternalSharing extends CI_Controller {
 		if(!$this->session->userdata('user')){
 			redirect('auth/login');
 		}
+		$this->load->helper('custom_helper');
 		$this->load->model('InternalSharing_Model', 'InternalSharing');
 		$this->load->model('Setting_ttd_model', 'settingTTD');
 		$this->load->model('PengawalanModel', 'PengawalanModel');
@@ -252,9 +253,24 @@ class InternalSharing extends CI_Controller {
     }
 
     public function createOrUpdate(){
+		// echo json_encode($this->input->post());
     	$waktu = explode("-", $this->input->post('tgl'));
 		$tgl1 = explode("/", $waktu[0]);
 		$tgl = $tgl1[2].'-'.$tgl1[0].'-'.$tgl1[1];
+
+		if($this->input->post('upload_file_materi')){
+			$fileName = $this->input->post('upload_file_materi');
+			$pathName = './files/upload/internal-sharing/materi';
+			// $pathName = './files/upload/tna/materi';
+			$allowed_types = '*';
+			$upload_file = upload_file($fileName, $pathName, $allowed_types, $this);
+			if($upload_file['success'] == false){
+			    // die(json_encode($upload_file)); 
+				$upload_file = '';
+			}
+		}
+
+		json_encode($upload_file);
 
     	$data = array(
 			'judul_materi' => $this->input->post('judul'),
@@ -266,14 +282,23 @@ class InternalSharing extends CI_Controller {
 			'biaya' => $this->input->post('biaya'),
 			'kuota' => $this->input->post('kuota'),
 			'link_zoom' => $this->input->post('linkZoom'),
-			'no_urut' => $this->input->post('no_urut')
+			'no_urut' => $this->input->post('no_urut'),
+			'r_tna_job_family_id' => $this->input->post('jobFamily'),
+			'r_tna_job_function_id' => $this->input->post('jobFunc'),
+			'r_tna_job_role_id' => $this->input->post('jobRole'),
+			'r_tna_kompetensi_id' => $this->input->post('kompetensi'),
+			// 'materi'			=> $upload_file['data'],
 		);
 		if($this->input->post('id')){
 			$data['updated_date'] = date('Y-m-d');
 			$action = $this->input->post('id');
+			if($upload_file){
+				$data['materi'] = $upload_file['data'];
+			}
 			$this->InternalSharing->updateData($data, $this->input->post('id') );
 		}else{
 			$data['created_date'] = date('Y-m-d');
+			$data['materi'] = $upload_file['data'];
 			$action = $this->InternalSharing->insertData($data);
 
 			// insert history
