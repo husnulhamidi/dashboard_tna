@@ -396,9 +396,13 @@ class UsulanTnaModel extends CI_Model {
 		return $data;
 	}
 
-    function get_kompetensi(){
-		$data = $this->db->get('r_tna_kompetensi')->result();
-		return $data;
+    // function get_kompetensi($code){
+	// 	$data = $this->db->get('r_tna_kompetensi')->result();
+	// 	return $data;
+	// }
+
+	function get_kompetensi($code){
+		return $this->db->from('r_tna_kompetensi')->where('status_code','1')->where('r_tna_job_role_code', $code)->select('id,code,r_tna_job_role_code,name')->get()->result();
 	}
 
 	function get_training(){

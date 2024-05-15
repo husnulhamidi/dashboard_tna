@@ -14,6 +14,7 @@ class Tna extends CI_Controller {
 		$this->load->helper('custom_helper');
 		$this->load->model(array('lokasi_akun_model','UsulanTnaModel','TnaModel'));
 		$this->load->model('Reference/LembagaModel','lembagaModel');
+		$this->load->model('Justifikasi_model', 'justifikasi');
 		
 		$userData = $this->session->userdata('user');
 		$this->karyawanId = $userData['m_karyawan_id'];
@@ -472,10 +473,11 @@ class Tna extends CI_Controller {
 		echo json_encode($result);
 	}
 
-	public function getkompetensi(){
+	public function getkompetensi($idJobRole){
 		// $search = $this->input->get('searchTerm');
 		// $data = $this->TnaModel->search_lembaga($search);
-		$data = $this->UsulanTnaModel->get_kompetensi();
+		$codeRole = $this->justifikasi->get_code_jobRole($idJobRole);
+		$data = $this->UsulanTnaModel->get_kompetensi($codeRole->code);
 
 		$result = array();
 		foreach ($data as $key => $value) {

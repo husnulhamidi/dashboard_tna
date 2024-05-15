@@ -55,6 +55,37 @@
                                                 </select>
                                             </div>
                                         </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Job Family</label>
+                                            <div class="col-sm-8">
+                                                <select class="select2 form-control" name="jobFamily" id="jobFamily" onChange="getJobFunc()">
+                                                    <option value="">--- Pilih Job Family ---</option>
+                                                   
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Job Function</label>
+                                            <div class="col-sm-8">
+                                                <select class="select2 form-control" name="jobFunc" id="jobFunc" onChange="getJobRole()">
+                                                    <option value="">--- Pilih Job Function ---</option>
+                                                   
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">Job Role</label>
+                                            <div class="col-sm-8">
+                                                <select class="select2 form-control" name="jobRole" id="jobRole" onChange="getDataKompetensi()">
+                                                    <option value="">--- Pilih Job Role ---</option>
+                                                   
+                                                </select>
+                                            </div>
+                                        </div>
+
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">Kompetensi</label>
                                             <div class="col-sm-8">
@@ -293,7 +324,8 @@
 <script>
 var count = 1;
 $(document).ready(function () {
-    getDataKompetensi()
+    // getDataKompetensi()
+    getJobFamily();
     $('.select2').select2();
 
     $('#waktu_pelaksanaan').daterangepicker();
@@ -826,8 +858,9 @@ function getDataKompetensi(datakompetensi = false){
     // console.log(datakompetensi)
     $('#kompetensi').empty()
     $('#kompetensi').append('<option value="">Pilih kompetensi</option')
+    let jobRole = $('#jobRole').val()
     $.ajax({
-        url:base_url+'tna/tna/getkompetensi',
+        url:base_url+'tna/tna/getkompetensi/'+jobRole,
         method: 'get',
         dataType: 'json',
         success: function(response){
@@ -924,18 +957,90 @@ function getDataTraining(){
     });
 }
 
-// function btnClose(){
-//     let new_penyelenggara = $('#new_penyelenggara').val()
-//     if(new_penyelenggara){
-//         $('#penyelenggara').prop('disabled', true)
-//         $('#tmpPenyelenggara').val(new_penyelenggara)
-//         $('#divNewPeneyelenggara').css('display', 'block')
+function getJobFamily(){
+    $('#jobFamily').empty()
+    $('#jobFamily').append('<option>Pilih Job Family</option>');
+    $.ajax({
+        url:base_url+'tna/justifikasi/getDataDropdown/jobFamily',
+        method: 'get',
+        dataType: 'json',
+        success: function(response){
+            for (var i = 0; i < response.length; i++) {
+                // var selected = "";
+                // if(jobFamily == response[i]['id']){
+                //     selected = "selected";
+                // }
+                $('#jobFamily').append('<option value='+response[i]['id']+'>'+response[i]['name']+'</option>')
+            }
+            
+        }
+    });
+    
+}
 
+function getJobFunc(){
+    $('#jobFunc').empty()
+    $('#jobFunc').append('<option>Pilih Job Function</option>');
+    // console.log('jobFamily', $('#jobFamily').val())
+    let jobFamily = $('#jobFamily').val()
+    $.ajax({
+        url:base_url+'tna/justifikasi/getDataDropdown/jobFunc/'+jobFamily,
+        method: 'get',
+        dataType: 'json',
+        success: function(response){
+            for (var i = 0; i < response.length; i++) {
+                // var selected = "";
+                // if(jobFunc == response[i]['id']){
+                //     selected = "selected";
+                // }
+                $('#jobFunc').append('<option value='+response[i]['id']+'>'+response[i]['name']+'</option>')
+            }
+            // if(jobFunc)getJobRole(jobRole,kompetensi);
+            
+        }
+    }); 
+}
 
-//         let edit = `<li class="fa fa-edit"></li> Edit Penyelenggara</b>`;
-//         $("#btnText").html(edit);
-//     }
+function getJobRole(){
+    $('#jobRole').empty()
+    $('#jobRole').append('<option>Pilih Job Role</option>');
+    let jobFunc = $('#jobFunc').val()
+    $.ajax({
+        url:base_url+'tna/justifikasi/getDataDropdown/jobRole/'+jobFunc,
+        method: 'get',
+        dataType: 'json',
+        success: function(response){
+            for (var i = 0; i < response.length; i++) {
+                // var selected = "";
+                // if(jobRole == response[i]['id']){
+                //     selected = "selected";
+                // }
+                $('#jobRole').append('<option  value='+response[i]['id']+'>'+response[i]['name']+'</option>')
+            }
+            // if(jobRole)getJobKompetensi(kompetensi);
+            
+        }
+    });
+}
+
+// function getJobKompetensi(kompetensi = false){
+//     $('#kompetensi').empty()
+//     $('#kompetensi').append('<option></option')
+//     let jobRole = $('#jobRole').val()
+//     $.ajax({
+//         url:base_url+'tna/justifikasi/getDataDropdown/kompetensi/'+jobRole,
+//         method: 'get',
+//         dataType: 'json',
+//         success: function(response){
+//             for (var i = 0; i < response.length; i++) {
+//                 var selected = "";
+//                 if(kompetensi == response[i]['id']){
+//                     selected = "selected";
+//                 }
+//                 $('#kompetensi').append('<option '+selected+' value='+response[i]['id']+'>'+response[i]['name']+'</option>')
+//             }
+//         }
+//     });
 // }
-
 
 </script>

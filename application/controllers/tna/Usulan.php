@@ -22,6 +22,7 @@ class Usulan extends CI_Controller {
 			'TnaModel'
             
         ));
+		$this->load->model('Justifikasi_model', 'justifikasi');
 		$this->load->model('Reference/LembagaModel','lembagaModel');
     
 	}
@@ -147,7 +148,7 @@ class Usulan extends CI_Controller {
 		$data['jenis_pelatihan'] = $this->UsulanTnaModel->get_jenis_pelatihan();
 		$data['jenis_development'] = $this->UsulanTnaModel->get_jenis_development();
 		$data['metoda'] = $this->UsulanTnaModel->get_metoda_pelatihan();
-		$data['kompetensi'] = $this->UsulanTnaModel->get_kompetensi();
+		// $data['kompetensi'] = $this->UsulanTnaModel->get_kompetensi();
 		$data['tna'] = $this->UsulanTnaModel->get_training();
 		$data['lembaga'] = $this->TnaModel->get_lembaga();
 		$data['direktorat'] = $this->TnaModel->get_direktorat();
