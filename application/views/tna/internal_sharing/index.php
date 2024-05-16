@@ -44,7 +44,7 @@
                                         <tr>
                                             <th width="7%" class="text-center">No.</th>
                                             <th class="text-nowrap text-center">Judul Materi</th>
-                                            <th class="text-nowrap text-center">Materi</th>
+                                            <!-- <th class="text-nowrap text-center">Materi</th> -->
                                             <th class="text-nowrap text-center">Kompetensi</th>
                                             <th class="text-nowrap text-center">Nara Sumber</th>
                                             <th class="text-nowrap text-center">Subdit/Unit</th>

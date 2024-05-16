@@ -258,19 +258,19 @@ class InternalSharing extends CI_Controller {
 		$tgl1 = explode("/", $waktu[0]);
 		$tgl = $tgl1[2].'-'.$tgl1[0].'-'.$tgl1[1];
 
-		if($this->input->post('upload_file_materi')){
-			$fileName = $this->input->post('upload_file_materi');
-			$pathName = './files/upload/internal-sharing/materi';
-			// $pathName = './files/upload/tna/materi';
-			$allowed_types = '*';
-			$upload_file = upload_file($fileName, $pathName, $allowed_types, $this);
-			if($upload_file['success'] == false){
-			    // die(json_encode($upload_file)); 
-				$upload_file = '';
-			}
-		}
+		// if($this->input->post('upload_file_materi')){
+		// 	$fileName = $this->input->post('upload_file_materi');
+		// 	$pathName = './files/upload/internal-sharing/materi';
+		// 	// $pathName = './files/upload/tna/materi';
+		// 	$allowed_types = '*';
+		// 	$upload_file = upload_file($fileName, $pathName, $allowed_types, $this);
+		// 	if($upload_file['success'] == false){
+		// 	    // die(json_encode($upload_file)); 
+		// 		$upload_file = '';
+		// 	}
+		// }
 
-		json_encode($upload_file);
+		// json_encode($upload_file);
 
     	$data = array(
 			'judul_materi' => $this->input->post('judul'),
@@ -292,13 +292,13 @@ class InternalSharing extends CI_Controller {
 		if($this->input->post('id')){
 			$data['updated_date'] = date('Y-m-d');
 			$action = $this->input->post('id');
-			if($upload_file){
-				$data['materi'] = $upload_file['data'];
-			}
+			// if($upload_file){
+			// 	$data['materi'] = $upload_file['data'];
+			// }
 			$this->InternalSharing->updateData($data, $this->input->post('id') );
 		}else{
 			$data['created_date'] = date('Y-m-d');
-			$data['materi'] = $upload_file['data'];
+			// $data['materi'] = $upload_file['data'];
 			$action = $this->InternalSharing->insertData($data);
 
 			// insert history

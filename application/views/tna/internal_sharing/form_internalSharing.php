@@ -79,17 +79,14 @@
                                             <input type="text" class="form-control" placeholder="Judul materi" name="judul" id="judul" value="<?php echo @$detail->judul_materi;?>" >
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label class="col-sm-2 control-label">Materi <span class="text-red">*</span></label>
                                         <div class="col-sm-8">
-                                            <!-- <input type="file" class="form-control" placeholder="Judul materi" name="judul" id="judul" > -->
-                                            <!-- <input type="file" name="file-materi" id="fileNameMateri" class="form-control">
-                                            <input type="hidden" name="file-materi" value="file-materi"> -->
-
+                                            
                                             <input type="file" name="file_materi" id="file_materi" class="form-control" >
                                             <input type="hidden" name="upload_file_materi" value="file_materi">
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Subdit / Unit <span class="text-red">*</span></label>
                                         <div class="col-sm-8">
@@ -204,7 +201,12 @@ $(document).ready(function () {
     }
 
     if($('#id').val()){
-
+        const jobFamily = '<?php echo @$detail->r_tna_job_family_id ;?>'
+        const jobFunct = '<?php echo @$detail->r_tna_job_function_id ;?>'
+        const jobRole = '<?php echo @$detail->r_tna_job_role_id ;?>'
+        const kompetensi = '<?php echo @$detail->r_tna_kompetensi_id ;?>'
+        // console.log('jobFamily', jobFamily)
+        getJobFamily(jobFamily, jobFunct, jobRole, kompetensi)
     }else{
         getJobFamily()
     }

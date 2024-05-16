@@ -165,7 +165,7 @@ class InternalSharing_Model extends CI_Model {
     }
 
     public function getDataDetail($id){
-		$data = $this->db->select('mti.id,mti.judul_materi,mti.tanggal,mti.jam,
+		$data = $this->db->select('mti.id,mti.judul_materi,mti.tanggal,mti.jam,mti.r_tna_job_family_id,mti.r_tna_job_function_id,mti.r_tna_job_role_id, mti.r_tna_kompetensi_id,
         				  mti.tempat,mti.biaya,mti.kuota, mti.link_zoom,mti.r_tna_training_id,mti.m_organisasi_id,mti.m_karyawan_id,
         				   mk.nama as narasumber,
         				   mo.nama as organisasi,
