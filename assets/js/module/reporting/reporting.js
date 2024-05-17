@@ -295,16 +295,32 @@ function generateData(){
             url  : base_url+"tna/reporting/generate",
             dataType: "JSON",
             success:function(resp){
-                setTimeout(function() {
-                    swal({
-                        title: "Notifikasi!",
-                        text: "Data berhasil digenerate",
-                        imageUrl: img_icon_success
-                    }, function(d) {
-                        location.reload();
-                    });
-                }, 1000);
+                // console.log('resp', resp);
+                if(resp.success){
+                    setTimeout(function() {
+                        swal({
+                            title: "Notifikasi!",
+                            text: resp.msg,
+                            imageUrl: img_icon_success
+                        }, function(d) {
+                            location.reload();
+                        });
+                    }, 1000);
+                }else{
+                    setTimeout(function() {
+                        swal({
+                            title: "Notifikasi!",
+                            text: resp.msg,
+                            imageUrl: img_icon_error
+                        }, function() {
+                            location.reload();
+                        });
+                    }, 1000);
+                }
                 // console.log(resp)
+                // $('.loader-wrapper').css('display', 'none')
+            },
+            complete: function (data) {
                 $('.loader-wrapper').css('display', 'none')
             }
         });

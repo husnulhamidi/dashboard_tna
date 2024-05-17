@@ -83,7 +83,7 @@ class ReportingModel extends CI_Model {
 		if (!empty($post['order'])) {
 			$this->db->order_by($column_order[$post['order']['0']['column']], $post['order']['0']['dir']);
 		} else {
-			$this->db->order_by('id', 'asc');
+			$this->db->order_by('tahun', 'desc');
 		}
 
 		$this->db->limit($pageSize, $skip);
@@ -232,7 +232,7 @@ class ReportingModel extends CI_Model {
         $this->db->join('m_tna_pengawalan_pembayaran mtpb', 'mtp.id = mtpb.m_tna_pengawalan_id', 'left');
         $this->db->where('tu.r_jenis_usulan_id', 29);
         $this->db->where('waktu_pelaksanaan_selesai <', 'NOW()', FALSE);
-        $this->db->limit(2);
+        // $this->db->limit(10);
         $query = $this->db->get();
         $result = $query->result(); // atau $query->result_array() untuk mendapatkan array asosiatif
         return $result;

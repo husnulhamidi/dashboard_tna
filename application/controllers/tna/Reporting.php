@@ -174,11 +174,13 @@ class Reporting extends CI_Controller {
 		ini_set('MAX_EXECUTION_TIME', 0);
 		$cekDataPengawalan = $this->reportingModel->cekDataPengawalan();
 		// loop
+		$count = 0;
 		foreach($cekDataPengawalan as $key){
 			$id = $this->reportingModel->get_max_id();
 			// // check data duplicate
 			$cekDataisExist = $this->reportingModel->cekDataisExist($key->nama_kegiatan, $key->waktu_pelaksanaan_mulai, $key->waktu_pelaksanaan_selesai,  $key->nik);
 			if ($cekDataisExist == 0) {
+				$count = $count + 1;
 				$data = array(
 					'id'			=> $id+1,
 					'tahun'				=> $key->tahun_mulai,
@@ -211,19 +213,26 @@ class Reporting extends CI_Controller {
 					'currency_key' => 'IDR',
 					// 'keterangan' => $cekDataPengawalan->nama_kegiatan,
 				);
-				// echo json_encode('abcd');
 				$save = $this->reportingModel->insertData($data);	
-				// echo json_encode($save);;
 			}
 		}
 		
-
-		$return = array(
-			'success'		=> true,
-			'status_code'	=> 201,
-			'msg'			=> "Data berhasil di simpan.",
-			'data'			=> array()
-		);
+		if($count > 0){
+			$return = array(
+				'success'		=> true,
+				'status_code'	=> 201,
+				'msg'			=> "Data yang ter generate adalah " . $count . " Data",
+				'data'			=> array()
+			);
+		}else{
+			$return = array(
+				'success'		=> false,
+				'status_code'	=> 500,
+				'msg'			=> "Tidak ada data yang di generate !",
+				'data'			=> array()
+			);
+		}
+		
 		
 		echo json_encode($return);
 	}
