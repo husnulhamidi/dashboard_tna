@@ -168,6 +168,89 @@ class ReportingModel extends CI_Model {
 		//  $this->db->insert_id();
     }
 
+    public function cekDataPengawalan(){
+        // $this->db->select('*');
+        // $this->db->from('m_tna_pengawalan');
+        // $this->db->where('waktu_pelaksanaan_selesai <', 'NOW()', FALSE);
+        // $query = $this->db->get();
+        // $result = $query->result(); // atau $query->result_array() untuk mendapatkan array asosiatif
+
+        $this->db->select("
+            YEAR(waktu_pelaksanaan_mulai) AS tahun_mulai,
+            nama_kegiatan,
+            nama_penyelenggara,
+            metoda_pembelajaran,
+            jenis_pelatihan,
+            rt.name AS pelatihan,
+            rtk.name AS kompetensi,
+            waktu_pelaksanaan_mulai,
+            waktu_pelaksanaan_selesai,
+            DATEDIFF(waktu_pelaksanaan_selesai, waktu_pelaksanaan_mulai) + 1 AS lama_kegiatan,
+            CASE 
+                WHEN MONTH(waktu_pelaksanaan_mulai) = 1 THEN 'Januari'
+                WHEN MONTH(waktu_pelaksanaan_mulai) = 2 THEN 'Februari'
+                WHEN MONTH(waktu_pelaksanaan_mulai) = 3 THEN 'Maret'
+                WHEN MONTH(waktu_pelaksanaan_mulai) = 4 THEN 'April'
+                WHEN MONTH(waktu_pelaksanaan_mulai) = 5 THEN 'Mei'
+                WHEN MONTH(waktu_pelaksanaan_mulai) = 6 THEN 'Juni'
+                WHEN MONTH(waktu_pelaksanaan_mulai) = 7 THEN 'Juli'
+                WHEN MONTH(waktu_pelaksanaan_mulai) = 8 THEN 'Agustus'
+                WHEN MONTH(waktu_pelaksanaan_mulai) = 9 THEN 'September'
+                WHEN MONTH(waktu_pelaksanaan_mulai) = 10 THEN 'Oktober'
+                WHEN MONTH(waktu_pelaksanaan_mulai) = 11 THEN 'November'
+                WHEN MONTH(waktu_pelaksanaan_mulai) = 12 THEN 'Desember'
+            END AS bulan,
+            QUARTER(waktu_pelaksanaan_mulai) AS kuartal,
+            mk.nik_tg AS nik,
+            mk.nama AS nama_karyawan,
+            rj.nama AS posisi,
+            IF(l5 = 2, o5, IF(l4 = 2, o4, IF(l3 = 2, o3, o2))) AS direktorat,
+            IF(l5 = 3, o5, IF(l4 = 3, o4, o3)) AS subdit,
+            LENGTH(mk.nik_tg) AS jumlah_nik,
+            status_karyawan,
+            jenis_development,
+            mtpd.no_dokumen AS no_sertifikat,
+            mtpd.tanggal_berlaku_awal AS tanggal_awal_sertifikat,
+            mtpd.tanggal_berlaku_akhir AS tanggal_akhir_sertifikat,
+            mtpb.no_ht AS no_ht,
+            mtpb.no_spb AS no_spb,
+            estimasi_biaya AS biaya_kegiatan,
+            QUARTER(waktu_pelaksanaan_mulai) AS bp,
+            jenis_development AS jenis_sertifikat,
+            jenis_development AS keterangan,
+        ");
+        $this->db->from('m_tna_pengawalan mtp');
+        $this->db->join('m_karyawan mk', 'mtp.m_karyawan_id = mk.id');
+        $this->db->join('v_organisasi org', 'mtp.m_organisasi_id = org.id');
+        $this->db->join('h_mutasi hm', 'mk.id = hm.m_karyawan_id AND hm.is_aktif = 1');
+        $this->db->join('r_tna_kompetensi rtk', 'rtk.id = mtp.r_tna_kompetensi_id');
+        $this->db->join('r_jabatan rj', 'rj.id = hm.r_jabatan_id');
+        $this->db->join('r_tna_training rt', 'rt.id = mtp.r_tna_traning_id');
+        $this->db->join('r_tahapan_usulan tu', 'tu.id = mtp.tahapan_id');
+        $this->db->join('m_organisasi mo', 'mo.id = mtp.m_organisasi_id');
+        $this->db->join('m_tna_pengawalan_dokumen mtpd', 'mtp.id = mtpd.m_tna_pengawalan_id AND mtpd.tipe = "sertifikat"', 'left');
+        $this->db->join('m_tna_pengawalan_pembayaran mtpb', 'mtp.id = mtpb.m_tna_pengawalan_id', 'left');
+        $this->db->where('tu.r_jenis_usulan_id', 29);
+        $this->db->where('waktu_pelaksanaan_selesai <', 'NOW()', FALSE);
+        $this->db->limit(2);
+        $query = $this->db->get();
+        $result = $query->result(); // atau $query->result_array() untuk mendapatkan array asosiatif
+        return $result;
+
+    }
+
+    public function cekDataisExist($namaKegiatan, $waktuMulai, $waktuSelesai, $nik){
+        $this->db->select('COUNT(id) as total');
+        $this->db->from('m_tna_report_imported');
+        $this->db->where('nama_kegiatan', $namaKegiatan);
+        $this->db->where('tanggal_mulai', $waktuMulai);
+        $this->db->where('tanggal_selesai', $waktuSelesai);
+        $this->db->where('nik', $nik);
+        $query = $this->db->get();
+        $result = $query->row()->total; 
+        return (int) $result;
+    }
+
     // private function quartal($quartal, $thn){
     //     if($quartal == 1){
     //         $date1 = $thn.'-01-01';

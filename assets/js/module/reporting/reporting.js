@@ -32,6 +32,10 @@ jQuery(document).ready(function() {
         submitReporting();
     })
 
+    $('.btn-generate').click(function(){
+        generateData();
+    })
+
     builTable()
 })
 
@@ -272,5 +276,38 @@ function submitReporting(){
                 }            
             });
         }
+    });
+}
+
+function generateData(){
+    swal({
+        title: "Yakin Akan Generate Data ?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Ya, Generate!",
+        closeOnConfirm: false
+    }, function () {
+        swal.close();
+        $('.loader-wrapper').css('display', 'block')
+        $.ajax({
+            type : "GET",
+            url  : base_url+"tna/reporting/generate",
+            dataType: "JSON",
+            success:function(resp){
+                setTimeout(function() {
+                    swal({
+                        title: "Notifikasi!",
+                        text: "Data berhasil digenerate",
+                        imageUrl: img_icon_success
+                    }, function(d) {
+                        location.reload();
+                    });
+                }, 1000);
+                // console.log(resp)
+                $('.loader-wrapper').css('display', 'none')
+            }
+        });
+       
     });
 }

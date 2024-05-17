@@ -169,6 +169,65 @@ class Reporting extends CI_Controller {
 		echo json_encode($return);
 	}
 
+	public function generate(){
+		ini_set('memory_limit', -1);
+		ini_set('MAX_EXECUTION_TIME', 0);
+		$cekDataPengawalan = $this->reportingModel->cekDataPengawalan();
+		// loop
+		foreach($cekDataPengawalan as $key){
+			$id = $this->reportingModel->get_max_id();
+			// // check data duplicate
+			$cekDataisExist = $this->reportingModel->cekDataisExist($key->nama_kegiatan, $key->waktu_pelaksanaan_mulai, $key->waktu_pelaksanaan_selesai,  $key->nik);
+			if ($cekDataisExist == 0) {
+				$data = array(
+					'id'			=> $id+1,
+					'tahun'				=> $key->tahun_mulai,
+					'nama_kegiatan' => $key->nama_kegiatan,
+					'nama_penyelenggara' => $key->nama_penyelenggara,
+					'metoda' => $key->metoda_pembelajaran,
+					'kategori_pelatihan' => $key->pelatihan,
+					'kompetensi' => $key->kompetensi,
+					'tanggal_mulai' => $key->waktu_pelaksanaan_mulai,
+					'tanggal_selesai' => $key->waktu_pelaksanaan_selesai,
+					'lama_kegiatan' => $key->lama_kegiatan,
+					'bulan' => $key->bulan,
+					'kuartal' => $this->cekKuartal($key->kuartal),
+					'nik' => $key->nik,
+					'nama_karyawan' => $key->nama_karyawan,
+					'posisi' => $key->posisi,
+					'direktorat' => $key->direktorat,
+					'subdit' => $key->subdit,
+					'jumlah_nik' => $key->jumlah_nik,
+					// 'bp' => $key->bp,
+					'status_fte' => $key->status_karyawan,
+					'jenis_pelatihan' =>	$key->jenis_development,
+					'nomor_sertifikat' => $key->no_sertifikat,
+					// 'jenis_sertifikat' => $key->jenis_sertifikat,
+					'tanggal_awal_berlaku_sertifikat' => $key->tanggal_awal_sertifikat,
+					'tanggal_akhir_berlaku_sertifikat' => $key->tanggal_akhir_sertifikat,
+					'no_ht' => $key->no_ht,
+					'no_spb' => $key->no_spb,
+					'biaya_kegiatan' => $key->biaya_kegiatan,
+					'currency_key' => 'IDR',
+					// 'keterangan' => $cekDataPengawalan->nama_kegiatan,
+				);
+				// echo json_encode('abcd');
+				$save = $this->reportingModel->insertData($data);	
+				// echo json_encode($save);;
+			}
+		}
+		
+
+		$return = array(
+			'success'		=> true,
+			'status_code'	=> 201,
+			'msg'			=> "Data berhasil di simpan.",
+			'data'			=> array()
+		);
+		
+		echo json_encode($return);
+	}
+
 	private function cekKuartal($bulan){
 		if ($bulan >= 1 && $bulan <= 3) {
 			$kuartal = 'Q1';

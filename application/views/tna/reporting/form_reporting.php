@@ -106,10 +106,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-3 control-label">Jenis Development Karyawan <span style="color: red">*</span></label>
+                                        <label class="col-sm-3 control-label">Sertifikasi/Pelatihan <span style="color: red">*</span></label>
                                         <div class="col-sm-8">
                                             <select class="select2 form-control" name="jenis_development" id="jenis_development">
-                                                <option value="">--- Pilih Jenis development Karyawan ---</option>
+                                                <option value="">--- Sertifikasi/Pelatihan ---</option>
                                                 <?php 
                                                 foreach ($jenis_development as $jd) {
                                                     $selected = '';

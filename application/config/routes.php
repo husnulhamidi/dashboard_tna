@@ -328,6 +328,7 @@ $route['tna/reporting']    = 'tna/Reporting/index';
 $route['tna/reporting/getData']    = 'tna/Reporting/getData';
 $route['tna/reporting/create']    = 'tna/Reporting/create';
 $route['tna/reporting/submit']    = 'tna/Reporting/submit';
+$route['tna/reporting/generate']    = 'tna/Reporting/generate';
 
 //=====================================================================================================================
 // Evaluasi
