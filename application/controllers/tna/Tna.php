@@ -169,7 +169,7 @@ class Tna extends CI_Controller {
 	public function submit(){
 		// echo json_encode($this->input->post());
 		$getNamaPenyelenggara = $this->lembagaModel->get_lembaga_byid($this->input->post('penyelenggara'));
-		echo json_encode($getNamaPenyelenggara['data']->nama_lembaga);
+		// echo json_encode($getNamaPenyelenggara['data']->nama_lembaga);
 		if($this->input->post('new_penyelenggara')){
 			$penyelenggara = $this->input->post('new_penyelenggara');
 		}else{

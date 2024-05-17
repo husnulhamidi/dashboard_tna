@@ -12,8 +12,8 @@ class ReportingModel extends CI_Model {
 	}
 
 	public function getData($post){
-		$column_order = array('id','tahun','nama_kegiatan','nama_penyelenggara','metoda','kategori_pelatihan','kompetensi','tanggal_mulai','tanggal_selesai','lama_kegiatan','bulan','kuartal','nik','nama_karyawan','posisi','direktorat','subdit','jumlah_nik','bp','status_fte','jenis_pelatihan','nomo_sertifikat','jenis_sertifikat','tanggal_awal_berlaku_sertifikat','tanggal_akhir_berlaku_sertifikat','no_ht', 'no_spb','biaya_kegiatan','currency_key','scanan_sertifikat','materi_pelatihan','evaluasi_pelatihan','keterangan');
-		$column_search = array('id','tahun','nama_kegiatan','nama_penyelenggara','metoda','kategori_pelatihan','kompetensi','tanggal_mulai','tanggal_selesai','lama_kegiatan','bulan','kuartal','nik','nama_karyawan','posisi','direktorat','subdit','jumlah_nik','bp','status_fte','jenis_pelatihan','nomo_sertifikat','jenis_sertifikat','tanggal_awal_berlaku_sertifikat','tanggal_akhir_berlaku_sertifikat','no_ht', 'no_spb','biaya_kegiatan','currency_key','scanan_sertifikat','materi_pelatihan','evaluasi_pelatihan','keterangan');
+		$column_order = array('id','tahun','nama_kegiatan','nama_penyelenggara','metoda','kategori_pelatihan','kompetensi','tanggal_mulai','tanggal_selesai','lama_kegiatan','bulan','kuartal','nik','nama_karyawan','posisi','direktorat','subdit','jumlah_nik','bp','status_fte','jenis_pelatihan','nomor_sertifikat','jenis_sertifikat','tanggal_awal_berlaku_sertifikat','tanggal_akhir_berlaku_sertifikat','no_ht', 'no_spb','biaya_kegiatan','currency_key','scanan_sertifikat','materi_pelatihan','evaluasi_pelatihan','keterangan');
+		$column_search = array('id','tahun','nama_kegiatan','nama_penyelenggara','metoda','kategori_pelatihan','kompetensi','tanggal_mulai','tanggal_selesai','lama_kegiatan','bulan','kuartal','nik','nama_karyawan','posisi','direktorat','subdit','jumlah_nik','bp','status_fte','jenis_pelatihan','nomor_sertifikat','jenis_sertifikat','tanggal_awal_berlaku_sertifikat','tanggal_akhir_berlaku_sertifikat','no_ht', 'no_spb','biaya_kegiatan','currency_key','scanan_sertifikat','materi_pelatihan','evaluasi_pelatihan','keterangan');
 
         $draw = $post['draw'];
         $start = $post['start'];
@@ -138,6 +138,34 @@ class ReportingModel extends CI_Model {
             default:
                 return $monthName;
         }
+    }
+
+    public function cekDataKaryawan($id){
+        $this->db->select('nik_tg, nama');
+        $this->db->from('m_karyawan');
+        $this->db->where('id', $id);
+        $query = $this->db->get();
+
+        $result = $query->row();
+
+        return $result;
+
+    }
+
+    public function get_max_id() {
+        $this->db->select_max('id');
+        $query = $this->db->get('m_tna_report_imported');
+
+        if ($query->num_rows() > 0) {
+            return $query->row()->id;
+        } else {
+            return null;
+        }
+    }
+
+    public function insertData($data){
+        return $this->db->insert($this->table, $data);
+		//  $this->db->insert_id();
     }
 
     // private function quartal($quartal, $thn){

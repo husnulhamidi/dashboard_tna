@@ -7,7 +7,14 @@ jQuery(document).ready(function() {
         autoclose: true
     });
 
-    
+    $('#jenis_development').change(function(){
+        let jenis = $('#jenis_development').val()
+        $('#typeSertifikasi').css('display','none')
+        if(jenis == 'Sertifikasi'){
+            $('#typeSertifikasi').css('display','block')
+        }
+
+    });
 
     $('.btn-reset').click(function(){
         // location.reload();
@@ -19,6 +26,10 @@ jQuery(document).ready(function() {
     $('.btn-filter').click(function(){
         $('#ModalFilter').modal('hide')
         builTable()
+    })
+
+    $('.submit-reporting').click(function(){
+        submitReporting();
     })
 
     builTable()
@@ -121,7 +132,7 @@ function builTable(){
                 "data": "tanggal_awal_berlaku_sertifikat",
                 render:function(data, type, row, meta){
                     let date = '-'
-                    if(data !== ''){
+                    if(data !== '' && data !== '0000-00-00'){
                         date = formatDate(data)
                     }
                     return date
@@ -131,7 +142,7 @@ function builTable(){
                 "data": "tanggal_akhir_berlaku_sertifikat",
                 render:function(data, type, row, meta){
                     let date = '-'
-                    if(data !== ''){
+                    if(data !== '' && data !== '0000-00-00'){
                         date = formatDate(data)
                     }
                     return date
@@ -157,5 +168,109 @@ function builTable(){
             { "data": "keterangan"},
     
         ],
+    });
+}
+
+function submitReporting(){
+    $(".form-reporting").validate({
+        rules: {
+            jenis_pelatihan: "required",
+            kompetensi: "required",
+            jenis_development: "required",
+            tna: "required",
+            nama_kegiatan: "required",
+            metoda: "required",
+            estimasi_biaya: "required",
+            penyelenggara: "required",
+            waktu_pelaksanaan: "required",
+            direktorat: "required",
+            karyawan: "required",
+            metoda: "required",
+            estimasi_biaya: "required",
+        },
+        messages: {
+            jenis_pelatihan:{
+                required:"<i class='fa fa-times'></i> Jenis Pelatihan harus diisi"
+            },
+            kompetensi:{
+                required:"<i class='fa fa-times'></i>  Kompetensi harus diisi"
+            },
+            jenis_development:{
+                required:"<i class='fa fa-times'></i> Jenis Development harus diisi"
+            },
+            tna:{
+                required:"<i class='fa fa-times'></i> Pelatihan/Sertifikasi harus diisi"
+            },
+            nama_kegiatan:{
+                required:"<i class='fa fa-times'></i> Nama Kegiatan harus diisi"
+            },
+            metoda:{
+                required:"<i class='fa fa-times'></i> Metoda Pembelajaran harus diisi"
+            },
+            estimasi_biaya:{
+                required:"<i class='fa fa-times'></i> Estimasi Biaya harus diisi"
+            },
+            penyelenggara:{
+                required:"<i class='fa fa-times'></i> Nama Penyelenggara harus diisi"
+            },
+            waktu_pelaksanaan:{
+                required:"<i class='fa fa-times'></i> Waktu Pelaksanaan harus diisi"
+            },
+            direktorat:{
+                required:"<i class='fa fa-times'></i> Direktorat harus diisi"
+            },
+            karyawan:{
+                required:"<i class='fa fa-times'></i> Nama Karyawan harus diisi"
+            },
+            metoda:{
+                required:"<i class='fa fa-times'></i> Metoda Pembelajaran harus diisi"
+            },
+            estimasi_biaya:{
+                required:"<i class='fa fa-times'></i> Estimasi biaya harus diisi"
+            }
+            
+        },
+        highlight: function (element) {
+            $(element).parent().parent().addClass("has-error")
+            $(element).parent().addClass("has-error")
+        },
+        unhighlight: function (element) {
+            $(element).parent().removeClass("has-error")
+            $(element).parent().parent().removeClass("has-error")
+        },
+        submitHandler: function(form) {
+            $.ajax({
+                url: base_url+"tna/reporting/submit",
+                type: 'POST',
+                dataType: "JSON",
+                // data: combinedData,
+                data: $(form).serialize(),
+                success: function(response) {
+                    console.log('response')
+                    if(response.success){
+                        setTimeout(function() {
+                            swal({
+                                title: "Notifikasi!",
+                                text: "Data berhasil disimpan",
+                                imageUrl: img_icon_success
+                            }, function(d) {
+                                // location.href = base_url+'/tna'
+                            });
+                        }, 1000);
+                    }else{
+                        setTimeout(function() {
+                            swal({
+                                title: "Notifikasi!",
+                                text: "Data gagal disimpan",
+                                imageUrl: img_icon_error
+                            }, function() {
+                                // location.reload();
+                            });
+                        }, 1000);
+                    }
+                    
+                }            
+            });
+        }
     });
 }

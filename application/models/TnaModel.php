@@ -250,7 +250,8 @@ class TnaModel extends CI_Model {
 		$this->db->select('tl.id, tl.nama_lembaga, tl.nama_pic, tld.biaya,tld.kapasitas');
 		$this->db->from('r_tna_lembaga tl');
 		$this->db->join('r_tna_lembaga_detail tld', 'tl.id = tld.r_tna_lembaga_id');
-		$this->db->where('tld.r_tna_training_id', $id);
+		if($id != 99999)$this->db->where('tld.r_tna_training_id', $id);
+		
 		// $this->db->where('tl.status_code', '1');
 		$query = $this->db->get();
 		return $query->result();

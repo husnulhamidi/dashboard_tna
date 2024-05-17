@@ -326,6 +326,8 @@ $route['tna/library_materi/getData']    = 'tna/LibraryMateri/getData';
 // Reporting
 $route['tna/reporting']    = 'tna/Reporting/index';
 $route['tna/reporting/getData']    = 'tna/Reporting/getData';
+$route['tna/reporting/create']    = 'tna/Reporting/create';
+$route['tna/reporting/submit']    = 'tna/Reporting/submit';
 
 //=====================================================================================================================
 // Evaluasi
