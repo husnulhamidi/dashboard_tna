@@ -265,12 +265,13 @@
                                                     <select class="select2 form-control" name="direktorat[]" id="direktorat1" onchange="getSubdit(1)" >
                                                         <option value="">--- Pilih Direktorat ---</option>
                                                         <?php 
+                                                            $selected = '';
                                                             foreach ($direktorat as $dir) {
-                                                                $selected = '';
+                                                                
                                                                 if($dir->id == @$detail->direktorat_id){
                                                                     $selected = 'selected';
                                                                 }
-                                                                echo "<option ".$selected." value='".$dir->id."'>".$dir->o5.'</option>';
+                                                                echo "<option ".$selected." value='".$dir->id."'>".$dir->id.' | '.$dir->o5.'</option>';
                                                             }
                                                         ?>
                                                     </select>
@@ -374,17 +375,18 @@ $(document).ready(function () {
 
         let karyawanId = '<?php echo @$detail->m_karyawan_id;?>'
         let direktoratId = '<?php echo @$detail->direktorat_id;?>'
-        let varifikatorId = '<?php echo @$detail->verifikator_id_1;?>'
-        let subdit = '<?php echo @$detail->m_organisasi_id;?>'
-        getSubdit(1, subdit, varifikatorId)
+        let varifikatorId = '<?php echo @$detail->verifikator_id_1;?>'        
         getAtasan(1, direktoratId, varifikatorId)
-        // getKaryawanBySubdit(1,direktoratId, karyawanId)
-        if(subdit){
+        let subdit = '<?php echo @$detail->m_organisasi_id;?>'
+        if(subdit != 0){
+            getSubdit(1, subdit, varifikatorId)
             getKaryawanBySubdit(1,subdit, karyawanId)
         }else{
+            // console.log('sini', karyawanId)
             getKaryawanBySubdit(1,direktoratId, karyawanId)
         }
-        
+        // getKaryawanBySubdit(1,direktoratId, karyawanId)
+       
 
         getDataDetailKaryawan(1,karyawanId)
 
@@ -418,7 +420,7 @@ $(document).ready(function () {
         }
 
         let kompetensiId = '<?php echo @$detail->r_tna_kompetensi_id;?>';
-        getDataTraining(kompetensiId)
+        getDataTraining(kompetensiId, trainingId)
     }else{
         getJobFamily()
     }
@@ -437,6 +439,7 @@ $(document).ready(function () {
 function getSubdit(count, subdit = false, varifikatorId = false){
     // console.log(subdit)
     let direktoratId = $('#direktorat'+count).val();
+    // console.log('direktoratId', direktoratId)
     // if(subdit){
     //     direktoratId = subdit
     // }
@@ -474,7 +477,7 @@ function getKaryawanBySubdit(count, direktoratId = false, karyawanId = false){
     if( direktoratId ){
         subditId = direktoratId
     }
-
+   
     $.ajax({
         url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_organisasi'); ?>',
         type: 'POST',
@@ -484,8 +487,9 @@ function getKaryawanBySubdit(count, direktoratId = false, karyawanId = false){
         success: function (result) {
             $('#karyawan'+count).empty(); 
             $('#karyawan'+count).append('<option value="">-- Pilih Karyawan --</option>');
-
+            console.log('karyawanId2', karyawanId)
             if(result !== null){
+                
                 $.each(result, function(i, value) {
                     var selected = '';
                     if(value['id'] == karyawanId){
@@ -562,6 +566,7 @@ function formatRepoSelectionKaryawan(repo){
 
 var isHeaderAtasan = true;
 function getAtasan(count, direktoratId, varifikatorId = false){
+    // console.log(varifikatorId)
     $.ajax({
         url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_organisasi'); ?>',
         type: 'POST',
@@ -572,6 +577,7 @@ function getAtasan(count, direktoratId, varifikatorId = false){
             $('#verifikator_id_1'+count).empty(); 
             $('#verifikator_id_1'+count).append('<option value="">-- Pilih Atasan --</option>');
             if(result !== null){
+                
                 $.each(result, function(i, value) {
                     var selected2 = '';
                     if(value['id'] == varifikatorId){
@@ -918,11 +924,11 @@ function getDataKompetensi(datakompetensi = false){
         dataType: 'json',
         success: function(response){
             // console.log(response)
+            var selected = "";
             $.each(response, function(index, item) {
-                var selected = "";
                 if(datakompetensi && datakompetensi == item.id){
                     // console.log(item.id)
-                    // console.log(item.kompetensi)
+                    // console.log(datakompetensi)
                     selected = "selected";
                 }
                 $('#kompetensi').append('<option '+selected+' value="'+item.id+'" >' + item.kompetensi + '</option>');
@@ -993,12 +999,13 @@ function formatRepoSelectionKom(repo){
     return repo.kompetensi  || repo.text;
 }
 
-function getDataTraining(detailKompetensiId = false){
+function getDataTraining(detailKompetensiId = false, trainingId = false){
     // value='".$tna->id.'|'.$tna->name."'
     let kompetensiId = $('#kompetensi').val()
     if(detailKompetensiId){
         kompetensiId = detailKompetensiId
     }
+    // console.log(kompetensiId)
     $('#tna').empty()
     $('#tna').append('<option value="">Pilih Pelatihan/Sertifikasi</option')
     $.ajax({
@@ -1011,7 +1018,7 @@ function getDataTraining(detailKompetensiId = false){
             let selected = '';
             for (var i = 0; i < response.length; i++) {
                 // console.log('response', response[i]['id'])
-                if(response[i]['id'] == kompetensiId) selected = 'selected';
+                if(response[i]['id'] == trainingId) selected = 'selected';
                 $('#tna').append('<option '+selected+' value="'+response[i]['id']+'|'+response[i]['name']+'"> '+ response[i]['code']+' | '+response[i]['name']+'</option>');
             }
         }

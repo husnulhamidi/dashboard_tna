@@ -356,7 +356,7 @@ function getDataJob(kompetensi){
     }); 
 }
 
-var isHeaderKom = true;
+
 function getDataKompetensi(datakompetensi = false){
     // console.log(datakompetensi)
     $('#kompetensi').empty()
@@ -375,71 +375,13 @@ function getDataKompetensi(datakompetensi = false){
                     // console.log(item.kompetensi)
                     selected = "selected";
                 }
-                $('#kompetensi').append('<option '+selected+' value="'+item.id+'" >' + item.kompetensi + '</option>');
+                $('#kompetensi').append('<option '+selected+' value="'+item.id+'" >' + item.code + ' | ' + item.kompetensi + '</option>');
             });
-            isHeaderKom = true;
-            $('#kompetensi').select2({
-                data: response,
-                placeholder: 'Pilih Kompetensi',
-                templateResult: formatRepoKom,
-                templateSelection: formatRepoSelectionKom,
-                matcher: function(params, data) {
-                    isHeaderKom = true;
-                    if ($.trim(params.term) === '') {
-                        return data;
-                    }
-                    var term = params.term.toLowerCase();
-                    for (var key in data) {
-                        if (Object.prototype.hasOwnProperty.call(data, key) && data[key] != null && typeof data[key] === 'string') {
-                            var value = data[key].toString().toLowerCase();
-                            if (value.indexOf(term) !== -1) {
-                                return data;
-                            }
-                        }
-                    }
-                    
-                    return null;
-                },
-            });
+           
             
         },
     });
 }
 
-function formatRepoKom(repo){
-    // console.log(repo)
-    if (repo.loading) {
-        return repo.text;
-    }
-    var $container = $(`
-        <table class="table table-border">
-            ${isHeaderKom ? `
-                <thead>   
-                    <tr>
-                        <th class="text-nowrap"> Kode </th>    
-                        <th class="text-nowrap"> Kode Job Role </th>       
-                        <th class="text-nowrap"> Kompetensi </th>    
-                    </tr>    
-                </thead>
-            ` : ''}
-            <tbody>
-                <tr>
-                    <td class="text-nowrap select2-result-repository__code"></td>
-                    <td class="text-nowrap text-right select2-result-repository__job_role"></td>
-                    <td class="text-nowrap text-right select2-result-repository__kompetensi"></td>
-                </tr>
-            </tbody>
-        </table>
-    `);  
-    $container.find(".select2-result-repository__code").text(repo.code);
-    $container.find(".select2-result-repository__job_role").text(repo.job_role);
-    $container.find(".select2-result-repository__kompetensi").text(repo.kompetensi);
-    isHeaderKom = false;
-    return $container;    
-}
 
-function formatRepoSelectionKom(repo){
-    isHeaderKom = true;
-    return repo.kompetensi  || repo.text;
-}
 </script>

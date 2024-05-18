@@ -226,7 +226,7 @@ class Tna extends CI_Controller {
 			$data['m_organisasi_id'] = $this->input->post('subdit')[0];
 			$data['status_karyawan'] = $this->input->post('status_fte')[0];
 			$data['verifikator_id_1'] = $this->input->post('verifikator_id_1')[0];
-			$data['direktorat_id'] = $this->input->post('verifikator_id_1')[0];
+			$data['direktorat_id'] = $this->input->post('direktorat')[0];
 			
 			$action = $this->TnaModel->updateData($data, $this->input->post('id'));
 		}else{
