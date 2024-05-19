@@ -176,6 +176,7 @@ class ReportingModel extends CI_Model {
         // $result = $query->result(); // atau $query->result_array() untuk mendapatkan array asosiatif
 
         $this->db->select("
+            mtp.id,
             YEAR(waktu_pelaksanaan_mulai) AS tahun_mulai,
             nama_kegiatan,
             nama_penyelenggara,
@@ -232,20 +233,18 @@ class ReportingModel extends CI_Model {
         $this->db->join('m_tna_pengawalan_pembayaran mtpb', 'mtp.id = mtpb.m_tna_pengawalan_id', 'left');
         $this->db->where('tu.r_jenis_usulan_id', 29);
         $this->db->where('waktu_pelaksanaan_selesai <', 'NOW()', FALSE);
-        // $this->db->limit(10);
+        // $this->db->limit(3);
         $query = $this->db->get();
         $result = $query->result(); // atau $query->result_array() untuk mendapatkan array asosiatif
         return $result;
 
     }
 
-    public function cekDataisExist($namaKegiatan, $waktuMulai, $waktuSelesai, $nik){
+    public function cekDataisExist($sourceId, $sourceType){
         $this->db->select('COUNT(id) as total');
         $this->db->from('m_tna_report_imported');
-        $this->db->where('nama_kegiatan', $namaKegiatan);
-        $this->db->where('tanggal_mulai', $waktuMulai);
-        $this->db->where('tanggal_selesai', $waktuSelesai);
-        $this->db->where('nik', $nik);
+        $this->db->where('sourceId', $sourceId);
+        $this->db->where('sourceType', $sourceType);
         $query = $this->db->get();
         $result = $query->row()->total; 
         return (int) $result;

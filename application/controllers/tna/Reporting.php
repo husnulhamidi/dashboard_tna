@@ -178,11 +178,13 @@ class Reporting extends CI_Controller {
 		foreach($cekDataPengawalan as $key){
 			$id = $this->reportingModel->get_max_id();
 			// // check data duplicate
-			$cekDataisExist = $this->reportingModel->cekDataisExist($key->nama_kegiatan, $key->waktu_pelaksanaan_mulai, $key->waktu_pelaksanaan_selesai,  $key->nik);
+			$cekDataisExist = $this->reportingModel->cekDataisExist($key->id,'Pengawalan');
 			if ($cekDataisExist == 0) {
 				$count = $count + 1;
 				$data = array(
 					'id'			=> $id+1,
+					'sourceID'		=> $key->id,
+					'sourceType'	=> 'Pengawalan',
 					'tahun'				=> $key->tahun_mulai,
 					'nama_kegiatan' => $key->nama_kegiatan,
 					'nama_penyelenggara' => $key->nama_penyelenggara,
