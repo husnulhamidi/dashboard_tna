@@ -271,7 +271,7 @@
                                                                 if($dir->id == @$detail->direktorat_id){
                                                                     $selected = 'selected';
                                                                 }
-                                                                echo "<option ".$selected." value='".$dir->id."'>".$dir->id.' | '.$dir->o5.'</option>';
+                                                                echo "<option ".$selected." value='".$dir->id."'>".$dir->o5.'</option>';
                                                             }
                                                         ?>
                                                     </select>
@@ -526,7 +526,7 @@ function getKaryawanBySubdit(count, direktoratId = false, karyawanId = false){
     });
 }
 
-function formatRepoKarywan(repo){
+funct ion formatRepoKarywan(repo){
     if (repo.loading) {
         return repo.text;
     }

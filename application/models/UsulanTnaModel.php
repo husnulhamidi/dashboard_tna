@@ -92,6 +92,50 @@ class UsulanTnaModel extends CI_Model {
 
 		$this->db->where("us.is_rejected",$post['is_rejected']);
 
+		if($post['filter_direktorat'] !== 'all'){
+			$this->db->where('us.direktorat_id', $post['filter_direktorat']);
+		}
+		if($post['filter_subdit'] !== 'all'){
+			$this->db->where('us.m_organisasi_id', $post['filter_subdit']);
+		}
+		if($post['filter_bidang'] !== 'all'){
+			$this->db->where('us.m_organisasi_id', $post['filter_bidang']);
+		}
+		if($post['filter_karyawan'] !== 'all'){
+			$this->db->where('us.m_karyawan_id', $post['filter_karyawan']);
+		}
+		if($post['filter_status_karyawan'] !== 'all'){
+			$this->db->where('us.status_karyawan', $post['filter_status_karyawan']);
+		}
+		if($post['filter_kompetensi'] !== 'all'){
+			$this->db->where('us.r_tna_kompetensi_id', $post['filter_kompetensi']);
+		}
+		if($post['filter_jenis_development'] !== 'all'){
+			$this->db->where('us.jenis_development', $post['filter_jenis_development']);
+		}
+		if($post['filter_nama_pelatihan'] !== 'all'){
+			$this->db->where('us.r_tna_traning_id', $post['filter_nama_pelatihan']);
+		}
+		if($post['filter_justifikasi'] !== ''){
+			$this->db->like('us.justifikasi_pengajuan', $post['filter_justifikasi'],'both');
+		}
+		if($post['filter_metoda_pembelajaran'] !== 'all'){
+			$this->db->where('us.metoda_pembelajaran', $post['filter_metoda_pembelajaran']);
+		}
+		if($post['filter_biaya_min'] !== ''){
+			$this->db->where('us.estimasi_biaya >=', $post['filter_biaya_min']);
+		}
+
+		if($post['filter_biaya_max'] !== ''){
+			$this->db->where('us.estimasi_biaya <=', $post['filter_biaya_max']);
+		}
+
+		if($post['filter_penyelenggara'] !== ''){
+			$this->db->like('us.nama_penyelenggara', $post['filter_penyelenggara'],'both');
+		}
+		if($post['filter_tahapan'] !== 'all'){
+			$this->db->where('us.status_karyawan', $post['filter_tahapan']);
+		}
 
 		$this->db->group_by('us.id');
 		$this->db->stop_cache();

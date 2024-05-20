@@ -19,7 +19,7 @@ class Usulan extends CI_Controller {
 		$this->load->model(array(
             'lokasi_akun_model',
 			'UsulanTnaModel',
-			'TnaModel'
+			'TnaModel',
             
         ));
 		$this->load->model('Justifikasi_model', 'justifikasi');
@@ -35,9 +35,16 @@ class Usulan extends CI_Controller {
         $data['active_tab'] 	= $active_tab;
 		$data['action_url_submit'] 	= site_url('tna/anggaran/submit');
 		$data['action_url_update'] 	= site_url('tna/anggaran/update');
-		$data['role'] 			= strtolower($this->sess['role']['name']);
+		// $data['role'] 			= strtolower($this->sess['role']['name']);
+		$data['role'] 			= 'admin unit';
 		$data['sess'] 			= $this->session->userdata('session');
 		$data['subdit'] = $this->lokasi_akun_model->viewall_subdit()->result();
+		$data['direktorat'] = $this->TnaModel->get_direktorat();
+		$data['kompetensi'] = $this->UsulanTnaModel->get_kompetensi();
+		$data['jenis_development'] = $this->UsulanTnaModel->get_jenis_development();
+		$data['jenis_pelatihan'] = $this->UsulanTnaModel->get_jenis_pelatihan();
+		$data['metoda'] = $this->UsulanTnaModel->get_metoda_pelatihan();
+		$data['tna'] = $this->UsulanTnaModel->get_training();
 		$data['css'] 			= array(
 			'plugins/sweet-alert/sweetalert.css',
 			'plugins/select2/select2.min.css',
@@ -259,7 +266,7 @@ class Usulan extends CI_Controller {
 					'status_karyawan' => $this->input->post('status_fte')[$i],
 					'direktorat_id' => $this->input->post('direktorat')[$i],
 					'tahapan_id' => 170,
-					'created_by' => $this->ion_auth->user()->row()->id,
+					// 'created_by' => $this->ion_auth->user()->row()->id,
 					'created_date' =>  date('Y-m-d'),
 					'kode'			  => $code,
 					'is_urgent' => $this->input->post('is_urgent'),

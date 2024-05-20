@@ -16,7 +16,7 @@
                         <ul class="nav nav-tabs">
                             <?php $this->load->view('tna/usulan/header_tab');?>
                             <div class="pull-right">
-                                <a data-toggle='modal' data-target='#upload_excel_node'> 
+                                <a data-toggle='modal' data-target='#ModalFilterUsulan'> 
                                     <button class="btn btn-grey btn-sm">
                                         <i class="fa fa-filter"></i> Filter
                                     </button>
@@ -47,62 +47,64 @@
                        
                         <div class="row">
                             <div class="col-md-12">
-                                <table  class="table table-striped table-bordered table-hover" id="table-tab-rejected" cellspacing="0" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <!-- <th width="7%">No</th> -->
-                                            <th>Action</th>
-                                            <th>Status</th>
-                                            <th>ID TNA</th>
-                                            <th>Nama Karyawan</th>
-                                            <th>Subdit/Unit</th>
-                                            <th>TNA</th>
-                                            <th>Jenis Pelatihan/Sertifikasi</th>
-                                            <th>Kompetensi</th>
-                                            <th>Jenis Dev. Karyawan</th>
-                                            <th>Justifikasi Pengajuan</th>
-                                            <th>Metode Pembelajaran</th>
-                                            <th>Estimasi Biaya</th>
-                                            <th>Status Karyawan</th>
-                                            <th>Nama Penyelenggara</th>
-                                            <th>Waktu Pelaksanaan</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>                                    
-                                        <!-- <tr>
-                                            <td>P0001001</td>
-                                            <td>8674474-Citra Dewi</td>
-                                            <td>Corporate Secretary</td>
-                                            <td>FTE</td>
-                                            <td>Busines Enabler</td>
-                                            <td>Pelatihan</td>
-                                            <td>Legal Compliance</td>
-                                            <td>-</td>
-                                            <td>Offline</td>
-                                            <td>Rp.1.000.000</td>
-                                            <td>Gajayana</td>
-                                            <td>Maret 2023</td>
-                                            <td>
-                                                Ditolak <br>
-                                                <i class="fa fa-check-circle text-success"></i>
-                                                <i class="fa fa-check-circle text-success"></i>
-                                                <i class="fa fa-check-circle text-success"></i>
-                                                <i class="fa fa-close text-danger">
-                                                
-                                
-                                            </td>
-                                            <td>
-                                                
-                                                <button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle" data-toggle="dropdown" style="width: 80px;">
-                                                <i class="fa fa-eye"></i> Riwayat
-                                                </button>
-                                                
-                                            </td>
-                                        </tr> -->
+                                <div class="table-responsive">
+                                    <table  class="table table-striped table-bordered table-hover" id="table-tab-rejected" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <!-- <th width="7%">No</th> -->
+                                                <th>Action</th>
+                                                <th>Status</th>
+                                                <th>ID TNA</th>
+                                                <th>Nama Karyawan</th>
+                                                <th>Subdit/Unit</th>
+                                                <th>TNA</th>
+                                                <th>Jenis Pelatihan/Sertifikasi</th>
+                                                <th>Kompetensi</th>
+                                                <th>Jenis Dev. Karyawan</th>
+                                                <th>Justifikasi Pengajuan</th>
+                                                <th>Metode Pembelajaran</th>
+                                                <th>Estimasi Biaya</th>
+                                                <th>Status Karyawan</th>
+                                                <th>Nama Penyelenggara</th>
+                                                <th>Waktu Pelaksanaan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>                                    
+                                            <!-- <tr>
+                                                <td>P0001001</td>
+                                                <td>8674474-Citra Dewi</td>
+                                                <td>Corporate Secretary</td>
+                                                <td>FTE</td>
+                                                <td>Busines Enabler</td>
+                                                <td>Pelatihan</td>
+                                                <td>Legal Compliance</td>
+                                                <td>-</td>
+                                                <td>Offline</td>
+                                                <td>Rp.1.000.000</td>
+                                                <td>Gajayana</td>
+                                                <td>Maret 2023</td>
+                                                <td>
+                                                    Ditolak <br>
+                                                    <i class="fa fa-check-circle text-success"></i>
+                                                    <i class="fa fa-check-circle text-success"></i>
+                                                    <i class="fa fa-check-circle text-success"></i>
+                                                    <i class="fa fa-close text-danger">
+                                                    
+                                    
+                                                </td>
+                                                <td>
+                                                    
+                                                    <button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle" data-toggle="dropdown" style="width: 80px;">
+                                                    <i class="fa fa-eye"></i> Riwayat
+                                                    </button>
+                                                    
+                                                </td>
+                                            </tr> -->
 
-                                        
-                                    </tbody>
-                                </table>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                        
@@ -123,3 +125,11 @@
         </div> <!-- /.modal-dialog -->
     </div> <!-- /.modal -->
 </section>
+<?php $this->load->view('tna/usulan/modal_filter');?>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.select2').select2({
+            placeholder: "Please Select"
+        });
+    })
+</script>
