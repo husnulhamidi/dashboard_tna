@@ -98,9 +98,9 @@ class UsulanTnaModel extends CI_Model {
 		if($post['filter_subdit'] !== 'all'){
 			$this->db->where('us.m_organisasi_id', $post['filter_subdit']);
 		}
-		if($post['filter_bidang'] !== 'all'){
-			$this->db->where('us.m_organisasi_id', $post['filter_bidang']);
-		}
+		// if($post['filter_bidang'] !== 'all'){
+		// 	$this->db->where('us.m_organisasi_id', $post['filter_bidang']);
+		// }
 		if($post['filter_karyawan'] !== 'all'){
 			$this->db->where('us.m_karyawan_id', $post['filter_karyawan']);
 		}
@@ -566,6 +566,17 @@ class UsulanTnaModel extends CI_Model {
 
 	function insert_m_tna($data){
 		return $this->db->insert("m_tna_pengawalan", $data);
+	}
+
+	public function get_tahapan(){
+		$this->db->select('a.id, a.nama, a.urutan');
+		$this->db->from('r_tahapan_usulan a');
+		$this->db->join('r_jenis_usulan js', 'js.id = a.r_jenis_usulan_id', 'left');
+		
+		$this->db->where('js.nama',"Usulan TNA");
+		$query = $this->db->get();
+		$result = $query->result();
+		return $result;
 	}
 
 

@@ -45,6 +45,7 @@ class Usulan extends CI_Controller {
 		$data['jenis_pelatihan'] = $this->UsulanTnaModel->get_jenis_pelatihan();
 		$data['metoda'] = $this->UsulanTnaModel->get_metoda_pelatihan();
 		$data['tna'] = $this->UsulanTnaModel->get_training();
+		$data['tahapan'] = $this->UsulanTnaModel->get_tahapan();
 		$data['css'] 			= array(
 			'plugins/sweet-alert/sweetalert.css',
 			'plugins/select2/select2.min.css',

@@ -37,15 +37,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-4 control-label">Bidang</label>
-                                    <div class="col-sm-8">
-                                        <select class="select2 form-control" name="filter_bidang" id="filter_bidang">
-                                            <option value="all">Semua</option>
-                                            
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <label class="col-sm-4 control-label">Nama Karyawan</label>
                                     <div class="col-sm-8">
                                         <select class="select2 form-control" name="filter_karyawan" id="filter_karyawan" >
@@ -153,7 +144,12 @@
                                     <div class="col-sm-8">
                                         <select class="select2 form-control" name="filter_tahapan" id="filter_tahapan">
                                             <option value="all">Semua</option>
-                                            
+                                            <?php 
+                                                foreach ($tahapan as $val) {
+                                                                
+                                                    echo "<option value='".$val->id."'>".$val->nama.'</option>';
+                                                }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>

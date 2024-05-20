@@ -198,7 +198,7 @@ function buildTableUsulanTna(){
                 d.is_rejected=0;
                 d.filter_direktorat = $('#filter_direktorat').val()
                 d.filter_subdit = $('#filter_subdit').val()
-                d.filter_bidang = $('#filter_bidang').val()
+                
                 d.filter_karyawan = $('#filter_karyawan').val()
                 d.filter_status_karyawan = $('#filter_status_karyawan').val()
                 d.filter_kompetensi = $('#filter_kompetensi').val()
@@ -321,7 +321,7 @@ function buildTableVerifikasi(){
                d.is_rejected=0;
                d.filter_direktorat = $('#filter_direktorat').val()
                 d.filter_subdit = $('#filter_subdit').val()
-                d.filter_bidang = $('#filter_bidang').val()
+                
                 d.filter_karyawan = $('#filter_karyawan').val()
                 d.filter_status_karyawan = $('#filter_status_karyawan').val()
                 d.filter_kompetensi = $('#filter_kompetensi').val()
@@ -444,7 +444,7 @@ function buildTableVerifikasiHcm(){
                d.is_rejected=0;
                d.filter_direktorat = $('#filter_direktorat').val()
                 d.filter_subdit = $('#filter_subdit').val()
-                d.filter_bidang = $('#filter_bidang').val()
+                
                 d.filter_karyawan = $('#filter_karyawan').val()
                 d.filter_status_karyawan = $('#filter_status_karyawan').val()
                 d.filter_kompetensi = $('#filter_kompetensi').val()
@@ -545,7 +545,7 @@ function buildTableRejected(){
                 d.is_rejected=1;
                 d.filter_direktorat = $('#filter_direktorat').val()
                 d.filter_subdit = $('#filter_subdit').val()
-                d.filter_bidang = $('#filter_bidang').val()
+                
                 d.filter_karyawan = $('#filter_karyawan').val()
                 d.filter_status_karyawan = $('#filter_status_karyawan').val()
                 d.filter_kompetensi = $('#filter_kompetensi').val()
@@ -646,7 +646,7 @@ function buildTableSelesai(){
                d.is_rejected=0;
                d.filter_direktorat = $('#filter_direktorat').val()
                 d.filter_subdit = $('#filter_subdit').val()
-                d.filter_bidang = $('#filter_bidang').val()
+                
                 d.filter_karyawan = $('#filter_karyawan').val()
                 d.filter_status_karyawan = $('#filter_status_karyawan').val()
                 d.filter_kompetensi = $('#filter_kompetensi').val()
