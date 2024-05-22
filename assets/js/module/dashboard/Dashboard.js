@@ -4,7 +4,12 @@ $(document).ready(function(){
         let type = $('#type').val()
         let quartal = $('#quartal').val()
         let thn = $('#thn').val()
-        detail(type, quartal, thn)
+        if($('#type').val() != 'is'){
+            detail(type, quartal, thn)
+        }else{
+            detailInternalSharing(type, quartal, thn)
+        }
+        
     }else{
         let thn = $('#filter_year').val();
         loadData(thn)
@@ -64,16 +69,13 @@ $(document).ready(function(){
 function redirectDetail(paramsType, paramsQuartal) {
     let thn = $('#filter_year').val();
     var dynamic_url = base_url + 'tna/home/detail/'+paramsType+'/'+paramsQuartal +'/'+ thn;
+    
     window.location.href = dynamic_url;
 }
 
 
 function loadData(thn){
-    $('#tahun_filter').html(thn)
-    $('#tahun_filter_sertifikasi').html(thn)
-    $('#thn_anggaran_tna').html(thn)
-    $('#thn_summary').html(thn)
-    $('#thn_summary_non_tna').html(thn)
+    $('.tahun_filter').html(thn)
 
     getDataUrget()
     getDataDashboad()
@@ -1397,7 +1399,7 @@ function summary(){
             },
         dataType: "JSON",
         success:function(resp){
-            // console.log(JSON.stringify(resp))
+            console.log(JSON.stringify(resp))
             // console.log(formatRupiah(resp.tna_quartal1))
             // let summary_tna_q1 = resp.tna_quartal1
             // console.log(formatRupiah(summary_tna_q1.toString(),'Rp.'))
@@ -1409,6 +1411,11 @@ function summary(){
             $('#summary_non_tna_q2').html(resp.non_tna_quartal2)
             $('#summary_non_tna_q3').html(resp.non_tna_quartal3)
             $('#summary_non_tna_q4').html(resp.non_tna_quartal4)
+
+            $('#summary_is_q1').html(resp.internal_sharing1)
+            $('#summary_is_q2').html(resp.internal_sharing2)
+            $('#summary_is_q3').html(resp.internal_sharing3)
+            $('#summary_is_q4').html(resp.internal_sharing4)
         },
         complete: function (data) {
             $('.summary_tna').each(function () {
@@ -1478,5 +1485,78 @@ function detail(type, quartal, thn){
             },
         ]
         
+    });
+}
+
+function detailInternalSharing(type, quartal, thn){
+    $('#tbl-internal-sharing').DataTable({
+        processing: true, 
+        serverSide: true, 
+        order: [], 
+        ajax: {
+            // url     : base_url+"tna/internalSharing/getDataAdmin",
+            url     : base_url+"tna/home/dataDetailInternalSharing",
+            type    : "get",
+            datatype: "json",
+            data    : function(d){
+                d.type = type
+                d.quartal = quartal
+                d.thn = thn
+            }
+                      
+        },
+        columns: [
+            {
+                "data": "id",
+                "width": "50px",
+                render: function (data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                }
+            },
+            { "data": "judul_materi" },
+            
+            { "data": "kompetensi" },
+            { "data": "narasumber" },
+            { "data": "organisasi" },
+            { 
+                "data": "tanggal",
+                render:function(data, type, row, meta){
+                    return formatDate(data)
+                } 
+            },
+            { "data": "jam" },
+            { "data": "tempat" },
+            { 
+                "data": "biaya",
+                render:function(data, type, row, meta){
+                    return formatRupiah(data,'Rp.')
+                } 
+            },
+            { 
+                "data": "m_tna_training_id", 
+                render:function(data, type, row, meta){
+                    let ket = 'Inisiasi'
+                    if(data){
+                        ket = 'TNA'
+                    }
+                    return ket
+                }
+            },
+            { 
+                "data": "jumlah_peserta",
+                render:function(data, type, row, meta){
+                    return data+' Peserta'
+                } 
+            },
+        ],
+        columnDefs: [
+            {
+                targets: [0],
+                orderable: false,
+                className: 'text-center',
+
+            }
+
+        ],
     });
 }

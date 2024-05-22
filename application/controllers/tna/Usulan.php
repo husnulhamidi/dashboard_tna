@@ -184,21 +184,46 @@ class Usulan extends CI_Controller {
 		$this->template->load('template','tna/usulan/form_usulan', $data);
 	}
 
-	public function edit()
+	public function edit($id)
 	{
+		$id = decrypt_url($id);
+		// echo json_encode($id);
+
         $data = array();
         $data['breadcrumb'] 	= 'Usulan > Edit';
         $data['title'] 			= 'Edit Usulan';
 		$data['action'] 		= 'add';
-		$data['active_menu'] 	= 'usulan_tna';
-		$data['action_url'] 	= site_url('tna/anggaran/submit');
+		$data['active_menu'] 	= 'Usulan TNA';
+		$data['submit_url'] 	= site_url('tna/usulan/submit');
+		$data['action_url']		= site_url('tna/usulan/update');
+		$data['sess'] 			= $this->session->userdata('session');
+		$data['subdit'] 		= $this->lokasi_akun_model->viewall_subdit()->result();
+		$data['jenis_pelatihan'] = $this->UsulanTnaModel->get_jenis_pelatihan();
+		$data['jenis_development'] = $this->UsulanTnaModel->get_jenis_development();
+		$data['metoda'] = $this->UsulanTnaModel->get_metoda_pelatihan();
+		// $data['kompetensi'] = $this->UsulanTnaModel->get_kompetensi();
+		$data['tna'] = $this->UsulanTnaModel->get_training();
+		$data['lembaga'] = $this->TnaModel->get_lembaga();
+		$data['direktorat'] = $this->TnaModel->get_direktorat();
+		$data['detail']    = $this->UsulanTnaModel->getDetail($id);
 		
+		// echo json_encode($data['detail']);die;
 		$data['css'] 			= array(
-            'plugins/select2/select2.min.css',
+			'plugins/sweet-alert/sweetalert.css',
+			'plugins/select2/select2.min.css',
+			'plugins/datepicker/datepicker3.css',
+			'plugins/daterangepicker/daterangepicker-bs3.css'
         );
 		$data['js']				= array(	// js tambahan
+			'plugins/daterangepicker/moment.js',
+			'plugins/daterangepicker/daterangepicker.js',
+			'plugins/sweet-alert/sweetalert.min.js',
+			'plugins/select2/select2.full.min.js',
+			'plugins/datepicker/bootstrap-datepicker.js',
 			'js/jquery.validate.js',
-            'plugins/select2/select2.full.min.js',
+			'plugins/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js',
+			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js',
+			'js/module/usulan/UsulanTNA.js?random='.date("ymdHis"),
             
         );
 		

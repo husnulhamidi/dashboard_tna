@@ -224,6 +224,8 @@ class DashboardModel extends CI_Model {
             $query_biaya = $this->db->get();
             $result_biaya = $query_biaya->row();
             $total_biaya = $result_biaya->biaya ?? 0;
+            $quartals['internal_sharing' . ($index + 1)] = $total_biaya ?? 0;
+            
     
             $total_tna = $result_tna->total_nominal + $total_biaya;
             $quartals['tna_quartal' . ($index + 1)] = $total_tna ?? 0;
@@ -239,6 +241,19 @@ class DashboardModel extends CI_Model {
             $result_non_tna = $query_non_tna->row();
             $total_non_tna = $result_non_tna->total_nominal + $total_biaya;
             $quartals['non_tna_quartal' . ($index + 1)] = $total_non_tna ?? 0;
+
+
+            // Internal Sharing
+            // $this->db->select('SUM(IFNULL(tis.biaya, 0)) AS total_nominal');
+            // $this->db->from('m_tna_internal_sharing tis');
+            // // $this->db->join('m_tna_pengawalan p', 'p.id = pp.m_tna_pengawalan_id');
+            // // $this->db->where('p.is_tna', '0');
+            // $this->db->where('tis.tanggal >=', $start_date);
+            // $this->db->where('tis.tanggal <=', $end_date);
+            // $internal_sharing = $this->db->get();
+            // $result_internal_sharing = $internal_sharing->row();
+            // $total_internal_sharing = $result_internal_sharing->total_nominal;
+            // $quartals['internal_sharing' . ($index + 1)] = $total_internal_sharing ?? 0;
         }
         return $quartals;
     }
@@ -364,6 +379,103 @@ class DashboardModel extends CI_Model {
         echo json_encode($output);
 		exit();
 	}
+
+    public function getDataDetailInternalSharing($post){
+        $dateQuartal = $this->quartal($post['quartal'], $post['thn']);
+        $column_order = array('mti.id','mti.judul_materi','mk.nama','mo.nama','mti.jam','mti.tanggal','mti.tempat','mti.biaya','mti.kuota','jr.name as job_role', 'jr.id as job_role_id','jf.name as job_function', 'jf.id as job_function_id', 'jfa.name as job_family', 'jfa.id as job_family_id');
+		$column_search = array('mti.id','mti.judul_materi','mk.nama','mo.nama','mti.jam','mti.tanggal','mti.tempat','mti.biaya','mti.kuota','jr.name as job_role', 'jr.id as job_role_id','jf.name as job_function', 'jf.id as job_function_id', 'jfa.name as job_family', 'jfa.id as job_family_id');
+
+        $draw = $post['draw'];
+        $start = $post['start'];
+        $length = $post['length'];
+
+        if ($length != null) {
+            $pageSize = $length;
+        } else {
+            $pageSize = 0;
+        }
+        if ($start != null) {
+            $skip = $start;
+        } else {
+            $skip = 0;
+        }
+		$recordsTotal = 0;
+        $this->db->start_cache();
+
+
+        $this->db->select('mti.id, mti.judul_materi, mti.tanggal, mti.jam,mti.materi,
+                   mti.tempat, mti.biaya, mti.kuota, mti.link_zoom, mti.r_tna_training_id,
+                   mk.nama AS narasumber,mk.id AS idNarasumber,
+                   mo.nama AS organisasi,
+                   k.name as kompetensi, k.id as kompetensi_id, 
+                   jr.name as job_role, jr.id as job_role_id, 
+                   jf.name as job_function, jf.id as job_function_id, 
+                   jfa.name as job_family, jfa.id as job_family_id,
+                   COUNT(isp.m_tna_internal_sharing_id) AS jumlah_peserta');
+        $this->db->from('m_tna_internal_sharing as mti');
+        $this->db->join('m_karyawan as mk', 'mti.m_karyawan_id = mk.id');
+        $this->db->join('m_organisasi as mo', 'mti.m_organisasi_id = mo.id');
+        $this->db->join('m_tna_internal_sharing_peserta isp', 'isp.m_tna_internal_sharing_id = mti.id', 'left');
+        $this->db->join('r_tna_job_family jfa', 'jfa.id = mti.r_tna_job_family_id', 'left');
+        $this->db->join('r_tna_job_function jf', 'jf.id = mti.r_tna_job_function_id', 'left');
+        $this->db->join('r_tna_job_role jr', 'jr.id = mti.r_tna_job_role_id', 'left');
+        $this->db->join('r_tna_kompetensi k', 'k.id = mti.r_tna_kompetensi_id', 'left');
+        $this->db->where('mti.tanggal >=', $dateQuartal['date1']);
+        $this->db->where('mti.tanggal <=', $dateQuartal['date2']);
+
+        
+        $this->db->group_by('mti.id, mti.judul_materi, mti.tanggal, mti.jam,
+                             mti.tempat, mti.biaya, mti.kuota, mti.link_zoom, mti.r_tna_training_id,
+                             mk.nama, mo.nama');
+				 
+
+		IF($post['search']['value']!=""){
+			$i = 0;
+			foreach ($column_search as $item) // looping awal
+			{
+				if($post['search']['value']) // jika datatable mengirimkan pencarian dengan metode POST
+				{
+					if($i===0){
+						$this->db->group_start(); 
+						$this->db->like($item, $post['search']['value']);
+					}else{
+						$this->db->or_like($item, $post['search']['value']);
+					}
+
+					if(count($column_search) - 1 == $i)$this->db->group_end(); 
+					
+				}
+				$i++;
+			}
+		}
+		
+		$this->db->stop_cache();
+		$x = $this->db->count_all_results();
+
+		if (!empty($post['order'])) {
+			$this->db->order_by($column_order[$post['order']['0']['column']], $post['order']['0']['dir']);
+		} else {
+			$this->db->order_by('id', 'desc');
+		}
+
+		$this->db->limit($pageSize, $skip);
+		$query = $this->db->get();
+		$data = $query->result_array();
+		$this->db->flush_cache();
+
+		foreach ($data as $i => $rec) {
+			$data[$i]['encrypt_id'] = encrypt_url($rec['id']);
+			# code...
+		}
+		$output = array(
+            "draw" => $draw,
+            "recordsTotal" => $x,
+            "recordsFiltered" => $x,
+            "data" => $data,
+        );
+        echo json_encode($output);
+		exit();
+    }
 
     public function getListTNAUrgent($post){
         // $dateQuartal = $this->quartal($quartal, $thn);

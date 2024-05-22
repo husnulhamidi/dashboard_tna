@@ -64,6 +64,7 @@ $route['tna/home/realisasiPesertaInternalSharing'] = 'tna/home/realisasiPesertaI
 $route['tna/home/anggaranTNA'] = 'tna/home/anggaranTNA';
 $route['tna/home/summary'] = 'tna/home/summary';
 $route['tna/home/dataDetail'] = 'tna/home/dataDetail';
+$route['tna/home/dataDetailInternalSharing'] = 'tna/home/dataDetailInternalSharing';
 $route['tna/home/detail/(:any)/(:any)/(:any)'] = 'tna/home/detail/$1/$2/$3';
 
 $route['tna/home1'] = 'tna/home/index1';
@@ -149,7 +150,7 @@ $route['tna/usulan/list-data']    = 'tna/usulan/list_data';
 $route['tna/usulan/create']    = 'tna/usulan/create';
 $route['tna/usulan/submit']    = 'tna/usulan/submit';
 $route['tna/usulan/submit-usulkan']    = 'tna/usulan/submit_usulkan';
-$route['tna/usulan/edit']       = 'tna/usulan/edit';
+$route['tna/usulan/edit/(:any)']       = 'tna/usulan/edit/$1';
 
 
 //=====================================================================================================================

@@ -133,8 +133,8 @@ class Home extends CI_Controller {
 		if($quartal == '2') $quartalName = 'Quartal 1';
 		if($quartal == '3') $quartalName = 'Quartal 2';
 		if($quartal == '3') $quartalName = 'Quartal 3';
-		$data['title'] 				= 'Detail ' . strtoupper($type) . ' ' . $quartalName;
-		$data['breadcrumb'] 		= 'Dashboard > Datail > '. strtoupper($type) . ' > ' . $quartalName;
+		$data['title'] 				= 'Detail ' . strtoupper($type == 'is' ? 'Internal Sharing' : $type) . ' ' . $quartalName;
+		$data['breadcrumb'] 		= 'Dashboard > Datail > '. strtoupper($type == 'is' ? 'Internal Sharing' : $type) . ' > ' . $quartalName;
 		$data['active_menu'] 		= 'dashboard';
 		$data['base_url'] 			= site_url('tna/home/detail');
 		$data['type']				= $type;
@@ -148,13 +148,25 @@ class Home extends CI_Controller {
 			'js/module/Dashboard/Dashboard.js?random='.date("ymdHis"),
 			'js/custom.js?random='.date("ymdHis"),
 		);
-		$this->template->load('template','tna/dashboard/detail', $data);
+
+		if($type == 'is'){
+			$this->template->load('template','tna/dashboard/detail_internal_sharing', $data);
+		}else{
+			$this->template->load('template','tna/dashboard/detail', $data);
+		}
+		
 	}
 
 	public function dataDetail(){
 		$get = $this->input->get();
 		// echo json_encode($get);
 		echo $this->dashboard->getDataDetail($get);
+	}
+
+	public function dataDetailInternalSharing(){
+		$get = $this->input->get();
+		// echo json_encode($get);
+		echo $this->dashboard->getDataDetailInternalSharing($get);
 	}
 
 	public function getListTNAUrgent(){

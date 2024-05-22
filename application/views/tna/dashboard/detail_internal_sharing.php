@@ -34,16 +34,21 @@
                     <div class="tab-pane active">
                         <div class="row">
                             <div class="col-md-12">
-                                <table  class="table table-striped table-bordered table-hover" id="tbl-detail-dashboard" cellspacing="0" width="100%">
+                                <table  class="table table-striped table-bordered table-hover" id="tbl-internal-sharing" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
                                             <th width="7%" class="text-center">No.</th>
-                                            <th class="text-nowrap text-center">ID TNA</th>
-                                            <th class="text-nowrap text-center">Nama Pelatihan</th>
-                                            <th class="text-nowrap text-center">Penyelenggara</th>
-                                            <th class="text-nowrap text-center">Nama Karyawan</th>
+                                            <th class="text-nowrap text-center">Judul Materi</th>
+                                            <!-- <th class="text-nowrap text-center">Materi</th> -->
+                                            <th class="text-nowrap text-center">Kompetensi</th>
+                                            <th class="text-nowrap text-center">Nara Sumber</th>
                                             <th class="text-nowrap text-center">Subdit/Unit</th>
-                                            <th class="text-nowrap text-center">Status</th>
+                                            <th class="text-nowrap text-center">Tanggal</th>
+                                            <th class="text-nowrap text-center">Waktu</th>
+                                            <th class="text-nowrap text-center">Tempat</th>
+                                            <th class="text-nowrap text-center">Biaya</th>
+                                            <th class="text-nowrap text-center">Ket</th>
+                                            <th class="text-nowrap text-center">Jumlah Peserta</th>
                                         </tr>
                                     </thead>
                                     <tbody>
