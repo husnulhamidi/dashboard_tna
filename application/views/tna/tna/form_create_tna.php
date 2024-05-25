@@ -526,7 +526,7 @@ function getKaryawanBySubdit(count, direktoratId = false, karyawanId = false){
     });
 }
 
-funct ion formatRepoKarywan(repo){
+function formatRepoKarywan(repo){
     if (repo.loading) {
         return repo.text;
     }

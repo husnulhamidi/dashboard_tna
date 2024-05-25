@@ -59,7 +59,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-4 control-label">Kompetensi</label>
                                     <div class="col-sm-8">
-                                        <select class="select2 form-control" name="filter_kompetensi" id="filter_kompetensi">
+                                        <select class="select2 form-control" name="filter_kompetensi" id="filter_kompetensi" onChange="getDataTraining()">
 
                                             <option value="all">Semua</option>
                                             <?php 
@@ -91,11 +91,11 @@
                                     <div class="col-sm-8">
                                         <select class="select2 form-control" name="filter_nama_pelatihan" id="filter_nama_pelatihan">
                                             <option value="all">Semua</option>
-                                            <?php 
+                                            <!-- <?php 
                                             foreach ($tna as $tna) {
                                                 echo "<option  value='".$tna->id."'>".$tna->code.' | '.$tna->name.'</option>';
                                             }
-                                            ?>
+                                            ?> -->
 
                                         </select>
                                     </div>
@@ -229,6 +229,23 @@
                     $.each(result, function(i, value) {
                         $('#filter_karyawan').append('<option value=' + value['id'] + '>' + value['nama'] + ' | '+ value['nik_tg']+' | '+value['jabatan_nama']+'</option>');
                     });
+                }
+            }
+        });
+    }
+
+    function getDataTraining(){
+        let kompetensiId = $('#filter_kompetensi').val()
+        $('#filter_nama_pelatihan').empty()
+        $('#filter_nama_pelatihan').append('<option value="all">Semua</option')
+        $.ajax({
+            url:base_url+'tna/tna/getDataTraining',
+            method: 'post',
+            dataType: 'json',
+            data: { kompetensiId:kompetensiId},
+            success: function(response){
+                for (var i = 0; i < response.length; i++) {
+                    $('#filter_nama_pelatihan').append('<option value="'+response[i]['id']+'"> '+ response[i]['code']+' | '+response[i]['name']+'</option>');
                 }
             }
         });
