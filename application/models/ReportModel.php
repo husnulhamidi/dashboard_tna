@@ -12,8 +12,8 @@ class ReportModel extends CI_Model {
 	}
 
 	public function getData($post){
-		$column_order = array('tp.id','tp.jenis_development','tk.name',);
-		$column_search = array('tp.id','tp.jenis_development','tk.name',);
+		$column_order = array('tp.id','tp.jenis_pelatihan','tk.name',);
+		$column_search = array('tp.id','tp.jenis_pelatihan','tk.name',);
 
         $draw = $post['draw'];
         $start = $post['start'];
@@ -31,54 +31,16 @@ class ReportModel extends CI_Model {
         }
 		$recordsTotal = 0;
         $this->db->start_cache();
-        $this->db->select("
-            id,
-            jenis_development,
-            kompetensi,
-            MAX(CASE WHEN jenis_development = 'Pelatihan' AND kuartal = 1 AND waktu_pelaksanaan_selesai <= CURRENT_DATE() THEN total_pelatihan END) AS realisasi_pelatihan_Q1,
-            MAX(CASE WHEN jenis_development = 'Pelatihan' AND kuartal = 1 AND waktu_pelaksanaan_selesai >= CURRENT_DATE() THEN total_pelatihan END) AS perencanaan_pelatihan_Q1,
-            MAX(CASE WHEN jenis_development = 'Pelatihan' AND kuartal = 2 AND waktu_pelaksanaan_selesai <= CURRENT_DATE() THEN total_pelatihan END) AS realisasi_pelatihan_Q2,
-            MAX(CASE WHEN jenis_development = 'Pelatihan' AND kuartal = 2 AND waktu_pelaksanaan_selesai >= CURRENT_DATE() THEN total_pelatihan END) AS perencanaan_pelatihan_Q2,
-            MAX(CASE WHEN jenis_development = 'Pelatihan' AND kuartal = 3 AND waktu_pelaksanaan_selesai <= CURRENT_DATE() THEN total_pelatihan END) AS realisasi_pelatihan_Q3,
-            MAX(CASE WHEN jenis_development = 'Pelatihan' AND kuartal = 3 AND waktu_pelaksanaan_selesai >= CURRENT_DATE() THEN total_pelatihan END) AS perencanaan_pelatihan_Q3,
-            MAX(CASE WHEN jenis_development = 'Pelatihan' AND kuartal = 4 AND waktu_pelaksanaan_selesai <= CURRENT_DATE() THEN total_pelatihan END) AS realisasi_pelatihan_Q4,
-            MAX(CASE WHEN jenis_development = 'Pelatihan' AND kuartal = 4 AND waktu_pelaksanaan_selesai >= CURRENT_DATE() THEN total_pelatihan END) AS perencanaan_pelatihan_Q4,
-            SUM(CASE WHEN jenis_development = 'Pelatihan' AND waktu_pelaksanaan_selesai <= CURRENT_DATE() THEN total_pelatihan END) AS realisasi_total_pelatihan,
-            SUM(CASE WHEN jenis_development = 'Pelatihan' AND waktu_pelaksanaan_selesai >= CURRENT_DATE() THEN total_pelatihan END) AS perencanaan_total_pelatihan,
-            MAX(CASE WHEN jenis_development = 'Sertifikasi' AND kuartal = 1 AND waktu_pelaksanaan_selesai <= CURRENT_DATE() THEN total_sertifikasi END) AS realisasi_sertifikasi_Q1,
-            MAX(CASE WHEN jenis_development = 'Sertifikasi' AND kuartal = 1 AND waktu_pelaksanaan_selesai >= CURRENT_DATE() THEN total_sertifikasi END) AS perencanaan_sertifikasi_Q1,
-            MAX(CASE WHEN jenis_development = 'Sertifikasi' AND kuartal = 2 AND waktu_pelaksanaan_selesai <= CURRENT_DATE() THEN total_sertifikasi END) AS realisasi_sertifikasi_Q2,
-            MAX(CASE WHEN jenis_development = 'Sertifikasi' AND kuartal = 2 AND waktu_pelaksanaan_selesai >= CURRENT_DATE() THEN total_sertifikasi END) AS perencanaan_sertifikasi_Q2,
-            MAX(CASE WHEN jenis_development = 'Sertifikasi' AND kuartal = 3 AND waktu_pelaksanaan_selesai <= CURRENT_DATE() THEN total_sertifikasi END) AS realisasi_sertifikasi_Q3,
-            MAX(CASE WHEN jenis_development = 'Sertifikasi' AND kuartal = 3 AND waktu_pelaksanaan_selesai >= CURRENT_DATE() THEN total_sertifikasi END) AS perencanaan_sertifikasi_Q3,
-            MAX(CASE WHEN jenis_development = 'Sertifikasi' AND kuartal = 4 AND waktu_pelaksanaan_selesai <= CURRENT_DATE() THEN total_sertifikasi END) AS realisasi_sertifikasi_Q4,
-            MAX(CASE WHEN jenis_development = 'Sertifikasi' AND kuartal = 4 AND waktu_pelaksanaan_selesai >= CURRENT_DATE() THEN total_sertifikasi END) AS perencanaan_sertifikasi_Q4,
-            SUM(CASE WHEN jenis_development = 'Sertifikasi' AND waktu_pelaksanaan_selesai <= CURRENT_DATE() THEN total_sertifikasi END) AS realisasi_total_sertifikasi,
-            SUM(CASE WHEN jenis_development = 'Sertifikasi' AND waktu_pelaksanaan_selesai >= CURRENT_DATE() THEN total_sertifikasi END) AS perencanaan_total_sertifikasi
-        ");
-        $this->db->from("
-            (SELECT
-                m_tna_pengawalan.id,
-                jenis_development,
-                tk.name AS kompetensi,
-                YEAR(waktu_pelaksanaan_selesai) AS tahun,
-                QUARTER(waktu_pelaksanaan_selesai) AS kuartal,
-                waktu_pelaksanaan_selesai,
-                SUM(CASE WHEN jenis_development = 'Pelatihan' THEN 1 ELSE 0 END) AS total_pelatihan,
-                SUM(CASE WHEN jenis_development = 'Sertifikasi' THEN 1 ELSE 0 END) AS total_sertifikasi
-            FROM
-                m_tna_pengawalan
-            JOIN r_tna_kompetensi tk ON tk.id = m_tna_pengawalan.r_tna_kompetensi_id
-            WHERE YEAR(m_tna_pengawalan.waktu_pelaksanaan_selesai) = ".$post['thn']."
-            GROUP BY
-                jenis_development,
-                tk.name,
-                YEAR(waktu_pelaksanaan_selesai),
-                QUARTER(waktu_pelaksanaan_selesai),
-                waktu_pelaksanaan_selesai
-            ) AS subquery
-        ");
-        $this->db->group_by("jenis_development, kompetensi");
+        $this->db->select("tp.id,
+                        tp.jenis_development,
+                            tp.jenis_pelatihan,
+                            GROUP_CONCAT(DISTINCT(tp.r_tna_kompetensi_id)) as kompetensi_id,
+                            `kom`.`name` AS `kompetensi`")
+                ->from("m_tna_pengawalan as tp")
+                ->join("r_tna_kompetensi as kom","kom.id=tp.r_tna_kompetensi_id")
+                ->where("YEAR(tp.waktu_pelaksanaan_selesai)",$post['thn'])
+                ->or_where("YEAR(tp.rencana_pelaksanaan_selesai)",$post['thn'])
+                ->group_by("kom.name");
 
 		
 		IF($post['search']['value']!=""){
@@ -117,6 +79,49 @@ class ReportModel extends CI_Model {
 		$this->db->flush_cache();
 
 		foreach ($data as $i => $rec) {
+            $arr_kom_id = explode(",",$rec['kompetensi_id']);
+            $rencana_pl = $this->getSumRencana($post['thn'],"Pelatihan",$arr_kom_id );
+            $rencana_cert = $this->getSumRencana($post['thn'],"Sertifikasi",$arr_kom_id );
+        
+            $realisasi_pl = $this->getSumRealisasi($post['thn'],"Pelatihan",$arr_kom_id );
+            $realisasi_cert = $this->getSumRealisasi($post['thn'],"Sertifikasi",$arr_kom_id );
+           
+            $data[$i]['rencana_pelatihan_q1'] = $rencana_pl['rencana_q1'];
+            $data[$i]['rencana_pelatihan_q2'] = $rencana_pl['rencana_q2'];
+            $data[$i]['rencana_pelatihan_q3'] = $rencana_pl['rencana_q3'];
+            $data[$i]['rencana_pelatihan_q4'] = $rencana_pl['rencana_q4'];
+            $data[$i]['rencana_pelatihan_total'] = $rencana_pl['total'];
+
+            $data[$i]['rencana_sertifikasi_q1'] = @$rencana_cert['rencana_q1'];
+            $data[$i]['rencana_sertifikasi_q2'] = @$rencana_cert['rencana_q2'];
+            $data[$i]['rencana_sertifikasi_q3'] = @$rencana_cert['rencana_q3'];
+            $data[$i]['rencana_sertifikasi_q4'] = @$rencana_cert['rencana_q4'];
+            $data[$i]['rencana_sertifikasi_total'] = @$rencana_cert['total'];
+
+            $data[$i]['rencana_pelatihan_fte'] = @$rencana_pl['rencana_fte'];
+            $data[$i]['rencana_pelatihan_nonfte'] = @$rencana_pl['rencana_nonfte'];
+            $data[$i]['rencana_sertifikasi_fte'] = @$rencana_cert['rencana_fte'];
+            $data[$i]['rencana_sertifikasi_nonfte'] = @$rencana_cert['rencana_nonfte'];
+            $data[$i]['rencana_peserta_total'] = @$rencana_pl['rencana_fte']+@$rencana_pl['rencana_nonfte']+@$rencana_cert['rencana_fte']+@$rencana_cert['rencana_nonfte'];
+
+            $data[$i]['realisasi_pelatihan_q1'] = $realisasi_pl['realisasi_q1'];
+            $data[$i]['realisasi_pelatihan_q2'] = $realisasi_pl['realisasi_q2'];
+            $data[$i]['realisasi_pelatihan_q3'] = $realisasi_pl['realisasi_q3'];
+            $data[$i]['realisasi_pelatihan_q4'] = $realisasi_pl['realisasi_q4'];
+            $data[$i]['realisasi_pelatihan_total'] = $realisasi_pl['total'];
+
+            $data[$i]['realisasi_sertifikasi_q1'] = @$realisasi_cert['realisasi_q1'];
+            $data[$i]['realisasi_sertifikasi_q2'] = @$realisasi_cert['realisasi_q2'];
+            $data[$i]['realisasi_sertifikasi_q3'] = @$realisasi_cert['realisasi_q3'];
+            $data[$i]['realisasi_sertifikasi_q4'] = @$realisasi_cert['realisasi_q4'];
+            $data[$i]['realisasi_sertifikasi_total'] = @$realisasi_cert['total'];
+
+            $data[$i]['realisasi_pelatihan_fte'] = @$realisasi_pl['realisasi_fte'];
+            $data[$i]['realisasi_pelatihan_nonfte'] = @$realisasi_pl['realisasi_nonfte'];
+            $data[$i]['realisasi_sertifikasi_fte'] = @$realisasi_cert['realisasi_fte'];
+            $data[$i]['realisasi_sertifikasi_nonfte'] = @$realisasi_cert['realisasi_nonfte'];
+            $data[$i]['realisasi_peserta_total'] = @$realisasi_pl['realisasi_fte']+@$realisasi_pl['realisasi_nonfte']+@$realisasi_cert['realisasi_fte']+@$realisasi_cert['realisasi_nonfte'];
+
 			$data[$i]['encrypt_id'] = encrypt_url($rec['id']);
 			# code...
 		}
@@ -132,29 +137,98 @@ class ReportModel extends CI_Model {
 		exit();
 	}
 
-    // private function quartal($quartal, $thn){
-    //     if($quartal == 1){
-    //         $date1 = $thn.'-01-01';
-    //         $date2 = $thn.'-03-31';
-    //     }
-    //     if($quartal == 2){
-    //         $date1 = $thn.'-04-01';
-    //         $date2 = $thn.'-06-30';
-    //     }
-    //     if($quartal == 3){
-    //         $date1 = $thn.'-07-01';
-    //         $date2 = $thn.'-09-30';
-    //     }
-    //     if($quartal == 4){
-    //         $date1 = $thn.'-10-01';
-    //         $date2 = $thn.'-12-31';
-    //     }
+    private function getSumRencana($thn,$jenis,$kom_id){
+        $query = $this->db->select(" 
+                `p`.`m_karyawan_id` AS `m_karyawan_id`,
+                
+                COUNT(IF(QUARTER(p.rencana_pelaksanaan_selesai)=1,1,NULL)) as rencana_q1, 
+                COUNT(IF(QUARTER(p.rencana_pelaksanaan_selesai)=2,1,NULL)) as rencana_q2, 
+                COUNT(IF(QUARTER(p.rencana_pelaksanaan_selesai)=3,1,NULL)) as rencana_q3, 
+                COUNT(IF(QUARTER(p.rencana_pelaksanaan_selesai)=4,1,NULL)) as rencana_q4, 
+                
+                SUM(IF(p.status_karyawan='FTE',1,0)) as rencana_fte,
+                SUM(IF(p.status_karyawan='Non FTE',1,0)) as rencana_nonfte,
+                count( `p`.`id` ) AS `total`  ")
+            ->from(" `m_tna_pengawalan` as `p`")
+            ->join("r_tna_kompetensi as kom","kom.id = p.r_tna_kompetensi_id")
+            ->where("p.status_code",'1')
+            ->where("YEAR(p.rencana_pelaksanaan_selesai)",$thn)
+            ->where("p.jenis_development",$jenis)
+            ->where_in("p.r_tna_kompetensi_id",$kom_id)
+            ->group_by("kom.name")
+            ->get();
 
-    //     return array(
-    //         'date1' => $date1,
-    //         'date2' => $date2,
-    //     );
-    // }
+            if($query->num_rows()>0){
+                $data = $query->row_array(); 
+            }else{
+                $data = array(
+                    "rencana_q1"=>0,
+                    "rencana_q2"=>0,
+                    "rencana_q3"=>0,
+                    "rencana_q4"=>0,
+                    "rencana_fte"=>0,
+                    "rencana_nonfte"=>0,
+                    "total"=>0
+                );
+            }
+    
+            return $data;
+    }
+
+    private function getSumRealisasi($thn,$jenis,$kom_id){
+        $query = $this->db->select("`p`.`m_karyawan_id` AS `m_karyawan_id`,
+        
+                    COUNT(IF(QUARTER(p.waktu_pelaksanaan_selesai)=1,1,NULL)) as realisasi_q1, 
+                    COUNT(IF(QUARTER(p.waktu_pelaksanaan_selesai)=2,1,NULL)) as realisasi_q2, 
+                    COUNT(IF(QUARTER(p.waktu_pelaksanaan_selesai)=3,1,NULL)) as realisasi_q3, 
+                    COUNT(IF(QUARTER(p.waktu_pelaksanaan_selesai)=4,1,NULL)) as realisasi_q4, 
+                    
+                    SUM(IF(p.status_karyawan='FTE',1,0)) as realisasi_fte,
+                    SUM(IF(p.status_karyawan='Non FTE',1,0)) as realisasi_nonfte,
+                    count( `p`.`id` ) AS `total` ")
+                ->from(" `m_tna_pengawalan` as `p`")
+                ->join("r_tna_kompetensi as kom","kom.id = p.r_tna_kompetensi_id")
+                ->where("p.status_code",'1')
+                ->where("`p`.`waktu_pelaksanaan_selesai` <= now()")
+                ->where("YEAR(p.waktu_pelaksanaan)",$thn)
+                ->where("p.jenis_development",$jenis)
+                ->where_in("p.r_tna_kompetensi_id",$kom_id)
+                ->group_by("kom.name")
+                ->get();
+        if($query->num_rows()>0){
+            $data = $query->row_array(); 
+        }else{
+            $data = array(
+                "realisasi_q1"=>0,
+                "realisasi_q2"=>0,
+                "realisasi_q3"=>0,
+                "realisasi_q4"=>0,
+                "realisasi_fte"=>0,
+                "realisasi_nonfte"=>0,
+                "total"=>0
+            );
+        }
+
+        return $data;
+       
+    }
+
+
+
+    public function getDataReport($thn){
+        $query = $this->db->select("tp.id,
+                            tp.jenis_pelatihan,
+                            GROUP_CONCAT(DISTINCT(tp.r_tna_kompetensi_id)) as kompetensi_id,
+                            `tk`.`name` AS `kompetensi`")
+                ->from("m_tna_pengawalan as tp")
+                ->join("r_tna_kompetensi as kom","kom.id=tp.r_tna_kompetensi_id")
+                ->where("YEAR(tp.waktu_pelaksanaan_selesai)",$thn)
+                ->or_where("YEAR(tp.rencana_pelaksanaan_selesai)",$thn)
+                ->group_by("kom.name")
+                ->get()
+                ->result();
+
+    }
 
 }
 

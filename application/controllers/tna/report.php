@@ -23,10 +23,10 @@ class Report extends CI_Controller {
         }
 		$data['active_menu'] 	= 'Report';
         $data['breadcrumb'] 	= 'Report';
-		$data['title'] 			= 'Report';
+		$data['title'] 			= 'Report Perencanaaan Vs Realisasi';
         $data['filter_year']    = $filter_year;
-		$data['action_url_submit'] 	= site_url('tna/anggaran/submit');
-		$data['action_url_update'] 	= site_url('tna/anggaran/update');
+		$data['action_url_submit'] 	= "";
+		$data['action_url_update'] 	= "";
 		$data['css'] 			= array(
 			'plugins/select2/select2.min.css',
 			'plugins/datepicker/datepicker3.css',
@@ -36,7 +36,6 @@ class Report extends CI_Controller {
 			'plugins/datepicker/bootstrap-datepicker.js',
 			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js',
 			'js/module/report/report.js?random='.date("ymdHis"),
-			'js/custom.js='.date("ymdHis"),
 		);
 
 		$this->template->load('template','tna/report/index',$data);

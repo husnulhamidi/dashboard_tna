@@ -14,9 +14,9 @@ function load(thn){
 
 function builTable(thn){
     if ($.fn.DataTable.isDataTable('#report')) {
-        $('#report').DataTable().destroy();
+        $('#tbl_report').DataTable().destroy();
     }
-    $('#report').DataTable({
+    $('#tbl_report').DataTable({
         processing: true, 
         serverSide: true, 
         scrollX: true,
@@ -41,41 +41,43 @@ function builTable(thn){
                     return meta.row + meta.settings._iDisplayStart + 1;
                 }
             },
-            { "data": "jenis_development"},
+            { "data": "jenis_pelatihan"},
             { "data": "kompetensi"},
-            { "data": "perencanaan_pelatihan_Q1"},
-            { "data": "perencanaan_pelatihan_Q2"},
-            { "data": "perencanaan_pelatihan_Q3"},
-            { "data": "perencanaan_pelatihan_Q4"},
-            { "data": "perencanaan_total_pelatihan"},
-            { "data": "perencanaan_sertifikasi_Q1"},
-            { "data": "perencanaan_sertifikasi_Q2"},
-            { "data": "perencanaan_sertifikasi_Q3"},
-            { "data": "perencanaan_sertifikasi_Q4"},
-            { "data": "perencanaan_total_sertifikasi"},
+            { "data": "rencana_pelatihan_q1"},
+            { "data": "rencana_pelatihan_q2"},
+            { "data": "rencana_pelatihan_q3"},
+            { "data": "rencana_pelatihan_q4"},
+            { "data": "rencana_pelatihan_total"},
 
-            { "data": "id"}, //peserta pelatihan fte (perencanaan)
-            { "data": "id"}, //peserta pelatihan non fte (perencanaan)
-            { "data": "id"}, //peserta sertifikasi fte (perencanaan)
-            { "data": "id"}, //peserta sertifikasi non fte (perencanaan)
-            { "data": "id"}, //total peserta (perencanaan)
+            { "data": "rencana_sertifikasi_q1"},
+            { "data": "rencana_sertifikasi_q2"},
+            { "data": "rencana_sertifikasi_q3"},
+            { "data": "rencana_sertifikasi_q4"},
+            { "data": "rencana_sertifikasi_total"},
 
-            { "data": "realisasi_pelatihan_Q1"},
-            { "data": "realisasi_pelatihan_Q2"},
-            { "data": "realisasi_pelatihan_Q3"},
-            { "data": "realisasi_pelatihan_Q4"},
-            { "data": "realisasi_total_pelatihan"},
+            { "data": "rencana_pelatihan_fte"}, //peserta pelatihan fte (perencanaan)
+            { "data": "rencana_pelatihan_nonfte"}, //peserta pelatihan non fte (perencanaan)
+            { "data": "rencana_sertifikasi_fte"}, //peserta sertifikasi fte (perencanaan)
+            { "data": "rencana_sertifikasi_nonfte"}, //peserta sertifikasi non fte (perencanaan)
+            { "data": "rencana_peserta_total"}, //total peserta (perencanaan)
 
-            { "data": "realisasi_sertifikasi_Q1"},
-            { "data": "realisasi_sertifikasi_Q2"},
-            { "data": "realisasi_sertifikasi_Q3"},
-            { "data": "realisasi_sertifikasi_Q4"},
-            { "data": "realisasi_total_sertifikasi"},
+            { "data": "realisasi_pelatihan_q1"},
+            { "data": "realisasi_pelatihan_q2"},
+            { "data": "realisasi_pelatihan_q3"},
+            { "data": "realisasi_pelatihan_q4"},
+            { "data": "realisasi_pelatihan_total"},
 
-            { "data": "id"}, //peserta pelatihan fte (realisasi)
-            { "data": "id"}, //peserta pelatihan non fte (realisasi)
-            { "data": "id"}, //peserta sertifikasi fte (realisasi)
-            { "data": "id"}, //peserta sertifikasi non fte (per          
+            { "data": "realisasi_sertifikasi_q1"},
+            { "data": "realisasi_sertifikasi_q2"},
+            { "data": "realisasi_sertifikasi_q3"},
+            { "data": "realisasi_sertifikasi_q4"},
+            { "data": "realisasi_sertifikasi_total"},
+
+            { "data": "realisasi_pelatihan_fte"}, //peserta pelatihan fte (realisasi)
+            { "data": "realisasi_pelatihan_nonfte"}, //peserta pelatihan non fte (realisasi)
+            { "data": "realisasi_sertifikasi_fte"}, //peserta sertifikasi fte (realisasi)
+            { "data": "realisasi_sertifikasi_nonfte"},
+            { "data": "realisasi_peserta_total"}, //peserta sertifikasi non fte (per          
         ],
     });
 }
