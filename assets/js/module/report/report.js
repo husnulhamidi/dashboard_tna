@@ -53,8 +53,8 @@ function load(kom,thn){
     builTable(kom,thn)
 }
 
-function builTable(kom,thn){
-    if ($.fn.DataTable.isDataTable('#tbl_report')) {
+function builTable(thn){
+    if ($.fn.DataTable.isDataTable('#report')) {
         $('#tbl_report').DataTable().destroy();
     }
     $('#tbl_report').DataTable({
