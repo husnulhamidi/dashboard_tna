@@ -24,11 +24,13 @@ function exportData(){
     $.ajax({
         url     : base_url+"tna/report/exportExcel",
         method: 'post',
-        data: function(d){
-            d.tahun=thn;
-            d.kom=kom
-        }, 
+        // data: function(d){
+        //     d.tahun=thn;
+        //     d.kom=kom
+        // },
+        data:{thn:thn, kom:kom} ,
         success: function(response){
+            // console.log(response)
             var url = window.URL.createObjectURL(new Blob([response]));
     
             // Membuat elemen a untuk tautan unduhan

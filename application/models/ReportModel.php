@@ -137,6 +137,66 @@ class ReportModel extends CI_Model {
 		exit();
 	}
 
+    public function getDataExport($param){
+        if($param['kom']=="Telkomsat"){
+            $kompetensi = "kompetensi_tsat";
+        }else{
+            $kompetensi = "kompetensi";
+        }
+        $this->db->select("kategori_pelatihan,kompetensi_tsat as kompe,jenis_kompetensi,CONCAT(kategori_pelatihan,'-',".$kompetensi.") as con_kompetensi")
+                ->from("m_tna_report_imported")
+                ->where("tahun",$param['thn'])
+                ->group_by("con_kompetensi");
+        $query = $this->db->get();
+        $data = $query->result_array();
+
+        foreach ($data as $i => $rec) {
+            //$arr_kom_id = explode(",",$rec['kompetensi_id']);
+            $rencana_pl = $this->getSumRencana($param['thn'],"Pelatihan",$rec['con_kompetensi'],$kompetensi );
+            $rencana_cert = $this->getSumRencana($param['thn'],"Sertifikasi",$rec['con_kompetensi'],$$kompetensi );
+        
+            $realisasi_pl = $this->getSumRealisasi($param['thn'],"Pelatihan",$rec['con_kompetensi'],$kompetensi );
+            $realisasi_cert = $this->getSumRealisasi($param['thn'],"Sertifikasi",$rec['con_kompetensi'],$kompetensi );
+            
+            $data[$i]['rencana_pelatihan_q1'] = $rencana_pl['rencana_q1'];
+            $data[$i]['rencana_pelatihan_q2'] = $rencana_pl['rencana_q2'];
+            $data[$i]['rencana_pelatihan_q3'] = $rencana_pl['rencana_q3'];
+            $data[$i]['rencana_pelatihan_q4'] = $rencana_pl['rencana_q4'];
+            $data[$i]['rencana_pelatihan_total'] = $rencana_pl['total'];
+
+            $data[$i]['rencana_sertifikasi_q1'] = @$rencana_cert['rencana_q1'];
+            $data[$i]['rencana_sertifikasi_q2'] = @$rencana_cert['rencana_q2'];
+            $data[$i]['rencana_sertifikasi_q3'] = @$rencana_cert['rencana_q3'];
+            $data[$i]['rencana_sertifikasi_q4'] = @$rencana_cert['rencana_q4'];
+            $data[$i]['rencana_sertifikasi_total'] = @$rencana_cert['total'];
+
+            $data[$i]['rencana_pelatihan_fte'] = @$rencana_pl['rencana_fte'];
+            $data[$i]['rencana_pelatihan_nonfte'] = @$rencana_pl['rencana_nonfte'];
+            $data[$i]['rencana_sertifikasi_fte'] = @$rencana_cert['rencana_fte'];
+            $data[$i]['rencana_sertifikasi_nonfte'] = @$rencana_cert['rencana_nonfte'];
+            $data[$i]['rencana_peserta_total'] = @$rencana_pl['rencana_fte']+@$rencana_pl['rencana_nonfte']+@$rencana_cert['rencana_fte']+@$rencana_cert['rencana_nonfte'];
+
+            $data[$i]['realisasi_pelatihan_q1'] = $realisasi_pl['realisasi_q1'];
+            $data[$i]['realisasi_pelatihan_q2'] = $realisasi_pl['realisasi_q2'];
+            $data[$i]['realisasi_pelatihan_q3'] = $realisasi_pl['realisasi_q3'];
+            $data[$i]['realisasi_pelatihan_q4'] = $realisasi_pl['realisasi_q4'];
+            $data[$i]['realisasi_pelatihan_total'] = $realisasi_pl['total'];
+
+            $data[$i]['realisasi_sertifikasi_q1'] = @$realisasi_cert['realisasi_q1'];
+            $data[$i]['realisasi_sertifikasi_q2'] = @$realisasi_cert['realisasi_q2'];
+            $data[$i]['realisasi_sertifikasi_q3'] = @$realisasi_cert['realisasi_q3'];
+            $data[$i]['realisasi_sertifikasi_q4'] = @$realisasi_cert['realisasi_q4'];
+            $data[$i]['realisasi_sertifikasi_total'] = @$realisasi_cert['total'];
+
+            $data[$i]['realisasi_pelatihan_fte'] = @$realisasi_pl['realisasi_fte'];
+            $data[$i]['realisasi_pelatihan_nonfte'] = @$realisasi_pl['realisasi_nonfte'];
+            $data[$i]['realisasi_sertifikasi_fte'] = @$realisasi_cert['realisasi_fte'];
+            $data[$i]['realisasi_sertifikasi_nonfte'] = @$realisasi_cert['realisasi_nonfte'];
+            $data[$i]['realisasi_peserta_total'] = @$realisasi_pl['realisasi_fte']+@$realisasi_pl['realisasi_nonfte']+@$realisasi_cert['realisasi_fte']+@$realisasi_cert['realisasi_nonfte'];
+        }
+        return $data;
+    }
+
     private function getSumRencana($thn,$jenis,$kom,$filter_kom){
         /*$query = $this->db->select(" 
                 `p`.`m_karyawan_id` AS `m_karyawan_id`,
