@@ -1,19 +1,60 @@
 jQuery(document).ready(function() {
-    let thn = $('#filter_year').val()
-    load(thn)
+    let thn = $('#filter_year').val();
+    let kom = $('#filter_kompetensi').val();
+    load(kom,thn)
     $('#filter_year').change(function(){
+        let kom = $('#filter_kompetensi').val();
+        let thn = $('#filter_year').val();
+        load(kom,thn)
+    });
+    $('#filter_kompetensi').change(function(){
+        let kom = $('#filter_kompetensi').val();
         let thn = $('#filter_year').val()
-        load(thn)
-    })
+        load(kom,thn)
+    });
+
+    $('#btnExport').click(function(){
+        exportData();
+    });
 })
 
-function load(thn){
-    $('#thn_realisasi, #thn_perencanaan').html(thn)
-    builTable(thn)
+function exportData(){
+    let kom = $('#filter_kompetensi').val();
+    let thn = $('#filter_year').val();
+    $.ajax({
+        url     : base_url+"tna/report/exportExcel",
+        method: 'post',
+        data: function(d){
+            d.tahun=thn;
+            d.kom=kom
+        }, 
+        success: function(response){
+            var url = window.URL.createObjectURL(new Blob([response]));
+    
+            // Membuat elemen a untuk tautan unduhan
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'report rencana vs realisasi.xls'; // Atur nama file yang diinginkan
+            document.body.appendChild(a);
+            a.click();
+
+            // Menghapus URL objek setelah tautan unduhan diklik
+            window.URL.revokeObjectURL(url);
+        },
+        error: function(xhr, status, error) {
+            console.log(error)
+            console.error(xhr.responseText); // Tampilkan pesan kesalahan dalam konsol
+        }
+    });
 }
 
-function builTable(thn){
-    if ($.fn.DataTable.isDataTable('#report')) {
+function load(kom,thn){
+    $('#thn_realisasi, #thn_perencanaan').html(thn)
+    builTable(kom,thn)
+}
+
+function builTable(kom,thn){
+    if ($.fn.DataTable.isDataTable('#tbl_report')) {
         $('#tbl_report').DataTable().destroy();
     }
     $('#tbl_report').DataTable({
@@ -26,8 +67,9 @@ function builTable(thn){
             type    : "get",
             datatype: "json",
             data    : function(d){
-                d.thn = thn
-                console.log(d)
+                d.thn = thn,
+                d.kom = kom
+                //console.log(d)
             }
                       
         },
@@ -41,8 +83,8 @@ function builTable(thn){
                     return meta.row + meta.settings._iDisplayStart + 1;
                 }
             },
-            { "data": "jenis_pelatihan"},
-            { "data": "kompetensi"},
+            { "data": "kategori_pelatihan"},
+            { "data": "kompe"},
             { "data": "rencana_pelatihan_q1"},
             { "data": "rencana_pelatihan_q2"},
             { "data": "rencana_pelatihan_q3"},

@@ -7,14 +7,14 @@
                 <div class="box box-info">
                     
                     <div class="box-header with-border">
-                        <div class="col-lg-8">
+                        <div class="col-lg-7">
                             <h3 class="box-title" style="padding-top:5px"><?php echo $title;?></h3>
                         </div>
                         <div class="col-lg-2 ">
                             <div class="pull-right">
-                                <div class="input-group">
+                                <div class="input-group" style="padding:5px">
                                     <span class="input-group-addon">Kompetensi </span>
-                                    <select class="select2 form-control" name="kompetensi" id="kompetensi">
+                                    <select class="select2 form-control" name="filter_kompetensi" id="filter_kompetensi">
                                         <option value="Telkomsat">Telkomsat</option>
                                         <option value="Telkom">Telkom</option>
                                     </select>
@@ -32,6 +32,12 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-lg-1 ">
+                            <button class="btn btn-info btn-sm" id="btnExport">
+                                <i class="fa fa-download"></i> Export
+                            </button>
+                        </div>
+                        
                     </div>
                 </div>
                 <div class="row">

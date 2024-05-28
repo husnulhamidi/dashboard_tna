@@ -6,9 +6,9 @@ class Report extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		// if(!$this->session->userdata('user')){
-		// 	redirect('auth/login');
-		// }
+		// if ($this->ion_auth->logged_in() != true) {
+        //     Redirect(baseapplicationportal, false);
+        // }
 		//Do your magic here
 
 		$this->load->model('ReportModel');
