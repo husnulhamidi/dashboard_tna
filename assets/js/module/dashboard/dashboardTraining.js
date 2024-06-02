@@ -13,6 +13,7 @@ $(document).ready(function(){
     })
 
 	$('.export-excel').click(function(){
+		$('.loader-wrapper').css('display','block')
 		exportExcel();
 	})
 })
@@ -142,4 +143,8 @@ function exportExcel(){
 	let thn = parseInt($('#tahun').val());
     var dynamic_url = base_url + 'tna/dashboard-training/export/'+thn;
     window.location.href = dynamic_url;
+	
+	setTimeout(function() { 
+		$('.loader-wrapper').css('display','none')
+    }, 1000);
 }

@@ -1,3 +1,42 @@
+<style>
+    .loader-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.8);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000; /* Pastikan loader berada di atas tabel */
+    }
+
+    .loader {
+        border: 20px solid #EAF0F6;
+        border-radius: 50%;
+        border-top: 20px solid #FF7A59;
+        width: 200px;
+        height: 200px;
+        animation: spinner 4s linear infinite;
+        margin-left:40%;
+        margin-top:5%;
+    }
+
+    .loading-text {
+        margin-top: -8%;
+        margin-left:44%;
+        font-size: 20px;
+        font-weight: bold;
+        color: #FF7A59;
+    }
+
+    @keyframes spinner {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
 <section class="content">
     <div class="row">
         <div class="col-md-12">
@@ -111,7 +150,10 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-
+                        <div class="loader-wrapper" style="display:none">
+                            <div class="loader" ></div>
+                            <div class="loading-text">Loading...</div>
+                        </div>
                         <table  class="table table-striped table-bordered table-hover" id="table-list-karyawan" cellspacing="0" width="100%">
                             <thead>
                                 <tr>

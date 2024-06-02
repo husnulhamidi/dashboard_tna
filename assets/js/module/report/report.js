@@ -14,6 +14,7 @@ jQuery(document).ready(function() {
     });
 
     $('#btnExport').click(function(){
+        $('.loader-wrapper').css('display','block')
         exportData();
     });
 })
@@ -42,6 +43,7 @@ function exportData(){
 
             // Menghapus URL objek setelah tautan unduhan diklik
             window.URL.revokeObjectURL(url);
+            $('.loader-wrapper').css('display','none')
         },
         error: function(xhr, status, error) {
             console.log(error)
