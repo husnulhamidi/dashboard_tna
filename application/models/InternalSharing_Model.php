@@ -34,7 +34,7 @@ class InternalSharing_Model extends CI_Model {
 
         $this->db->select('mti.id, mti.judul_materi, mti.tanggal, mti.jam,mti.materi,
                    mti.tempat, mti.biaya, mti.kuota, mti.link_zoom, mti.r_tna_training_id,
-                   mk.nama AS narasumber,mk.id AS idNarasumber,
+                   mk.nama AS narasumber,mk.id AS idNarasumber,mti.tanggal_mulai,mti.tanggal_selesai,
                    mo.nama AS organisasi,
                    k.name as kompetensi, k.id as kompetensi_id, 
                    jr.name as job_role, jr.id as job_role_id, 

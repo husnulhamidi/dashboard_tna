@@ -100,7 +100,11 @@ function submitFormInternalSharingHCM(){
             jobFamily: "required",
             jobFunc: "required",
             jobRole: "required",
-            kompetensi: "required"
+            kompetensi: "required",
+            jenis_pelatihan: "required",
+            jenis_development: "required",
+            tna: "required",
+            metoda: "required",
         },
         messages: {
             judul:{
@@ -138,7 +142,19 @@ function submitFormInternalSharingHCM(){
             },
             kompetensi:{
                 required:"<i class='fa fa-times'></i> Kompetensi harus diisi"
-            }
+            },
+            jenis_pelatihan:{
+                required:"<i class='fa fa-times'></i> Jenis pelatihan harus diisi"
+            },
+            jenis_development:{
+                required:"<i class='fa fa-times'></i> Jenis development karyawan harus diisi"
+            },
+            metoda:{
+                required:"<i class='fa fa-times'></i> Metode Pembelajaran harus diisi"
+            },
+            tna:{
+                required:"<i class='fa fa-times'></i> Pelatihan/Sertifikasi (TNA) harus diisi"
+            },
             
         },
         highlight: function (element) {
@@ -234,7 +250,11 @@ function buildTableInternalSharingAdmin(){
             { 
                 "data": "tanggal",
                 render:function(data, type, row, meta){
-                    return formatDate(data)
+                    let tgl = formatDate(row.tanggal_mulai) + ' s/d ' +  formatDate(row.tanggal_selesai)
+                    if(row.tanggal_mulai == null){
+                        tgl = formatDate(data)
+                    }
+                    return tgl
                 } 
             },
             { "data": "jam" },

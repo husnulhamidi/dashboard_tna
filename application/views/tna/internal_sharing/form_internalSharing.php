@@ -79,14 +79,6 @@
                                             <input type="text" class="form-control" placeholder="Judul materi" name="judul" id="judul" value="<?php echo @$detail->judul_materi;?>" >
                                         </div>
                                     </div>
-                                    <!-- <div class="form-group">
-                                        <label class="col-sm-2 control-label">Materi <span class="text-red">*</span></label>
-                                        <div class="col-sm-8">
-                                            
-                                            <input type="file" name="file_materi" id="file_materi" class="form-control" >
-                                            <input type="hidden" name="upload_file_materi" value="file_materi">
-                                        </div>
-                                    </div> -->
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Subdit / Unit <span class="text-red">*</span></label>
                                         <div class="col-sm-8">
@@ -104,8 +96,76 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
+                                        <label class="col-sm-2 control-label">Jenis Pelatihan/Sertifikasi <span class="text-red">*</span></label>
+                                        <div class="col-sm-8">
+                                            <select class="select2 form-control" name="jenis_pelatihan" id="jenis_pelatihan" >
+                                                <option value="">--- Pilih ---</option>
+                                                <?php 
+                                                foreach ($jenis_pelatihan as $jp) {
+                                                    $selected = '';
+                                                    if($jp->name == @$detail->jenis_pelatihan){
+                                                        $selected = 'selected';
+                                                    }
+                                                    echo "<option ".$selected." value='".$jp->name."'>".$jp->name.'</option>';
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Jenis Development Karyawan <span class="text-red">*</span></label>
+                                        <div class="col-sm-8">
+                                            <select class="select2 form-control" name="jenis_development" id="jenis_development">
+                                                <option value="">--- Pilih Jenis development Karyawan ---</option>
+                                                <?php 
+                                                foreach ($jenis_development as $jd) {
+                                                    $selected = '';
+                                                    if($jd->label == @$detail->jenis_development){
+                                                        $selected = 'selected';
+                                                    }
+                                                    echo "<option ".$selected." value='".$jd->label."'>".$jd->label.'</option>';
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Pelatihan/Sertifikasi (TNA) <span class="text-red">*</span></label>
+                                        <div class="col-sm-8">
+                                            <select class="select2 form-control" name="tna" id="tna">
+                                                <option value="">--- Pilih ---</option>
+                                                <?php 
+                                                foreach ($tna as $value) {
+                                                    $selected = '';
+                                                    if($value->id == @$detail->metoda_pembelajaran){
+                                                        $selected = 'selected';
+                                                    }
+                                                    echo "<option ".$selected." value='".$value->id."'>". $value->code .' | '.$value->name.'</option>';
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Metode Pembelajaran <span class="text-red">*</span></label>
+                                        <div class="col-sm-8">
+                                            <select class="select2 form-control" name="metoda" id="metoda">
+                                                <option value="">--- Pilih ---</option>
+                                                <?php 
+                                                foreach ($metoda as $mt) {
+                                                    $selected = '';
+                                                    if($mt->label == @$detail->metoda_pembelajaran){
+                                                        $selected = 'selected';
+                                                    }
+                                                    echo "<option ".$selected." value='".$mt->label."'>".$mt->label.'</option>';
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="col-sm-2 control-label">Tanggal <span class="text-red">*</span></label>
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-4">
                                             <div class="input-group">
                                                 <input type="text" class="form-control pull-right" id="tgl" name="tgl"  >
                                                 <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
@@ -184,7 +244,7 @@ $(document).ready(function () {
         placeholder: "Pilih Opsi"
     });
 
-    $('#tgl').datepicker({
+    $('#tgl').daterangepicker({
         autoclose: true
     });
 

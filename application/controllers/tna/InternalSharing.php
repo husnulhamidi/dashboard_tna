@@ -14,6 +14,7 @@ class InternalSharing extends CI_Controller {
 		$this->load->model('InternalSharing_Model', 'InternalSharing');
 		$this->load->model('Setting_ttd_model', 'settingTTD');
 		$this->load->model('PengawalanModel', 'PengawalanModel');
+		$this->load->model('UsulanTnaModel', 'UsulanTnaModel');
 		//Do your magic here
     
 	}
@@ -94,14 +95,21 @@ class InternalSharing extends CI_Controller {
 		$data['title'] 			= 'Tambah Internal Sharing';
 		$data['action'] 		= 'add';
 		$data['action_url'] 	= site_url('tna/InternalSharing/submit');
+		$data['jenis_pelatihan'] = $this->UsulanTnaModel->get_jenis_pelatihan();
+		$data['jenis_development'] = $this->UsulanTnaModel->get_jenis_development();
+		$data['metoda'] = $this->UsulanTnaModel->get_metoda_pelatihan();
+		$data['tna'] = $this->UsulanTnaModel->get_training();
 		$data['css'] 			= array(
 			'plugins/sweet-alert/sweetalert.css',
             'plugins/select2/select2.min.css',
             'plugins/datepicker/datepicker3.css',
             'plugins/timepicker/bootstrap-timepicker.css',
             'plugins/timepicker/bootstrap-timepicker.min.css',
+			'plugins/daterangepicker/daterangepicker-bs3.css'
         );
 		$data['js']				= array(
+			'plugins/daterangepicker/moment.js',
+			'plugins/daterangepicker/daterangepicker.js',
 			'plugins/sweet-alert/sweetalert.min.js',
 			'js/jquery.validate.js',
             'plugins/select2/select2.full.min.js',
@@ -254,9 +262,12 @@ class InternalSharing extends CI_Controller {
 
     public function createOrUpdate(){
 		// echo json_encode($this->input->post());
-    	$waktu = explode("-", $this->input->post('tgl'));
-		$tgl1 = explode("/", $waktu[0]);
-		$tgl = $tgl1[2].'-'.$tgl1[0].'-'.$tgl1[1];
+
+    	$pecahTgl = explode('-', $this->input->post('tgl'));
+		$tmptgl1 = trim($pecahTgl[0]);
+		$tmptgl2 = trim($pecahTgl[1]);
+		$tgl = explode('/', $tmptgl1);
+		$tgl2 = explode('/', $tmptgl2);
 
 		// if($this->input->post('upload_file_materi')){
 		// 	$fileName = $this->input->post('upload_file_materi');
@@ -276,7 +287,8 @@ class InternalSharing extends CI_Controller {
 			'judul_materi' => $this->input->post('judul'),
 			'm_organisasi_id' => $this->input->post('direktorat'),
 			'm_karyawan_id' => $this->input->post('pemateri'),
-			'tanggal' => $tgl,
+			// 'tanggal' => $tgl,
+			'tanggal' => $tgl[2].'-'.$tgl[0].'-'.$tgl[1],
 			'jam' => $this->input->post('time'),
 			'tempat' => $this->input->post('tempat'),
 			'biaya' => $this->input->post('biaya'),
@@ -287,6 +299,12 @@ class InternalSharing extends CI_Controller {
 			'r_tna_job_function_id' => $this->input->post('jobFunc'),
 			'r_tna_job_role_id' => $this->input->post('jobRole'),
 			'r_tna_kompetensi_id' => $this->input->post('kompetensi'),
+			'jenis_pelatihan' => $this->input->post('jenis_pelatihan'),
+			'jenis_development'=> $this->input->post('jenis_development'),
+			'metod_pembelajaran'=> $this->input->post('metoda'),
+			'r_tna_training_id' => $this->input->post('tna'),
+			'tanggal_mulai' => $tgl[2].'-'.$tgl[0].'-'.$tgl[1],
+			'tanggal_selesai'=> $tgl2[2].'-'.$tgl2[0].'-'.$tgl2[1],
 			// 'materi'			=> $upload_file['data'],
 		);
 		if($this->input->post('id')){
