@@ -12,6 +12,10 @@ jQuery(document).ready(function() {
         submitConform()
     })
 
+    $('#submit-feedback').click(function(){
+        submitFeedback()
+    })
+
     $('.btn-filter').on('click', function() {
         $('#modalFilter').modal('hide')
         const table = $('#tbl-internal-sharing-hcpd').DataTable();
@@ -434,6 +438,15 @@ function buildTableInternalSharingKaryawan(){
                                     </button>&nbsp;`
                     }
 
+                    html = html+`<button
+                                onclick="showModalFeedback(`+row.id+`)" 
+                                data-toggle="tooltip" 
+                                data-placement="bottom" 
+                                title="Feedback" 
+                                class="btn btn-primary btn-xs">
+                                <i class="fa fa-comments-o" aria-hidden="true"></i>
+                            </button>&nbsp;`
+
                     return html
                 }
             },
@@ -452,7 +465,7 @@ function buildTableInternalSharingKaryawan(){
 
 function showModal(ket, pelatihan, idSharing){
     var formattedDateTime = getCurrentDateTime();
-    console.log(formattedDateTime);
+    // console.log(formattedDateTime);
     var label = 'Konfirmasi Pendaftaran Internal Sharing'
     var text = 'Apakah anda yakin mau daftar Internal Sharing'
     var text2 = pelatihan
@@ -477,6 +490,44 @@ function submitConform(){
         type: 'POST',
         dataType: "JSON",
         data: $('#form-confirm').serialize(),
+        success: function(response) {
+            if(response.success){
+                setTimeout(function() {
+                    swal({
+                        title: "Notifikasi!",
+                        text: "Data berhasil disimpan",
+                        imageUrl: img_icon_success
+                    }, function(d) {
+                        location.reload();
+                    });
+                }, 1000);
+            }else{
+                setTimeout(function() {
+                    swal({
+                        title: "Notifikasi!",
+                        text: "Data gagal disimpan",
+                        imageUrl: img_icon_error
+                    }, function() {
+                        location.reload();
+                    });
+                }, 1000);
+            }
+        }            
+    });
+}
+
+function showModalFeedback(id){
+    console.log(id)
+    $('#id').val(id)
+    $('#modalFeedback').modal('show')
+}
+
+function submitFeedback(){
+    $.ajax({
+        url: base_url+"tna/internalSharing-employee/feedback",
+        type: 'POST',
+        dataType: "JSON",
+        data: $('#form-feedback').serialize(),
         success: function(response) {
             if(response.success){
                 setTimeout(function() {

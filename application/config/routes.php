@@ -289,6 +289,7 @@ $route['tna/internalSharing/createOrUpdatePeserta']    = 'tna/InternalSharing/cr
 
 $route['tna/internalSharing/deleteData/(:any)']    = 'tna/InternalSharing/deleteData/$1';
 $route['tna/internalSharing-employee/confirm']    = 'tna/InternalSharing/confirm';
+$route['tna/internalSharing-employee/feedback']    = 'tna/InternalSharing/feedback';
 
 
 //=====================================================================================================================

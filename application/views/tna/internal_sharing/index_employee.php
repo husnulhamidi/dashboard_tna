@@ -136,6 +136,7 @@
 <?php 
     $this->load->view('tna/internal_sharing/modal_filter');
     $this->load->view('tna/internal_sharing/modal_confrim');
+    $this->load->view('tna/internal_sharing/modal_feedback');
 ?>
 <script type="text/javascript">
 	var action_url_detail = '<?php echo base_url('tna/internalSharing-employee/detail');?>'
