@@ -38,7 +38,11 @@
             </div>
             <div class="modal-body" style="margin-top:-10px">
                 <form method="post" action="javascript:;" class="form-horizontal form-feedback" id="form-feedback">
-                    <input type="hidden" name="id" id="id">
+                    <input type="hidden" name="source_id" id="id">
+                    <input type="hidden" name="source_type" value="Internal Sharing">
+                    <input type="hidden" name="skor_materi" id="total_materi">
+                    <input type="hidden" name="skor_narasumber" id="total_narasumber">
+                    <input type="hidden" name="source_karyawan_id" id="source_karyawan_id">
                     <div class="box-body">
                         <div>
                             <h3>FORM UMPAN BALIK (FEEDBACK) PELAKSANAAN PELATIHAN (INTERNAL & EKSTERNAL)/SERTIFIKASI</h3>
@@ -54,85 +58,35 @@
 
                             <div class="form-section">
                                 <h3>MATERI</h3>
-                                <table class="form-table">
-                                    <tr>
-                                        <th>Pernyataan</th>
-                                        <th>5</th>
-                                        <th>4</th>
-                                        <th>3</th>
-                                        <th>2</th>
-                                        <th>1</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Kesesuaian dengan kebutuhan peserta</td>
-                                        <td><input type="radio" name="materi_a" value="5"></td>
-                                        <td><input type="radio" name="materi_a" value="4"></td>
-                                        <td><input type="radio" name="materi_a" value="3"></td>
-                                        <td><input type="radio" name="materi_a" value="2"></td>
-                                        <td><input type="radio" name="materi_a" value="1"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mudah diterima dan diterapkan dengan mudah</td>
-                                        <td><input type="radio" name="materi_b" value="5"></td>
-                                        <td><input type="radio" name="materi_b" value="4"></td>
-                                        <td><input type="radio" name="materi_b" value="3"></td>
-                                        <td><input type="radio" name="materi_b" value="2"></td>
-                                        <td><input type="radio" name="materi_b" value="1"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Disampaikan dengan urut dan sistematikanya jelas</td>
-                                        <td><input type="radio" name="materi_c" value="5"></td>
-                                        <td><input type="radio" name="materi_c" value="4"></td>
-                                        <td><input type="radio" name="materi_c" value="3"></td>
-                                        <td><input type="radio" name="materi_c" value="2"></td>
-                                        <td><input type="radio" name="materi_c" value="1"></td>
-                                    </tr>
+                                <table class="form-table" id="table-materi">
+                                    <thead>
+                                        <tr>
+                                            <th>Pernyataan</th>
+                                            <th>5</th>
+                                            <th>4</th>
+                                            <th>3</th>
+                                            <th>2</th>
+                                            <th>1</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="body-table-materi"></tbody>
                                 </table>
                             </div>
 
                             <div class="form-section">
                                 <h3>NARASUMBER</h3>
-                                <table class="form-table">
-                                    <tr>
-                                        <th>Pernyataan</th>
-                                        <th>5</th>
-                                        <th>4</th>
-                                        <th>3</th>
-                                        <th>2</th>
-                                        <th>1</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Menguasai Materi yang disampaikan</td>
-                                        <td><input type="radio" name="narasumber_a" value="5"></td>
-                                        <td><input type="radio" name="narasumber_a" value="4"></td>
-                                        <td><input type="radio" name="narasumber_a" value="3"></td>
-                                        <td><input type="radio" name="narasumber_a" value="2"></td>
-                                        <td><input type="radio" name="narasumber_a" value="1"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Memberikan kesempatan tanya-jawab</td>
-                                        <td><input type="radio" name="narasumber_b" value="5"></td>
-                                        <td><input type="radio" name="narasumber_b" value="4"></td>
-                                        <td><input type="radio" name="narasumber_b" value="3"></td>
-                                        <td><input type="radio" name="narasumber_b" value="2"></td>
-                                        <td><input type="radio" name="narasumber_b" value="1"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Menyajikan materi dengan jelas dan mudah dipahami</td>
-                                        <td><input type="radio" name="narasumber_c" value="5"></td>
-                                        <td><input type="radio" name="narasumber_c" value="4"></td>
-                                        <td><input type="radio" name="narasumber_c" value="3"></td>
-                                        <td><input type="radio" name="narasumber_c" value="2"></td>
-                                        <td><input type="radio" name="narasumber_c" value="1"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Penampilan narasumber</td>
-                                        <td><input type="radio" name="narasumber_d" value="5"></td>
-                                        <td><input type="radio" name="narasumber_d" value="4"></td>
-                                        <td><input type="radio" name="narasumber_d" value="3"></td>
-                                        <td><input type="radio" name="narasumber_d" value="2"></td>
-                                        <td><input type="radio" name="narasumber_d" value="1"></td>
-                                    </tr>
+                                <table class="form-table" id="table-materi-narasumber">
+                                    <thead>
+                                        <tr>
+                                            <th>Pernyataan</th>
+                                            <th>5</th>
+                                            <th>4</th>
+                                            <th>3</th>
+                                            <th>2</th>
+                                            <th>1</th>
+                                        </tr>
+                                    </thead>
+                                   <tbody id="body-table-narasumber"></tbody>
                                 </table>
                             </div>
 

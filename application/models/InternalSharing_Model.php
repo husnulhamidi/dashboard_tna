@@ -514,6 +514,26 @@ class InternalSharing_Model extends CI_Model {
         return $data;
     }
 
+    public function getDataFeedback($group){
+        $data = $this->db->select('*')
+                ->from('r_tna_feedback_pertanyaan')
+                ->where('group', $group)
+                ->where('status_code', '1')
+                ->get()
+                ->result();
+        return $data;
+    }
+
+    public function insertFeedback($data){
+        $this->db->insert('m_tna_feedback', $data);
+        return $this->db->insert_id();
+    }
+
+    public function insertFeedbackPenilaian($data){
+        $this->db->insert('m_tna_feedback_penilaian', $data);
+        return $this->db->insert_id();
+    }
+
 }
 
 /* End of file internalSharing.php */

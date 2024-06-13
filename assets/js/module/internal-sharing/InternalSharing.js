@@ -387,6 +387,7 @@ function buildTableInternalSharingKaryawan(){
             { 
                 "data": "id",
                 render:function(data, type, row, meta){
+                    console.log(row)
                     // var respon = 'Tidak ikut'
                     // if(row.jumlah_ikut > '0'){
                     //     respon = 'Ikut'
@@ -439,7 +440,7 @@ function buildTableInternalSharingKaryawan(){
                     }
 
                     html = html+`<button
-                                onclick="showModalFeedback(`+row.id+`)" 
+                                onclick="showModalFeedback(`+row.id+`,`+row.idNarasumber+`)" 
                                 data-toggle="tooltip" 
                                 data-placement="bottom" 
                                 title="Feedback" 
@@ -516,10 +517,94 @@ function submitConform(){
     });
 }
 
-function showModalFeedback(id){
+function showModalFeedback(id, source_karyawan_id){
     console.log(id)
     $('#id').val(id)
+    $('#source_karyawan_id').val(source_karyawan_id)
+    getDataFeedbackMateri();
+    getDataFeedbackNarasumber();
     $('#modalFeedback').modal('show')
+}
+
+function getDataFeedbackMateri(){
+    $('#body-table-materi').empty()
+    var totalNilaiMateri = 0;
+    $.ajax({
+        type : "POST",
+        url  : base_url+"tna/internalSharing-employee/getDataFeedback",
+        data:{group:'Materi'},
+        dataType: "JSON",
+        success:function(resp){
+            console.log(resp)
+            if(resp.length > 0){
+                resp.forEach((element, index) => {
+                    let number_materi = index+1
+                    var htmlGroup = `
+                        <tr>
+                            <td>
+                                ${element.pertanyaan}
+                                <input type="hidden" value="${element.pertanyaan}" name="pertanyaan_materi[]">
+                            </td>
+                            <td class="text-center" style="vertical-align: middle"> <input type="radio" name="radio_${element.group}_${number_materi}" value="${element.nilai_skor1}">
+                            </td>
+                            <td class="text-center" style="vertical-align: middle"><input type="radio" name="radio_${element.group}_${number_materi}" value="${element.nilai_skor2}"></td>
+                            <td class="text-center" style="vertical-align: middle"><input type="radio" name="radio_${element.group}_${number_materi}" value="${element.nilai_skor3}"></td>
+                            <td class="text-center" style="vertical-align: middle"><input type="radio" name="radio_${element.group}_${number_materi}" value="${element.nilai_skor4}"></td>
+                            <td class="text-center" style="vertical-align: middle"><input type="radio" name="radio_${element.group}_${number_materi}" value="${element.nilai_skor5}"></td>
+                        </tr>
+                    `;
+                    $('#body-table-materi').append(htmlGroup);
+                })
+            }
+            $('input[type=radio]').on('change', function () {
+                totalNilaiMateri = 0;
+                $('input[type=radio]:checked').each(function () {
+                    totalNilaiMateri += parseInt($(this).val());
+                    $('#total_materi').val(totalNilaiMateri)
+                });
+            });
+        },
+    });
+}
+
+function getDataFeedbackNarasumber(){
+    $('#body-table-narasumber').empty()
+    var totalNilaiNarasumber = 0
+    $.ajax({
+        type : "POST",
+        url  : base_url+"tna/internalSharing-employee/getDataFeedback",
+        data:{group:'Narasumber'},
+        dataType: "JSON",
+        success:function(resp){
+            console.log(resp)
+            if(resp.length > 0){
+                resp.forEach((element, index) => {
+                    let number_narasumber = index+1
+                    var htmlGroup = `
+                        <tr>
+                            <td>
+                                ${element.pertanyaan}
+                                <input type="hidden" value="${element.pertanyaan}" name="pertanyaan_narasumber[]">
+                            </td>
+                            <td class="text-center" style="vertical-align: middle"><input type="radio" name="radio_${element.group}_${number_narasumber}" value="${element.nilai_skor1}"></td>
+                            <td class="text-center" style="vertical-align: middle"><input type="radio" name="radio_${element.group}_${number_narasumber}" value="${element.nilai_skor2}"></td>
+                            <td class="text-center" style="vertical-align: middle"><input type="radio" name="radio_${element.group}_${number_narasumber}" value="${element.nilai_skor3}"></td>
+                            <td class="text-center" style="vertical-align: middle"><input type="radio" name="radio_${element.group}_${number_narasumber}" value="${element.nilai_skor4}"></td>
+                            <td class="text-center" style="vertical-align: middle"><input type="radio" name="radio_${element.group}_${number_narasumber}" value="${element.nilai_skor5}"></td>
+                        </tr>
+                    `;
+                    $('#body-table-narasumber').append(htmlGroup);
+                })
+            }
+            $('input[type=radio]').on('change', function () {
+                totalNilaiNarasumber = 0;
+                $('input[type=radio]:checked').each(function () {
+                    totalNilaiNarasumber += parseInt($(this).val());
+                    $('#total_narasumber').val(totalNilaiNarasumber)
+                });
+            });
+        },
+    });
 }
 
 function submitFeedback(){
@@ -529,6 +614,7 @@ function submitFeedback(){
         dataType: "JSON",
         data: $('#form-feedback').serialize(),
         success: function(response) {
+            console.log(response)
             if(response.success){
                 setTimeout(function() {
                     swal({

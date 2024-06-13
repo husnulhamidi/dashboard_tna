@@ -537,11 +537,53 @@ class InternalSharing extends CI_Controller {
 		echo json_encode($data);
 	}
 
+	public function getDataFeedback(){
+		$data = $this->InternalSharing->getDataFeedback($this->input->post('group'));
+		echo json_encode($data);
+	}
+
 	public function feedback(){
 		$userData = $this->session->userdata('user');
 		$karyawanId = $userData['m_karyawan_id'];
 		$karyawanId = $karyawanId;
-		echo json_encode($this->input->post());
+		//insert table m_tna_feedback
+		$dataFeedback = array(
+			'source_type' => $this->input->post('source_type'),
+			'source_id' => $this->input->post('source_id'),
+			'source_karyawan_id' => $this->input->post('source_karyawan_id'),
+			'skor_materi' => $this->input->post('skor_materi'),
+			'skor_narasumber' => $this->input->post('skor_narasumber'),
+			'manfaat_yg_diperoleh' => $this->input->post('manfaat'),
+			'kritik_saran' => $this->input->post('kritik_saran'),
+			'created_by' => $karyawanId,
+			'created_date' => date('Y-m-d')
+		);
+		$saveFeedback = $this->InternalSharing->insertFeedback($dataFeedback);
+		if($saveFeedback){
+			$this->saveFeedbackPenilaian($saveFeedback, 'pertanyaan_materi', 'Materi');
+			$this->saveFeedbackPenilaian($saveFeedback, 'pertanyaan_narasumber', 'Narasumber');
+		}
+
+		$return = array(
+			'success'		=> true,
+			'status_code'	=> 201,
+			'msg'			=> "Data berhasil diubah.",
+			'data'			=> array()
+		);	
+		echo json_encode($return);
+
+	}
+
+	private function saveFeedbackPenilaian($feedbackId, $pertanyaanKey, $group) {
+		foreach ($this->input->post($pertanyaanKey) as $key => $value) {
+			$skor = 'radio_' . $group . '_' . ($key + 1);
+			$dataPenilaian = array(
+				'm_tna_feedback_id' => $feedbackId,
+				'pertanyaan' => $value,
+				'nilai_skor' => $this->input->post($skor)
+			);
+			$this->InternalSharing->insertFeedbackPenilaian($dataPenilaian);
+		}
 	}
 
 	public function complate(){
