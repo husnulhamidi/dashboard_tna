@@ -73,6 +73,7 @@
 </section>
 <?php 
     $this->load->view('tna/internal_sharing/modal_filter');
+    $this->load->view('tna/internal_sharing/modal_feedback');
 ?>
 <script type="text/javascript">
     var action_url_edit ='<?php echo base_url('tna/InternalSharing/edit');?>';

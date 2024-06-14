@@ -523,6 +523,35 @@ class InternalSharing_Model extends CI_Model {
                 ->result();
         return $data;
     }
+    public function getDataFeedbackAdmin($group, $id, $karyawanId, $source){
+        $this->db->select('
+            f.source_id,
+            f.source_karyawan_id,
+            f.skor_materi,
+            f.skor_narasumber,
+            f.manfaat_yg_diperoleh,
+            f.kritik_saran,
+            p.pertanyaan,
+            p.group,
+            p.nilai_skor1,
+            p.nilai_skor2,
+            p.nilai_skor3,
+            p.nilai_skor4,
+            p.nilai_skor5,
+            pen.nilai_skor
+        ');
+        $this->db->from('m_tna_feedback AS f');
+        $this->db->join('m_tna_feedback_penilaian AS pen', 'f.id = pen.m_tna_feedback_id', 'left');
+        $this->db->join('r_tna_feedback_pertanyaan AS p', 'pen.pertanyaan = p.pertanyaan', 'left');
+        $this->db->where('f.source_karyawan_id', $karyawanId);
+        $this->db->where('f.source_id', $id);
+        $this->db->where('f.source_type', $source);
+        $this->db->where('f.source_type', $source);
+        $this->db->where('p.group', $group);
+        
+        $query = $this->db->get();
+        return $query->result();
+    }
 
     public function insertFeedback($data){
         $this->db->insert('m_tna_feedback', $data);

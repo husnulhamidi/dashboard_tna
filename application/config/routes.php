@@ -291,6 +291,7 @@ $route['tna/internalSharing/deleteData/(:any)']    = 'tna/InternalSharing/delete
 $route['tna/internalSharing-employee/confirm']    = 'tna/InternalSharing/confirm';
 $route['tna/internalSharing-employee/feedback']    = 'tna/InternalSharing/feedback';
 $route['tna/internalSharing-employee/getDataFeedback']    = 'tna/InternalSharing/getDataFeedback';
+$route['tna/internalSharing-employee/getDataFeedbackAdmin']    = 'tna/InternalSharing/getDataFeedbackAdmin';
 
 
 //=====================================================================================================================

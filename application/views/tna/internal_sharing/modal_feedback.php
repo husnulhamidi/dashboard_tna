@@ -27,6 +27,15 @@
         max-width: 90%;
         width: 60%;
     }
+    .box-footer .pull-right {
+        display: flex;
+        align-items: center; /* Ensures vertical alignment */
+    }
+
+    .box-footer .pull-right .btn {
+        margin-left: 5px; /* Adds space between buttons, adjust as needed */
+    }
+
 </style>
 
 <div class="modal fade" id="modalFeedback" role="dialog" aria-hidden="true" enctype="multipart/form-data">
@@ -43,6 +52,7 @@
                     <input type="hidden" name="skor_materi" id="total_materi">
                     <input type="hidden" name="skor_narasumber" id="total_narasumber">
                     <input type="hidden" name="source_karyawan_id" id="source_karyawan_id">
+                    <input type="hidden" name="is_update" id="is_update">
                     <div class="box-body">
                         <div>
                             <h3>FORM UMPAN BALIK (FEEDBACK) PELAKSANAAN PELATIHAN (INTERNAL & EKSTERNAL)/SERTIFIKASI</h3>
@@ -92,19 +102,19 @@
 
                             <div class="form-section">
                                 <h3>MANFAAT YANG DIPEROLEH DARI PELATIHAN/SERTIFIKASI INI :</h3>
-                                <textarea class="textarea form-control" name="manfaat" rows='3'></textarea>
+                                <textarea class="textarea form-control" name="manfaat" id="manfaat" rows='3'></textarea>
                             </div>
 
                             <div class="form-section">
                                 <h3>KRITIK/SARAN UNTUK MATERI DAN FASILITATOR :</h3>
-                                <textarea class="textarea form-control" name="kritik_saran" rows='3'></textarea>
+                                <textarea class="textarea form-control" name="kritik_saran" id="kritik_saran" rows='3'></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="box-footer">
                         <div class="pull-right">
                             <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="false">Close</button>
-                            <button type="submit" class="btn btn-info submit-feedback" id="submit-feedback">Kirim Feedback</button>
+                            <button type="submit" style="display:none" class="btn btn-info submit-feedback" id="submit-feedback">Kirim Feedback</button>
                         </div>
                     </div>
                 </form>

@@ -542,7 +542,13 @@ class InternalSharing extends CI_Controller {
 		echo json_encode($data);
 	}
 
+	public function getDataFeedbackAdmin(){
+		$data = $this->InternalSharing->getDataFeedbackAdmin($this->input->post('group'),$this->input->post('internalSharingId'),$this->input->post('karywanId'),$this->input->post('source') );
+		echo json_encode($data);
+	}
+
 	public function feedback(){
+		echo json_encode($this->input->post());
 		$userData = $this->session->userdata('user');
 		$karyawanId = $userData['m_karyawan_id'];
 		$karyawanId = $karyawanId;
@@ -558,6 +564,7 @@ class InternalSharing extends CI_Controller {
 			'created_by' => $karyawanId,
 			'created_date' => date('Y-m-d')
 		);
+		// if($this->input->post('is_update'))
 		$saveFeedback = $this->InternalSharing->insertFeedback($dataFeedback);
 		if($saveFeedback){
 			$this->saveFeedbackPenilaian($saveFeedback, 'pertanyaan_materi', 'Materi');

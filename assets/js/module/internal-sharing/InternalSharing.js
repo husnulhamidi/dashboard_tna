@@ -303,8 +303,19 @@ function buildTableInternalSharingAdmin(){
                                         href="`+action_url_generate+'/'+data+'/all'+`">Generate Sertifikat
                                         </a>
                                     </li>
+                                    <li>
+                                        <a
+                                            href="javascript:void(0)"
+                                            onclick="showModalFeedback(`+row.id+`,`+row.idNarasumber+`,'admin')" 
+                                            data-toggle="tooltip" 
+                                            data-placement="bottom" 
+                                        >
+                                            Show Feedback
+                                        </a>
+                                    </li>
                                   </ul>
                                 </div>`
+                
                     return html
                 }
             },
@@ -387,7 +398,6 @@ function buildTableInternalSharingKaryawan(){
             { 
                 "data": "id",
                 render:function(data, type, row, meta){
-                    console.log(row)
                     // var respon = 'Tidak ikut'
                     // if(row.jumlah_ikut > '0'){
                     //     respon = 'Ikut'
@@ -517,13 +527,98 @@ function submitConform(){
     });
 }
 
-function showModalFeedback(id, source_karyawan_id){
-    console.log(id)
+function showModalFeedback(id, source_karyawan_id, is_admin = false){
     $('#id').val(id)
     $('#source_karyawan_id').val(source_karyawan_id)
-    getDataFeedbackMateri();
-    getDataFeedbackNarasumber();
+    if(is_admin == false){
+        $('.submit-feedback').css('display','block')
+        // getDataFeedbackMateri();
+        // getDataFeedbackNarasumber();
+    }
+    // else{
+    //     getDataFeedbackMateriAdmin(id, source_karyawan_id);
+    //     getDataFeedbackNarasumberAdmin(id, source_karyawan_id);
+    // }
+    getDataFeedbackMateriAdmin(id, source_karyawan_id);
+    getDataFeedbackNarasumberAdmin(id, source_karyawan_id);
+    
     $('#modalFeedback').modal('show')
+}
+
+function getDataFeedbackMateriAdmin(id, source_karyawan_id){
+    $('#body-table-materi').empty()
+    var totalNilaiMateriAdmin = 0;
+    $.ajax({
+        type : "POST",
+        url  : base_url+"tna/internalSharing-employee/getDataFeedbackAdmin",
+        data:{
+            group:'Materi',
+            karywanId:source_karyawan_id,
+            internalSharingId:id,
+            source:'Internal Sharing'
+        },
+        dataType: "JSON",
+        success:function(resp){
+            if(resp.length > 0){
+                $('.submit-feedback').css('display','none')
+                $('#manfaat').val(resp[0].manfaat_yg_diperoleh)
+                $('#kritik_saran').val(resp[0].kritik_saran)
+                $('#total_materi').val(resp[0].skor_materi)
+                $('#total_narasumber').val(resp[0].skor_narasumber)
+                $('#is_update').val(true)
+                resp.forEach((element, index) => {
+                    let number_materi = index + 1;
+                    var htmlGroup = createFeedbackRow(element, 'materi', number_materi);
+                    $('#body-table-materi').append(htmlGroup);
+                })
+                
+            }else{
+                getDataFeedbackMateri()
+                $('#is_update').val(false)
+                $('#manfaat').val('')
+                $('#kritik_saran').val('')
+                $('#total_materi').val('')
+                $('#total_narasumber').val('')
+            }
+
+            $('input[type=radio], input[type=checkbox]').on('change', function () {
+                totalNilaiMateriAdmin = calculateTotalValue('materi');
+                $('#total_materi').val(totalNilaiMateriAdmin);
+            });
+        },
+    });
+}
+
+function getDataFeedbackNarasumberAdmin(id, source_karyawan_id){
+    $('#body-table-narasumber').empty()
+    var totalNilaiNarasumberAdmin = 0;
+    $.ajax({
+        type : "POST",
+        url  : base_url+"tna/internalSharing-employee/getDataFeedbackAdmin",
+        data:{
+            group:'Narasumber',
+            karywanId:source_karyawan_id,
+            internalSharingId:id,
+            source:'Internal Sharing'
+        },
+        dataType: "JSON",
+        success:function(resp){
+            console.log(resp)
+            if(resp.length > 0){
+                resp.forEach((element, index) => {
+                    let number_narasumber = index+1
+                    var htmlGroup = createFeedbackRow(element, 'narasumber', number_narasumber);
+                    $('#body-table-narasumber').append(htmlGroup);
+                })
+            }else{
+                getDataFeedbackNarasumber()
+            }
+            $('input[type=radio], input[type=checkbox]').on('change', function () {
+                totalNilaiNarasumberAdmin = calculateTotalValue('narasumber');
+                $('#total_narasumber').val(totalNilaiNarasumberAdmin);
+            })
+        },
+    });
 }
 
 function getDataFeedbackMateri(){
@@ -535,33 +630,16 @@ function getDataFeedbackMateri(){
         data:{group:'Materi'},
         dataType: "JSON",
         success:function(resp){
-            console.log(resp)
             if(resp.length > 0){
                 resp.forEach((element, index) => {
-                    let number_materi = index+1
-                    var htmlGroup = `
-                        <tr>
-                            <td>
-                                ${element.pertanyaan}
-                                <input type="hidden" value="${element.pertanyaan}" name="pertanyaan_materi[]">
-                            </td>
-                            <td class="text-center" style="vertical-align: middle"> <input type="radio" name="radio_${element.group}_${number_materi}" value="${element.nilai_skor1}">
-                            </td>
-                            <td class="text-center" style="vertical-align: middle"><input type="radio" name="radio_${element.group}_${number_materi}" value="${element.nilai_skor2}"></td>
-                            <td class="text-center" style="vertical-align: middle"><input type="radio" name="radio_${element.group}_${number_materi}" value="${element.nilai_skor3}"></td>
-                            <td class="text-center" style="vertical-align: middle"><input type="radio" name="radio_${element.group}_${number_materi}" value="${element.nilai_skor4}"></td>
-                            <td class="text-center" style="vertical-align: middle"><input type="radio" name="radio_${element.group}_${number_materi}" value="${element.nilai_skor5}"></td>
-                        </tr>
-                    `;
+                    let number_materi = index + 1;
+                    var htmlGroup = createFeedbackRow(element, 'materi', number_materi);
                     $('#body-table-materi').append(htmlGroup);
                 })
             }
-            $('input[type=radio]').on('change', function () {
-                totalNilaiMateri = 0;
-                $('input[type=radio]:checked').each(function () {
-                    totalNilaiMateri += parseInt($(this).val());
-                    $('#total_materi').val(totalNilaiMateri)
-                });
+            $('input[type=radio], input[type=checkbox]').on('change', function () {
+                totalNilaiMateri = calculateTotalValue('materi');
+                $('#total_materi').val(totalNilaiMateri);
             });
         },
     });
@@ -576,35 +654,47 @@ function getDataFeedbackNarasumber(){
         data:{group:'Narasumber'},
         dataType: "JSON",
         success:function(resp){
-            console.log(resp)
+            // console.log(resp)
             if(resp.length > 0){
                 resp.forEach((element, index) => {
                     let number_narasumber = index+1
-                    var htmlGroup = `
-                        <tr>
-                            <td>
-                                ${element.pertanyaan}
-                                <input type="hidden" value="${element.pertanyaan}" name="pertanyaan_narasumber[]">
-                            </td>
-                            <td class="text-center" style="vertical-align: middle"><input type="radio" name="radio_${element.group}_${number_narasumber}" value="${element.nilai_skor1}"></td>
-                            <td class="text-center" style="vertical-align: middle"><input type="radio" name="radio_${element.group}_${number_narasumber}" value="${element.nilai_skor2}"></td>
-                            <td class="text-center" style="vertical-align: middle"><input type="radio" name="radio_${element.group}_${number_narasumber}" value="${element.nilai_skor3}"></td>
-                            <td class="text-center" style="vertical-align: middle"><input type="radio" name="radio_${element.group}_${number_narasumber}" value="${element.nilai_skor4}"></td>
-                            <td class="text-center" style="vertical-align: middle"><input type="radio" name="radio_${element.group}_${number_narasumber}" value="${element.nilai_skor5}"></td>
-                        </tr>
-                    `;
+                    var htmlGroup = createFeedbackRow(element, 'narasumber', number_narasumber);
                     $('#body-table-narasumber').append(htmlGroup);
                 })
             }
-            $('input[type=radio]').on('change', function () {
-                totalNilaiNarasumber = 0;
-                $('input[type=radio]:checked').each(function () {
-                    totalNilaiNarasumber += parseInt($(this).val());
-                    $('#total_narasumber').val(totalNilaiNarasumber)
-                });
-            });
+            $('input[type=radio], input[type=checkbox]').on('change', function () {
+                totalNilaiNarasumber = calculateTotalValue('narasumber');
+                $('#total_narasumber').val(totalNilaiNarasumber);
+            })
         },
     });
+}
+
+function calculateTotalValue(group) {
+    var totalValue = 0;
+    $(`input[name^="radio_${group}"]:checked, input[name^="checkbox_${group}"]:checked`).each(function () {
+        var value = parseInt($(this).val());
+        if (!isNaN(value)) {
+            totalValue += value;
+        }
+    });
+    return totalValue;
+}
+
+function createFeedbackRow(element, group, number) {
+    return `
+        <tr>
+            <td>
+                ${element.pertanyaan}
+                <input type="hidden" value="${element.pertanyaan}" name="pertanyaan_${group}[]">
+            </td>
+            <td class="text-center" style="vertical-align: middle"><input type="radio" name="radio_${group}_${number}" value="${element.nilai_skor1}" ${element.nilai_skor1 === element.nilai_skor ? 'checked' : ''}></td>
+            <td class="text-center" style="vertical-align: middle"><input type="radio" name="radio_${group}_${number}" value="${element.nilai_skor2}" ${element.nilai_skor2 === element.nilai_skor ? 'checked' : ''}></td>
+            <td class="text-center" style="vertical-align: middle"><input type="radio" name="radio_${group}_${number}" value="${element.nilai_skor3}" ${element.nilai_skor3 === element.nilai_skor ? 'checked' : ''}></td>
+            <td class="text-center" style="vertical-align: middle"><input type="radio" name="radio_${group}_${number}" value="${element.nilai_skor4}" ${element.nilai_skor4 === element.nilai_skor ? 'checked' : ''}></td>
+            <td class="text-center" style="vertical-align: middle"><input type="radio" name="radio_${group}_${number}" value="${element.nilai_skor5}" ${element.nilai_skor5 === element.nilai_skor ? 'checked' : ''}></td>
+        </tr>
+    `;
 }
 
 function submitFeedback(){
