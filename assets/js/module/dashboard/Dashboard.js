@@ -63,6 +63,22 @@ $(document).ready(function(){
             }
         });
     }
+
+    // $('#filter_sertifikat').val();
+
+    
+    $('#title_sertificate').html($('#filter_sertifikat').val())
+    buildTableSertifikat()
+    $( "#filter_sertifikat" ).on( "change", function() {
+        $('#title_sertificate').html($('#filter_sertifikat').val())
+        buildTableSertifikat()        
+    })
+
+    $('.export-list-sertificate').on('click', function(){
+        $('.loader-wrapper').css('display','block')
+        exportListSertifikat()
+    })
+
  
 })
 
@@ -92,6 +108,7 @@ function loadData(thn){
     getDataDashboardPengawalan()
     anggaranTNA()
     summary()
+    buildTableSertifikat()
 
 }
 
@@ -1559,4 +1576,82 @@ function detailInternalSharing(type, quartal, thn){
 
         ],
     });
+}
+
+function buildTableSertifikat(){
+    var thn = $('#filter_year').val();
+    var jenis = $('#filter_sertifikat').val()
+    if ($.fn.DataTable.isDataTable('.table-sertif')) {
+        $('.table-sertif').DataTable().destroy();
+    }
+    $('.table-sertif').DataTable({
+        processing: true, 
+        serverSide: true, 
+        scrollX: true,
+        order: [], 
+        ajax: {
+            url     : base_url+"tna/home/getListSertifikat",
+            type    : "get",
+            datatype: "json",
+            data    : function(d){
+                d.thn = thn
+                d.jenis = jenis
+
+                console.log(d)
+            }
+        },
+        columns: [
+            {
+                "data": "id",
+                "width": "50px",
+                render: function (data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                }
+            },
+            {"data": "nama_kegiatan"},
+            {"data": "nama_karyawan"},
+            {"data": "subdit"},
+            // { "data": "tanggal_awal_berlaku_sertifikat"},
+            { 
+                "data": "tanggal_awal_berlaku_sertifikat",
+                render:function(data, type, row, meta){
+                    let date = '-'
+                    if(data !== '0000-00-00'){
+                        date = formatDate(data)
+                    }
+                    return date
+                }
+            },    
+            // { "data": "tanggal_akhir_berlaku_sertifikat"},
+            { 
+                "data": "tanggal_akhir_berlaku_sertifikat",
+                render:function(data, type, row, meta){
+                    let date = '-'
+                    if(data !== '0000-00-00'){
+                        date = formatDate(data)
+                    }
+                    return date
+                }
+            },    
+            { "data": "nomor_sertifikat" },
+            { "data": "nama_penyelenggara" },
+            { 
+                "data": "id",
+                render:function(data, type, row,meta){
+                    return ''
+                }
+            }   
+        ],
+    })
+}
+
+function exportListSertifikat(){
+    var thn = $('#filter_year').val();
+    var jenis = $('#filter_sertifikat').val()
+    var dynamic_url = base_url + 'tna/home/export_sertificate/'+thn+'/'+jenis;
+    window.location.href = dynamic_url;
+	
+	setTimeout(function() { 
+		$('.loader-wrapper').css('display','none')
+    }, 1000);
 }

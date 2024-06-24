@@ -1,3 +1,42 @@
+<style>
+    .loader-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.8);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000; /* Pastikan loader berada di atas tabel */
+    }
+
+    .loader {
+        border: 20px solid #EAF0F6;
+        border-radius: 50%;
+        border-top: 20px solid #FF7A59;
+        width: 200px;
+        height: 200px;
+        animation: spinner 4s linear infinite;
+        margin-left:40%;
+        margin-top:5%;
+    }
+
+    .loading-text {
+        margin-top: -8%;
+        margin-left:44%;
+        font-size: 20px;
+        font-weight: bold;
+        color: #FF7A59;
+    }
+
+    @keyframes spinner {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
 <section class="content">
     <!-- Main row -->
     <div class="row">
@@ -273,6 +312,53 @@
                                 </thead>
                             </table>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="loader-wrapper" style="display:none">
+                        <div class="loader" ></div>
+                        <div class="loading-text">Loading...</div>
+                    </div>
+                    <div class="box box-default">
+                        <div class="box-header with-border">
+                            <div class="row align-items-center mb-3">
+                                <div class="col-md-8">
+                                    <h4>Daftar Sertifikat <span id="title_sertificate"></span> - Tahun <span class="tahun_filter"></span></h4>
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <select class="form-control d-inline-block" style="max-width: 60%; display: inline-block;" name="filter_sertifikat" id="filter_sertifikat">
+                                        <option>Nasional</option>
+                                        <option>Internasional</option>
+                                    </select>
+                                    <button class="btn btn-primary btn-sm ml-2 export-list-sertificate">
+                                        <i class="fa fa-download"></i> Export
+                                    </button>
+                                </div>
+                            </div>
+                            <hr>
+                            <table class="table table-sertif">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" rowspan="2">No</th>
+                                        <th class="text-center" rowspan="2">Nama Sertifikat</th>
+                                        <th class="text-center" rowspan="2">Nama Karyawan</th>
+                                        <th class="text-center" rowspan="2">Subdit</th>
+                                        <th class="text-center" colspan="2">Berlaku Sertifikat</th>
+                                        <th class="text-center" rowspan="2">Sertifik No</th>
+                                        <th class="text-center" rowspan="2">Lembaga</th>
+                                        <th class="text-center" rowspan="2">Keterangan</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-center">Mulai</th>
+                                        <th class="text-center">Berakhir</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+
                     </div>
                 </div>
             </div>

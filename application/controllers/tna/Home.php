@@ -173,6 +173,70 @@ class Home extends CI_Controller {
 		$get = $this->input->get();
 		echo $this->dashboard->getListTNAUrgent($get);
 	}
+
+	public function getListSertifikat(){
+		$get = $this->input->get();
+		echo $this->dashboard->getListSertifikat($get);
+	}
+
+	public function export_sertificate($thn, $jenis){
+		$data = $this->dashboard->export_sertificate($thn, $jenis);
+
+        $filename = 'list_sertifikat_' . $jenis . ' _Tahun_' . $thn . date('YmdHis') . '.xls';
+        
+        // Set headers
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="'.$filename.'"');
+        header('Cache-Control: max-age=0');
+
+        // Open file pointer
+        $fp = fopen('php://output', 'w');
+
+        // Set column headers
+        $header1 = array(
+			'No',
+			'Nama Sertifikat', 
+			'Nama Karyawan', 
+			'Subdit', 
+			'Berlaku Sertifikat', 
+			'', 
+			'Nomor Sertifikat', 
+			'Lembaga'
+		);
+        fputcsv($fp, $header1, "\t");
+
+		$header2 = array(
+			'',
+			'', 
+			'', 
+			'', 
+			'Mulai', 
+			'Berakhir', 
+			'', 
+			''
+		);
+        fputcsv($fp, $header2, "\t");
+
+        // Add data to CSV
+        foreach ($data as $key => $val) {
+            $row = array(
+				(
+					$key+1), 
+					$val->nama_kegiatan, 
+					$val->nama_karyawan, 
+					$val->subdit, 
+					$val->tanggal_awal_berlaku_sertifikat,
+					$val->tanggal_akhir_berlaku_sertifikat,
+					$val->nomor_sertifikat,
+					$val->nama_penyelenggara,
+					''
+				);
+            fputcsv($fp, $row, "\t");
+        }
+
+        fclose($fp);
+        exit;
+	}
 	
 
 }
