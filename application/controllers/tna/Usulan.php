@@ -252,11 +252,16 @@ class Usulan extends CI_Controller {
 			// 	'status_karyawan' => $this->input->post('status_fte')
 				
 			// );
+			// if($this->input->post('new_penyelenggara')){
+			// 	$penyelenggara = $this->input->post('new_penyelenggara');
+			// }else{
+			// 	$getNamaPenyelenggara = $this->lembagaModel->get_lembaga_byid($this->input->post('penyelenggara'));
+			// 	$penyelenggara = $getNamaPenyelenggara['data']->nama_lembaga;
+			// }
+
+			$penyelenggara = $this->input->post('penyelenggara');
 			if($this->input->post('new_penyelenggara')){
 				$penyelenggara = $this->input->post('new_penyelenggara');
-			}else{
-				$getNamaPenyelenggara = $this->lembagaModel->get_lembaga_byid($this->input->post('penyelenggara'));
-				$penyelenggara = $getNamaPenyelenggara['data']->nama_lembaga;
 			}
 
 			$pecahTgl = explode('-', $this->input->post('waktu_pelaksanaan'));
@@ -336,41 +341,55 @@ class Usulan extends CI_Controller {
 	}
 
 	public function submit_edit(){
-
+		// echo json_encode( $this->input->post());
 		try {
+			$pecahTgl = explode('-', $this->input->post('waktu_pelaksanaan'));
+			$tmptgl1 = trim($pecahTgl[0]);
+			$tmptgl2 = trim($pecahTgl[1]);
+			$tgl = explode('/', $tmptgl1);
+			$tgl2 = explode('/', $tmptgl2);
+
+			$penyelenggara = $this->input->post('penyelenggara');
+			if($this->input->post('new_penyelenggara')){
+				$penyelenggara = $this->input->post('new_penyelenggara');
+			}
+			
+			$exp = explode('|', $this->input->post('tna'));
 			$data = array(
 				'm_organisasi_id'	=> $this->input->post('subdit'),
 				'm_karyawan_id'	=> $this->input->post('karyawan'),
 				'jenis_pelatihan' => $this->input->post('jenis_pelatihan'),
 				'r_tna_kompetensi_id' => $this->input->post('kompetensi'),
 				'jenis_development' => $this->input->post('jenis_development'),
-
-				'r_tna_traning_id' => $this->input->post('tna'),
+				'r_tna_traning_id' => $exp[0],
 				'nama_kegiatan' => $this->input->post('nama_kegiatan'),
 				'justifikasi_pengajuan' => $this->input->post('justifikasi'),
-
 				'metoda_pembelajaran' => $this->input->post('metoda'),
 				'estimasi_biaya' => preg_replace("/[,\s]/", '', $this->input->post('estimasi_biaya')),
-				'nama_penyelenggara' => $this->input->post('penyelenggara'),
-				'waktu_pelaksanaan' => $this->input->post('waktu_pelaksanaan'),
-				'status_karyawan' => $this->input->post('status_fte')
+				'nama_penyelenggara' => $penyelenggara,
+				'waktu_pelaksanaan_mulai' => $tgl[2].'-'.$tgl[0].'-'.$tgl[1],
+				'waktu_pelaksanaan_selesai' => $tgl2[2].'-'.$tgl2[0].'-'.$tgl2[1],
+				'status_karyawan' => $this->input->post('status_fte'),
+				'direktorat_id' => $this->input->post('direktorat'),
+				'is_urgent' => $this->input->post('is_urgent'),
 				
 			);
 			
 
-			$usulan_id = decrypt_url($this->input->post('usulan_id'));
-			$check = $this->UsulanTnaModel->get_data_byid($usulan_id);
-			if($check['success']===TRUE){
-				$data['updated_by'] = $this->ion_auth->user()->row()->id;
-				$data['updated_date'] = date('Y-m-d');
-				$action = $this->UsulanTnaModel->update($data,$usulan_id);
-			}else{
-				$tahapan = $this->UsulanTnaModel->get_tahapan_id(1,"Usulan TNA");
-				$data['tahapan_id'] =@$tahapan['r_tahapan_usulan_id'];
-				$data['created_by'] = $this->ion_auth->user()->row()->id;
-				$data['created_date'] = date('Y-m-d');
-				$action = $this->UsulanTnaModel->insert($data);
-			}
+			$usulan_id = $this->input->post('usulan_id');
+			$action = $this->UsulanTnaModel->update($data,$usulan_id);
+			// $check = $this->UsulanTnaModel->get_data_byid($usulan_id);
+			// if($check['success']===TRUE){
+			// 	$data['updated_by'] = $this->ion_auth->user()->row()->id;
+			// 	$data['updated_date'] = date('Y-m-d');
+			// 	$action = $this->UsulanTnaModel->update($data,$usulan_id);
+			// }else{
+			// 	$tahapan = $this->UsulanTnaModel->get_tahapan_id(1,"Usulan TNA");
+			// 	$data['tahapan_id'] =@$tahapan['r_tahapan_usulan_id'];
+			// 	$data['created_by'] = $this->ion_auth->user()->row()->id;
+			// 	$data['created_date'] = date('Y-m-d');
+			// 	$action = $this->UsulanTnaModel->insert($data);
+			// }
 	
 			if($action){
 				$return = array(

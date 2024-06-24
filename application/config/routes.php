@@ -152,6 +152,8 @@ $route['tna/usulan/list-data']    = 'tna/usulan/list_data';
 
 $route['tna/usulan/create']    = 'tna/usulan/create';
 $route['tna/usulan/submit']    = 'tna/usulan/submit';
+$route['tna/usulan/submit_edit']    = 'tna/usulan/submit_edit';
+// $route['tna/usulan/submit_edit']    = 'tna/usulan/submit_edit';
 $route['tna/usulan/submit-usulkan']    = 'tna/usulan/submit_usulkan';
 $route['tna/usulan/edit/(:any)']       = 'tna/usulan/edit/$1';
 

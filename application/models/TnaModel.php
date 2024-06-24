@@ -248,7 +248,7 @@ class TnaModel extends CI_Model {
 
 	public function getPenyelenggara($id){
 		$this->db->select('distinct(tl.id), tl.nama_lembaga, tl.nama_pic, tld.biaya,tld.kapasitas');
-		$this->db->from('r_tna_lembagas tl');
+		$this->db->from('r_tna_lembaga tl');
 		$this->db->join('r_tna_lembaga_detail tld', 'tl.id = tld.r_tna_lembaga_id');
 		if($id != 99999)$this->db->where('tld.r_tna_training_id', $id);
 		

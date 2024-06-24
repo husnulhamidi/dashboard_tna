@@ -116,6 +116,113 @@ function submitForm($btn){
     });
 }
 
+function submitFormEdit(){
+    // $.ajax({
+    //     url: base_url + "tna/usulan/submit_edit",
+    //     type: 'POST',
+    //     dataType: "JSON",
+    //     data: $(".form-usulan-edit").serialize(), // Serialize form data
+    //     success: function(response) {
+    //         if (response.success) {
+    //             setTimeout(function() {
+    //                 swal({
+    //                     title: "Notifikasi!",
+    //                     text: response.msg,
+    //                     imageUrl: img_icon_success
+    //                 }, function() {
+    //                     // location.reload();
+    //                     // $('#AddTraining').modal('hide');
+    //                 });
+    //             }, 1000);
+    //         } else {
+    //             setTimeout(function() {
+    //                 swal({
+    //                     title: "Notifikasi!",
+    //                     text: response.msg,
+    //                     imageUrl: img_icon_error
+    //                 }, function() {
+    //                     // location.reload();
+    //                 });
+    //             }, 1000);
+    //         }
+    //     }
+    // });
+    $(".form-usulan-edit").validate({
+        rules: {
+            jenis_pelatihan: "required",
+            kompetensi: "required",
+            jenis_development: "required",
+            nama_kegiatan: "required",
+            tna: "required",
+            direktorat: "required",
+            justifikasi: "required"
+        },
+        messages: {
+            jenis_pelatihan: {
+                required: "<i class='fa fa-times'></i> Jenis Pelatihan harus diisi"
+            },
+            kompetensi: {
+                required: "<i class='fa fa-times'></i> Kompetensi harus diisi"
+            },
+            jenis_development: {
+                required: "<i class='fa fa-times'></i> Jenis Development harus diisi"
+            },
+            nama_kegiatan: {
+                required: "<i class='fa fa-times'></i> Nama Kegiatan harus diisi"
+            },
+            tna: {
+                required: "<i class='fa fa-times'></i> TNA harus diisi"
+            },
+            direktorat: {
+                required: "<i class='fa fa-times'></i> Direktorat harus diisi"
+            },
+            justifikasi: {
+                required: "<i class='fa fa-times'></i> Justifikasi pengajuan harus diisi"
+            }
+        },
+        highlight: function(element) {
+            $(element).parent().parent().addClass("has-error")
+            $(element).parent().addClass("has-error")
+        },
+        unhighlight: function(element) {
+            $(element).parent().removeClass("has-error")
+            $(element).parent().parent().removeClass("has-error")
+        },
+        submitHandler: function(form) {
+            $.ajax({
+                url: base_url + "tna/usulan/submit_edit",
+                type: 'POST',
+                dataType: "JSON",
+                data: $(form).serialize(), // Serialize form data
+                success: function(response) {
+                    if (response.success) {
+                        setTimeout(function() {
+                            swal({
+                                title: "Notifikasi!",
+                                text: response.msg,
+                                imageUrl: img_icon_success
+                            }, function() {
+                                // location.reload();
+                                // $('#AddTraining').modal('hide');
+                            });
+                        }, 1000);
+                    } else {
+                        setTimeout(function() {
+                            swal({
+                                title: "Notifikasi!",
+                                text: response.msg,
+                                imageUrl: img_icon_error
+                            }, function() {
+                                // location.reload();
+                            });
+                        }, 1000);
+                    }
+                }
+            });
+        }
+    });
+}
+
 function getDashlet(urutan){
     $.ajax({
         type: "GET",
@@ -172,6 +279,10 @@ jQuery(document).ready(function() {
         submitForm('usulkan');
     });
 
+    $(".submit-usulkan-edit").click(function() {
+        submitFormEdit();
+    });
+
     $(document).on('click', '.btn_edit_usulan_tna', function() {
         var id = this.value;
         setupForm(id);
@@ -224,7 +335,4 @@ jQuery(document).ready(function() {
         });
             
     });
-
-    
-
 });

@@ -580,7 +580,7 @@ class UsulanTnaModel extends CI_Model {
 	}
 
 	public function getDetail($id){
-		$this->db->select('us.id,us.kode,us.m_organisasi_id,us.m_karyawan_id,us.r_tna_kompetensi_id,us.r_tna_traning_id,jenis_pelatihan,jenis_development,nama_kegiatan,justifikasi_pengajuan,metoda_pembelajaran,estimasi_biaya,nama_penyelenggara,waktu_pelaksanaan,status_karyawan,tahapan_id,us.is_verifikasi_admin_hcpd,us.is_verifikasi_manager_hcpd,is_verifikasi_avp_hcm,mo.nama as subdit,mk.nama, mk.nik_tg,kom.code as kode_kompetensi,kom.name as kompetensi,tr.code as kode_training,tr.name as training,th.urutan,th.nama as tahapan, us.is_urgent, waktu_pelaksanaan_mulai, waktu_pelaksanaan_selesai')
+		$this->db->select('us.direktorat_id,us.id,us.kode,us.m_organisasi_id,us.m_karyawan_id,us.r_tna_kompetensi_id,us.r_tna_traning_id,jenis_pelatihan,jenis_development,nama_kegiatan,justifikasi_pengajuan,metoda_pembelajaran,estimasi_biaya,nama_penyelenggara,waktu_pelaksanaan,status_karyawan,tahapan_id,us.is_verifikasi_admin_hcpd,us.is_verifikasi_manager_hcpd,is_verifikasi_avp_hcm,mo.nama as subdit,mk.nama, mk.nik_tg,kom.code as kode_kompetensi,kom.name as kompetensi,tr.code as kode_training,tr.name as training,th.urutan,th.nama as tahapan, us.is_urgent, waktu_pelaksanaan_mulai, waktu_pelaksanaan_selesai')
 				 ->from($this->table." as us")
 				 ->join('m_karyawan mk', 'mk.id=us.m_karyawan_id','left')
 				 ->join('m_organisasi mo', 'mo.id=us.m_organisasi_id','left')
