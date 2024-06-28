@@ -303,16 +303,7 @@ function buildTableInternalSharingAdmin(){
                                         href="`+action_url_generate+'/'+data+'/all'+`">Generate Sertifikat
                                         </a>
                                     </li>
-                                    <li>
-                                        <a
-                                            href="javascript:void(0)"
-                                            onclick="showModalFeedback(`+row.id+`,`+row.idNarasumber+`,'admin')" 
-                                            data-toggle="tooltip" 
-                                            data-placement="bottom" 
-                                        >
-                                            Show Feedback
-                                        </a>
-                                    </li>
+                                   
                                   </ul>
                                 </div>`
                 

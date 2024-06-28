@@ -285,10 +285,14 @@ function getPeserta(id){
             { 
                 "data": "id",
                 render:function(data, type, row, meta){
+                    console.log(row)
                     let html = `
                                 <button onclick="deleteData(`+row.idPeserta+`,'peserta')" class="btn-danger btn-xs">
                                     <i class="fa fa-trash"></i>
-                                </button>`
+                                </button>&nbsp;&nbsp;`
+                    html = html + `<button onclick="showModalFeedback(`+data+`,`+row.m_karywan_id+`,'admin')" class="btn-success btn-xs">
+                                        <i class="fa fa-comments-o" title="show feedback"></i>
+                                    </button>`
                     return html
                 }
             },
@@ -397,5 +401,99 @@ function deleteData(id,ket){
                 }
             }
         });
+    });
+}
+
+function showModalFeedback(id, source_karyawan_id, is_admin = false){
+    $('#id').val(id)
+    $('#source_karyawan_id').val(source_karyawan_id)
+    if(is_admin == false){
+        $('.submit-feedback').css('display','block')
+        // getDataFeedbackMateri();
+        // getDataFeedbackNarasumber();
+    }
+    // else{
+    //     getDataFeedbackMateriAdmin(id, source_karyawan_id);
+    //     getDataFeedbackNarasumberAdmin(id, source_karyawan_id);
+    // }
+    getDataFeedbackMateriAdmin(id, source_karyawan_id);
+    getDataFeedbackNarasumberAdmin(id, source_karyawan_id);
+    
+    $('#modalFeedback').modal('show')
+}
+
+function getDataFeedbackMateriAdmin(id, source_karyawan_id){
+    $('#body-table-materi').empty()
+    var totalNilaiMateriAdmin = 0;
+    $.ajax({
+        type : "POST",
+        url  : base_url+"tna/internalSharing-employee/getDataFeedbackAdmin",
+        data:{
+            group:'Materi',
+            karywanId:source_karyawan_id,
+            internalSharingId:id,
+            source:'Internal Sharing'
+        },
+        dataType: "JSON",
+        success:function(resp){
+            if(resp.length > 0){
+                $('.submit-feedback').css('display','none')
+                $('#manfaat').val(resp[0].manfaat_yg_diperoleh)
+                $('#kritik_saran').val(resp[0].kritik_saran)
+                $('#total_materi').val(resp[0].skor_materi)
+                $('#total_narasumber').val(resp[0].skor_narasumber)
+                $('#is_update').val(true)
+                resp.forEach((element, index) => {
+                    let number_materi = index + 1;
+                    var htmlGroup = createFeedbackRow(element, 'materi', number_materi);
+                    $('#body-table-materi').append(htmlGroup);
+                })
+                
+            }else{
+                getDataFeedbackMateri()
+                $('#is_update').val(false)
+                $('#manfaat').val('')
+                $('#kritik_saran').val('')
+                $('#total_materi').val('')
+                $('#total_narasumber').val('')
+            }
+
+            $('input[type=radio], input[type=checkbox]').on('change', function () {
+                totalNilaiMateriAdmin = calculateTotalValue('materi');
+                $('#total_materi').val(totalNilaiMateriAdmin);
+            });
+        },
+    });
+}
+
+function getDataFeedbackNarasumberAdmin(id, source_karyawan_id){
+    $('#body-table-narasumber').empty()
+    var totalNilaiNarasumberAdmin = 0;
+    $.ajax({
+        type : "POST",
+        url  : base_url+"tna/internalSharing-employee/getDataFeedbackAdmin",
+        data:{
+            group:'Narasumber',
+            karywanId:source_karyawan_id,
+            internalSharingId:id,
+            source:'Internal Sharing'
+        },
+        dataType: "JSON",
+        success:function(resp){
+            console.log(resp)
+            if(resp.length > 0){
+                resp.forEach((element, index) => {
+                    let number_narasumber = index+1
+                    var htmlGroup = createFeedbackRow(element, 'narasumber', number_narasumber);
+                    $('#body-table-narasumber').append(htmlGroup);
+                })
+            }else{
+                getDataFeedbackNarasumber()
+            }
+            $('input[type=radio], input[type=checkbox]').on('change', function () {
+                totalNilaiNarasumberAdmin = calculateTotalValue('narasumber');
+                $('#total_narasumber').val(totalNilaiNarasumberAdmin);
+            })
+        },
     });
 }

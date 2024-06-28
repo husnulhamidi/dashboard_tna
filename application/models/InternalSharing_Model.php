@@ -11,8 +11,8 @@ class InternalSharing_Model extends CI_Model {
     }
 
     public function getDataInternalSharing($post, $karyawanId){
-    	$column_order = array('mti.id','mti.judul_materi','mk.nama','mo.nama','mti.jam','mti.tanggal','mti.tempat','mti.biaya','mti.kuota','jr.name as job_role', 'jr.id as job_role_id','jf.name as job_function', 'jf.id as job_function_id', 'jfa.name as job_family', 'jfa.id as job_family_id');
-		$column_search = array('mti.id','mti.judul_materi','mk.nama','mo.nama','mti.jam','mti.tanggal','mti.tempat','mti.biaya','mti.kuota','jr.name as job_role', 'jr.id as job_role_id','jf.name as job_function', 'jf.id as job_function_id', 'jfa.name as job_family', 'jfa.id as job_family_id');
+    	$column_order = array('mti.id','mti.judul_materi','mk.nama','mo.nama','mti.jam','mti.tanggal','mti.tempat','mti.biaya','mti.kuota','jr.name', 'jr.id','jf.name', 'jf.id', 'jfa.name', 'jfa.id');
+		$column_search = array('mti.id','mti.judul_materi','mk.nama','mo.nama','mti.jam','mti.tanggal','mti.tempat','mti.biaya','mti.kuota','jr.name', 'jr.id','jf.name', 'jf.id', 'jfa.name', 'jfa.id');
 
         $draw = $post['draw'];
         $start = $post['start'];
@@ -337,7 +337,7 @@ class InternalSharing_Model extends CI_Model {
         // $this->db->select('misp.');
         // $this->db->from('m_tna_internal_sharing_peserta misp');
         // $this->db->where('misp.m_tna_internal_sharing_id',$id);
-        $this->db->select('tis.id, mk.nama, j.nama as jabatan, mo.nama as subunit, IF(sk.id IN (2,4,5),"FTE","Non FTE") as status_fte,isp.id as idPeserta')
+        $this->db->select('tis.id, mk.nama, j.nama as jabatan, mo.nama as subunit, IF(sk.id IN (2,4,5),"FTE","Non FTE") as status_fte,isp.id as idPeserta, mk.id as m_karywan_id')
          ->from('m_tna_internal_sharing_peserta as isp')
          ->join('m_karyawan mk', 'mk.id = isp.m_karyawan_id')
          ->join('m_tna_internal_sharing tis', 'tis.id = isp.m_tna_internal_sharing_id')

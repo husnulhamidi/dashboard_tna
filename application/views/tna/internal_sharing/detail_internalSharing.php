@@ -271,6 +271,7 @@
     $this->load->view('tna/internal_sharing/modal_form_tambah_peserta');
     $this->load->view('tna/internal_sharing/form_tambah_materi');
     $this->load->view('tna/internal_sharing/form_upload_dokumentasi');
+	$this->load->view('tna/internal_sharing/modal_feedback');
 ?>
 <script type="text/javascript">
 	var url_file ='<?php echo base_url('files/upload/materi');?>';
