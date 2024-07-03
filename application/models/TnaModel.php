@@ -271,7 +271,11 @@ class TnaModel extends CI_Model {
 		$this->db->join('r_tna_lembaga_detail tld', 'tl.id = tld.r_tna_lembaga_id');
 		$this->db->where('tld.r_tna_training_id !=', $id);
 		// $this->db->where('tld.r_tna_lembaga_id !=', $lembagaId);
-		$this->db->where_not_in('tld.r_tna_lembaga_id', $lembagaId);
+		// $this->db->where_not_in('tld.r_tna_lembaga_id', $lembagaId);
+		$excluded_ids = $lembagaId; // Gantilah dengan array yang sesuai
+		if (!empty($excluded_ids)) {
+			$this->db->where_not_in('tld.r_tna_lembaga_id', $excluded_ids);
+		}
 		$this->db->where('tl.status_code', '1');
 		$this->db->group_by('tl.id');
 		$query = $this->db->get();
@@ -284,6 +288,21 @@ class TnaModel extends CI_Model {
 	}
 	public function saveDetailPenyelenggara($data){
 		$this->db->insert('r_tna_lembaga_detail', $data);
+		return $this->db->insert_id();
+	}
+
+	public function checkCodeTraining($filter){
+		$this->db->select_max('code');
+		$this->db->from('r_tna_training');
+		$this->db->like('code', $filter, 'after');
+		$query = $this->db->get();
+
+		$result = $query->row();
+		return $result ? $result->code : null;
+	}
+
+	public function saveTraining($data){
+		$this->db->insert('r_tna_training', $data);
 		return $this->db->insert_id();
 	}
 

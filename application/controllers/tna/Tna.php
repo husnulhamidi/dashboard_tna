@@ -168,8 +168,8 @@ class Tna extends CI_Controller {
 
 	public function submit(){
 		// echo json_encode($this->input->post());
+
 		$getNamaPenyelenggara = $this->lembagaModel->get_lembaga_byid($this->input->post('penyelenggara'));
-		// echo json_encode($getNamaPenyelenggara['data']->nama_lembaga);
 		if($this->input->post('new_penyelenggara')){
 			$penyelenggara = $this->input->post('new_penyelenggara');
 		}else{
@@ -187,10 +187,7 @@ class Tna extends CI_Controller {
 		
 		// $penyelenggara = $this->input->post('new_penyelenggara') ?? $this->input->post('penyelenggara');
 		$exp = explode('|', $this->input->post('tna'));
-		$data = array(
-			// 'm_organisasi_id'	=> $this->input->post('subdit'),
-			// 'm_karyawan_id'	=> $this->input->post('karyawan'),
-			// 'status_karyawan'	=> $this->input->post('status_fte'),	
+		$data = array(	
 			'r_tna_kompetensi_id' => $this->input->post('kompetensi'),
 			'r_tna_traning_id' => $exp[0],
 			'jenis_pelatihan' => $this->input->post('jenis_pelatihan'),
@@ -200,8 +197,6 @@ class Tna extends CI_Controller {
 			'metoda_pembelajaran' => $this->input->post('metoda'),
 			'estimasi_biaya' => str_replace(".", "", $this->input->post('estimasi_biaya')),
 			'nama_penyelenggara' => $penyelenggara,
-			// 'nama_penyelenggara' => $this->input->post('penyelenggara'),
-			// 'waktu_pelaksanaan' => $tgl[2].'-'.$tgl[1].'-'.$tgl[0],
 			'waktu_pelaksanaan_mulai' => $tgl[2].'-'.$tgl[0].'-'.$tgl[1],
 			'waktu_pelaksanaan_selesai' => $tgl2[2].'-'.$tgl2[0].'-'.$tgl2[1],
 			'tahapan_id' => $this->input->post('tahapan_id'),
@@ -317,6 +312,43 @@ class Tna extends CI_Controller {
 			);
 		}
 
+		echo json_encode($return);
+	}
+
+	public function submit_training(){
+		$data = $this->input->post();
+		// cari kode kompetensi
+		$codeKomp = $this->TnaModel->getCodeKompetensi($this->input->post('komp'));
+		$pre = 'S';
+		if($this->input->post('type') == 'Pelatihan') $pre = 'P';
+
+		$filter = $pre.date('y');
+		$cekCode = $this->TnaModel->checkCodeTraining($filter);
+
+		$filter = $pre . date('y');
+		$cekCode = $this->TnaModel->checkCodeTraining($filter);
+
+		if ($cekCode) {
+			$prefix = substr($cekCode, 0, 3);
+			$number = (int)substr($cekCode, 3);
+			$newNumber = str_pad($number + 1, 4, '0', STR_PAD_LEFT);
+			$newCode = $prefix . $newNumber;
+		} else {
+			$newCode = $filter . '0001';
+		}
+
+		$dataTraining = array(
+			'r_tna_kompetensi_code' => $codeKomp->code,
+			'code'                  => $newCode,
+			'name'                  => $this->input->post('new_training'),
+			'type'                  => $this->input->post('type'),
+		);
+		$savePenyelenggara = $this->TnaModel->saveTraining($dataTraining);
+		$return = array(
+			'id'			=> $savePenyelenggara,
+			'name'			=> $this->input->post('new_training'),
+			'code'			=> $newCode
+		);
 		echo json_encode($return);
 	}
 

@@ -134,73 +134,78 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Pelatihan / Sertifikasi (TNA) <span style="color: red">*</span></label>
-                                        <div class="col-sm-8">
+                                        <div class="col-sm-6">
                                             <select class="select2 form-control" name="tna" id="tna" onchange="getCode()">
                                                 <option value="">--- Pilih Pelatihan/Sertifikasi ---</option>
-                                                <!-- <?php 
-                                                    foreach ($tna as $tna) {
-                                                        $selected = '';
-                                                        if($tna->id == @$detail->r_tna_traning_id){
-                                                            $selected = 'selected';
-                                                        }
-                                                        echo "<option ".$selected." value='".$tna->id.'|'.$tna->name."'>".$tna->code.' | '.$tna->name.'</option>';
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2" id="divBtnAddTraining">
+                                            <button class="btn btn-info btn-sm pull-left" id="btn-add-training" onclick="addTraining()"><b> <li class="fa fa-plus"></li> Tambah Pelatihan</b> </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- <div class="form-group" id="new_training" style="display:none">
+                                        <label class="col-sm-3 control-label"> &nbsp; </label>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control" name="new_training" id="new_training" placeholder="Tambah Training Baru">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button class="btn btn-danger btn-sm pull-left" onclick="cancelAddTraining()"><b> <li class="fa fa-close"></li> Batal Pelatihan</b> </button>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Nama Kegiatan <span style="color: red">*</span></label>
+                                        <div class="col-sm-8">
+                                            <input type="text"  name="nama_kegiatan" id="nama_kegiatan"  class="form-control input-sm" value="<?php echo @$detail->nama_kegiatan;?>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Objective</label>
+                                        <div class="col-sm-8">
+                                            <input type="text"  name="objective" id="objective"  class="form-control input-sm" value="<?php echo @$detail->objective;?>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Justifikasi Pengajuan <span style="color: red">*</span></label>
+                                        <div class="col-sm-8">
+                                            <textarea type="text"  name="justifikasi" id="justifikasi"  class="form-control input-sm" ><?php echo @$detail->justifikasi_pengajuan;?></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Metode Pembelajaran <span style="color: red">*</span></label>
+                                        <div class="col-sm-8">
+                                            <select class="select2 form-control" name="metoda" id="metoda">
+                                                <option value="">--- Pilih ---</option>
+                                                <?php 
+                                                foreach ($metoda as $mt) {
+                                                    $selected = '';
+                                                    if($mt->label == @$detail->metoda_pembelajaran){
+                                                        $selected = 'selected';
                                                     }
-                                                ?> -->
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Nama Kegiatan <span style="color: red">*</span></label>
-                                    <div class="col-sm-8">
-                                        <input type="text"  name="nama_kegiatan" id="nama_kegiatan"  class="form-control input-sm" value="<?php echo @$detail->nama_kegiatan;?>">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Objective</label>
-                                    <div class="col-sm-8">
-                                        <input type="text"  name="objective" id="objective"  class="form-control input-sm" value="<?php echo @$detail->objective;?>">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Justifikasi Pengajuan <span style="color: red">*</span></label>
-                                    <div class="col-sm-8">
-                                        <textarea type="text"  name="justifikasi" id="justifikasi"  class="form-control input-sm" ><?php echo @$detail->justifikasi_pengajuan;?></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Metode Pembelajaran <span style="color: red">*</span></label>
-                                    <div class="col-sm-8">
-                                        <select class="select2 form-control" name="metoda" id="metoda">
-                                            <option value="">--- Pilih ---</option>
-                                            <?php 
-                                            foreach ($metoda as $mt) {
-                                                $selected = '';
-                                                if($mt->label == @$detail->metoda_pembelajaran){
-                                                    $selected = 'selected';
+                                                    echo "<option ".$selected." value='".$mt->label."'>".$mt->label.'</option>';
                                                 }
-                                                echo "<option ".$selected." value='".$mt->label."'>".$mt->label.'</option>';
-                                            }
-                                            ?>
-                                        </select>
+                                                ?>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Estimasi Biaya <span style="color: red">*</span></label>
-                                    <div class="col-sm-8">
-                                        <input  class="form-control input_mask" name="estimasi_biaya" id="estimasi_biaya" value="<?php echo number_format(@$detail->estimasi_biaya);?>"> 
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Estimasi Biaya <span style="color: red">*</span></label>
+                                        <div class="col-sm-8">
+                                            <input  class="form-control input_mask" name="estimasi_biaya" id="estimasi_biaya" value="<?php echo number_format(@$detail->estimasi_biaya);?>"> 
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">Nama Penyelenggara <span style="color: red">*</span></label>
-                                    <div class="col-sm-6">
-                                        <select class="select2 form-control" name="penyelenggara" id="penyelenggara">
-                                            <option value=""> Pilih Lembaga</option>
-                                        </select>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Nama Penyelenggara <span style="color: red">*</span></label>
+                                        <div class="col-sm-6">
+                                            <select class="select2 form-control" name="penyelenggara" id="penyelenggara">
+                                                <option value=""> Pilih Lembaga</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2" id="divBtnAddPenyelenggara">
+                                            <button class="btn btn-info btn-sm pull-left" id="btnText" onclick="addPenyelenggara()"><b> <li class="fa fa-plus"></li> Tambah Penyelenggara</b> </button>
+                                        </div>
                                     </div>
-                                    <div class="col-md-2" id="divBtnAddPenyelenggara">
-                                        <button class="btn btn-info btn-sm pull-left" id="btnText" onclick="addPenyelenggara()"><b> <li class="fa fa-plus"></li> Tambah Penyelenggara</b> </button>
-                                    </div>
-                                </div>
 
                                 <!-- <div class="form-group" id="divNewPeneyelenggara" style="display:none">
                                     <label class="col-sm-3 control-label"> &nbsp; </label>
@@ -354,6 +359,8 @@
     </div>
 </section>
 <?php $this->load->view('tna/tna/modal_add_penyelenggara'); ?>
+<?php $this->load->view('tna/tna/modal_add_training'); ?>
+
 <script>
 
 var count = 1;
@@ -429,6 +436,8 @@ $(document).ready(function () {
         count = count + 1;
         appendRow(count)
     })
+
+    $('')
 
     // getDataKompetensi();
 
@@ -678,11 +687,10 @@ function getDataDetailKaryawan(count, karyawanId = false){
 function getCode() {
     var countData;
     let exp = $('#tna').val().split('|');
-    console.log($('#tna').val())
-    // let pelatihanId = $('#tna').val();
+    // console.log(exp)
     let pelatihanId = exp[0];
     $('#nama_kegiatan').val(exp[1])
-    // cosole.log(pelatihanId)
+   
     getDataLembaga(pelatihanId)
     getDataLembagawithotPelatihan(pelatihanId)
     getSum(pelatihanId)
@@ -817,10 +825,15 @@ function formatRepoSelection2(repo){
 }
 
 function addPenyelenggara(){
-    // alert('tamabah')
+    
     $('#modalTambahPenyelenggara').modal({backdrop: 'static', keyboard: false}) 
     $('#modalTambahPenyelenggara').modal('show')
    
+}
+
+function addTraining(){
+    $('#modalTambahTraining').modal({backdrop: 'static', keyboard: false}) 
+    $('#modalTambahTraining').modal('show')
 }
 
 function appendRow(count){
@@ -1104,6 +1117,7 @@ function getDataJob(kompetensi){
         }
     }); 
 }
+
 
 
 </script>

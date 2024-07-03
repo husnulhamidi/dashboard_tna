@@ -264,7 +264,7 @@
     }
 
     function getDataLembagawithotPelatihan(pelatihanId) {
-        console.log(pelatihanId)
+        // console.log(pelatihanId)
         $('#select_lembaga').empty()
         $('#select_lembaga').append('<option value="">Pilih Lembaga</option')
         $.ajax({

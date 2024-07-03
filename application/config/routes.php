@@ -314,6 +314,7 @@ $route['tna/edit/(:any)']    = 'tna/tna/edit/$1';
 $route['tna/detail/(:any)']    = 'tna/tna/detail/$1';
 $route['tna/submit']    = 'tna/tna/submit';
 $route['tna/submit_lembaga']    = 'tna/tna/submit_lembaga';
+$route['tna/submit_training']    = 'tna/tna/submit_training';
 $route['tna/delete_tna']    = 'tna/tna/delete';
 $route['tna/get_code_training']    = 'tna/tna/get_code_training';
 $route['tna/get_sum_data']    = 'tna/tna/get_sum_data';
