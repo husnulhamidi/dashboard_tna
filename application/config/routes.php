@@ -345,6 +345,10 @@ $route['tna/reporting/generate']    = 'tna/Reporting/generate';
 $route['tna/evaluasi']    = 'tna/Evaluasi/index';
 $route['tna/evaluasi/getData']    = 'tna/Evaluasi/getData';
 
+//=====================================================================================================================
+// Feedback
+$route['internalsharing/feedback/(:any)']    = 'tna/feedback/index/$1';
+
 
 
 
