@@ -348,6 +348,8 @@ $route['tna/evaluasi/getData']    = 'tna/Evaluasi/getData';
 //=====================================================================================================================
 // Feedback
 $route['internalsharing/feedback/(:any)']    = 'tna/feedback/index/$1';
+$route['internalSharing/getFeedback/(:any)']    = 'tna/feedback/getFeedback/$1';
+$route['internalsharing/feedback/simpan/data']    = 'tna/feedback/submit';
 
 
 

@@ -232,6 +232,7 @@
                    				</a>
                    			</div>
                    			<div class="col-md-12">
+								<h4> List Karywan</h4>
                    				<table class="table" id="tbl-peserta">
                    					<thead>
                    						<tr>
@@ -243,24 +244,31 @@
                    							<th> Aksi </th>
                    						</tr>
                    					</thead>
-                   					<tbody>
-                   						<!-- <tr>
-                   							<td> 1 </td>
-                   							<td> 12345 </td>
-                   							<td> Citra Dewi </td>
-                   							<td> Manager IT </td>
-                   							<td> IT & Digital </td>
-                   							<td> FTE </td>
-                   							<td>
-												<button class="btn-danger btn-xs">
-													<i class="fa fa-trash"></i>
-												</button>
-                   							</td>
-                   						</tr> -->
-                   					</tbody>
+                   					<tbody></tbody>
                    				</table>
                    			</div>
 	                   	</div>
+						<hr>
+						<div class="row">
+							<div class="col-md-12">
+								<h4> List Feedback </h4>
+								<table class="table" id="tbl-feedback">
+									<thead>
+										<tr>
+											<th> No </th>
+											<th> Nama Pesrta </th>
+											<th> NIK </th>
+											<th> Subdit/Unit </th>
+											<th> Penilain Materi </th>
+											<th> Penilain Narasumber </th>
+											<th> Manfaat </th>
+											<th> Kritik Saran </th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
+						</div>
                    	</div>
                 </div>
             </div>

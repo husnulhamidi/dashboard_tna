@@ -548,7 +548,7 @@ class InternalSharing extends CI_Controller {
 	}
 
 	public function feedback(){
-		echo json_encode($this->input->post());
+		// echo json_encode($this->input->post());
 		$userData = $this->session->userdata('user');
 		$karyawanId = $userData['m_karyawan_id'];
 		$karyawanId = $karyawanId;
