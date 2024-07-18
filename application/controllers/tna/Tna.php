@@ -189,7 +189,7 @@ class Tna extends CI_Controller {
 		$exp = explode('|', $this->input->post('tna'));
 		$data = array(	
 			'r_tna_kompetensi_id' => $this->input->post('kompetensi'),
-			'r_tna_traning_id' => $exp[0],
+			'r_tna_training_id' => $exp[0],
 			'jenis_pelatihan' => $this->input->post('jenis_pelatihan'),
 			'jenis_development' =>	$this->input->post('jenis_development'),	
 			'nama_kegiatan' => $this->input->post('nama_kegiatan'),
@@ -228,32 +228,83 @@ class Tna extends CI_Controller {
 
 			$data['created_date'] = date('Y-m-d');
 			$data['created_by'] = $this->karyawanId;
-			foreach ($this->input->post('karyawan') as $key => $value) {
-				if($value){
-					$data['m_karyawan_id'] = $value;
-					$data['m_organisasi_id'] = $this->input->post('subdit')[$key];
-					$data['status_karyawan'] = $this->input->post('status_fte')[$key];
-					$data['verifikator_id_1'] = $this->input->post('verifikator_id_1')[$key];
-					$data['direktorat_id'] = $this->input->post('direktorat')[$key];
+			// foreach ($this->input->post('karyawan') as $key => $value) {
+			// 	if($value){
+			// 		$data['m_karyawan_id'] = $value;
+			// 		$data['m_organisasi_id'] = $this->input->post('subdit')[$key];
+			// 		$data['status_karyawan'] = $this->input->post('status_fte')[$key];
+			// 		$data['verifikator_id_1'] = $this->input->post('verifikator_id_1')[$key];
+			// 		$data['direktorat_id'] = $this->input->post('direktorat')[$key];
 
-					$action = $this->TnaModel->insertData($data);
-				}	
+			// 		// $action = $this->TnaModel->insertData($data);
+			// 	}	
+			// }
+			foreach ($this->input->post('newKaryawan') as $key => $value) {
+				$nama_karyawan = $value;
+				$nik = $this->input->post('newNik')[$key];
+				$status_karyawan = $this->input->post('status_karyawan')[$key];
+				$m_karyawan_id = '';
+				if($value == null){
+					$status_karyawan = $this->input->post('status_fte')[$key];
+					// cek karyawan
+					$checkKaryawan = $this->TnaModel->checkKaryawan($this->input->post('karyawan')[$key]);
+					$nama_karyawan = $checkKaryawan->nama;
+					$nik = $checkKaryawan->nik_tg;
+					$m_karyawan_id = $this->input->post('karyawan')[$key];
+				}
+
+				$jabatan = $this->input->post('jabatan')[$key];
+
+				// direktorat
+				$direktorat = explode('#',$this->input->post('direktorat')[$key]);
+				$direktorat_id = $direktorat[0];
+				$direktorat_name = $direktorat[1];
+
+				// subdit
+				$subdit = explode('#',$this->input->post('subdit')[$key]);
+				$subdit_id = $subdit[0];
+				$m_organisasi_id = $subdit[0];
+				$subdit_name = $subdit[1];
+
+				//cek verifikator 
+				$checkVerifikator = $this->TnaModel->checkKaryawan($this->input->post('verifikator_id_1')[$key]);
+				$verifikator_id_1 = $this->input->post('verifikator_id_1')[$key];
+				$verifikator_nik = $checkVerifikator->nama;
+				$verifikator_name = $checkVerifikator->nik_tg;
+				
+				$data['direktorat_id'] = $direktorat_id;
+				$data['direktorat_name'] = $direktorat_name;
+				$data['m_organisasi_id'] = $m_organisasi_id;
+				$data['subdit_id'] = $subdit_id;
+				$data['subdit_name'] = $subdit_name;
+				$data['m_karyawan_id'] = $m_karyawan_id;
+				$data['nik'] = $nik;
+				$data['nama_karyawan'] = $nama_karyawan;
+				$data['jabatan'] = $jabatan;
+				$data['verifikator_id_1'] = $verifikator_id_1;
+				$data['verifikator_nik'] = $verifikator_nik;
+				$data['verifikator_name'] = $verifikator_name;
+
+				$action = $this->TnaModel->insertData($data);
+				
 			}
 			
-			// $this->saveHistory($dataHistory);
-			save_history_pengawalan($action, $this->input->post('tahapan_id'), 'Ya','Pembuatan TNA',$this->karyawanId);
+			
+			// save_history_pengawalan($action, $this->input->post('tahapan_id'), 'Ya','Pembuatan TNA',$this->karyawanId);
 		}
+
+		echo json_encode($data);
 		
 
 		
-		$return = array(
-			'success'		=> true,
-			'status_code'	=> 201,
-			'msg'			=> "Data berhasil di simpan.",
-			'data'			=> array()
-		);
+		// $return = array(
+		// 	'success'		=> true,
+		// 	'status_code'	=> 201,
+		// 	'msg'			=> "Data berhasil di simpan.",
+		// 	'data'			=> array()
+		// );
 		
-		echo json_encode($return);
+		// echo json_encode($return);
 	}
 
 	public function submit_lembaga(){
@@ -358,7 +409,7 @@ class Tna extends CI_Controller {
 	}
 
 	public function get_sum_data(){
-		$data = $this->TnaModel->get_sum_data($this->input->post('r_tna_traning_id'));
+		$data = $this->TnaModel->get_sum_data($this->input->post('r_tna_training_id'));
 		echo json_encode($data);
 
 	}

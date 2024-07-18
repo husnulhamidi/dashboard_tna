@@ -270,13 +270,13 @@
                                                     <select class="select2 form-control" name="direktorat[]" id="direktorat1" onchange="getSubdit(1)" >
                                                         <option value="">--- Pilih Direktorat ---</option>
                                                         <?php 
-                                                            $selected = '';
+                                                           
                                                             foreach ($direktorat as $dir) {
-                                                                
+                                                                $selected = '';
                                                                 if($dir->id == @$detail->direktorat_id){
                                                                     $selected = 'selected';
                                                                 }
-                                                                echo "<option ".$selected." value='".$dir->id."'>".$dir->o5.'</option>';
+                                                                echo "<option ".$selected." value='".$dir->id.'#'.$dir->o5."'>".$dir->o5.'</option>';
                                                             }
                                                         ?>
                                                     </select>
@@ -301,23 +301,43 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Nama Karyawan <span style="color: red">*</span></label>
-                                                <div class="col-sm-8">
+                                                <div class="col-sm-6">
                                                     <select class="select2 form-control" name="karyawan[]" id="karyawan1" onchange="getDataDetailKaryawan(1)">
                                                         <option value="">---Pilih Karyawan ---</option>
 
                                                     </select>
                                                 </div>
+                                                <div class="col-md-2" id="divBtnAddKaryawan1" style="display:block">
+                                                    <button class="btn btn-info btn-sm pull-left" id="btn-add-karyawan" onclick="addKaryawan(1)"><b> <li class="fa fa-plus"></li> Tambah Karyawan</b> </button>
+                                                </div>
+                                                <div class="col-md-2" id="divBtnCancelKaryawan1" style="display:none">
+                                                    <button class="btn btn-danger btn-sm pull-left" id="btn-cancel-karyawan" onclick="cancelKaryawan(1)"><b> <li class="fa fa-close"></li> Batal Tambah</b> </button>
+                                                </div>
+                                            </div>
+                                            <div id="formAdd1" style="display:none">
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">&nbsp;</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" name="newKaryawan[]" id="newKaryawan1" class="form-control" placeholder="Nama Karyawan">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-3 control-label">NIK</label>
+                                                    <div class="col-sm-6">
+                                                        <input type="text" name="newNik[]" id="newNik1" class="form-control" placeholder="NIK Karyawan">
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Jabatan / Posisi <span style="color: red">*</span></label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" readonly class="form-control" name="jabatan[]" id="jabatan1"> 
+                                                    <input type="text" class="form-control" name="jabatan[]" id="jabatan1"> 
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Status Karyawan <span style="color: red">*</span></label>
                                                 <div class="col-sm-8">
-                                                    <input type="text" readonly class="form-control" name="status_karyawan[]" id="status_karyawan1"> 
+                                                    <input type="text" class="form-control" name="status_karyawan[]" id="status_karyawan1"> 
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -365,6 +385,8 @@
 
 var count = 1;
 $(document).ready(function () {
+    $('#status_karyawan'+count).attr('readonly', true)
+    $('#jabatan'+count).attr('readonly', true)
     $('.select2').select2();
     // $('#date .input-group.date').daterangepicker({
     //     // format: "dd-mm-yyyy",
@@ -443,12 +465,34 @@ $(document).ready(function () {
 
 });
 
+function addKaryawan(count) {
+    $('#divBtnCancelKaryawan'+count).css('display','block')
+    $('#divBtnAddKaryawan'+count).css('display','none')
+    $('#karyawan'+count).attr('disabled', true)
+    $('#formAdd'+count).css('display','block')
+
+    $('#status_karyawan'+count).attr('readonly', false)
+    $('#jabatan'+count).attr('readonly', false)
+}
+
+function cancelKaryawan(count){
+    $('#divBtnCancelKaryawan'+count).css('display','none')
+    $('#divBtnAddKaryawan'+count).css('display','block')
+    $('#karyawan'+count).attr('disabled', false)
+    $('#formAdd'+count).css('display','none')
+
+    $('#status_karyawan'+count).attr('readonly', true)
+    $('#jabatan'+count).attr('readonly', true)
+}
+
 
 
 function getSubdit(count, subdit = false, varifikatorId = false){
-    // console.log(subdit)
-    let direktoratId = $('#direktorat'+count).val();
-    // console.log('direktoratId', direktoratId)
+    // console.log('subdit', subdit)
+    let tmp = $('#direktorat'+count).val();
+    let direktorat = tmp.split('#')
+    let direktoratId = direktorat[0]
+    console.log(tmp)
     // if(subdit){
     //     direktoratId = subdit
     // }
@@ -465,11 +509,12 @@ function getSubdit(count, subdit = false, varifikatorId = false){
 
             if(result !== null){
                 $.each(result, function(i, value) {
+                    
                     var selected = '';
                     if(value['id'] == subdit){
                         selected = 'selected';
                     }
-                    $('#subdit'+count).append('<option '+selected+' value=' + value['id'] + '>' + value['name'] +'</option>');
+                    $('#subdit'+count).append('<option '+selected+' value=' + value['id'] +'#'+value['name']+ '>' + value['name'] +'</option>');
                 });
             }
         },
@@ -485,7 +530,11 @@ function getKaryawanBySubdit(count, direktoratId = false, karyawanId = false){
     let subditId = $('#subdit'+count).val();
     if( direktoratId ){
         subditId = direktoratId
+    }else{
+        let tmp = $('#subdit'+count).val().split('#')
+        subditId = tmp[0]
     }
+
    
     $.ajax({
         url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_organisasi'); ?>',
@@ -496,7 +545,6 @@ function getKaryawanBySubdit(count, direktoratId = false, karyawanId = false){
         success: function (result) {
             $('#karyawan'+count).empty(); 
             $('#karyawan'+count).append('<option value="">-- Pilih Karyawan --</option>');
-            console.log('karyawanId2', karyawanId)
             if(result !== null){
                 
                 $.each(result, function(i, value) {
@@ -504,7 +552,7 @@ function getKaryawanBySubdit(count, direktoratId = false, karyawanId = false){
                     if(value['id'] == karyawanId){
                         selected = 'selected';
                     }
-                    $('#karyawan'+count).append('<option '+selected+' value=' + value['id'] + '>' + value['nama'] + ' | '+ value['nik_tg']+' | '+value['jabatan_nama']+'</option>');
+                    $('#karyawan'+count).append('<option '+selected+' value="' + value['id'] + '">' + value['nama'] + ' | '+ value['nik_tg']+' | '+value['jabatan_nama']+'</option>');
                 });
                 $('#karyawan'+count).select2({
                     data: result,
@@ -575,7 +623,8 @@ function formatRepoSelectionKaryawan(repo){
 
 var isHeaderAtasan = true;
 function getAtasan(count, direktoratId, varifikatorId = false){
-    // console.log(varifikatorId)
+    console.log('varifikatorId',varifikatorId)
+    console.log('direktoratId',direktoratId)
     $.ajax({
         url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_organisasi'); ?>',
         type: 'POST',
@@ -749,7 +798,7 @@ function getDataLembaga(pelatihanId, dataPenyelenggara = false){
         dataType: 'json',
         data: { pelatihanId:pelatihanId},
         success: function(response){
-            // console.log(response)
+            console.log('response', response.length)
            
             $.each(response, function(index, item) {
                 var selected = "";
@@ -758,6 +807,9 @@ function getDataLembaga(pelatihanId, dataPenyelenggara = false){
                 }
                 $('#penyelenggara').append('<option '+selected+' value="'+item.id+'" >' + item.nama_lembaga + '</option>');
             });
+            if(response.length == 0){
+                $('#penyelenggara').append('<option selected >' + dataPenyelenggara + '</option>');
+            }
             $('#penyelenggara').select2({
                 data: response,
                 placeholder: 'Pilih Penyelenggara',
@@ -855,7 +907,7 @@ function appendRow(count){
                                 if($dir->id == @$detail->direktorat_id){
                                     $selected = 'selected';
                                 }
-                                echo "<option  value='".$dir->id."'>".$dir->o5.'</option>';
+                                echo "<option  value='".$dir->id.'#'.$dir->o5."'>".$dir->o5.'</option>';
                             }
                         ?>
                     </select>
@@ -866,42 +918,48 @@ function appendRow(count){
                 <div class="col-sm-8">
                     <select class="select2 form-control" name="subdit[]" id="subdit`+count+`" onchange="getKaryawanBySubdit(`+count+`)">
                         <option value="">--- Pilih Subdit ---</option>
-                        // <?php 
-                        // foreach ($subdit as $sb) {
-                        //     $selected = '';
-                        //     if($sb->m_organisasi_id == @$detail->m_organisasi_id){
-                        //         $selected = 'selected';
-                        //     }
-                        //     echo "<option ".$selected." value='".$sb->m_organisasi_id."'>".$sb->nama.'</option>';
-                        // }
-                        // ?>
                     </select>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">Nama Karyawan <span style="color: red">*</span></label>
-                <div class="col-sm-8">
-                    <select class="select2 form-control" name="karyawan[]" id="karyawan`+count+`" onchange=getDataDetailKaryawan(`+count+`)>
+                <div class="col-sm-6">
+                    <select class="select2 form-control" name="karyawan[]" id="karyawan`+count+`" onchange="getDataDetailKaryawan(`+count+`)">
                         <option value="">---Pilih Karyawan ---</option>
 
                     </select>
+                </div>
+                <div class="col-md-2" id="divBtnAddKaryawan`+count+`" style="display:block">
+                    <button class="btn btn-info btn-sm pull-left" id="btn-add-karyawan" onclick="addKaryawan(`+count+`)"><b> <li class="fa fa-plus"></li> Tambah Karyawan</b> </button>
+                </div>
+                <div class="col-md-2" id="divBtnCancelKaryawan`+count+`" style="display:none">
+                    <button class="btn btn-danger btn-sm pull-left" id="btn-cancel-karyawan" onclick="cancelKaryawan(`+count+`)"><b> <li class="fa fa-close"></li> Batal Tambah</b> </button>
+                </div>
+            </div>
+            <div id="formAdd`+count+`" style="display:none">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">&nbsp;</label>
+                    <div class="col-sm-6">
+                        <input type="text" name="newKaryawan[]" id="newKaryawan`+count+`" class="form-control" placeholder="Nama Karyawan">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">NIK</label>
+                    <div class="col-sm-6">
+                        <input type="text" name="newNik[]" id="newNik`+count+`" class="form-control" placeholder="NIK Karyawan">
+                    </div>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">Jabatan / Posisi <span style="color: red">*</span></label>
                 <div class="col-sm-8">
-                    <input type="text" readonly class="form-control" name="jabatan[]" id="jabatan`+count+`"> 
+                    <input type="text" class="form-control" name="jabatan[]" id="jabatan`+count+`"> 
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">Status Karyawan <span style="color: red">*</span></label>
                 <div class="col-sm-8">
-                    <input type="text" readonly class="form-control" name="status_karyawan[]" id="status_karyawan`+count+`"> 
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-8">
-                    <input type="hidden" class="form-control" name="status_fte[]" id="status_fte`+count+`"> 
+                    <input type="text" class="form-control" name="status_karyawan[]" id="status_karyawan`+count+`"> 
                 </div>
             </div>
             <div class="form-group">

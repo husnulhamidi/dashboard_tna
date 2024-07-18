@@ -47,7 +47,7 @@ class TnaModel extends CI_Model {
 
 		$this->db->select('tp.id as id, tp.code_tna,tp.objective, rt.name as training, tp.jenis_development, tp.metoda_pembelajaran, tp.jenis_pelatihan, tk.name as kompetensi, tp.nama_penyelenggara, tp.waktu_pelaksanaan, tp.estimasi_biaya, mk.nama as nama_karyawan,mo.nama as nama_organisasi,tp.status_karyawan, tp.is_urgent');
 		$this->db->from('m_tna_pengawalan tp');
-		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_traning_id');
+		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_training_id');
 		$this->db->join('r_tna_kompetensi tk', 'tk.id = tp.r_tna_kompetensi_id');
 		$this->db->join('r_tahapan_usulan ru', 'ru.id = tp.tahapan_id');
 		$this->db->join('m_karyawan mk', 'mk.id = tp.m_karyawan_id');
@@ -64,7 +64,7 @@ class TnaModel extends CI_Model {
 			$this->db->where('tp.jenis_development', $post['filter_jenis_development']);
 		}
 		if($post['filter_nama_pelatihan'] !== 'all'){
-			$this->db->where('tp.r_tna_traning_id', $post['filter_nama_pelatihan']);
+			$this->db->where('tp.r_tna_training_id', $post['filter_nama_pelatihan']);
 		}
 		if($post['filter_justifikasi'] !== ''){
 			$this->db->like('tp.justifikasi_pengajuan', $post['filter_justifikasi'],'both');
@@ -170,7 +170,7 @@ class TnaModel extends CI_Model {
 							tk.name as kompetensi,
 							mk.nama as nama_karyawan,mo.nama as nama_organisasi,tp.status_karyawan');
 		$this->db->from('m_tna_pengawalan tp');
-		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_traning_id');
+		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_training_id');
 		$this->db->join('r_tna_kompetensi tk', 'tk.id = tp.r_tna_kompetensi_id');
 		$this->db->join('m_karyawan mk', 'mk.id = tp.m_karyawan_id');
 		$this->db->join('m_organisasi mo', 'mo.id = tp.m_organisasi_id', 'left');
@@ -209,11 +209,11 @@ class TnaModel extends CI_Model {
         return $return;
     }
 
-    public function get_sum_data($r_tna_traning_id){
+    public function get_sum_data($r_tna_training_id){
     	$count = $this->db
 		    ->from($this->table)
-		    ->where('r_tna_traning_id', $r_tna_traning_id)
-		    ->select('count(r_tna_traning_id) as count')
+		    ->where('r_tna_training_id', $r_tna_training_id)
+		    ->select('count(r_tna_training_id) as count')
 		    ->get()
 		    ->row();
 
@@ -315,7 +315,7 @@ class TnaModel extends CI_Model {
 	public function getDataExport($post){
 		$this->db->select('tp.id as id, tp.code_tna,tp.objective, rt.name as training, tp.jenis_development, tp.metoda_pembelajaran, tp.jenis_pelatihan, tk.name as kompetensi, tp.nama_penyelenggara, tp.waktu_pelaksanaan, tp.estimasi_biaya, mk.nama as nama_karyawan,mo.nama as nama_organisasi,tp.status_karyawan');
 		$this->db->from('m_tna_pengawalan tp');
-		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_traning_id');
+		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_training_id');
 		$this->db->join('r_tna_kompetensi tk', 'tk.id = tp.r_tna_kompetensi_id');
 		$this->db->join('r_tahapan_usulan ru', 'ru.id = tp.tahapan_id');
 		$this->db->join('m_karyawan mk', 'mk.id = tp.m_karyawan_id');
@@ -332,7 +332,7 @@ class TnaModel extends CI_Model {
 			$this->db->where('tp.jenis_development', $post['filter_jenis_development']);
 		}
 		if($post['filter_nama_pelatihan'] !== 'all'){
-			$this->db->where('tp.r_tna_traning_id', $post['filter_nama_pelatihan']);
+			$this->db->where('tp.r_tna_training_id', $post['filter_nama_pelatihan']);
 		}
 		if($post['filter_justifikasi'] !== ''){
 			$this->db->like('tp.justifikasi_pengajuan', $post['filter_justifikasi'],'both');
@@ -439,6 +439,14 @@ class TnaModel extends CI_Model {
 		$query = $this->db->get();
 		return $query->row();;
 
+	}
+
+	public function checkKaryawan($id){
+		$this->db->select('id, nama, nik_tg');
+		$this->db->from('m_karyawan');
+		$this->db->where('id', $id);
+		$query = $this->db->get();
+		return $query->row();
 	}
 
 

@@ -128,81 +128,81 @@ function deleteData(id){
 }
 
 function submitTNA(){
-    console.log('sini')
+    // console.log('sini')
     $(".form-tna").validate({
-        rules: {
-            jenis_pelatihan: "required",
-            kompetensi: "required",
-            jenis_development: "required",
-            tna: "required",
-            nama_kegiatan: "required",
-            metoda: "required",
-            estimasi_biaya: "required",
-            penyelenggara: "required",
-            waktu_pelaksanaan: "required",
-            direktorat: "required",
-            karyawan: "required",
-            is_tna: "required",
-            justifikasi: "required",
-            metoda: "required",
-            estimasi_biaya: "required",
-        },
-        messages: {
-            jenis_pelatihan:{
-                required:"<i class='fa fa-times'></i> Jenis Pelatihan harus diisi"
-            },
-            kompetensi:{
-                required:"<i class='fa fa-times'></i>  Kompetensi harus diisi"
-            },
-            jenis_development:{
-                required:"<i class='fa fa-times'></i> Jenis Development harus diisi"
-            },
-            tna:{
-                required:"<i class='fa fa-times'></i> Pelatihan/Sertifikasi harus diisi"
-            },
-            nama_kegiatan:{
-                required:"<i class='fa fa-times'></i> Nama Kegiatan harus diisi"
-            },
-            metoda:{
-                required:"<i class='fa fa-times'></i> Metoda Pembelajaran harus diisi"
-            },
-            estimasi_biaya:{
-                required:"<i class='fa fa-times'></i> Estimasi Biaya harus diisi"
-            },
-            penyelenggara:{
-                required:"<i class='fa fa-times'></i> Nama Penyelenggara harus diisi"
-            },
-            waktu_pelaksanaan:{
-                required:"<i class='fa fa-times'></i> Waktu Pelaksanaan harus diisi"
-            },
-            direktorat:{
-                required:"<i class='fa fa-times'></i> Direktorat harus diisi"
-            },
-            karyawan:{
-                required:"<i class='fa fa-times'></i> Nama Karyawan harus diisi"
-            },
-            is_tna:{
-                required:"<i class='fa fa-times'></i> TNA atau Non TNA harus diisi"
-            },
-            justifikasi:{
-                required:"<i class='fa fa-times'></i> Justifikasi Pengajuan harus diisi"
-            },
-            metoda:{
-                required:"<i class='fa fa-times'></i> Metoda Pembelajaran harus diisi"
-            },
-            estimasi_biaya:{
-                required:"<i class='fa fa-times'></i> Estimasi biaya harus diisi"
-            }
+        // rules: {
+        //     jenis_pelatihan: "required",
+        //     kompetensi: "required",
+        //     jenis_development: "required",
+        //     tna: "required",
+        //     nama_kegiatan: "required",
+        //     metoda: "required",
+        //     estimasi_biaya: "required",
+        //     penyelenggara: "required",
+        //     waktu_pelaksanaan: "required",
+        //     direktorat: "required",
+        //     karyawan: "required",
+        //     is_tna: "required",
+        //     justifikasi: "required",
+        //     metoda: "required",
+        //     estimasi_biaya: "required",
+        // },
+        // messages: {
+        //     jenis_pelatihan:{
+        //         required:"<i class='fa fa-times'></i> Jenis Pelatihan harus diisi"
+        //     },
+        //     kompetensi:{
+        //         required:"<i class='fa fa-times'></i>  Kompetensi harus diisi"
+        //     },
+        //     jenis_development:{
+        //         required:"<i class='fa fa-times'></i> Jenis Development harus diisi"
+        //     },
+        //     tna:{
+        //         required:"<i class='fa fa-times'></i> Pelatihan/Sertifikasi harus diisi"
+        //     },
+        //     nama_kegiatan:{
+        //         required:"<i class='fa fa-times'></i> Nama Kegiatan harus diisi"
+        //     },
+        //     metoda:{
+        //         required:"<i class='fa fa-times'></i> Metoda Pembelajaran harus diisi"
+        //     },
+        //     estimasi_biaya:{
+        //         required:"<i class='fa fa-times'></i> Estimasi Biaya harus diisi"
+        //     },
+        //     penyelenggara:{
+        //         required:"<i class='fa fa-times'></i> Nama Penyelenggara harus diisi"
+        //     },
+        //     waktu_pelaksanaan:{
+        //         required:"<i class='fa fa-times'></i> Waktu Pelaksanaan harus diisi"
+        //     },
+        //     direktorat:{
+        //         required:"<i class='fa fa-times'></i> Direktorat harus diisi"
+        //     },
+        //     karyawan:{
+        //         required:"<i class='fa fa-times'></i> Nama Karyawan harus diisi"
+        //     },
+        //     is_tna:{
+        //         required:"<i class='fa fa-times'></i> TNA atau Non TNA harus diisi"
+        //     },
+        //     justifikasi:{
+        //         required:"<i class='fa fa-times'></i> Justifikasi Pengajuan harus diisi"
+        //     },
+        //     metoda:{
+        //         required:"<i class='fa fa-times'></i> Metoda Pembelajaran harus diisi"
+        //     },
+        //     estimasi_biaya:{
+        //         required:"<i class='fa fa-times'></i> Estimasi biaya harus diisi"
+        //     }
             
-        },
-        highlight: function (element) {
-            $(element).parent().parent().addClass("has-error")
-            $(element).parent().addClass("has-error")
-        },
-        unhighlight: function (element) {
-            $(element).parent().removeClass("has-error")
-            $(element).parent().parent().removeClass("has-error")
-        },
+        // },
+        // highlight: function (element) {
+        //     $(element).parent().parent().addClass("has-error")
+        //     $(element).parent().addClass("has-error")
+        // },
+        // unhighlight: function (element) {
+        //     $(element).parent().removeClass("has-error")
+        //     $(element).parent().parent().removeClass("has-error")
+        // },
         submitHandler: function(form) {
             // var formData1 = $(form).serializeArray();
             // var formData2 = $('#form-add-penyelenggara').serializeArray();
@@ -216,27 +216,27 @@ function submitTNA(){
                 data: $(form).serialize(),
                 success: function(response) {
                     console.log('response')
-                    if(response.success){
-                        setTimeout(function() {
-                            swal({
-                                title: "Notifikasi!",
-                                text: "Data berhasil disimpan",
-                                imageUrl: img_icon_success
-                            }, function(d) {
-                                location.href = base_url+'/tna'
-                            });
-                        }, 1000);
-                    }else{
-                        setTimeout(function() {
-                            swal({
-                                title: "Notifikasi!",
-                                text: "Data gagal disimpan",
-                                imageUrl: img_icon_error
-                            }, function() {
-                                location.reload();
-                            });
-                        }, 1000);
-                    }
+                    // if(response.success){
+                    //     setTimeout(function() {
+                    //         swal({
+                    //             title: "Notifikasi!",
+                    //             text: "Data berhasil disimpan",
+                    //             imageUrl: img_icon_success
+                    //         }, function(d) {
+                    //             location.href = base_url+'/tna'
+                    //         });
+                    //     }, 1000);
+                    // }else{
+                    //     setTimeout(function() {
+                    //         swal({
+                    //             title: "Notifikasi!",
+                    //             text: "Data gagal disimpan",
+                    //             imageUrl: img_icon_error
+                    //         }, function() {
+                    //             location.reload();
+                    //         });
+                    //     }, 1000);
+                    // }
                     
                 }            
             });
