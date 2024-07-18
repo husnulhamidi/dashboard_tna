@@ -25,12 +25,49 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Karyawan<span style="color: red">*</span></label>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-8">
                                         <select class="select2 form-control" placeholder="Pilih Narasumber" name="peserta" id="peserta">
                                             <option value=""></option>
                                         </select>
                                     </div>
+                                    <div class="col-md-2" id="divBtnAddKaryawan" style="display:block">
+                                        <button class="btn btn-info btn-sm pull-left" id="btn-add-karyawan" onclick="addKaryawan()"><b> <li class="fa fa-plus"></li> Tambah Karyawan</b> </button>
+                                    </div>
+                                    <div class="col-md-2" id="divBtnCancelKaryawan" style="display:none">
+                                        <button class="btn btn-danger btn-sm pull-left" id="btn-cancel-karyawan" onclick="cancelKaryawan()"><b> <li class="fa fa-close"></li> Batal Tambah</b> </button>
+                                    </div>
                                 </div>
+                                <div class="form-tambah" id="form-tambah" style="display:none">
+                                    <div class="form-group divAddKaryawan">
+                                        <label class="col-sm-2 control-label">Nama Peserta<span style="color: red">*</span></label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" name="newKarywan" id="newKarywan" placeholder="Nama Peserta">
+                                        </div>
+                                    </div>
+                                    <div class="form-group divAddKaryawan">
+                                        <label class="col-sm-2 control-label">NIK Karyawan<span style="color: red">*</span></label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" name="nik" id="nik" placeholder="NIK Peserta">
+                                        </div>
+                                    </div>
+                                    <div class="form-group divAddKaryawan">
+                                        <label class="col-sm-2 control-label">Jabatan<span style="color: red">*</span></label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" name="jabatan" id="jabatan" placeholder="Jabatan Peserta">
+                                        </div>
+                                    </div>
+                                    <div class="form-group divAddKaryawan">
+                                        <label class="col-sm-2 control-label">Status Peserta<span style="color: red">*</span></label>
+                                        <div class="col-sm-10">
+                                            <!-- <input type="text" class="form-control" name="status_karyawan" id="status_karyawan" placeholder="Status Peserta"> -->
+                                            <select name="status_karyawan" id="status_karyawan" class="form-control">
+                                                <option> FTE </option>
+                                                <option> Non FTE </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                             </div> <!-- end col-12 -->
                             
                         </div><!-- end row -->
@@ -77,36 +114,11 @@
                     if(unit == response[i]['id']){
                         selected = "selected";
                     }
-                    $('#direktorat').append('<option '+selected+' value='+response[i]['id']+'>'+response[i]['nama']+'</option>')
+                    $('#direktorat').append('<option ' + selected + ' value="' + response[i]['id'] + '#' + response[i]['nama'] + '">' + response[i]['nama'] + '</option>');
                 }
             }
         });
     }
-
-    // function getDataPemateri(idDir = false, karyawan = false){
-    //     var dirId = $('#direktorat').val()
-    //     if(dirId == ''){
-    //         dirId = idDir
-    //     }
-       
-    //     $('#pemateri').empty()
-    //     $('#pemateri').append('<option></option')
-    //     $.ajax({
-    //         url:base_url+'tna/internalSharing/getPemateriByDirKom/'+dirId,
-    //         method: 'get',
-    //         dataType: 'json',
-    //         success: function(response){
-    //             console.log(response)
-                // for (var i = 0; i < response.length; i++) {
-                //     var selected = "";
-                //     if(karyawan == response[i]['id']){
-                //         selected = "selected";
-                //     }
-                //     $('#peserta').append('<option '+selected+' value='+response[i]['id']+'>'+response[i]['nama']+'</option>')
-                // }
-    //         }
-    //     });
-    // }
 
     function getDataPesertaByOrg(){
         var dirId = $('#direktorat').val()
@@ -122,7 +134,7 @@
             success: function(response){
                 console.log(response)
                 for (var i = 0; i < response.length; i++) {
-                    $('#peserta').append('<option value='+response[i]['id']+'>'+response[i]['nama']+'</option>')
+                    $('#peserta').append('<option value="'+response[i]['id']+'#'+response[i]['nik_tg']+'#'+response[i]['nama']+'">'+response[i]['nama']+'</option>')
                 }
                 
             }
@@ -132,5 +144,19 @@
     $('.select2').select2({
         placeholder: "Silahkan pilih"
     });
+
+    function addKaryawan() {
+        $('#divBtnCancelKaryawan').css('display','block')
+        $('#divBtnAddKaryawan').css('display','none')
+        $('#peserta').attr('disabled', true)
+        $('#form-tambah').css('display','block')
+    }
+
+    function cancelKaryawan(){
+        $('#divBtnCancelKaryawan').css('display','none')
+        $('#divBtnAddKaryawan').css('display','block')
+        $('#peserta').attr('disabled', false)
+        $('#form-tambah').css('display','none')
+    }
 
 </script>

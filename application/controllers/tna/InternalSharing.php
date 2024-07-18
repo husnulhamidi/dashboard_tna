@@ -460,10 +460,32 @@ class InternalSharing extends CI_Controller {
     }
    
    	public function createOrUpdatePeserta(){
+		$dir = explode('#',$this->input->post('direktorat'));
+		$nama_peserta = $this->input->post('newKarywan');
+		$nik_peserta = $this->input->post('nik');
+		$m_karyawan_id = '';
+		$status_karyawan = $this->input->post('status_karyawan');
+		$jabatan = $this->input->post('jabatan');
+		if($this->input->post('newKarywan') == null ){
+			$peserta = explode('#',$this->input->post('peserta'));
+			$nama_peserta = $peserta[2];
+			$nik_peserta = $peserta[1];
+			$m_karyawan_id = $peserta[0];
+			$status_karyawan = '';
+			$jabatan = '';
+		}
    		$data = array(
     		'm_tna_internal_sharing_id' => $this->input->post('trainingId'),
-    		'm_karyawan_id' => $this->input->post('peserta')
+			'subdit_id'	=> $dir[0],
+			'sudbit_name'	=> $dir[1],
+    		'm_karyawan_id' => $m_karyawan_id,
+    		'nik_peserta' => $nik_peserta,
+    		'nama_peserta' => $nama_peserta,
+			'status_karyawan' => $status_karyawan,
+			'jabatan' => $jabatan,
     	);
+
+		// echo json_encode($data);
     	if($this->input->post('id')){
 			$data['updated_date'] = date('Y-m-d');
 			$action = $this->InternalSharing->updateDataPeserta($data, $this->input->post('id'));

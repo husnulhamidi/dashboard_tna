@@ -334,16 +334,13 @@ class InternalSharing_Model extends CI_Model {
         $recordsTotal = 0;
         $this->db->start_cache();
 
-        // $this->db->select('misp.');
-        // $this->db->from('m_tna_internal_sharing_peserta misp');
-        // $this->db->where('misp.m_tna_internal_sharing_id',$id);
-        $this->db->select('tis.id, mk.nama, j.nama as jabatan, mo.nama as subunit, IF(sk.id IN (2,4,5),"FTE","Non FTE") as status_fte,isp.id as idPeserta, mk.id as m_karywan_id')
+        $this->db->select('tis.id, IFNULL(isp.nama_peserta, mk.nama) as nama, IFNULL(isp.jabatan, j.nama) as jabatan, isp.sudbit_name as subunit, IFNULL(isp.status_karyawan, IF(sk.id IN (2, 4, 5), "FTE", "Non FTE")) as status_fte, isp.id as idPeserta, mk.id as m_karyawan_id')
          ->from('m_tna_internal_sharing_peserta as isp')
-         ->join('m_karyawan mk', 'mk.id = isp.m_karyawan_id')
+         ->join('m_karyawan mk', 'mk.id = isp.m_karyawan_id', 'left')
          ->join('m_tna_internal_sharing tis', 'tis.id = isp.m_tna_internal_sharing_id')
-         ->join('h_mutasi hm', 'hm.m_karyawan_id = mk.id')
-         ->join('r_jabatan j', 'j.id = hm.r_jabatan_id','left')
-         ->join('m_organisasi mo', 'mo.id = hm.m_organisasi_id')
+         ->join('h_mutasi hm', 'hm.m_karyawan_id = mk.id', 'left')
+         ->join('r_jabatan j', 'j.id = hm.r_jabatan_id', 'left')
+        //  ->join('m_organisasi mo', 'mo.id = hm.m_organisasi_id', 'left')
          ->join('r_status_karyawan sk', 'sk.id = mk.r_status_karyawan_id', 'left')
          ->where('tis.id', $id)
          ->group_by('mk.nama');
