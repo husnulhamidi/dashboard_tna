@@ -166,7 +166,7 @@
                                                 <?php 
                                                     foreach ($tna as $tna) {
                                                         $selected = '';
-                                                        if($tna->id == @$detail->r_tna_traning_id){
+                                                        if($tna->id == @$detail->r_tna_training_id){
                                                             $selected = 'selected';
                                                         }
                                                         echo "<option ".$selected." value='".$tna->id.'|'.$tna->name."'>".$tna->code.' | '.$tna->name.'</option>';
@@ -679,7 +679,7 @@ function getSum(pelatihanId) {
         $.ajax({
             url: '<?php echo site_url('tna/get_sum_data'); ?>',
             type: 'POST',
-            data: { r_tna_traning_id: pelatihanId },
+            data: { r_tna_training_id: pelatihanId },
             dataType: 'json',
             success: function(result) {
             resolve(result); // Kirim hasil getSum ke resolve

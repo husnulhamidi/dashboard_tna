@@ -64,7 +64,7 @@ class DashboardTraining_model extends CI_Model {
   //           ->limit(10)
   //           ->get()
   //           ->result();
-        $this->db->select('mk.id, mk.nama,mk.url, mk.nik_tg, mo.nama AS nama_organisasi, COUNT(DISTINCT mshp.m_tna_internal_sharing_id) + COUNT(DISTINCT mtp.r_tna_traning_id) AS jumlah_training,mk.r_jenis_kelamin_id as jenis_kelamin');
+        $this->db->select('mk.id, mk.nama,mk.url, mk.nik_tg, mo.nama AS nama_organisasi, COUNT(DISTINCT mshp.m_tna_internal_sharing_id) + COUNT(DISTINCT mtp.r_tna_training_id) AS jumlah_training,mk.r_jenis_kelamin_id as jenis_kelamin');
         $this->db->from('m_karyawan mk');
         $this->db->join('h_mutasi hm', 'mk.id = hm.m_karyawan_id');
         $this->db->join('m_organisasi mo', 'hm.m_organisasi_id = mo.id');
@@ -108,7 +108,7 @@ class DashboardTraining_model extends CI_Model {
 		$recordsTotal = 0;
         $this->db->start_cache();
 
-        $this->db->select('mk.id, mk.nama,mk.url, mk.nik_tg, mo.nama AS nama_organisasi, COUNT(DISTINCT mshp.m_tna_internal_sharing_id) + COUNT(DISTINCT mtp.r_tna_traning_id) AS jumlah_training,mk.r_jenis_kelamin_id as jenis_kelamin');
+        $this->db->select('mk.id, mk.nama,mk.url, mk.nik_tg, mo.nama AS nama_organisasi, COUNT(DISTINCT mshp.m_tna_internal_sharing_id) + COUNT(DISTINCT mtp.r_tna_training_id) AS jumlah_training,mk.r_jenis_kelamin_id as jenis_kelamin');
         $this->db->from('m_karyawan mk');
         $this->db->join('h_mutasi hm', 'mk.id = hm.m_karyawan_id');
         $this->db->join('m_organisasi mo', 'hm.m_organisasi_id = mo.id');
@@ -173,7 +173,7 @@ class DashboardTraining_model extends CI_Model {
 	}
 
     public function getExportDataKaryawan($thn){
-        $this->db->select('mk.id, mk.nama, mk.url, mk.nik_tg, mo.nama AS nama_organisasi, COUNT(DISTINCT mshp.m_tna_internal_sharing_id) + COUNT(DISTINCT mtp.r_tna_traning_id) AS jumlah_training, mk.r_jenis_kelamin_id as jenis_kelamin');
+        $this->db->select('mk.id, mk.nama, mk.url, mk.nik_tg, mo.nama AS nama_organisasi, COUNT(DISTINCT mshp.m_tna_internal_sharing_id) + COUNT(DISTINCT mtp.r_tna_training_id) AS jumlah_training, mk.r_jenis_kelamin_id as jenis_kelamin');
         $this->db->from('m_karyawan mk');
         $this->db->join('h_mutasi hm', 'mk.id = hm.m_karyawan_id');
         $this->db->join('m_organisasi mo', 'hm.m_organisasi_id = mo.id');

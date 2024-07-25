@@ -124,7 +124,7 @@
                                                         <?php 
                                                         foreach ($tna as $tna) {
                                                             $selected = '';
-                                                            if($tna->id == @$detail->r_tna_traning_id){
+                                                            if($tna->id == @$detail->r_tna_training_id){
                                                                 $selected = 'selected';
                                                             }
                                                             echo "<option ".$selected." value='".$tna->id.'|'.$tna->name."'>".$tna->code.' | '.$tna->name.'</option>';

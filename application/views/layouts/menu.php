@@ -142,11 +142,33 @@ $sess = $this->session->userdata();
                 <i class="fa fa-gear"></i> <span>Setting TTD</span>
             </a>
         </li>
-         <li class="<?php echo $active_menu=='tna_materi'? 'active':'';?> ">
+        <!-- <li class="<?php echo $active_menu=='tna_materi'? 'active':'';?> ">
             <a href="<?php echo site_url('tna/library_materi'); ?>">
                 <i class="fa fa-cube"></i> <span>Library Materi</span>
             </a>
-        </li>
+        </li> -->
+
+
+        <li class="treeview <?php echo ($active_menu == 'tna_materi') ? 'active' : ''; ?> ">
+            <a href="#">
+                <i class="fa fa-clone"></i>Library</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li class="<?php echo $active_menu=='tna_materi'? 'active':'';?> ">
+                    <a href="<?php echo site_url('tna/library_materi'); ?>">
+                        <i class="fa fa-cube"></i> <span>Materi</span>
+                    </a>
+                </li>
+                <li class="<?php echo $active_menu=='tna_materi'? 'active':'';?> ">
+                    <a href="<?php echo site_url('tna/library_sertifikat'); ?>">
+                        <i class="fa fa-file"></i> <span>Sertifikat</span>
+                    </a>
+                </li>
+            </ul>
+        </li> 
 
          <!-- <li class="<?php echo $active_menu=='pelanggan'? 'active':'';?> ">
             <a href="<?php echo site_url('pelanggan/data_pelanggan'); ?>">

@@ -61,7 +61,7 @@ class PengawalanModel extends CI_Model {
 					tp.is_submit_evaluasi,
                     mis.id as internal_sharing');
 		$this->db->from('m_tna_pengawalan tp');
-		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_traning_id');
+		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_training_id');
 		$this->db->join('r_tna_kompetensi tk', 'tk.id = tp.r_tna_kompetensi_id');
 		$this->db->join('r_tahapan_usulan tu', 'tu.id = tp.tahapan_id');
 		$this->db->join('m_karyawan mk', 'mk.id = tp.m_karyawan_id');
@@ -265,9 +265,10 @@ class PengawalanModel extends CI_Model {
 							mo.nama as nama_organisasi,
 							mis.is_complete,
                     		mis.id as internal_sharing,
-                    		tu.urutan');
+                    		tu.urutan,
+							tu.nama as status_urutan');
 		$this->db->from('m_tna_pengawalan tp');
-		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_traning_id');
+		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_training_id');
 		$this->db->join('r_tna_kompetensi tk', 'tk.id = tp.r_tna_kompetensi_id');
 		$this->db->join('m_karyawan mk', 'mk.id = tp.m_karyawan_id');
 		$this->db->join('m_organisasi mo', 'mo.id = tp.m_organisasi_id');
@@ -677,7 +678,7 @@ class PengawalanModel extends CI_Model {
 				tp.jenis_development,
 				mis.id as internal_sharing');
 		$this->db->from('m_tna_pengawalan tp');
-		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_traning_id');
+		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_training_id');
 		$this->db->join('r_tna_kompetensi tk', 'tk.id = tp.r_tna_kompetensi_id');
 		$this->db->join('r_tahapan_usulan tu', 'tu.id = tp.tahapan_id');
 		$this->db->join('m_karyawan mk', 'mk.id = tp.m_karyawan_id');
@@ -796,7 +797,7 @@ class PengawalanModel extends CI_Model {
 		$this->db->join('h_mutasi hm', 'mk.id = hm.m_karyawan_id AND hm.is_aktif = 1');
 		$this->db->join('r_tna_kompetensi rtk', 'rtk.id = mtp.r_tna_kompetensi_id');
 		$this->db->join('r_jabatan rj', 'rj.id = hm.r_jabatan_id');
-		$this->db->join('r_tna_training rt', 'rt.id = mtp.r_tna_traning_id');
+		$this->db->join('r_tna_training rt', 'rt.id = mtp.r_tna_training_id');
 		$this->db->join('r_tahapan_usulan tu', 'tu.id = mtp.tahapan_id');
 		$this->db->join('m_organisasi mo', 'mo.id = mtp.m_organisasi_id');
 		$this->db->join('m_tna_pengawalan_dokumen mtpd', 'mtp.id = mtpd.m_tna_pengawalan_id AND mtpd.tipe = "sertifikat"', 'left');
@@ -880,7 +881,7 @@ class PengawalanModel extends CI_Model {
                     		mis.id as internal_sharing,
                     		tu.urutan');
 		$this->db->from('m_tna_pengawalan tp');
-		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_traning_id');
+		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_training_id');
 		$this->db->join('r_tna_kompetensi tk', 'tk.id = tp.r_tna_kompetensi_id');
 		$this->db->join('m_karyawan mk', 'mk.id = tp.m_karyawan_id');
 		$this->db->join('m_organisasi mo', 'mo.id = tp.m_organisasi_id');

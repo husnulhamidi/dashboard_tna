@@ -648,6 +648,7 @@ class Pengawalan extends CI_Controller {
 
 		$pageindex = 'tna/pengawalan/detail';
 
+		// echo json_encode($data['detail']);
 
         $data['active_tab'] = $active_tab;
 		$this->template->load('template',$pageindex,$data);

@@ -33,12 +33,12 @@ class UsulanTnaModel extends CI_Model {
         }
 		$recordsTotal = 0;
         $this->db->start_cache();
-		$this->db->select('us.id,us.kode,us.m_organisasi_id,us.m_karyawan_id,us.r_tna_kompetensi_id,us.r_tna_traning_id,jenis_pelatihan,jenis_development,nama_kegiatan,justifikasi_pengajuan,metoda_pembelajaran,estimasi_biaya,nama_penyelenggara,waktu_pelaksanaan,status_karyawan,tahapan_id,us.is_verifikasi_admin_hcpd,us.is_verifikasi_manager_hcpd,is_verifikasi_avp_hcm,mo.nama as subdit,mk.nama, mk.nik_tg,kom.code as kode_kompetensi,kom.name as kompetensi,tr.code as kode_training,tr.name as training,th.urutan,th.nama as tahapan, us.is_urgent')
+		$this->db->select('us.id,us.kode,us.m_organisasi_id,us.m_karyawan_id,us.r_tna_kompetensi_id,us.r_tna_training_id,jenis_pelatihan,jenis_development,nama_kegiatan,justifikasi_pengajuan,metoda_pembelajaran,estimasi_biaya,nama_penyelenggara,waktu_pelaksanaan,status_karyawan,tahapan_id,us.is_verifikasi_admin_hcpd,us.is_verifikasi_manager_hcpd,is_verifikasi_avp_hcm,mo.nama as subdit,mk.nama, mk.nik_tg,kom.code as kode_kompetensi,kom.name as kompetensi,tr.code as kode_training,tr.name as training,th.urutan,th.nama as tahapan, us.is_urgent')
 				 ->from($this->table." as us")
 				 ->join('m_karyawan mk', 'mk.id=us.m_karyawan_id','left')
 				 ->join('m_organisasi mo', 'mo.id=us.m_organisasi_id','left')
 				 ->join('r_tna_kompetensi kom', 'kom.id=us.r_tna_kompetensi_id','left')
-				 ->join('r_tna_training tr', 'tr.id=us.r_tna_traning_id','left')
+				 ->join('r_tna_training tr', 'tr.id=us.r_tna_training_id','left')
 				 ->join('r_tahapan_usulan th', 'th.id=us.tahapan_id','left')
 				 ;
 
@@ -114,7 +114,7 @@ class UsulanTnaModel extends CI_Model {
 			$this->db->where('us.jenis_development', $post['filter_jenis_development']);
 		}
 		if($post['filter_nama_pelatihan'] !== 'all'){
-			$this->db->where('us.r_tna_traning_id', $post['filter_nama_pelatihan']);
+			$this->db->where('us.r_tna_training_id', $post['filter_nama_pelatihan']);
 		}
 		if($post['filter_justifikasi'] !== ''){
 			$this->db->like('us.justifikasi_pengajuan', $post['filter_justifikasi'],'both');
@@ -518,12 +518,12 @@ class UsulanTnaModel extends CI_Model {
 		return $return;
 	}
 	public function download_usulan($kode_generate){
-		$query = $this->db->select('us.id,us.kode,us.m_organisasi_id,us.m_karyawan_id,us.r_tna_kompetensi_id,us.r_tna_traning_id,jenis_pelatihan,jenis_development,nama_kegiatan,justifikasi_pengajuan,us.objective,metoda_pembelajaran,estimasi_biaya,nama_penyelenggara,waktu_pelaksanaan,status_karyawan,tahapan_id,us.is_verifikasi_admin_hcpd,us.is_verifikasi_manager_hcpd,is_verifikasi_avp_hcm,mo.nama as subdit,mk.nama, mk.nik_tg,kom.code as kode_kompetensi,kom.name as kompetensi,tr.code as kode_training,tr.name as training,th.urutan,th.nama as tahapan')
+		$query = $this->db->select('us.id,us.kode,us.m_organisasi_id,us.m_karyawan_id,us.r_tna_kompetensi_id,us.r_tna_training_id,jenis_pelatihan,jenis_development,nama_kegiatan,justifikasi_pengajuan,us.objective,metoda_pembelajaran,estimasi_biaya,nama_penyelenggara,waktu_pelaksanaan,status_karyawan,tahapan_id,us.is_verifikasi_admin_hcpd,us.is_verifikasi_manager_hcpd,is_verifikasi_avp_hcm,mo.nama as subdit,mk.nama, mk.nik_tg,kom.code as kode_kompetensi,kom.name as kompetensi,tr.code as kode_training,tr.name as training,th.urutan,th.nama as tahapan')
 				 ->from($this->table." as us")
 				 ->join('m_karyawan mk', 'mk.id=us.m_karyawan_id','left')
 				 ->join('m_organisasi mo', 'mo.id=us.m_organisasi_id','left')
 				 ->join('r_tna_kompetensi kom', 'kom.id=us.r_tna_kompetensi_id','left')
-				 ->join('r_tna_training tr', 'tr.id=us.r_tna_traning_id','left')
+				 ->join('r_tna_training tr', 'tr.id=us.r_tna_training_id','left')
 				 ->join('r_tahapan_usulan th', 'th.id=us.tahapan_id','left')
 				 ->where("us.download_code",$kode_generate)
 				 ->where("th.urutan",6)
@@ -580,12 +580,12 @@ class UsulanTnaModel extends CI_Model {
 	}
 
 	public function getDetail($id){
-		$this->db->select('us.direktorat_id,us.id,us.kode,us.m_organisasi_id,us.m_karyawan_id,us.r_tna_kompetensi_id,us.r_tna_traning_id,jenis_pelatihan,jenis_development,nama_kegiatan,justifikasi_pengajuan,metoda_pembelajaran,estimasi_biaya,nama_penyelenggara,waktu_pelaksanaan,status_karyawan,tahapan_id,us.is_verifikasi_admin_hcpd,us.is_verifikasi_manager_hcpd,is_verifikasi_avp_hcm,mo.nama as subdit,mk.nama, mk.nik_tg,kom.code as kode_kompetensi,kom.name as kompetensi,tr.code as kode_training,tr.name as training,th.urutan,th.nama as tahapan, us.is_urgent, waktu_pelaksanaan_mulai, waktu_pelaksanaan_selesai')
+		$this->db->select('us.direktorat_id,us.id,us.kode,us.m_organisasi_id,us.m_karyawan_id,us.r_tna_kompetensi_id,us.r_tna_training_id,jenis_pelatihan,jenis_development,nama_kegiatan,justifikasi_pengajuan,metoda_pembelajaran,estimasi_biaya,nama_penyelenggara,waktu_pelaksanaan,status_karyawan,tahapan_id,us.is_verifikasi_admin_hcpd,us.is_verifikasi_manager_hcpd,is_verifikasi_avp_hcm,mo.nama as subdit,mk.nama, mk.nik_tg,kom.code as kode_kompetensi,kom.name as kompetensi,tr.code as kode_training,tr.name as training,th.urutan,th.nama as tahapan, us.is_urgent, waktu_pelaksanaan_mulai, waktu_pelaksanaan_selesai')
 				 ->from($this->table." as us")
 				 ->join('m_karyawan mk', 'mk.id=us.m_karyawan_id','left')
 				 ->join('m_organisasi mo', 'mo.id=us.m_organisasi_id','left')
 				 ->join('r_tna_kompetensi kom', 'kom.id=us.r_tna_kompetensi_id','left')
-				 ->join('r_tna_training tr', 'tr.id=us.r_tna_traning_id','left')
+				 ->join('r_tna_training tr', 'tr.id=us.r_tna_training_id','left')
 				 ->join('r_tahapan_usulan th', 'th.id=us.tahapan_id','left')
 				 ->where('us.id', $id);
 		$query = $this->db->get();

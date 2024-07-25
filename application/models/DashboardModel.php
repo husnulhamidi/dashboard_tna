@@ -295,7 +295,7 @@ class DashboardModel extends CI_Model {
                     tu.nama AS status, 
                     tu.urutan');
 		$this->db->from('m_tna_pengawalan tp');
-		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_traning_id');
+		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_training_id');
 		$this->db->join('r_tna_kompetensi tk', 'tk.id = tp.r_tna_kompetensi_id');
 		$this->db->join('r_tahapan_usulan tu', 'tu.id = tp.tahapan_id');
 		$this->db->join('m_karyawan mk', 'mk.id = tp.m_karyawan_id');
@@ -514,7 +514,7 @@ class DashboardModel extends CI_Model {
                     tk.name AS kompetensi, 
                     tp.waktu_pelaksanaan');
 		$this->db->from('m_tna_pengawalan tp');
-		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_traning_id');
+		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_training_id');
 		$this->db->join('r_tna_kompetensi tk', 'tk.id = tp.r_tna_kompetensi_id');
 		$this->db->join('r_tahapan_usulan tu', 'tu.id = tp.tahapan_id');
 		$this->db->join('m_karyawan mk', 'mk.id = tp.m_karyawan_id');

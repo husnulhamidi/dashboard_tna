@@ -2372,7 +2372,7 @@ CREATE TABLE `m_tna_usulan`  (
   `m_organisasi_id` int NULL DEFAULT NULL,
   `m_karyawan_id` int NULL DEFAULT NULL,
   `r_tna_kompetensi_id` int NULL DEFAULT NULL,
-  `r_tna_traning_id` int NULL DEFAULT NULL,
+  `r_tna_training_id` int NULL DEFAULT NULL,
   `jenis_pelatihan` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `jenis_development` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `nama_kegiatan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,

@@ -419,7 +419,7 @@ $(document).ready(function () {
 
         getDataDetailKaryawan(1,karyawanId)
 
-        let trainingId = '<?php echo @$detail->r_tna_traning_id;?>'
+        let trainingId = '<?php echo @$detail->r_tna_training_id;?>'
         let lembaga = '<?php echo @$detail->nama_penyelenggara;?>'
         getDataLembaga(trainingId, lembaga)
 
@@ -776,7 +776,7 @@ function getSum(pelatihanId) {
         $.ajax({
             url: '<?php echo site_url('tna/get_sum_data'); ?>',
             type: 'POST',
-            data: { r_tna_traning_id: pelatihanId },
+            data: { r_tna_training_id: pelatihanId },
             dataType: 'json',
             success: function(result) {
             resolve(result); // Kirim hasil getSum ke resolve

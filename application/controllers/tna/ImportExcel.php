@@ -574,9 +574,9 @@ class ImportExcel extends CI_Controller {
 				if($row['S'] == 'TNA')$is_tna = 1;
 
 				// code tna
-				$this->db->select('count(r_tna_traning_id) as count');
+				$this->db->select('count(r_tna_training_id) as count');
 				$this->db->from('m_tna_pengawalan');
-				$this->db->where('r_tna_traning_id', $trainingId->id);
+				$this->db->where('r_tna_training_id', $trainingId->id);
 				$query = $this->db->get();
 				$countTraining = $query->row();
 
@@ -602,7 +602,7 @@ class ImportExcel extends CI_Controller {
 						'm_karyawan_id'			=> $karyawanId->id,
 						'status_karyawan'		=> $row['E'],	
 						'r_tna_kompetensi_id' 	=> $kompId->id,
-						'r_tna_traning_id' 		=> $trainingId->id,
+						'r_tna_training_id' 		=> $trainingId->id,
 						'jenis_pelatihan' 		=> $row['N'],
 						'jenis_development' 	=> $row['K'],	
 						'nama_kegiatan' 		=> $row['H'],

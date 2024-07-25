@@ -10,66 +10,99 @@
                     <input type="hidden" name="id" id="id" value=<?php echo $detail->id;?> >
                     <input type="hidden" name="urutan" id="urutan" value="<?php echo $detail->urutan;?>" >
                     <div class="box-body">
-                        <div class="row" style="padding-top:10px">
-                            <div class="col-md-12">
-                                <label class="col-md-3"> ID TNA </label>
-                                <div class="col-md-9"><b>: <?php echo $detail->code_tna;?> </b> </div>
-                            </div>
-                            
-                        </div>
-                        <div class="row" style="padding-top:10px">
-                            <div class="col-md-12">
-                                <label class="col-md-3"> 
-                                    Nama Karyawan
-                                    <?php
-                                        if($detail->internal_sharing != null){
-                                            echo " (Pemateri) ";
-                                        }
-                                    ?>
-                                </label>
-                                <div class="col-md-9"><b>: <?php echo $detail->nik;?> | <?php echo $detail->nama_karyawan;?> </b> </div>
-                            </div>
-                            
-                        </div>
-                        <div class="row" style="padding-top:10px">
-                            <div class="col-md-12">
-                                <label class="col-md-3"> Subunit /Unit </label>
-                                <div class="col-md-9"><b>: <?php echo $detail->nama_organisasi;?> </b> </div>
-                            </div>
-                            
-                        </div>
-                        <div class="row" style="padding-top:10px">
-                            <div class="col-md-12">
-                                <label class="col-md-3"> Nama Pelatihan</label>
-                                <div class="col-md-9"><b>: <?php echo $detail->training;?> </b> </div>
-                            </div>
-                            
-                        </div>
-                        <div class="row" style="padding-top:10px">
-                            <div class="col-md-12">
-                                <label class="col-md-3"> Jenis Development</label>
-                                <div class="col-md-9"><b>: <?php echo $detail->jenis_development;?> </b> </div>
-                            </div>
-                            
-                        </div>
-                        <div class="row" style="padding-top:10px">
-                            <div class="col-md-12">
-                                <label class="col-md-3"> Nama Penyelenggara</label>
-                                <div class="col-md-9"><b>: <?php echo $detail->nama_penyelenggara;?> </b> </div>
-                            </div>
-                            
-                        </div>
-                        <div class="row" style="padding-top:10px">
-                            <div class="col-md-12">
-                                <label class="col-md-3"> Waktu Pelaksanaan </label>
-                                <div class="col-md-2"><b>: <?php echo date('d M Y', strtotime($detail->waktu_pelaksanaan_mulai)) ;?> s/d <?php echo date('d M Y', strtotime($detail->waktu_pelaksanaan_selesai)) ;?> </b> </div>
-                                <div>
-                                    <button onclick="showModalEditTgl(`<?php echo $detail->id ?>`,`<?php echo $detail->waktu_pelaksanaan_mulai ?>`,`<?php echo $detail->waktu_pelaksanaan_selesai ?>`,`<?php echo $detail->alasan_update_waktu_pelaksanaan ?>`)" class="btn btn-xs btn-primary" title="Edit">
-                                        <i class="fa fa-edit"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                    
+
+
+                    <div class="row">
+    <div class="col-md-6">
+        <div class="form-group row">
+            <label class="col-md-3">ID TNA</label>
+            <div class="col-md-7"><b>: <?php echo $detail->code_tna;?></b></div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3">Nama Karyawan</label>
+            <div class="col-md-7"><b>: <?php echo $detail->nik;?> | <?php echo $detail->nama_karyawan;?> <?php if($detail->internal_sharing != null) { echo " (Pemateri) "; } ?></b></div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3">Status Karyawan</label>
+            <div class="col-md-7"><b>: <?php echo $detail->status_karyawan;?></b></div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3">Direktorat</label>
+            <div class="col-md-7"><b>: <?php echo $detail->direktorat_name;?></b></div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3">Subunit /Unit</label>
+            <div class="col-md-7"><b>: <?php echo $detail->nama_organisasi;?></b></div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3">Nama Atasan</label>
+            <div class="col-md-7"><b>: <?php echo $detail->verifikator_nik;?> | <?php echo $detail->verifikator_name;?></b></div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3">Nama Pelatihan</label>
+            <div class="col-md-7"><b>: <?php echo $detail->nama_kegiatan;?></b></div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3">Jenis Development</label>
+            <?php
+                $tipe = '';
+                if($detail->jenis_development == 'Sertifikasi'){
+                    if($detail->jenis_Sertifikasi == 'INTL'){
+                        $tipe = '( Internasional )';
+                    } else {
+                        $tipe = '( Nasional )';
+                    }
+                }
+            ?>
+            <div class="col-md-7"><b>: <?php echo $detail->jenis_development;?> <?php echo $tipe;?> </b></div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group row">
+            <label class="col-md-3">Jenis Pelatihan</label>
+            <div class="col-md-7"><b>: <?php echo $detail->jenis_pelatihan;?></b></div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3">Kompetensi</label>
+            <div class="col-md-7"><b>: <?php echo $detail->r_tna_kompetensi_name;?></b></div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3">Kompetensi tsat</label>
+            <div class="col-md-7"><b>: <?php echo $detail->r_tna_kompetensi_name_tsat;?></b></div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3">Nama Penyelenggara</label>
+            <div class="col-md-7"><b>: <?php echo $detail->nama_penyelenggara;?></b></div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3">Metode Pembelajaran</label>
+            <div class="col-md-7"><b>: <?php echo $detail->metoda_pembelajaran;?></b></div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3">Estimasi Biaya</label>
+            <div class="col-md-7"><b>: <?php echo number_format($detail->estimasi_biaya);?></b></div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3">Justifikasi Pengajuan</label>
+            <div class="col-md-7"><b>: <?php echo $detail->justifikasi_pengajuan;?></b></div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3">Waktu Pelaksanaan</label>
+            <div class="col-md-7">
+                <b>: <?php echo date('d M Y', strtotime($detail->waktu_pelaksanaan_mulai)) ;?> s/d <?php echo date('d M Y', strtotime($detail->waktu_pelaksanaan_selesai)) ;?> </b>
+                <button onclick="showModalEditTgl(`<?php echo $detail->id ?>`,`<?php echo $detail->waktu_pelaksanaan_mulai ?>`,`<?php echo $detail->waktu_pelaksanaan_selesai ?>`,`<?php echo $detail->alasan_update_waktu_pelaksanaan ?>`)" class="btn btn-xs btn-primary" title="Edit">
+                    <i class="fa fa-edit"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
                         <div class="row" style="padding-top: 10px">
                             <hr>
                         </div>
@@ -82,7 +115,8 @@
                                 </ul>  
                             </div>
                         </div>
-                         <div class="col-md-12" style="padding-bottom: 10px"></div>
+                        
+                        <div class="col-md-12" style="padding-bottom: 10px"></div>
                         <?php
                             if($active_tab == 'dokumen'){
                                 $this->load->view('tna/pengawalan/tabs/detail_dokumen');

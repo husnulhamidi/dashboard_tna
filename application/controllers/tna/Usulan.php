@@ -241,7 +241,7 @@ class Usulan extends CI_Controller {
 			// 	'r_tna_kompetensi_id' => $this->input->post('kompetensi'),
 			// 	'jenis_development' => $this->input->post('jenis_development'),
 
-			// 	'r_tna_traning_id' => $this->input->post('tna'),
+			// 	'r_tna_training_id' => $this->input->post('tna'),
 			// 	'nama_kegiatan' => $this->input->post('nama_kegiatan'),
 			// 	'justifikasi_pengajuan' => $this->input->post('justifikasi'),
 
@@ -283,7 +283,7 @@ class Usulan extends CI_Controller {
 					'r_tna_kompetensi_id' => $this->input->post('kompetensi'),
 					'jenis_development' => $this->input->post('jenis_development'),
 	
-					'r_tna_traning_id' => $this->input->post('tna_id'),
+					'r_tna_training_id' => $this->input->post('tna_id'),
 					'nama_kegiatan' => $this->input->post('nama_kegiatan'),
 					'justifikasi_pengajuan' => $this->input->post('justifikasi'),
 	
@@ -361,7 +361,7 @@ class Usulan extends CI_Controller {
 				'jenis_pelatihan' => $this->input->post('jenis_pelatihan'),
 				'r_tna_kompetensi_id' => $this->input->post('kompetensi'),
 				'jenis_development' => $this->input->post('jenis_development'),
-				'r_tna_traning_id' => $exp[0],
+				'r_tna_training_id' => $exp[0],
 				'nama_kegiatan' => $this->input->post('nama_kegiatan'),
 				'justifikasi_pengajuan' => $this->input->post('justifikasi'),
 				'metoda_pembelajaran' => $this->input->post('metoda'),
@@ -777,7 +777,7 @@ class Usulan extends CI_Controller {
 								'm_karyawan_id'			=> $us->m_karyawan_id,
 								'status_karyawan'		=> $us->status_karyawan,	
 								'r_tna_kompetensi_id' 	=> $us->r_tna_kompetensi_id,
-								'r_tna_traning_id' 		=> $us->r_tna_traning_id,
+								'r_tna_training_id' 		=> $us->r_tna_training_id,
 								'jenis_pelatihan' 		=> $us->jenis_pelatihan,
 								'jenis_development' 	=> $us->jenis_development,	
 								'nama_kegiatan' 		=> $us->nama_kegiatan,

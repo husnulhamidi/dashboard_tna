@@ -226,7 +226,7 @@ class ReportingModel extends CI_Model {
         $this->db->join('h_mutasi hm', 'mk.id = hm.m_karyawan_id AND hm.is_aktif = 1');
         $this->db->join('r_tna_kompetensi rtk', 'rtk.id = mtp.r_tna_kompetensi_id');
         $this->db->join('r_jabatan rj', 'rj.id = hm.r_jabatan_id');
-        $this->db->join('r_tna_training rt', 'rt.id = mtp.r_tna_traning_id');
+        $this->db->join('r_tna_training rt', 'rt.id = mtp.r_tna_training_id');
         $this->db->join('r_tahapan_usulan tu', 'tu.id = mtp.tahapan_id');
         $this->db->join('m_organisasi mo', 'mo.id = mtp.m_organisasi_id');
         $this->db->join('m_tna_pengawalan_dokumen mtpd', 'mtp.id = mtpd.m_tna_pengawalan_id AND mtpd.tipe = "sertifikat"', 'left');
