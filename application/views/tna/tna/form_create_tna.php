@@ -287,18 +287,21 @@
                                                 <div class="col-sm-8">
                                                     <select class="select2 form-control" name="subdit[]" id="subdit1" onchange="getKaryawanBySubdit(1)">
                                                         <option value="">--- Pilih Subdit ---</option>
-                                                        <!-- <?php 
-                                                        foreach ($subdit as $sb) {
-                                                            $selected = '';
-                                                            if($sb->m_organisasi_id == @$detail->m_organisasi_id){
-                                                                $selected = 'selected';
-                                                            }
-                                                            echo "<option ".$selected." value='".$sb->m_organisasi_id."'>".$sb->nama.'</option>';
-                                                        }
-                                                        ?> -->
+                                                       
                                                     </select>
                                                 </div>
                                             </div>
+
+                                            <div class="form-group">
+                                                <label class="col-sm-3 control-label">Sub Unit </label>
+                                                <div class="col-sm-8">
+                                                    <select class="select2 form-control" name="subunit[]" id="subunit1">
+                                                        <option value="">--- Pilih Subunit ---</option>
+                                                       
+                                                    </select>
+                                                </div>
+                                            </div>
+
                                             <div class="form-group">
                                                 <label class="col-sm-3 control-label">Nama Karyawan <span style="color: red">*</span></label>
                                                 <div class="col-sm-6">
@@ -403,19 +406,17 @@ $(document).ready(function () {
         $('.remove-field').css('display','none')
 
         let karyawanId = '<?php echo @$detail->m_karyawan_id;?>'
+        let subunitId = '<?php echo @$detail->subunit_id;?>'
         let direktoratId = '<?php echo @$detail->direktorat_id;?>'
         let varifikatorId = '<?php echo @$detail->verifikator_id_1;?>'        
         getAtasan(1, direktoratId, varifikatorId)
-        let subdit = '<?php echo @$detail->m_organisasi_id;?>'
+        let subdit = '<?php echo @$detail->subdit_id;?>'
         if(subdit != 0){
             getSubdit(1, subdit, varifikatorId)
-            getKaryawanBySubdit(1,subdit, karyawanId)
+            getKaryawanBySubdit(1,subdit, karyawanId, subunitId)
         }else{
-            // console.log('sini', karyawanId)
-            getKaryawanBySubdit(1,direktoratId, karyawanId)
-        }
-        // getKaryawanBySubdit(1,direktoratId, karyawanId)
-       
+            getKaryawanBySubdit(1,direktoratId, karyawanId, subunitId)
+        }       
 
         getDataDetailKaryawan(1,karyawanId)
 
@@ -485,18 +486,11 @@ function cancelKaryawan(count){
     $('#jabatan'+count).attr('readonly', true)
 }
 
-
-
 function getSubdit(count, subdit = false, varifikatorId = false){
-    // console.log('subdit', subdit)
     let tmp = $('#direktorat'+count).val();
     let direktorat = tmp.split('#')
     let direktoratId = direktorat[0]
-    console.log(tmp)
-    // if(subdit){
-    //     direktoratId = subdit
-    // }
-    // console.log(varifikatorId)
+   
     $.ajax({
         url: '<?php echo site_url('karyawan/ajax_get_subdit'); ?>',
         type: 'POST',
@@ -526,7 +520,7 @@ function getSubdit(count, subdit = false, varifikatorId = false){
 }
 
 var isHeaderKaryawan = true;
-function getKaryawanBySubdit(count, direktoratId = false, karyawanId = false){
+function getKaryawanBySubdit(count, direktoratId = false, karyawanId = false, subunit=false){
     let subditId = $('#subdit'+count).val();
     if( direktoratId ){
         subditId = direktoratId
@@ -535,7 +529,7 @@ function getKaryawanBySubdit(count, direktoratId = false, karyawanId = false){
         subditId = tmp[0]
     }
 
-   
+    getSubunit(count,subditId, subunit)
     $.ajax({
         url: '<?php echo site_url('karyawan/ajax_get_karyawan_by_organisasi'); ?>',
         type: 'POST',
@@ -578,6 +572,32 @@ function getKaryawanBySubdit(count, direktoratId = false, karyawanId = false){
                     },
                 });
                 isHeaderKaryawan = true;
+            }
+        }
+    });
+}
+
+function getSubunit(count, subdir, subunit){
+    $.ajax({
+        url:base_url+'tna/tna/getSubunit',
+        type: 'POST',
+        async: false, 
+        data: { subdit: subdir },
+        dataType: 'json',
+        success: function (result) {
+            // console.log(result)
+            $('#subunit'+count).empty(); 
+            $('#subunit'+count).append('<option value="">-- Pilih Subunit --</option>');
+
+            if(result !== null){
+                $.each(result, function(i, value) {
+                    
+                    var selected = '';
+                    if(value['id'] == subunit){
+                        selected = 'selected';
+                    }
+                    $('#subunit'+count).append('<option '+selected+' value=' + value['id'] +'#'+value['name']+ '>' + value['name'] +'</option>');
+                });
             }
         }
     });
@@ -918,6 +938,15 @@ function appendRow(count){
                 <div class="col-sm-8">
                     <select class="select2 form-control" name="subdit[]" id="subdit`+count+`" onchange="getKaryawanBySubdit(`+count+`)">
                         <option value="">--- Pilih Subdit ---</option>
+                    </select>
+                </div>
+            </div>
+
+             <div class="form-group">
+                <label class="col-sm-3 control-label">Sub Unit </label>
+                <div class="col-sm-8">
+                    <select class="select2 form-control" name="subunit[]" id="subunit`+count+`">
+                        <option value="">--- Pilih Subunit ---</option>
                     </select>
                 </div>
             </div>

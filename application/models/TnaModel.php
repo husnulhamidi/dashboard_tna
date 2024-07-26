@@ -45,14 +45,14 @@ class TnaModel extends CI_Model {
 		$recordsTotal = 0;
         $this->db->start_cache();
 
-		$this->db->select('tp.id as id, tp.code_tna,tp.objective, rt.name as training, tp.jenis_development, tp.metoda_pembelajaran, tp.jenis_pelatihan, tk.name as kompetensi, tp.nama_penyelenggara, tp.waktu_pelaksanaan, tp.estimasi_biaya, mk.nama as nama_karyawan,mo.nama as nama_organisasi,tp.status_karyawan, tp.is_urgent');
+		$this->db->select('tp.id as id, tp.is_urgent,tp.code_tna,tp.objective,tp.justifikasi_pengajuan,tp.waktu_pelaksanaan_mulai,tp.waktu_pelaksanaan_selesai, IFNULL(rt.name,nama_kegiatan) as training, tp.jenis_development, tp.metoda_pembelajaran, tp.jenis_pelatihan, tk.name as kompetensi, tp.nama_penyelenggara, tp.waktu_pelaksanaan, tp.estimasi_biaya, mk.nama as nama_karyawan,mo.nama as nama_organisasi,tp.status_karyawan,direktorat_name,subdit_name,subunit_name,tp.r_tna_kompetensi_name,r_tna_kompetensi_name_tsat,keterangan');
 		$this->db->from('m_tna_pengawalan tp');
-		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_training_id');
-		$this->db->join('r_tna_kompetensi tk', 'tk.id = tp.r_tna_kompetensi_id');
+		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_training_id','left');
+		$this->db->join('r_tna_kompetensi tk', 'tk.id = tp.r_tna_kompetensi_id','left');
 		$this->db->join('r_tahapan_usulan ru', 'ru.id = tp.tahapan_id');
-		$this->db->join('m_karyawan mk', 'mk.id = tp.m_karyawan_id');
+		$this->db->join('m_karyawan mk', 'mk.id = tp.m_karyawan_id','left');
 		$this->db->join('m_organisasi mo', 'mo.id = tp.m_organisasi_id','left');
-		$this->db->where('ru.r_jenis_usulan_id = 29 and ru.urutan = 1');
+		$this->db->where('ru.urutan = 1');
 
 		if($post['filter_subdit'] !== 'all'){
 			$this->db->where('tp.m_organisasi_id', $post['filter_subdit']);
@@ -255,6 +255,18 @@ class TnaModel extends CI_Model {
 		// $this->db->where('tl.status_code', '1');
 		$query = $this->db->get();
 		return $query->result();
+	}
+
+	public function getSubunit($subdit){
+		$this->db->select('id, o5 as name');
+        $this->db->from('v_organisasi');
+        $this->db->where('l5', 4);
+        $this->db->where('i4', $subdit);
+
+        $query = $this->db->get();
+        $result = $query->result();
+
+        return $result;
 	}
 
 	public function get_lembaga_id($pelatihanId){

@@ -266,6 +266,12 @@ class Tna extends CI_Controller {
 				$m_organisasi_id = $subdit[0];
 				$subdit_name = $subdit[1];
 
+				// subunit
+				$subunit = explode('#',$this->input->post('subunit')[$key]);
+				$subunit_id = $subunit[0];
+				$m_organisasi_id = $subunit[0];
+				$subunit_name = $subunit[1];
+
 				//cek verifikator 
 				$checkVerifikator = $this->TnaModel->checkKaryawan($this->input->post('verifikator_id_1')[$key]);
 				$verifikator_id_1 = $this->input->post('verifikator_id_1')[$key];
@@ -277,6 +283,8 @@ class Tna extends CI_Controller {
 				$data['m_organisasi_id'] = $m_organisasi_id;
 				$data['subdit_id'] = $subdit_id;
 				$data['subdit_name'] = $subdit_name;
+				$data['subunit_id'] = $subunit_id;
+				$data['subunit_name'] = $subunit_name;
 				$data['m_karyawan_id'] = $m_karyawan_id;
 				$data['nik'] = $nik;
 				$data['nama_karyawan'] = $nama_karyawan;
@@ -465,6 +473,12 @@ class Tna extends CI_Controller {
 	public function getPenyelenggara(){
 		$id = $this->input->post('pelatihanId');
 		$data = $this->TnaModel->getPenyelenggara($id);
+		echo json_encode($data);
+	}
+
+	public function getSubunit(){
+		$subdit = $this->input->post('subdit');
+		$data = $this->TnaModel->getSubunit($subdit);
 		echo json_encode($data);
 	}
 
