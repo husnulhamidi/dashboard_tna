@@ -358,6 +358,12 @@ $route['internalsharing/feedback/(:any)']    = 'tna/feedback/index/$1';
 $route['internalSharing/getFeedback/(:any)']    = 'tna/feedback/getFeedback/$1';
 $route['internalsharing/feedback/simpan/data']    = 'tna/feedback/submit';
 
+//=====================================================================================================================
+// Groups
+$route['tna/role_akses']    = 'tna/RoleAkses/index';
+$route['tna/role_akses/(:any)/(:any)']    = 'tna/RoleAkses/edit/$1/$2';
+$route['tna/role_akses/simpan/data/(:any)']    = 'tna/RoleAkses/submit/$1';
+
 
 
 

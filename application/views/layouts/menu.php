@@ -142,13 +142,7 @@ $sess = $this->session->userdata();
                 <i class="fa fa-gear"></i> <span>Setting TTD</span>
             </a>
         </li>
-        <!-- <li class="<?php echo $active_menu=='tna_materi'? 'active':'';?> ">
-            <a href="<?php echo site_url('tna/library_materi'); ?>">
-                <i class="fa fa-cube"></i> <span>Library Materi</span>
-            </a>
-        </li> -->
-
-
+        
         <li class="treeview <?php echo ($active_menu == 'tna_materi') ? 'active' : ''; ?> ">
             <a href="#">
                 <i class="fa fa-clone"></i>Library</span>
@@ -169,29 +163,14 @@ $sess = $this->session->userdata();
                 </li>
             </ul>
         </li> 
-
-         <!-- <li class="<?php echo $active_menu=='pelanggan'? 'active':'';?> ">
-            <a href="<?php echo site_url('pelanggan/data_pelanggan'); ?>">
-                <i class="fa fa-user"></i> <span>Pelanggan</span>
-            </a>
-        </li> 
-        <li class="<?php echo $active_menu=='bank'? 'active':'';?> ">
-            <a href="<?php echo site_url('bank/data_bank'); ?>">
-                <i class="fa fa-bank"></i> <span>Bank</span>
-            </a>
-        </li> 
-        <li class="<?php echo $active_menu=='project'? 'active':'';?> ">
-            <a href="<?php echo site_url('project'); ?>">
-                <i class="fa fa-cubes"></i> <span>Project</span>
+        
+        <li class="<?php echo $active_menu=='role_akses'? 'active':'';?>">
+            <a href="<?php echo site_url('tna/role_akses'); ?>">
+                <i class="fa fa-gear"></i> <span>Role Akses</span>
             </a>
         </li>
-        <li class="<?php echo $active_menu=='list_invoice'? 'active':'';?> ">
-            <a href="<?php echo site_url('invoice/lists'); ?>">
-                <i class="fa fa-file"></i> <span>Invoice</span>
-            </a>
-        </li> -->
-       
-       
+
+         
       
     </ul>
 </section>
