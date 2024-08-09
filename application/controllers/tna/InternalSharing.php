@@ -165,6 +165,7 @@ class InternalSharing extends CI_Controller {
             'plugins/datepicker/datepicker3.css',
             'plugins/timepicker/bootstrap-timepicker.css',
             'plugins/timepicker/bootstrap-timepicker.min.css',
+			
         );
 		$data['js']				= array(
 			'plugins/sweet-alert/sweetalert.min.js',
@@ -174,6 +175,7 @@ class InternalSharing extends CI_Controller {
 			'plugins/timepicker/bootstrap-timepicker.min.js',
 			'js/module/internal-sharing/InternalSharing.js?random='.date("ymdHis"),
 			'js/module/internal-sharing/DetailInternalSharing.js?random='.date("ymdHis"),
+			'extension/bootstrap-filestyle-2.1.0/src/bootstrap-filestyle.min.js',
         );
 
         $detail = $this->getDetailData($id);
@@ -639,6 +641,7 @@ class InternalSharing extends CI_Controller {
 		);
 		$this->InternalSharing->insertDataHistory($dataHistory);
 	}
+	
 
 	
 }

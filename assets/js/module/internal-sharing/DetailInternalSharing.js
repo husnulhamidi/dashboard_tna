@@ -1,4 +1,5 @@
 jQuery(document).ready(function() {
+    
 	const id = $('#id').val();
 	getMateriSharing(id)
 	getDokumentasiSharing(id)

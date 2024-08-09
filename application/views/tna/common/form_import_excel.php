@@ -41,6 +41,7 @@
                                             <div class="form-group">
                                                 <div class="form-line">
                                                     <!-- <label>&nbsp;&nbsp;</label> -->
+                                                     <input type="hidden" id="internalSharingId" name="internalSharingId">
                                                     <button type="submit" class="btn btn-primary btn-md" id="btn-submit-import">Upload</button>
                                                 </div>
                                             </div>

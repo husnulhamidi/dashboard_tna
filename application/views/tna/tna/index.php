@@ -131,7 +131,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         const link_template = base_url+'files/upload/excel/template_uplaod_tna.xlsx'
-        $('#template_upload').html('Untuk template uplaod file <a href="'+link_template+'"> Download Disini </a>')
+        $('#template_upload').html('Untuk template upload file <a href="'+link_template+'"> Download Disini </a>')
     })
     const url_submit_import = base_url+"tna/import";
     const url_detail = '<?php echo base_url('tna/detail/');?>';

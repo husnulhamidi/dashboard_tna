@@ -290,6 +290,7 @@ $route['tna/internalSharing/getDataDokumentasi/(:any)']    = 'tna/InternalSharin
 $route['tna/internalSharing/createOrUpdateDokumentasi']    = 'tna/InternalSharing/createOrUpdateDokumentasi';
 
 $route['tna/internalSharing/getPeserta/(:any)']    = 'tna/InternalSharing/getPeserta/$1';
+$route['tna/internalSharing/uploadPeserta']    = 'tna/importexcel/import_excel_peserta_internal_sharing';
 $route['tna/internalSharing/createOrUpdatePeserta']    = 'tna/InternalSharing/createOrUpdatePeserta';
 
 $route['tna/internalSharing/deleteData/(:any)']    = 'tna/InternalSharing/deleteData/$1';

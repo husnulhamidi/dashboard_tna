@@ -10,7 +10,7 @@
                 <div>
                 <form method="post" action="javascript:;" class="form-horizontal form-upload-dokumentasi" id="form-upload-dokumentasi">
                     <input type="hidden" name="ket" id="ket">
-                    <input type="text" name="id" id="idDokumentasi">
+                    <input type="hidden" name="id" id="idDokumentasi">
                     <input type="hidden" name="trainingId" id="trainingId" value="<?php echo $detail->id ;?>">
                     <div class="box-body">
                         <div class="row">

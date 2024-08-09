@@ -648,6 +648,82 @@ class ImportExcel extends CI_Controller {
 		echo json_encode(array($json));
 	}
 
+	public function import_excel_peserta_internal_sharing(){
+		ini_set('memory_limit',-1);
+		ini_set('MAX_EXECUTION_TIME', 0);
+	
+		$data =array();
+		$config['upload_path'] = './files/upload/excel';
+		$config['allowed_types'] = '*';
+		$config['max_size'] = '20000';
+		$input = $this->input->post('input-file-excel');
+		
+		$new_name = time().'_'.$_FILES[$input]['name'];
+		$config['file_name'] = $new_name;
+	
+		$this->upload->initialize($config);
+		if ( ! $this->upload->do_upload($this->input->post('input-file-excel'))){
+			$json = array(
+				'code' => '0005',
+				'message' => $this->upload->display_errors(),
+			);
+		
+		} else {
+			
+			$upload_data  = $this->upload->data();
+			$file = $upload_data['full_path'];
+			require_once APPPATH.'third_party/PHPExcel_/PHPExcel.php';
+			
+			$excelreader = new PHPExcel_Reader_Excel2007();
+			$loadexcel = $excelreader->load($file); 
+			$sheet = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
+	
+			$this->db->trans_start();
+			$no = 1;
+			$update_count = true;
+			$tmp_count = '';
+			foreach($sheet as $row){
+
+				if($no >1){
+					$data= array(
+						// 'status_karyawan'		=> $row['E'],	
+						'm_tna_internal_sharing_id' => $this->input->post('internalSharingId'),
+						'sudbit_name'	=> $row['B'],
+						'nik_peserta' => $row['D'],
+						'nama_peserta' => $row['C'],
+						'status_karyawan' => $row['F'],
+						'jabatan' => $row['E'],
+					);
+					// echo json_encode(array($data));
+					$this->tna->insertData($data);
+					$update_count = false;
+					$tmp_count = $count;
+
+	
+				}
+				$no++;
+			}
+		
+	
+			$this->db->trans_complete();
+			if($this->db->trans_status() === FALSE){
+				$json = array(
+					'rc' => '0001',
+					'message' => 'Terjadi kesalahan Database & File!',
+				);
+			}else{
+	
+				unlink("./files/upload/excel/".$new_name);
+				$json = array(
+					'rc' => '0000',
+					'message' => 'Data berhasil diimport',
+				);
+			}
+	
+		}
+		echo json_encode(array($json));
+	}
+
 
 }
 

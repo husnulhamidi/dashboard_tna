@@ -1,6 +1,6 @@
 jQuery(document).ready(function() {
     buildTable();
-	 $('#fileName').filestyle({
+	$('#fileName').filestyle({
         btnClass : 'btn-success',
         text : 'Select File',
         htmlIcon : '<span class="fa fa-folder"></span> ',

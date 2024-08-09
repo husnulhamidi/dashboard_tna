@@ -218,6 +218,9 @@
 
 	                   	<div class="row">
 	                   		<div class="pull-right" style="padding-right: 2%; padding-bottom: 10px">
+							   <button class="btn btn-primary btn-sm" data-toggle='modal' data-target='#ModalImportExcel'>
+                                    <i class="fa fa-upload"></i> Upload
+                                </button>
                    				<button
                    					id="btnAddPeserta"
                    					class="btn btn-sm btn-primary">
@@ -280,11 +283,14 @@
     $this->load->view('tna/internal_sharing/form_tambah_materi');
     $this->load->view('tna/internal_sharing/form_upload_dokumentasi');
 	$this->load->view('tna/internal_sharing/modal_feedback');
+	$this->load->view('tna/common/form_import_excel');
 ?>
 <script type="text/javascript">
 	var url_file ='<?php echo base_url('files/upload/materi');?>';
 	var url_dokumentasi ='<?php echo base_url('files/upload/dokumentasi');?>';
 	var url_edit ='<?php echo base_url('tna/InternalSharing/materi/edit');?>';
+	var url_submit_import = base_url+"tna/internalSharing/uploadPeserta";
+	
     $(document).ready(function () {
         $('.select2').select2({
             placeholder: "Pilih Opsi"
@@ -298,8 +304,9 @@
           showInputs: false
         });
 
+		var id = $('#id').val()
 		$('.btn-complete').click(function(){
-			let id = $('#id').val()
+			
 			// alert('aksi complete')
 			var data = {
                 internalSharingId : id
@@ -345,5 +352,11 @@
                 });
             });
 		})
+
+		const link_template = base_url+'files/upload/excel/template_upload_peserta_intenal_sharing.xlsx'
+        $('#template_upload').html('Untuk template upload file <a href="'+link_template+'"> Download Disini </a>')
+		$('#internalSharingId').val(id)
+		
+		console.log('url_submit_import', url_submit_import)
     })
 </script>
