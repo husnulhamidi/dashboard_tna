@@ -21,7 +21,7 @@
 </div>
 <script type="text/javascript">
     // $('#tbl-riwayat').DataTable()
-    var id = $('#id').val();
+    var id = $('#ids').val();
     $('#tbl-riwayat').DataTable({
         processing: true, 
         serverSide: true, 

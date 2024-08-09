@@ -262,10 +262,12 @@ class PengawalanModel extends CI_Model {
 							tk.name as kompetensi,
 							mk.nama as nama_karyawan,
 							mk.nik_tg as nik,
+							mk.id as id_karyawan,
 							mo.nama as nama_organisasi,
 							mis.is_complete,
                     		mis.id as internal_sharing,
                     		tu.urutan,
+							mo.id AS id_organisasi, 
 							tu.nama as status_urutan');
 		$this->db->from('m_tna_pengawalan tp');
 		$this->db->join('r_tna_training rt', 'rt.id = tp.r_tna_training_id');
